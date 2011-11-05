@@ -17,7 +17,7 @@ namespace ZScreenLib
             if (bConvert)
             {
                 long streamLength = stream.Length / 1024;
-                int sizeLimit = wf.ImageSizeLimit * 1024;
+                int sizeLimit = wf.ConfigImageEffects.ImageSizeLimit * 1024;
 
                 if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
                 {
@@ -56,7 +56,7 @@ namespace ZScreenLib
                                                 workflow.ImageFormat.GetDescription(),
                                                 stream.Length / 1024,
                                                 workflow.ImageFormat2.GetDescription(),
-                                                workflow.ImageSizeLimit));
+                                                workflow.ConfigImageEffects.ImageSizeLimit));
 
             if (workflow.ImageFormat2 == EImageFormat.JPEG)
             {

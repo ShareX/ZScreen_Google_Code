@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +11,8 @@ using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
 using ZScreenCoreLib;
+using ZScreenLib;
+
 #region License Information (GPL v2)
 
 /*
@@ -37,44 +38,29 @@ using ZScreenCoreLib;
 
 #endregion License Information (GPL v2)
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     public class ImageEffects
     {
+        #region 0 Properties
 
-        private static Bitmap AddReflection(Image bmp, int percentage, int transparency)
+        private ImageEffectsConfig Config = null;
+        private static List<int> mLogoRandomList = new List<int>(5);
+
+        #endregion 0 Properties
+
+        #region 0 Constructors
+
+        protected ImageEffects() { }
+
+        public ImageEffects(ImageEffectsConfig cfg)
         {
-            Bitmap b = new Bitmap(bmp);
-            b.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            b = b.Clone(new Rectangle(0, 0, b.Width, (int)(b.Height * ((float)percentage / 100))), PixelFormat.Format32bppArgb);
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-
-            byte alpha;
-            int nOffset = bmData.Stride - b.Width * 4;
-            transparency.Mid(0, 255);
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)bmData.Scan0;
-
-                for (int y = 0; y < b.Height; ++y)
-                {
-                    for (int x = 0; x < b.Width; ++x)
-                    {
-                        alpha = (byte)(transparency - transparency * (y + 1) / b.Height);
-                        if (p[3] > alpha) p[3] = alpha;
-                        p += 4;
-                    }
-                    p += nOffset;
-                }
-            }
-
-            b.UnlockBits(bmData);
-
-            return b;
+            this.Config = cfg;
         }
 
-        private static Bitmap AddSkew(Bitmap bmp, int skew)
+        #endregion 0 Constructors
+
+        protected static Bitmap AddSkew(Bitmap bmp, int skew)
         {
             Bitmap result = new Bitmap(bmp.Width + skew, bmp.Height);
             Graphics g = Graphics.FromImage(result);
@@ -86,36 +72,36 @@ namespace ZScreenLib
 
         public Image ApplyScreenshotEffects(Image img)
         {
-            if (wf.BevelEffect)
+            if (Config.BevelEffect)
             {
-                img = BevelImage(img, wf.BevelEffectOffset);
+                img = BevelImage(img, Config.BevelEffectOffset);
             }
-            if (wf.DrawReflection)
+            if (Config.DrawReflection)
             {
                 img = DrawReflection(img);
             }
-            if (wf.BorderEffect)
+            if (Config.BorderEffect)
             {
-                img = DrawBorder(img, wf.BorderEffectColor, wf.BorderEffectSize);
+                img = DrawBorder(img, Config.BorderEffectColor, Config.BorderEffectSize);
             }
             return img;
         }
 
         public Image ApplySizeChanges(Image img)
         {
-            switch (wf.ImageSizeType)
+            switch (Config.ImageSizeType)
             {
                 case ImageSizeType.FIXED:
-                    img = GraphicsMgr.ChangeImageSize(img, wf.ImageSizeFixedWidth, wf.ImageSizeFixedHeight, true, true);
+                    img = GraphicsMgr.ChangeImageSize(img, Config.ImageSizeFixedWidth, Config.ImageSizeFixedHeight, true, true);
                     break;
                 case ImageSizeType.RATIO:
-                    img = GraphicsMgr.ChangeImageSize(img, wf.ImageSizeRatioPercentage);
+                    img = GraphicsMgr.ChangeImageSize(img, Config.ImageSizeRatioPercentage);
                     break;
             }
             return img;
         }
 
-        private Image BevelImage(Image image, int offset)
+        protected Image BevelImage(Image image, int offset)
         {
             Image defaultImage = (Image)image.Clone();
 
@@ -152,7 +138,7 @@ namespace ZScreenLib
             return defaultImage;
         }
 
-        private static Image DrawBorder(Image img, Color color, int size)
+        protected static Image DrawBorder(Image img, Color color, int size)
         {
             Image result = new Bitmap(img.Size.Width + (size * 2), img.Size.Height + (size * 2));
             Graphics g = Graphics.FromImage(result);
@@ -192,17 +178,17 @@ namespace ZScreenLib
             return bmp;
         }
 
-        private Image DrawReflection(Image bmp)
+        protected Image DrawReflection(Image bmp)
         {
-            Bitmap reflection = AddReflection(bmp, wf.ReflectionPercentage, wf.ReflectionTransparency);
-            if (wf.ReflectionSkew)
+            Bitmap reflection = WatermarkEffects.AddReflection(bmp, Config.ReflectionPercentage, Config.ReflectionTransparency);
+            if (Config.ReflectionSkew)
             {
-                reflection = AddSkew(reflection, wf.ReflectionSkewSize);
+                reflection = AddSkew(reflection, Config.ReflectionSkewSize);
             }
-            Bitmap result = new Bitmap(reflection.Width, bmp.Height + reflection.Height + wf.ReflectionOffset);
+            Bitmap result = new Bitmap(reflection.Width, bmp.Height + reflection.Height + Config.ReflectionOffset);
             Graphics g = Graphics.FromImage(result);
             g.DrawImage(bmp, new Point(0, 0));
-            g.DrawImage(reflection, new Point(0, bmp.Height + wf.ReflectionOffset));
+            g.DrawImage(reflection, new Point(0, bmp.Height + Config.ReflectionOffset));
             return result;
         }
 
@@ -223,7 +209,7 @@ namespace ZScreenLib
             return bmp;
         }
 
-        private static Point FindPosition(WatermarkPositionType positionType, int offset, Size img, Size img2, int add)
+        protected static Point FindPosition(WatermarkPositionType positionType, int offset, Size img, Size img2, int add)
         {
             Point position;
             switch (positionType)
@@ -273,7 +259,7 @@ namespace ZScreenLib
 
                 for (int x = 0; x < count; x++)
                 {
-                    int r = Adapter.RandomNumber(0, numbers.Count - 1);
+                    int r = StaticHelper.RandomNumber(0, numbers.Count - 1);
                     mLogoRandomList.Add(numbers[r]);
                     numbers.RemoveAt(r);
                 }
@@ -293,17 +279,17 @@ namespace ZScreenLib
                     break;
                 case 4:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(100, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(100, 300)));
                     break;
                 case 5:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(-300, -100)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(-300, -100)));
                     break;
                 case 6:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(150, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(150, 300)));
                     break;
                 case 7:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(Adapter.RandomNumber(-300, -150)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(-300, -150)));
                     break;
             }
 
@@ -311,12 +297,6 @@ namespace ZScreenLib
 
             return logo;
         }
-
-        public ImageEffects(Workflow workflow)
-        {
-            this.wf = workflow;
-        }
-        private static List<int> mLogoRandomList = new List<int>(5);
 
         private Image PrepareBevel(Image image, Point[] points, int filterValue)
         {
@@ -329,7 +309,7 @@ namespace ZScreenLib
             g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
             g.Dispose();
             ColorMatrix cm;
-            switch (wf.BevelFilterType)
+            switch (Config.BevelFilterType)
             {
                 default:
                 case FilterType.Brightness:
@@ -374,6 +354,7 @@ namespace ZScreenLib
 
                 ReportImage(image1);
             }
+
             private int speed = 5;
 
             public void StartTurn()
@@ -383,12 +364,14 @@ namespace ZScreenLib
                     IsTurning = timer.Enabled = true;
                 }
             }
+
             private int step = 1;
 
             public void StopTurn()
             {
                 IsTurning = timer.Enabled = false;
             }
+
             private Timer timer;
 
             private void timer_Tick(object sender, EventArgs e)
@@ -454,6 +437,5 @@ namespace ZScreenLib
                 timer.Tick += new EventHandler(timer_Tick);
             }
         }
-        private Workflow wf = null;
     }
 }

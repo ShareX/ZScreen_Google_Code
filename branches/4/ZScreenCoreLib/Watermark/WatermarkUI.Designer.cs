@@ -562,7 +562,7 @@
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(469, 381);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(468, 379);
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
@@ -639,6 +639,7 @@
             this.Name = "WatermarkUI";
             this.Text = "WatermarkUI";
             this.Load += new System.EventHandler(this.WatermarkUI_Load);
+            this.Resize += new System.EventHandler(this.WatermarkUI_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).EndInit();
             this.gbWatermarkGeneral.ResumeLayout(false);
             this.gbWatermarkGeneral.PerformLayout();

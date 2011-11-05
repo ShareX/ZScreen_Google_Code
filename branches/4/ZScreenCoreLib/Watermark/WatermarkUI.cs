@@ -24,6 +24,8 @@ namespace ZScreenCoreLib
 
         #endregion 0 Properties
 
+        #region 1 Constructors
+
         public WatermarkUI(WatermarkConfig cfg = null)
         {
             InitializeComponent();
@@ -43,6 +45,8 @@ namespace ZScreenCoreLib
             codesMenu.Opacity = 0.8;
             codesMenu.ShowImageMargin = false;
         }
+
+        #endregion 1 Constructors
 
         #region 1 Helper Methods
 
@@ -395,6 +399,11 @@ namespace ZScreenCoreLib
 
             CreateCodesMenu();
             TestWatermark();
+        }
+
+        private void WatermarkUI_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
     }
 }

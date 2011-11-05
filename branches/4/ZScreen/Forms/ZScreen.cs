@@ -372,21 +372,12 @@ namespace ZScreenGUI
                     Engine.ConfigApp.WindowLocation = Location;
                     Engine.ConfigApp.WindowSize = Size;
                 }
+
+                Refresh();
             }
         }
 
         #endregion ZScreen Form Events
-
-        private string FontToString()
-        {
-            return FontToString(Engine.ConfigWorkflow.ConfigWatermark.WatermarkFont, Engine.ConfigWorkflow.ConfigWatermark.WatermarkFontArgb);
-        }
-
-        private string FontToString(Font font, Color color)
-        {
-            return "Name: " + font.Name + " - Size: " + font.Size + " - Style: " + font.Style + " - Color: " +
-                   color.R + "," + color.G + "," + color.B;
-        }
 
         private FTPAccount GetSelectedFTPforImages()
         {

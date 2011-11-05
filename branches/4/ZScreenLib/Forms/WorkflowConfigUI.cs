@@ -5,6 +5,7 @@ using FreeImageNetLib;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
+using ZScreenCoreLib;
 
 namespace ZScreenLib
 {
@@ -166,7 +167,7 @@ namespace ZScreenLib
                 cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
             }
 
-            nudSwitchAfter.Value = Config.ImageSizeLimit;
+            nudSwitchAfter.Value = Config.ConfigImageEffects.ImageSizeLimit;
 
             if (cboSwitchFormat.Items.Count == 0)
             {
@@ -207,7 +208,7 @@ namespace ZScreenLib
 
         private void ConfigGuiResize()
         {
-            switch (Config.ImageSizeType)
+            switch (Config.ConfigImageEffects.ImageSizeType)
             {
                 case ImageSizeType.DEFAULT:
                     rbImageSizeDefault.Checked = true;
@@ -220,9 +221,9 @@ namespace ZScreenLib
                     break;
             }
 
-            nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
-            nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
-            nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
+            nudImageSizeFixedWidth.Value = Config.ConfigImageEffects.ImageSizeFixedWidth;
+            nudImageSizeFixedHeight.Value = Config.ConfigImageEffects.ImageSizeFixedHeight;
+            nudImageSizeRatio.Value = (decimal)Config.ConfigImageEffects.ImageSizeRatioPercentage;
         }
 
         private void ConfigGuiTasks()
@@ -369,7 +370,7 @@ namespace ZScreenLib
             else
             {
                 tcMain.TabPages.Remove(tpImageResize);
-                Config.ImageSizeType = ImageSizeType.DEFAULT;
+                Config.ConfigImageEffects.ImageSizeType = ImageSizeType.DEFAULT;
             }
         }
 
@@ -456,7 +457,7 @@ namespace ZScreenLib
 
             // Quality
             Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Config.ConfigImageEffects.ImageSizeLimit = (int)nudSwitchAfter.Value;
             Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
 
             Config.ImagePngInterlaced = chkPngQualityInterlaced.Checked;
@@ -551,13 +552,13 @@ namespace ZScreenLib
 
             if (rbImageSizeDefault.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.DEFAULT;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.DEFAULT;
                 ratio = 1.0;
                 h2 = Task.Info.ImageSize.Height;
             }
             else if (rbImageSizeFixed.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.FIXED;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.FIXED;
                 if (Task.Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
                 {
                     ratio = (double)nudImageSizeFixedWidth.Value / (double)Task.Info.ImageSize.Width;
@@ -566,7 +567,7 @@ namespace ZScreenLib
             }
             else if (rbImageSizeRatio.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.RATIO;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.RATIO;
                 if (Task.Info.ImageSize.Width > 0)
                 {
                     ratio = (double)nudImageSizeRatio.Value / 100.0;

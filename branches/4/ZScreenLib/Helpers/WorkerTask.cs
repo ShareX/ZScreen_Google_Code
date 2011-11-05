@@ -949,7 +949,7 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                var effects = new ImageEffects(WorkflowConfig);
+                var effects = new ImageEffects(WorkflowConfig.ConfigImageEffects);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
                 if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.ConfigWatermark.WatermarkExcludeClipboardUpload)

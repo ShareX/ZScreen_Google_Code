@@ -14,9 +14,24 @@ using HelpersLib;
 
 namespace ZScreenCoreLib
 {
-    public class WatermarkEffects
+    public class WatermarkEffects : ImageEffects
     {
-        private static Bitmap AddReflection(Image bmp, int percentage, int transparency)
+        #region 0 Constructors
+
+        public WatermarkEffects(WatermarkConfig Config)
+        {
+            this.Config = Config;
+        }
+
+        #endregion 0 Constructors
+
+        #region 0 Properties
+
+        WatermarkConfig Config = new WatermarkConfig();
+
+        #endregion 0 Properties
+
+        public static Bitmap AddReflection(Image bmp, int percentage, int transparency)
         {
             Bitmap b = new Bitmap(bmp);
             b.RotateFlip(RotateFlipType.RotateNoneFlipY);
@@ -72,8 +87,6 @@ namespace ZScreenCoreLib
                     return DrawImageWatermark(img, Config.WatermarkImageLocation);
             }
         }
-
-        WatermarkConfig Config = new WatermarkConfig();
 
         private Image DrawImageWatermark(Image img, string imgPath)
         {
@@ -175,50 +188,6 @@ namespace ZScreenCoreLib
             }
 
             return img;
-        }
-
-        private static Point FindPosition(WatermarkPositionType positionType, int offset, Size img, Size img2, int add)
-        {
-            Point position;
-            switch (positionType)
-            {
-                case WatermarkPositionType.TOP_LEFT:
-                    position = new Point(offset, offset);
-                    break;
-                case WatermarkPositionType.TOP_RIGHT:
-                    position = new Point(img.Width - img2.Width - offset - add, offset);
-                    break;
-                case WatermarkPositionType.BOTTOM_LEFT:
-                    position = new Point(offset, img.Height - img2.Height - offset - add);
-                    break;
-                case WatermarkPositionType.BOTTOM_RIGHT:
-                    position = new Point(img.Width - img2.Width - offset - add, img.Height - img2.Height - offset - add);
-                    break;
-                case WatermarkPositionType.CENTER:
-                    position = new Point(img.Width / 2 - img2.Width / 2 - add, img.Height / 2 - img2.Height / 2 - add);
-                    break;
-                case WatermarkPositionType.LEFT:
-                    position = new Point(offset, img.Height / 2 - img2.Height / 2 - add);
-                    break;
-                case WatermarkPositionType.TOP:
-                    position = new Point(img.Width / 2 - img2.Width / 2 - add, offset);
-                    break;
-                case WatermarkPositionType.RIGHT:
-                    position = new Point(img.Width - img2.Width - offset - add, img.Height / 2 - img2.Height / 2 - add);
-                    break;
-                case WatermarkPositionType.BOTTOM:
-                    position = new Point(img.Width / 2 - img2.Width / 2 - add, img.Height - img2.Height - offset - add);
-                    break;
-                default:
-                    position = Point.Empty;
-                    break;
-            }
-            return position;
-        }
-
-        public WatermarkEffects(WatermarkConfig Config)
-        {
-            this.Config = Config;
         }
     }
 }

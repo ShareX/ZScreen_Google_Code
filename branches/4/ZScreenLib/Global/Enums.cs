@@ -111,11 +111,6 @@ namespace ZScreenLib
         UploadTextFromFile
     }
 
-    public enum ImageSizeType
-    {
-        DEFAULT, FIXED, RATIO
-    }
-
     public enum CropEngineType
     {
         [Description("Crop v0 - Simple crop engine for slow computers.")]

@@ -128,7 +128,6 @@
       <DependentUpon>WorkflowConfigUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Capture.cs" />
-    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
@@ -200,7 +199,6 @@
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Adapter.cs" />
-    <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
