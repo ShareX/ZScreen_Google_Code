@@ -19,10 +19,30 @@ namespace ZScreenCoreLib
     {
         #region 0 Properties
 
-        private readonly ContextMenuStrip codesMenu = new ContextMenuStrip();
-        private WatermarkConfig Config = new WatermarkConfig();
+        public WatermarkConfig Config;
+        private ContextMenuStrip codesMenu;
 
         #endregion 0 Properties
+
+        public WatermarkUI(WatermarkConfig cfg = null)
+        {
+            InitializeComponent();
+
+            if (cfg == null)
+            {
+                Config = new WatermarkConfig();
+            }
+            else
+            {
+                Config = cfg;
+            }
+
+            codesMenu = new ContextMenuStrip();
+            codesMenu.AutoClose = false;
+            codesMenu.Font = new Font("Lucida Console", 8);
+            codesMenu.Opacity = 0.8;
+            codesMenu.ShowImageMargin = false;
+        }
 
         #region 1 Helper Methods
 
@@ -322,18 +342,12 @@ namespace ZScreenCoreLib
         private void txtWatermarkText_MouseDown(object sender, MouseEventArgs e)
         {
             CheckForCodes(sender);
-        }   
+        }
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
             Config.WatermarkText = txtWatermarkText.Text;
             TestWatermark();
-        }
-
-        public WatermarkUI(WatermarkConfig cfg)
-        {
-            InitializeComponent();
-            this.Config = cfg;
         }
 
         private void WatermarkUI_Load(object sender, EventArgs e)
