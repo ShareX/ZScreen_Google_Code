@@ -185,8 +185,6 @@ namespace ZScreenGUI
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
-            this.btnConfigWatermark = new System.Windows.Forms.Button();
-            this.btnWorkflowConfig = new System.Windows.Forms.Button();
             this.chkShellExt = new System.Windows.Forms.CheckBox();
             this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
@@ -198,6 +196,9 @@ namespace ZScreenGUI
             this.cboMinimizeButtonAction = new System.Windows.Forms.ComboBox();
             this.lblCloseButtonAction = new System.Windows.Forms.Label();
             this.lblMinimizeButtonAction = new System.Windows.Forms.Label();
+            this.tpWorkflow = new System.Windows.Forms.TabPage();
+            this.btnConfigWatermark = new System.Windows.Forms.Button();
+            this.btnWorkflowConfig = new System.Windows.Forms.Button();
             this.tpFileNaming = new System.Windows.Forms.TabPage();
             this.chkOverwriteFiles = new System.Windows.Forms.CheckBox();
             this.lblMaxNameLength = new System.Windows.Forms.Label();
@@ -247,12 +248,9 @@ namespace ZScreenGUI
             this.txtLogsDir = new System.Windows.Forms.TextBox();
             this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
-            this.tpInteraction = new System.Windows.Forms.TabPage();
             this.gbOptionsBalloonTip = new System.Windows.Forms.GroupBox();
             this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
             this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.gbDropBox = new System.Windows.Forms.GroupBox();
-            this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
             this.gbAppearance = new System.Windows.Forms.GroupBox();
             this.chkShowPopup = new System.Windows.Forms.CheckBox();
             this.chkTwitterEnable = new System.Windows.Forms.CheckBox();
@@ -333,7 +331,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-            this.tpWorkflow = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -384,6 +381,7 @@ namespace ZScreenGUI
             this.gbUpdates.SuspendLayout();
             this.gbMisc.SuspendLayout();
             this.gbWindowButtons.SuspendLayout();
+            this.tpWorkflow.SuspendLayout();
             this.tpFileNaming.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxNameLength)).BeginInit();
             this.gbOthersNaming.SuspendLayout();
@@ -394,9 +392,7 @@ namespace ZScreenGUI
             this.gbImages.SuspendLayout();
             this.gbLogs.SuspendLayout();
             this.tpTreeGUI.SuspendLayout();
-            this.tpInteraction.SuspendLayout();
             this.gbOptionsBalloonTip.SuspendLayout();
-            this.gbDropBox.SuspendLayout();
             this.gbAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.tpProxy.SuspendLayout();
@@ -422,7 +418,6 @@ namespace ZScreenGUI
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
-            this.tpWorkflow.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1997,12 +1992,11 @@ namespace ZScreenGUI
             // 
             // tcOptions
             // 
-            this.tcOptions.Controls.Add(this.tpOptionsGeneral);
             this.tcOptions.Controls.Add(this.tpWorkflow);
+            this.tcOptions.Controls.Add(this.tpOptionsGeneral);
             this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpPaths);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
-            this.tcOptions.Controls.Add(this.tpInteraction);
             this.tcOptions.Controls.Add(this.tpProxy);
             this.tcOptions.Controls.Add(this.tpHistoryOptions);
             this.tcOptions.Controls.Add(this.tpBackupRestore);
@@ -2022,7 +2016,7 @@ namespace ZScreenGUI
             this.tpOptionsGeneral.Name = "tpOptionsGeneral";
             this.tpOptionsGeneral.Padding = new System.Windows.Forms.Padding(3);
             this.tpOptionsGeneral.Size = new System.Drawing.Size(790, 424);
-            this.tpOptionsGeneral.TabIndex = 0;
+            this.tpOptionsGeneral.TabIndex = 1;
             this.tpOptionsGeneral.Text = "General";
             this.tpOptionsGeneral.UseVisualStyleBackColor = true;
             // 
@@ -2095,30 +2089,6 @@ namespace ZScreenGUI
             this.gbMisc.TabIndex = 0;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
-            // 
-            // btnConfigWatermark
-            // 
-            this.btnConfigWatermark.AutoSize = true;
-            this.btnConfigWatermark.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnConfigWatermark.Location = new System.Drawing.Point(16, 48);
-            this.btnConfigWatermark.Name = "btnConfigWatermark";
-            this.btnConfigWatermark.Size = new System.Drawing.Size(126, 23);
-            this.btnConfigWatermark.TabIndex = 1;
-            this.btnConfigWatermark.Text = "Configure Watermark...";
-            this.btnConfigWatermark.UseVisualStyleBackColor = true;
-            this.btnConfigWatermark.Click += new System.EventHandler(this.btnConfigWatermark_Click);
-            // 
-            // btnWorkflowConfig
-            // 
-            this.btnWorkflowConfig.AutoSize = true;
-            this.btnWorkflowConfig.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnWorkflowConfig.Location = new System.Drawing.Point(16, 16);
-            this.btnWorkflowConfig.Name = "btnWorkflowConfig";
-            this.btnWorkflowConfig.Size = new System.Drawing.Size(235, 23);
-            this.btnWorkflowConfig.TabIndex = 0;
-            this.btnWorkflowConfig.Text = "Configure image file format and image quality...";
-            this.btnWorkflowConfig.UseVisualStyleBackColor = true;
-            this.btnWorkflowConfig.Click += new System.EventHandler(this.btnWorkflowConfig_Click);
             // 
             // chkShellExt
             // 
@@ -2239,6 +2209,44 @@ namespace ZScreenGUI
             this.lblMinimizeButtonAction.Size = new System.Drawing.Size(115, 13);
             this.lblMinimizeButtonAction.TabIndex = 0;
             this.lblMinimizeButtonAction.Text = "Minimize button action:";
+            // 
+            // tpWorkflow
+            // 
+            this.tpWorkflow.Controls.Add(this.gbOptionsBalloonTip);
+            this.tpWorkflow.Controls.Add(this.btnConfigWatermark);
+            this.tpWorkflow.Controls.Add(this.gbAppearance);
+            this.tpWorkflow.Controls.Add(this.btnWorkflowConfig);
+            this.tpWorkflow.Location = new System.Drawing.Point(4, 22);
+            this.tpWorkflow.Name = "tpWorkflow";
+            this.tpWorkflow.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWorkflow.Size = new System.Drawing.Size(790, 424);
+            this.tpWorkflow.TabIndex = 0;
+            this.tpWorkflow.Text = "Workflow";
+            this.tpWorkflow.UseVisualStyleBackColor = true;
+            // 
+            // btnConfigWatermark
+            // 
+            this.btnConfigWatermark.AutoSize = true;
+            this.btnConfigWatermark.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnConfigWatermark.Location = new System.Drawing.Point(16, 48);
+            this.btnConfigWatermark.Name = "btnConfigWatermark";
+            this.btnConfigWatermark.Size = new System.Drawing.Size(123, 23);
+            this.btnConfigWatermark.TabIndex = 1;
+            this.btnConfigWatermark.Text = "Configure watermark...";
+            this.btnConfigWatermark.UseVisualStyleBackColor = true;
+            this.btnConfigWatermark.Click += new System.EventHandler(this.btnConfigWatermark_Click);
+            // 
+            // btnWorkflowConfig
+            // 
+            this.btnWorkflowConfig.AutoSize = true;
+            this.btnWorkflowConfig.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnWorkflowConfig.Location = new System.Drawing.Point(16, 16);
+            this.btnWorkflowConfig.Name = "btnWorkflowConfig";
+            this.btnWorkflowConfig.Size = new System.Drawing.Size(235, 23);
+            this.btnWorkflowConfig.TabIndex = 0;
+            this.btnWorkflowConfig.Text = "Configure image file format and image quality...";
+            this.btnWorkflowConfig.UseVisualStyleBackColor = true;
+            this.btnWorkflowConfig.Click += new System.EventHandler(this.btnWorkflowConfig_Click);
             // 
             // tpFileNaming
             // 
@@ -2829,27 +2837,14 @@ namespace ZScreenGUI
             this.pgIndexer.Size = new System.Drawing.Size(784, 418);
             this.pgIndexer.TabIndex = 0;
             // 
-            // tpInteraction
-            // 
-            this.tpInteraction.Controls.Add(this.gbOptionsBalloonTip);
-            this.tpInteraction.Controls.Add(this.gbDropBox);
-            this.tpInteraction.Controls.Add(this.gbAppearance);
-            this.tpInteraction.Location = new System.Drawing.Point(4, 22);
-            this.tpInteraction.Name = "tpInteraction";
-            this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(790, 424);
-            this.tpInteraction.TabIndex = 5;
-            this.tpInteraction.Text = "Interaction";
-            this.tpInteraction.UseVisualStyleBackColor = true;
-            // 
             // gbOptionsBalloonTip
             // 
             this.gbOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
             this.gbOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
-            this.gbOptionsBalloonTip.Location = new System.Drawing.Point(8, 168);
+            this.gbOptionsBalloonTip.Location = new System.Drawing.Point(16, 248);
             this.gbOptionsBalloonTip.Name = "gbOptionsBalloonTip";
-            this.gbOptionsBalloonTip.Size = new System.Drawing.Size(752, 80);
-            this.gbOptionsBalloonTip.TabIndex = 1;
+            this.gbOptionsBalloonTip.Size = new System.Drawing.Size(749, 80);
+            this.gbOptionsBalloonTip.TabIndex = 3;
             this.gbOptionsBalloonTip.TabStop = false;
             this.gbOptionsBalloonTip.Text = "Balloon Tip Options";
             // 
@@ -2875,27 +2870,6 @@ namespace ZScreenGUI
             this.cbShowUploadDuration.UseVisualStyleBackColor = true;
             this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
             // 
-            // gbDropBox
-            // 
-            this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 264);
-            this.gbDropBox.Name = "gbDropBox";
-            this.gbDropBox.Size = new System.Drawing.Size(752, 56);
-            this.gbDropBox.TabIndex = 2;
-            this.gbDropBox.TabStop = false;
-            this.gbDropBox.Text = "Drop Window Settings";
-            // 
-            // cbCloseDropBox
-            // 
-            this.cbCloseDropBox.AutoSize = true;
-            this.cbCloseDropBox.Location = new System.Drawing.Point(16, 24);
-            this.cbCloseDropBox.Name = "cbCloseDropBox";
-            this.cbCloseDropBox.Size = new System.Drawing.Size(205, 17);
-            this.cbCloseDropBox.TabIndex = 0;
-            this.cbCloseDropBox.Text = "Close Drop Window after Drag n Drop";
-            this.cbCloseDropBox.UseVisualStyleBackColor = true;
-            this.cbCloseDropBox.CheckedChanged += new System.EventHandler(this.cbCloseDropBox_CheckedChanged);
-            // 
             // gbAppearance
             // 
             this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
@@ -2905,10 +2879,10 @@ namespace ZScreenGUI
             this.gbAppearance.Controls.Add(this.chkCaptureFallback);
             this.gbAppearance.Controls.Add(this.lblTrayFlash);
             this.gbAppearance.Controls.Add(this.nudFlashIconCount);
-            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
+            this.gbAppearance.Location = new System.Drawing.Point(16, 88);
             this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(752, 152);
-            this.gbAppearance.TabIndex = 0;
+            this.gbAppearance.Size = new System.Drawing.Size(749, 152);
+            this.gbAppearance.TabIndex = 2;
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
             // 
@@ -2987,7 +2961,7 @@ namespace ZScreenGUI
             this.tpProxy.Name = "tpProxy";
             this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
             this.tpProxy.Size = new System.Drawing.Size(790, 424);
-            this.tpProxy.TabIndex = 6;
+            this.tpProxy.TabIndex = 5;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
@@ -3034,7 +3008,7 @@ namespace ZScreenGUI
             this.tpHistoryOptions.Name = "tpHistoryOptions";
             this.tpHistoryOptions.Padding = new System.Windows.Forms.Padding(3);
             this.tpHistoryOptions.Size = new System.Drawing.Size(790, 424);
-            this.tpHistoryOptions.TabIndex = 7;
+            this.tpHistoryOptions.TabIndex = 6;
             this.tpHistoryOptions.Text = "History";
             this.tpHistoryOptions.UseVisualStyleBackColor = true;
             // 
@@ -3096,7 +3070,7 @@ namespace ZScreenGUI
             this.tpBackupRestore.Name = "tpBackupRestore";
             this.tpBackupRestore.Padding = new System.Windows.Forms.Padding(3);
             this.tpBackupRestore.Size = new System.Drawing.Size(790, 424);
-            this.tpBackupRestore.TabIndex = 8;
+            this.tpBackupRestore.TabIndex = 7;
             this.tpBackupRestore.Text = "Backup & Restore";
             this.tpBackupRestore.UseVisualStyleBackColor = true;
             // 
@@ -3729,18 +3703,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpWorkflow
-            // 
-            this.tpWorkflow.Controls.Add(this.btnConfigWatermark);
-            this.tpWorkflow.Controls.Add(this.btnWorkflowConfig);
-            this.tpWorkflow.Location = new System.Drawing.Point(4, 22);
-            this.tpWorkflow.Name = "tpWorkflow";
-            this.tpWorkflow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWorkflow.Size = new System.Drawing.Size(790, 424);
-            this.tpWorkflow.TabIndex = 1;
-            this.tpWorkflow.Text = "Workflow";
-            this.tpWorkflow.UseVisualStyleBackColor = true;
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -3831,6 +3793,8 @@ namespace ZScreenGUI
             this.gbMisc.PerformLayout();
             this.gbWindowButtons.ResumeLayout(false);
             this.gbWindowButtons.PerformLayout();
+            this.tpWorkflow.ResumeLayout(false);
+            this.tpWorkflow.PerformLayout();
             this.tpFileNaming.ResumeLayout(false);
             this.tpFileNaming.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxNameLength)).EndInit();
@@ -3848,11 +3812,8 @@ namespace ZScreenGUI
             this.gbLogs.ResumeLayout(false);
             this.gbLogs.PerformLayout();
             this.tpTreeGUI.ResumeLayout(false);
-            this.tpInteraction.ResumeLayout(false);
             this.gbOptionsBalloonTip.ResumeLayout(false);
             this.gbOptionsBalloonTip.PerformLayout();
-            this.gbDropBox.ResumeLayout(false);
-            this.gbDropBox.PerformLayout();
             this.gbAppearance.ResumeLayout(false);
             this.gbAppearance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
@@ -3882,8 +3843,6 @@ namespace ZScreenGUI
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
             this.gbImageBamApiKeys.PerformLayout();
-            this.tpWorkflow.ResumeLayout(false);
-            this.tpWorkflow.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3988,9 +3947,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.NumericUpDown nudSelectedWindowBorderSize;
         internal System.Windows.Forms.Label lblSelectedWindowBorderSize;
         internal System.Windows.Forms.PictureBox pbSelectedWindowBorderColor;
-        internal System.Windows.Forms.TabPage tpInteraction;
-        internal System.Windows.Forms.GroupBox gbDropBox;
-        internal System.Windows.Forms.CheckBox cbCloseDropBox;
         internal System.Windows.Forms.GroupBox gbAppearance;
         internal System.Windows.Forms.CheckBox cbCompleteSound;
         internal System.Windows.Forms.CheckBox chkCaptureFallback;

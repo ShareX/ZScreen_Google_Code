@@ -79,6 +79,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Watermark\WatermarkUI.resx">
       <DependentUpon>WatermarkUI.cs</DependentUpon>
@@ -104,9 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\main.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\main1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

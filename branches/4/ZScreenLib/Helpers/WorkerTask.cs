@@ -31,6 +31,7 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
+using ZScreenCoreLib;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
@@ -948,12 +949,12 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                var effects = new ZScreenLib.ImageEffects(WorkflowConfig);
+                var effects = new ImageEffects(WorkflowConfig);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
                 if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.ConfigWatermark.WatermarkExcludeClipboardUpload)
                 {
-                    img = new ZScreenCoreLib.WatermarkEffects(WorkflowConfig.ConfigWatermark).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
+                    img = new WatermarkEffects(WorkflowConfig.ConfigWatermark).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
                 }
 
                 TempImage = img;

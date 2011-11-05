@@ -269,7 +269,6 @@ namespace ZScreenGUI
             chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
             cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
-            cbCloseDropBox.Checked = Engine.ConfigUI.CloseDropBox;
 
             // Proxy
             if (cboProxyConfig.Items.Count == 0)

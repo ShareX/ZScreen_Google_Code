@@ -263,11 +263,6 @@ namespace ZScreenGUI
         {
             Engine.zHandle = Handle;
 
-            if (Engine.ConfigApp.Windows7TaskbarIntegration && Engine.HasWindows7)
-            {
-                ZScreen_Windows7onlyTasks();
-            }
-
             #region Window Size/Location
 
             if (Engine.ConfigApp.WindowLocation.IsEmpty)
@@ -297,6 +292,7 @@ namespace ZScreenGUI
 
             #region Window Show/Hide
 
+            bool bHideWindow = false;
             if (Engine.ConfigApp.ShowMainWindow)
             {
                 if (Engine.ConfigApp.WindowState == FormWindowState.Maximized)
@@ -315,6 +311,16 @@ namespace ZScreenGUI
                 WindowState = FormWindowState.Minimized;
             }
             else
+            {
+                bHideWindow = true;
+            }
+
+            if (Engine.ConfigApp.Windows7TaskbarIntegration && Engine.HasWindows7)
+            {
+                ZScreen_Windows7onlyTasks();
+            }
+
+            if (bHideWindow)
             {
                 Hide(); // this should happen after windows 7 taskbar integration
             }
@@ -686,11 +692,6 @@ namespace ZScreenGUI
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.ConfigApp.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
-        }
-
-        private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.CloseDropBox = cbCloseDropBox.Checked;
         }
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)

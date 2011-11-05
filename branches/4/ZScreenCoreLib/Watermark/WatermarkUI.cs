@@ -322,7 +322,7 @@ namespace ZScreenCoreLib
         private void txtWatermarkText_MouseDown(object sender, MouseEventArgs e)
         {
             CheckForCodes(sender);
-        }
+        }   
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
