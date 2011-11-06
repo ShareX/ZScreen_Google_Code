@@ -113,7 +113,6 @@ namespace ZScreenLib
                 }
             }
 
-
             return fi;
         }
 
@@ -250,14 +249,14 @@ namespace ZScreenLib
 
         public static string GetUniqueFileName(Workflow workflow, string fileName)
         {
-            if (!workflow.OverwriteFiles)
+            if (!workflow.ConfigFileNaming.OverwriteFiles)
             {
                 string fn = Path.GetFileNameWithoutExtension(fileName);
                 string ext = Path.GetExtension(fileName);
 
-                if (fn.Length > workflow.MaxNameLength - ext.Length)
+                if (fn.Length > workflow.ConfigFileNaming.MaxNameLength - ext.Length)
                 {
-                    string nfn = fn.Substring(0, workflow.MaxNameLength - ext.Length);
+                    string nfn = fn.Substring(0, workflow.ConfigFileNaming.MaxNameLength - ext.Length);
                     fileName = Regex.Replace(fileName, fn, nfn);
                 }
 

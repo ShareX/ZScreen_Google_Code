@@ -112,16 +112,7 @@ namespace ZScreenLib
 
         #region File Naming
 
-        public string ActiveWindowPattern = "%t-%y-%mo-%d_%h.%mi.%s";
-
-        [Category(ComponentModelStrings.FileNaming), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
-        public int AutoIncrement { get; set; }
-
-        public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
-        public int MaxNameLength = 100;
-
-        [Category(ComponentModelStrings.FileNaming), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
-        public bool OverwriteFiles = false;
+        public FileNamingConfig ConfigFileNaming = new FileNamingConfig();
         public string SaveFolderPattern = "%y-%mo";
 
         #endregion File Naming

@@ -356,7 +356,7 @@ namespace ZScreenCoreLib
 
         private void WatermarkUI_Load(object sender, EventArgs e)
         {
-            this.Text = Application.ProductName + " - Watermark Configurator";
+            this.Text = "Watermark Configurator - " + Application.ProductName;
 
             if (cboWatermarkType.Items.Count == 0)
             {

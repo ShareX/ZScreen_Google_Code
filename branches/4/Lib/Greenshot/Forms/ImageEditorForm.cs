@@ -331,7 +331,7 @@ namespace Greenshot
 
         public Image GetImageForExport()
         {
-            return surface.GetImageForExport();
+            return surface.Modified ? surface.GetImageForExport() : surface.Image;
         }
 
         public ICaptureDetails CaptureDetails
@@ -374,7 +374,7 @@ namespace Greenshot
                 using (Image img = surface.GetImageForExport())
                 {
                     ImageOutput.Save(img, lastSaveFullPath);
-                    surface.Modified = false;
+                    // surface.Modified = false;
                 }
                 updateStatusLabel(lang.GetFormattedString(LangKey.editor_imagesaved, lastSaveFullPath), fileSavedStatusContextMenu);
             }
@@ -727,12 +727,6 @@ namespace Greenshot
                     else
                     {
                         SaveAsToolStripMenuItemClick(sender, e);
-                    }
-                    // Check if the save was made, if not it was cancelled so we cancel the closing
-                    if (surface.Modified)
-                    {
-                        e.Cancel = true;
-                        return;
                     }
                 }
             }

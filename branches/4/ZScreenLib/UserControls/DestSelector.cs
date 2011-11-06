@@ -311,7 +311,7 @@ namespace ZScreenLib
             }
         }
 
-        private void tsbDestConfig_Click(object sender, System.EventArgs e)
+        public void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
             UploadersConfigForm form = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys());
             form.Icon = Resources.zss_main;

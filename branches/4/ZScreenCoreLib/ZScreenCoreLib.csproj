@@ -55,6 +55,13 @@
     <Compile Include="Actions\Software.cs" />
     <Compile Include="ColorMatrices.cs" />
     <Compile Include="ExeFileNameEditor.cs" />
+    <Compile Include="FileNaming\FileNamingConfig.cs" />
+    <Compile Include="FileNaming\FileNamingUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileNaming\FileNamingUI.Designer.cs">
+      <DependentUpon>FileNamingUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphicsEx.cs" />
     <Compile Include="ImageEffects\ImageEffects.cs" />
     <Compile Include="ImageEffects\ImageEffectsConfig.cs" />
@@ -78,6 +85,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Actions\ActionsUI.resx">
       <DependentUpon>ActionsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileNaming\FileNamingUI.resx">
+      <DependentUpon>FileNamingUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

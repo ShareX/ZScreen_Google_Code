@@ -117,9 +117,6 @@ namespace ZScreenGUI
         private readonly ImageList tabImageList = new ImageList();
         public CloseMethod CloseMethod;
         private DebugHelper mDebug;
-        private TextBox mHadFocus;
-
-        private int mHadFocusAt;
 
         #endregion Variables
 
@@ -488,27 +485,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnCodes_Click(object sender, EventArgs e)
-        {
-            var b = (Button)sender;
-
-            const string beginning = "btnCodes";
-            string name = b.Name, code;
-
-            if (name.Contains(beginning))
-            {
-                name = name.Replace(beginning, string.Empty);
-                code = "%" + name.ToLower();
-
-                if (mHadFocus != null)
-                {
-                    mHadFocus.Text = mHadFocus.Text.Insert(mHadFocusAt, code);
-                    mHadFocus.Focus();
-                    mHadFocus.Select(mHadFocusAt + code.Length, 0);
-                }
-            }
-        }
-
         private void btnDebugStart_Click(object sender, EventArgs e)
         {
             if (mDebug.DebugTimer.Enabled)
@@ -596,7 +572,7 @@ namespace ZScreenGUI
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.AutoIncrement = 0;
+            Engine.ConfigWorkflow.ConfigFileNaming.AutoIncrement = 0;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
@@ -636,13 +612,7 @@ namespace ZScreenGUI
 
         private void btnWorkflowConfig_Click(object sender, EventArgs e)
         {
-            var wfwgui = new WorkflowWizardGUIOptions
-                             {
-                                 ShowQualityTab = true,
-                                 ShowResizeTab = true
-                             };
-            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow, false), wfwgui) { Icon = Icon };
-            wfw.Show();
+            ShowImageFormatUI();
         }
 
         public override void CaptureSelectedWindowGetList()
@@ -936,11 +906,6 @@ namespace ZScreenGUI
             Engine.ConfigUI.MonitorUrls = chkMonUrls.Checked;
         }
 
-        private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.OverwriteFiles = chkOverwriteFiles.Checked;
-        }
-
         private void chkShellExt_CheckedChanged(object sender, EventArgs e)
         {
             if (chkShellExt.Checked)
@@ -1145,11 +1110,6 @@ namespace ZScreenGUI
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
-        }
-
-        private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
@@ -1502,45 +1462,9 @@ namespace ZScreenGUI
             ShowDirectory(FileSystem.GetImagesDir());
         }
 
-        private void txtActiveWindow_Leave(object sender, EventArgs e)
-        {
-            mHadFocus = (TextBox)sender;
-            mHadFocusAt = ((TextBox)sender).SelectionStart;
-        }
-
-        private void txtActiveWindow_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.ActiveWindowPattern = txtActiveWindow.Text;
-            var parser = new NameParser(NameParserType.ActiveWindow)
-                             {
-                                 CustomProductName = Engine.GetProductName(),
-                                 IsPreview = true,
-                                 MaxNameLength = Engine.ConfigWorkflow.MaxNameLength
-                             };
-            lblActiveWindowPreview.Text = parser.Convert(Engine.ConfigWorkflow.ActiveWindowPattern);
-        }
-
         private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             StaticHelper.LoadBrowser(e.LinkText);
-        }
-
-        private void txtEntireScreen_Leave(object sender, EventArgs e)
-        {
-            mHadFocus = (TextBox)sender;
-            mHadFocusAt = ((TextBox)sender).SelectionStart;
-        }
-
-        private void txtEntireScreen_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.EntireScreenPattern = txtEntireScreen.Text;
-            var parser = new NameParser(NameParserType.EntireScreen)
-                             {
-                                 CustomProductName = Engine.GetProductName(),
-                                 IsPreview = true,
-                                 MaxNameLength = Engine.ConfigWorkflow.MaxNameLength
-                             };
-            lblEntireScreenPreview.Text = parser.Convert(Engine.ConfigWorkflow.EntireScreenPattern);
         }
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
@@ -1573,18 +1497,67 @@ namespace ZScreenGUI
 
         private void tsmEditinImageSoftware_Click(object sender, EventArgs e)
         {
-            ShowActionsUI();
+            ShowConfigureActionsUI();
         }
 
         private void btnActionsUI_Click(object sender, EventArgs e)
         {
-            ShowActionsUI();
+            ShowConfigureActionsUI();
         }
 
         private void btnConfigWatermark_Click(object sender, EventArgs e)
         {
-            WatermarkUI ui = new WatermarkUI(Engine.ConfigWorkflow.ConfigWatermark) { Icon = this.Icon };
-            ui.Show();
+            ShowWatermarkUI();
+        }
+
+        private void btnFileNamingUI_Click(object sender, EventArgs e)
+        {
+            ShowFileNamingUI();
+        }
+
+        private void tsmiImageSettings_Click(object sender, EventArgs e)
+        {
+            ShowImageFormatUI();
+        }
+
+        private void tsmiWatermark_Click(object sender, EventArgs e)
+        {
+            ShowWatermarkUI();
+        }
+
+        private void tsmiConfigureFileNaming_Click(object sender, EventArgs e)
+        {
+            ShowFileNamingUI();
+        }
+
+        private void tsmiFileUpload_Click(object sender, EventArgs e)
+        {
+            FileUpload();
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e)
+        {
+            tsmExitZScreen_Click(sender, e);
+        }
+
+        private void tsmiVersionHistory_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowVersionHistory();
+        }
+
+        private void tsmiConfigureActions_Click(object sender, EventArgs e)
+        {
+            ShowConfigureActionsUI();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowAboutWindow();
+        }
+
+        private void tsmiOutputs_Click(object sender, EventArgs e)
+        {
+            ucDestOptions.tsbDestConfig_Click(sender, e);
         }
     }
 }

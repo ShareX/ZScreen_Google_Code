@@ -89,20 +89,20 @@ namespace ZScreenLib
                     break;
             }
 
-            string pattern = workflow.EntireScreenPattern;
+            string pattern = workflow.ConfigFileNaming.EntireScreenPattern;
             switch (parser.Type)
             {
                 case NameParserType.ActiveWindow:
-                    pattern = workflow.ActiveWindowPattern;
+                    pattern = workflow.ConfigFileNaming.ActiveWindowPattern;
                     break;
                 default:
-                    pattern = workflow.EntireScreenPattern;
+                    pattern = workflow.ConfigFileNaming.EntireScreenPattern;
                     break;
             }
             string fn = parser.Convert(pattern);
             if (Engine.ConfigWorkflow != null)
             {
-                Engine.ConfigWorkflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
+                Engine.ConfigWorkflow.ConfigFileNaming.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
             }
 
             string fileName = string.Format("{0}.{1}", fn, ext);

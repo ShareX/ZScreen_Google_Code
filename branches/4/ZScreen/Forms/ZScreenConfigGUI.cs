@@ -170,10 +170,7 @@ namespace ZScreenGUI
             pgSurfaceConfig.SelectedObject = Engine.ConfigUI.SurfaceConfig;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.ConfigWorkflow.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.ConfigWorkflow.EntireScreenPattern;
             txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.ConfigWorkflow.MaxNameLength;
         }
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
@@ -321,8 +318,6 @@ namespace ZScreenGUI
             chkMonText.Checked = Engine.ConfigUI.MonitorText;
             chkMonFiles.Checked = Engine.ConfigUI.MonitorFiles;
             chkMonUrls.Checked = Engine.ConfigUI.MonitorUrls;
-
-            chkOverwriteFiles.Checked = Engine.ConfigWorkflow.OverwriteFiles;
         }
 
         private void ZScreen_ConfigGUI_Options_Paths()

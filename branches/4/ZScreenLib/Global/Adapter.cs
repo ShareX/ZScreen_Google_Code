@@ -35,7 +35,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using Greenshot.Helpers;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -151,16 +150,6 @@ namespace ZScreenLib
                     NativeMethods.DestroyIcon(hicon);
                 }
             }
-        }
-
-        public static string SaveImage(Image img)
-        {
-            if (img != null)
-            {
-                return ImageOutput.SaveWithDialog(img);
-            }
-
-            return string.Empty;
         }
 
         #endregion Worker Tasks

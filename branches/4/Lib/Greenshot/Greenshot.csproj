@@ -309,17 +309,17 @@
     <Compile Include="UnmanagedHelpers\WinMM.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GreenshotPlugin\GreenshotPlugin.csproj">
-      <Project>{5B924697-4DCD-4F98-85F1-105CB84B7341}</Project>
-      <Name>GreenshotPlugin</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>Microsoft.Net.Framework.3.5.SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenshotPlugin\GreenshotPlugin.csproj">
+      <Project>{5B924697-4DCD-4F98-85F1-105CB84B7341}</Project>
+      <Name>GreenshotPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
