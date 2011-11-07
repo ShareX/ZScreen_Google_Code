@@ -34,20 +34,13 @@ namespace ZScreenGUI
             HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.ConfigUI.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
             HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionClipboard, Engine.ConfigUI.HotkeyCaptureRectangeRegionClipboard2, CaptureRectRegionClipboard);
 
-            StringBuilder sbErrors = new StringBuilder();
+            string failedHotkeys;
 
-            foreach (HotkeyInfo hki in this.HotkeyList)
+            if (HotkeyManager.IsHotkeyRegisterFailed(out failedHotkeys))
             {
-                if (hki != null && !string.IsNullOrEmpty(hki.Error))
-                {
-                    sbErrors.AppendLine((ZScreenHotkey)hki.Tag + ": " + hki.Error);
-                }
-            }
-
-            if (sbErrors.Length > 0)
-            {
-                sbErrors.AppendLine("\nPlease reconfigure different hotkeys or quit the conflicting application and start over.");
-                MessageBox.Show(sbErrors.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
+                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen ZUploader.",
+                    "Hotkey register failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

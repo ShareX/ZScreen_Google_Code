@@ -63,6 +63,15 @@ namespace ZUploader
                 () => CaptureRegion(new PolygonRegion(), false), tsmiPolygon);
             HotkeyManager.AddHotkey(ZUploaderHotkey.FreeHandRegion, Program.Settings.HotkeyFreeHandRegion,
                 () => CaptureRegion(new FreeHandRegion(), false), tsmiFreeHand);
+
+            string failedHotkeys;
+
+            if (HotkeyManager.IsHotkeyRegisterFailed(out failedHotkeys))
+            {
+                MessageBox.Show("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
+                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen ZUploader.",
+                    "Hotkey register failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private new void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)

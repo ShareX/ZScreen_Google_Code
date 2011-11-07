@@ -121,11 +121,6 @@ namespace ZUploader
         {
             niTray.Visible = Program.Settings.ShowTray;
 
-            if (Program.IsSilentRun && Program.Settings.ShowTray)
-            {
-                Hide();
-            }
-
             if (ZAppHelper.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
             {
                 Program.Settings.SelectedImageUploaderDestination = 0;
