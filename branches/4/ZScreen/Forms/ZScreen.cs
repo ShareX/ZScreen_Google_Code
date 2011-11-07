@@ -180,8 +180,6 @@ namespace ZScreenGUI
                 FileSystem.BackupSettings();
             }
 
-            UpdateHotkeys(false);
-
             if (Engine.ConfigUI.FirstRun)
             {
                 if (Engine.HasVista)
@@ -336,7 +334,7 @@ namespace ZScreenGUI
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
 
-            if (Engine.IsMultipleInstance)
+            if (Engine.IsMultiInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(),
                                       string.Format("Another instance of {0} is already running...",

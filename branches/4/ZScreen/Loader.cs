@@ -37,7 +37,7 @@ namespace ZScreenGUI
 {
     public static class Loader
     {
-        public static bool IsMultiInstance { get; private set; }
+        private static readonly string ApplicationName = Application.ProductName;
 
         public static string CommandLineArg { get; private set; }
 
@@ -57,7 +57,7 @@ namespace ZScreenGUI
 
                 if (CommandLineArg.Contains("-m"))
                 {
-                    IsMultiInstance = true;
+                    Engine.IsMultiInstance = true;
                 }
                 else if (args.Length > 1 && args[0] == "/doc")
                 {
@@ -70,7 +70,7 @@ namespace ZScreenGUI
                 }
             }
 
-            if (!IsMultiInstance)
+            if (!Engine.IsMultiInstance)
             {
                 if (!ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback)) return;
             }

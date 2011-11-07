@@ -57,7 +57,7 @@ namespace ZScreenLib
 
         public static bool IsPortable { get; private set; }
 
-        public static bool IsMultipleInstance { get; private set; }
+        public static bool IsMultiInstance { get; set; }
 
         private static readonly string ApplicationName = Application.ProductName;
 
@@ -343,7 +343,7 @@ namespace ZScreenLib
 
                 if (!bGrantedOwnership)
                 {
-                    IsMultipleInstance = true;
+                    IsMultiInstance = true;
                 }
             }
 
@@ -595,7 +595,7 @@ namespace ZScreenLib
         public static string GetProductName()
         {
             string title = ApplicationName;
-            if (IsMultipleInstance) title += "*";
+            if (IsMultiInstance) title += "*";
             title += " " + Application.ProductVersion;
             if (ConfigUI != null && ConfigUI.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " r" + Adapter.AppRevision;
             if (IsPortable) title += " Portable";

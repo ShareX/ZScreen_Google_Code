@@ -33,23 +33,14 @@ namespace ZScreenGUI
             HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.ConfigUI.HotkeyScreenColorPicker2, ShowScreenColorPicker);
             HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.ConfigUI.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
             HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionClipboard, Engine.ConfigUI.HotkeyCaptureRectangeRegionClipboard2, CaptureRectRegionClipboard);
-        }
-
-        private void UpdateHotkeys(bool resetKeys = false)
-        {
-            List<HotkeyInfo> hkiList = new List<HotkeyInfo>();
-
-            foreach (ZScreenHotkey hk in Enum.GetValues(typeof(ZScreenHotkey)))
-            {
-            }
 
             StringBuilder sbErrors = new StringBuilder();
 
-            foreach (HotkeyInfo hki in hkiList)
+            foreach (HotkeyInfo hki in this.HotkeyList)
             {
                 if (hki != null && !string.IsNullOrEmpty(hki.Error))
                 {
-                    sbErrors.AppendLine(hki.Error);
+                    sbErrors.AppendLine((ZScreenHotkey)hki.Tag + ": " + hki.Error);
                 }
             }
 
