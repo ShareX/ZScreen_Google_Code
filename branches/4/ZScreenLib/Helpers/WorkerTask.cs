@@ -327,12 +327,22 @@ namespace ZScreenLib
                 Info.ImageSize = TempImage.Size;
             }
 
-            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableImageSound)
+            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableSoundTaskBegin)
             {
                 if (File.Exists(WorkflowConfig.SoundImagePath))
                     new SoundPlayer(WorkflowConfig.SoundImagePath).Play();
                 else
-                    new SoundPlayer(Resources.Camera).Play();
+                {
+                    string soundPath = Path.Combine(Application.StartupPath, "Camera.wav");
+                    if (File.Exists(soundPath))
+                    {
+                        new SoundPlayer(soundPath).Play();
+                    }
+                    else
+                    {
+                        new SoundPlayer(Resources.Camera).Play();
+                    }
+                }
             }
             if (!success)
             {

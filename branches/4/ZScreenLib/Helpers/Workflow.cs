@@ -199,10 +199,10 @@ namespace ZScreenLib
         #region Sound Settings
 
         [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable sound when screenshot is taken.")]
-        public bool EnableImageSound { get; set; }
+        public bool EnableSoundTaskBegin { get; set; }
 
         [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable custom sounds when upload completed.")]
-        public bool EnableSounds { get; set; }
+        public bool EnableSoundTaskCompleted { get; set; }
 
         [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.\nIf no sound is selected, a default camera click will play")]
         [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]

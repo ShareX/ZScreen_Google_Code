@@ -238,7 +238,7 @@ namespace ZScreenGUI
                     {
                         if (Engine.ConfigUI.CompleteSound)
                         {
-                            if (Engine.ConfigWorkflow.EnableSounds && !string.IsNullOrEmpty(Engine.ConfigWorkflow.SoundPath) && File.Exists(Engine.ConfigWorkflow.SoundPath))
+                            if (Engine.ConfigWorkflow.EnableSoundTaskCompleted && !string.IsNullOrEmpty(Engine.ConfigWorkflow.SoundPath) && File.Exists(Engine.ConfigWorkflow.SoundPath))
                                 new SoundPlayer(Engine.ConfigWorkflow.SoundPath).Play();
                             else
                                 SystemSounds.Exclamation.Play();
