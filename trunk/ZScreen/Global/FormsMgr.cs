@@ -32,9 +32,9 @@ namespace ZScreenGUI
 {
     public static class FormsMgr
     {
-        public static AboutBox AboutWindow = null;
-        public static TextViewer VersionHistoryWindow = null;
-        public static TextViewer LicenseWindow = null;
+        private static AboutBox AboutWindow = null;
+        private static TextViewer VersionHistoryWindow = null;
+        private static TextViewer LicenseWindow = null;
 
         public static void ShowLicense()
         {

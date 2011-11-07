@@ -27,7 +27,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     public static class GraphicsEx
     {

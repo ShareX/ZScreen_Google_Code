@@ -35,7 +35,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using Greenshot.Helpers;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -151,16 +150,6 @@ namespace ZScreenLib
                     NativeMethods.DestroyIcon(hicon);
                 }
             }
-        }
-
-        public static string SaveImage(Image img)
-        {
-            if (img != null)
-            {
-                return ImageOutput.SaveWithDialog(img);
-            }
-
-            return string.Empty;
         }
 
         #endregion Worker Tasks
@@ -508,46 +497,13 @@ namespace ZScreenLib
             }
             else
             {
-                var dlg = new FolderBrowserDialog {Description = title};
+                var dlg = new FolderBrowserDialog { Description = title };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     newDir = dlg.SelectedPath;
                 }
             }
             return newDir;
-        }
-
-        public static DialogResult ShowFontDialog()
-        {
-            DialogResult result = DialogResult.Cancel;
-            try
-            {
-                var fDialog = new FontDialog
-                {
-                    ShowColor = true
-                };
-                try
-                {
-                    fDialog.Color = Engine.ConfigWorkflow.WatermarkFontArgb;
-                    fDialog.Font = Engine.ConfigWorkflow.WatermarkFont;
-                }
-                catch (Exception err)
-                {
-                    StaticHelper.WriteException(err, "Error while initializing Font and Color");
-                }
-
-                result = fDialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    Engine.ConfigWorkflow.WatermarkFont = fDialog.Font;
-                    Engine.ConfigWorkflow.WatermarkFontArgb = fDialog.Color;
-                }
-            }
-            catch (Exception ex)
-            {
-                StaticHelper.WriteException(ex, "Error while setting Watermark Font");
-            }
-            return result;
         }
 
         #region "Windows 7 only"

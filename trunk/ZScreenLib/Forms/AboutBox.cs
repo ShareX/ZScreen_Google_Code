@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
+using ZScreenCoreLib;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib

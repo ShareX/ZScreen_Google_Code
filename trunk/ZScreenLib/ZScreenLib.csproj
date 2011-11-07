@@ -129,7 +129,6 @@
     </Compile>
     <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
-    <Compile Include="Helpers\GraphicsEx.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,12 +199,10 @@
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Adapter.cs" />
-    <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="Global\UploadInfo.cs" />
@@ -351,7 +348,7 @@
       <DependentUpon>WorkflowConfigUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DestSelector.resx">
