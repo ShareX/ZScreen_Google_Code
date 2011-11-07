@@ -210,7 +210,7 @@ namespace ZUploader
         {
             if (loaded)
             {
-                RegistryHelper.SetStartWithWindows(cbStartWithWindows.Checked);
+                RegistryHelper.SetStartWithWindows(cbStartWithWindows.Checked, "-silent");
             }
         }
 

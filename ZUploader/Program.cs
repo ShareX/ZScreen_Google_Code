@@ -38,10 +38,6 @@ namespace ZUploader
 {
     internal static class Program
     {
-        public static Settings Settings { get; private set; }
-
-        public static UploadersConfig UploadersConfig { get; private set; }
-
         private static readonly string ApplicationName = Application.ProductName;
 
         #region Paths
@@ -118,8 +114,11 @@ namespace ZUploader
 
         #endregion Paths
 
+        public static Settings Settings { get; private set; }
+        public static UploadersConfig UploadersConfig { get; private set; }
+        public static bool IsMultiInstance { get; private set; }
         public static bool IsPortable { get; private set; }
-
+        public static bool IsSilentRun { get; private set; }
         public static Stopwatch StartTimer { get; private set; }
 
         public static Logger MyLogger { get; private set; }
@@ -146,7 +145,7 @@ namespace ZUploader
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString(); ;
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
 
@@ -155,21 +154,33 @@ namespace ZUploader
         [STAThread]
         private static void Main(string[] args)
         {
-            if (!ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback)) return;
-
             StartTimer = Stopwatch.StartNew();
+
+            IsMultiInstance = CLIHelper.CheckArgs(args, "m", "multi");
+
+            if (!IsMultiInstance && !ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback))
+            {
+                return;
+            }
+
+            IsSilentRun = CLIHelper.CheckArgs(args, "s", "silent");
+            IsPortable = Directory.Exists(PortablePersonalPath);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            SplashForm.ShowSplash();
+            if (!IsSilentRun)
+            {
+                SplashForm.ShowSplash();
+            }
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
-            MyLogger.WriteLine("CommandLine: " + Environment.CommandLine);
-            IsPortable = CheckPortable();
+            MyLogger.WriteLine("CommandLine: " + string.Join(" ", args));
+            MyLogger.WriteLine("IsMultiInstance: " + IsMultiInstance);
+            MyLogger.WriteLine("IsSilentRun: " + IsSilentRun);
             MyLogger.WriteLine("IsPortable: " + IsPortable);
 
             Thread settingThread = new Thread(() =>
@@ -204,11 +215,6 @@ namespace ZUploader
         public static void LoadUploadersConfig()
         {
             UploadersConfig = UploadersConfig.Read(UploadersConfigFilePath);
-        }
-
-        private static bool CheckPortable()
-        {
-            return Directory.Exists(PortablePersonalPath);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

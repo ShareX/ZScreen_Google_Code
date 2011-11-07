@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
@@ -53,19 +54,18 @@ namespace ZUploader
         private void AfterLoadJobs()
         {
             LoadSettings();
-        }
 
-        private void AfterShownJobs()
-        {
-            SplashForm.CloseSplash();
-
-            BringToFront();
-            Activate();
+            if (!Program.IsSilentRun)
+            {
+                SplashForm.CloseSplash();
+            }
 
             InitHotkeys();
             UseCommandLineArgs(Environment.GetCommandLineArgs());
 
             IsReady = true;
+
+            Program.MyLogger.WriteLine("Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
         }
 
         private void InitControls()
@@ -120,6 +120,11 @@ namespace ZUploader
         private void LoadSettings()
         {
             niTray.Visible = Program.Settings.ShowTray;
+
+            if (Program.IsSilentRun && Program.Settings.ShowTray)
+            {
+                Hide();
+            }
 
             if (ZAppHelper.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
             {
@@ -249,7 +254,7 @@ namespace ZUploader
                     {
                         UploadManager.ClipboardUpload();
                     }
-                    else
+                    else if (args[i][0] != '-')
                     {
                         UploadManager.UploadFile(args[i]);
                     }
@@ -376,16 +381,25 @@ namespace ZUploader
 
         #region Form events
 
-        private void MainForm_Load(object sender, EventArgs e)
+        protected override void SetVisibleCore(bool value)
         {
-            Program.MyLogger.WriteLine("MainForm_Load");
-            AfterLoadJobs();
+            if (value && !this.IsHandleCreated)
+            {
+                if (Program.IsSilentRun && Program.Settings.ShowTray)
+                {
+                    value = false;
+                    CreateHandle();
+                }
+
+                AfterLoadJobs();
+            }
+
+            base.SetVisibleCore(value);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            Program.MyLogger.WriteLine("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
-            AfterShownJobs();
+            Activate();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

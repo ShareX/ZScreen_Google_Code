@@ -48,7 +48,7 @@ namespace HelpersLib
             return CheckRegistry(WindowsStartupRun, Application.ProductName);
         }
 
-        public static void SetStartWithWindows(bool startWithWindows)
+        public static void SetStartWithWindows(bool startWithWindows, string args = null)
         {
             using (RegistryKey regkey = Registry.CurrentUser.OpenSubKey(WindowsStartupRun, true))
             {
@@ -56,7 +56,14 @@ namespace HelpersLib
                 {
                     if (startWithWindows)
                     {
-                        regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
+                        string applicationPath = ApplicationPath;
+
+                        if (!string.IsNullOrEmpty(args))
+                        {
+                            applicationPath += " " + args;
+                        }
+
+                        regkey.SetValue(Application.ProductName, applicationPath, RegistryValueKind.String);
                     }
                     else
                     {
