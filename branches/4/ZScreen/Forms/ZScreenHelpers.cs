@@ -62,6 +62,12 @@ namespace ZScreenGUI
             ui.Show();
         }
 
+        private void ShowOptions()
+        {
+            ZScreenOptionsUI ui = new ZScreenOptionsUI(Engine.ConfigUI) { Icon = this.Icon };
+            ui.Show();
+        }
+
         private void ShowWatermarkUI()
         {
             WatermarkUI ui = new WatermarkUI(Engine.ConfigWorkflow.ConfigWatermark) { Icon = this.Icon };

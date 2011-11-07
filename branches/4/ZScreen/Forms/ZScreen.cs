@@ -1557,5 +1557,10 @@ namespace ZScreenGUI
         {
             ucDestOptions.tsbDestConfig_Click(sender, e);
         }
+
+        private void tsmiOptions_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
     }
 }

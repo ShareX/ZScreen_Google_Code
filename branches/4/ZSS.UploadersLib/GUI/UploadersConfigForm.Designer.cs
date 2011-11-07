@@ -2331,6 +2331,7 @@
             this.btnGmailAuth.TabIndex = 2;
             this.btnGmailAuth.Text = "&Authorize";
             this.btnGmailAuth.UseVisualStyleBackColor = true;
+            this.btnGmailAuth.Visible = false;
             this.btnGmailAuth.Click += new System.EventHandler(this.btnGmailAuth_Click);
             // 
             // chkEmailConfirm

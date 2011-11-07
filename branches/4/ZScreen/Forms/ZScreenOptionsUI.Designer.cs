@@ -1,6 +1,6 @@
 ﻿namespace ZScreenGUI
 {
-    partial class ZScreenOptionsCoreUI
+    partial class ZScreenOptionsUI
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Capture");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Effects");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Saving");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Hotkeys");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Directory Indexer");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Capture", new System.Windows.Forms.TreeNode[] {
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Effects");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Saving");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Hotkeys");
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tvOptions = new System.Windows.Forms.TreeView();
             this.tcMain = new System.Windows.Forms.TabControl();
@@ -41,8 +43,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tlpMain.SuspendLayout();
             this.tcMain.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -57,7 +62,7 @@
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Size = new System.Drawing.Size(795, 516);
+            this.tlpMain.Size = new System.Drawing.Size(784, 522);
             this.tlpMain.TabIndex = 0;
             // 
             // tvOptions
@@ -65,29 +70,32 @@
             this.tvOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvOptions.Location = new System.Drawing.Point(3, 3);
             this.tvOptions.Name = "tvOptions";
-            treeNode6.Name = "tnGeneral";
-            treeNode6.Text = "General";
-            treeNode7.Name = "tnCapture";
-            treeNode7.Text = "Capture";
-            treeNode8.Name = "tnEffects";
-            treeNode8.Text = "Effects";
-            treeNode9.Name = "tnSaving";
-            treeNode9.Text = "Saving";
-            treeNode10.Name = "tnHotkeys";
-            treeNode10.Text = "Hotkeys";
+            treeNode7.Name = "tnGeneral";
+            treeNode7.Text = "General";
+            treeNode8.Name = "Node1";
+            treeNode8.Text = "Directory Indexer";
+            treeNode9.Name = "tnCapture";
+            treeNode9.Text = "Capture";
+            treeNode10.Name = "tnEffects";
+            treeNode10.Text = "Effects";
+            treeNode11.Name = "tnSaving";
+            treeNode11.Text = "Saving";
+            treeNode12.Name = "tnHotkeys";
+            treeNode12.Text = "Hotkeys";
             this.tvOptions.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6,
             treeNode7,
-            treeNode8,
             treeNode9,
-            treeNode10});
-            this.tvOptions.Size = new System.Drawing.Size(160, 510);
+            treeNode10,
+            treeNode11,
+            treeNode12});
+            this.tvOptions.Size = new System.Drawing.Size(160, 516);
             this.tvOptions.TabIndex = 0;
             // 
             // tcMain
             // 
             this.tcMain.Controls.Add(this.tabPage1);
             this.tcMain.Controls.Add(this.tabPage2);
+            this.tcMain.Controls.Add(this.tabPage6);
             this.tcMain.Controls.Add(this.tabPage3);
             this.tcMain.Controls.Add(this.tabPage4);
             this.tcMain.Controls.Add(this.tabPage5);
@@ -95,7 +103,7 @@
             this.tcMain.Location = new System.Drawing.Point(169, 3);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(623, 510);
+            this.tcMain.Size = new System.Drawing.Size(612, 516);
             this.tcMain.TabIndex = 1;
             // 
             // tabPage1
@@ -148,31 +156,56 @@
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // ZScreenOptions
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.pgIndexer);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(604, 490);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "tabPage6";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // pgIndexer
+            // 
+            this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgIndexer.Location = new System.Drawing.Point(3, 3);
+            this.pgIndexer.Name = "pgIndexer";
+            this.pgIndexer.Size = new System.Drawing.Size(598, 484);
+            this.pgIndexer.TabIndex = 0;
+            // 
+            // ZScreenOptionsUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(795, 516);
+            this.ClientSize = new System.Drawing.Size(784, 522);
             this.Controls.Add(this.tlpMain);
-            this.Name = "ZScreenOptions";
-            this.Text = "ZScreenOptions";
-            this.Load += new System.EventHandler(this.ZScreenOptions_Load);
+            this.MinimumSize = new System.Drawing.Size(800, 560);
+            this.Name = "ZScreenOptionsUI";
+            this.Text = "Options";
+            this.Load += new System.EventHandler(this.ZScreenOptionsCoreUI_Load);
+            this.Shown += new System.EventHandler(this.ZScreenOptionsUI_Shown);
+            this.Resize += new System.EventHandler(this.ZScreenOptionsUI_Resize);
             this.tlpMain.ResumeLayout(false);
             this.tcMain.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private System.Windows.Forms.TreeView tvOptions;
-        private System.Windows.Forms.TabControl tcMain;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
+        protected System.Windows.Forms.TableLayoutPanel tlpMain;
+        protected System.Windows.Forms.TreeView tvOptions;
+        protected System.Windows.Forms.TabControl tcMain;
+        protected System.Windows.Forms.TabPage tabPage1;
+        protected System.Windows.Forms.TabPage tabPage2;
+        protected System.Windows.Forms.TabPage tabPage3;
+        protected System.Windows.Forms.TabPage tabPage4;
+        protected System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.PropertyGrid pgIndexer;
 
     }
 }

@@ -82,7 +82,7 @@ namespace ZScreenGUI
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            ZScreenOptionsCoreUI zo = new ZScreenOptionsCoreUI();
+            ZScreenOptionsUI zo = new ZScreenOptionsUI(Engine.ConfigUI);
             zo.ShowDialog();
         }
 

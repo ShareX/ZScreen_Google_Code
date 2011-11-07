@@ -65,7 +65,6 @@ namespace ZScreenGUI
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
             pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
             pgUploaders.SelectedObject = Engine.ConfigUploaders;
-            pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
 
             ZScreen_ConfigGUI_Form();
             ZScreen_ConfigGUI_TrayMenu();
