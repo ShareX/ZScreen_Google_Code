@@ -378,18 +378,15 @@ namespace ZUploader
 
         protected override void SetVisibleCore(bool value)
         {
-            if (value && !this.IsHandleCreated)
+            if (value && !IsHandleCreated && Program.IsSilentRun && Program.Settings.ShowTray)
             {
-                if (Program.IsSilentRun && Program.Settings.ShowTray)
-                {
-                    value = false;
-                    CreateHandle();
-                }
-
-                AfterLoadJobs();
+                CreateHandle();
+                value = false;
             }
 
             base.SetVisibleCore(value);
+
+            AfterLoadJobs();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
