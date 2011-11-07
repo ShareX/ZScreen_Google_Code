@@ -5,6 +5,7 @@ using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
+using ZScreenCoreLib;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -55,10 +56,33 @@ namespace ZScreenGUI
             GetGTGUI().Show();
         }
 
-        private void ShowActionsUI()
+        private void ShowConfigureActionsUI()
         {
             var ui = new ActionsUI(Engine.ConfigUI.ConfigActions) { Icon = this.Icon, Text = Application.ProductName + @" - Actions" };
             ui.Show();
+        }
+
+        private void ShowWatermarkUI()
+        {
+            WatermarkUI ui = new WatermarkUI(Engine.ConfigWorkflow.ConfigWatermark) { Icon = this.Icon };
+            ui.Show();
+        }
+
+        private void ShowFileNamingUI()
+        {
+            FileNamingUI ui = new FileNamingUI(Engine.ConfigWorkflow.ConfigFileNaming) { Icon = this.Icon };
+            ui.Show();
+        }
+
+        private void ShowImageFormatUI()
+        {
+            var wfwgui = new WorkflowWizardGUIOptions
+            {
+                ShowQualityTab = true,
+                ShowResizeTab = true
+            };
+            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow, false), wfwgui) { Icon = Icon };
+            wfw.Show();
         }
 
         public GoogleTranslateGUI GetGTGUI()

@@ -5,6 +5,7 @@ using FreeImageNetLib;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
+using ZScreenCoreLib;
 
 namespace ZScreenLib
 {
@@ -12,14 +13,13 @@ namespace ZScreenLib
     {
         #region 0 Variables
 
-
         public Workflow Config = new Workflow();
 
         public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
 
         protected WorkerTask Task = null;
 
-        #endregion
+        #endregion 0 Variables
 
         #region 1 Constructors
 
@@ -33,7 +33,8 @@ namespace ZScreenLib
         {
             Initialize(info, gui);
         }
-        #endregion
+
+        #endregion 1 Constructors
 
         private void btnCopyImageClose_Click(object sender, EventArgs e)
         {
@@ -49,7 +50,6 @@ namespace ZScreenLib
 
         private void chkTaskImageAnnotate_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         #region Config GUI
@@ -87,7 +87,7 @@ namespace ZScreenLib
             txtName.Text = Config.Description;
             if (cboTask.Items.Count == 0)
             {
-                cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
+                cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetEnumDescriptions());
             }
             cboTask.SelectedIndex = (int)Config.Job;
         }
@@ -163,21 +163,21 @@ namespace ZScreenLib
         {
             if (cboFileFormat.Items.Count == 0)
             {
-                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetEnumDescriptions());
                 cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
             }
 
-            nudSwitchAfter.Value = Config.ImageSizeLimit;
+            nudSwitchAfter.Value = Config.ConfigImageEffects.ImageSizeLimit;
 
             if (cboSwitchFormat.Items.Count == 0)
             {
-                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetEnumDescriptions());
                 cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
             }
 
             if (cboPngQuality.Items.Count == 0)
             {
-                cboPngQuality.Items.AddRange(typeof(FreeImagePngQuality).GetDescriptions());
+                cboPngQuality.Items.AddRange(typeof(FreeImagePngQuality).GetEnumDescriptions());
                 cboPngQuality.SelectedIndex = (int)Config.ImagePngCompression;
             }
 
@@ -185,13 +185,13 @@ namespace ZScreenLib
 
             if (cboJpgQuality.Items.Count == 0)
             {
-                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
+                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetEnumDescriptions());
                 cboJpgQuality.SelectedIndex = (int)Config.ImageJpegQuality;
             }
 
             if (cboJpgSubSampling.Items.Count == 0)
             {
-                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
+                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetEnumDescriptions());
                 cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
             }
 
@@ -199,7 +199,7 @@ namespace ZScreenLib
 
             if (cboTiffQuality.Items.Count == 0)
             {
-                cboTiffQuality.Items.AddRange(typeof(FreeImageTiffQuality).GetDescriptions());
+                cboTiffQuality.Items.AddRange(typeof(FreeImageTiffQuality).GetEnumDescriptions());
                 cboTiffQuality.SelectedIndex = (int)Config.ImageTiffCompression;
             }
 
@@ -208,7 +208,7 @@ namespace ZScreenLib
 
         private void ConfigGuiResize()
         {
-            switch (Config.ImageSizeType)
+            switch (Config.ConfigImageEffects.ImageSizeType)
             {
                 case ImageSizeType.DEFAULT:
                     rbImageSizeDefault.Checked = true;
@@ -221,9 +221,9 @@ namespace ZScreenLib
                     break;
             }
 
-            nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
-            nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
-            nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
+            nudImageSizeFixedWidth.Value = Config.ConfigImageEffects.ImageSizeFixedWidth;
+            nudImageSizeFixedHeight.Value = Config.ConfigImageEffects.ImageSizeFixedHeight;
+            nudImageSizeRatio.Value = (decimal)Config.ConfigImageEffects.ImageSizeRatioPercentage;
         }
 
         private void ConfigGuiTasks()
@@ -244,6 +244,7 @@ namespace ZScreenLib
             chkTaskImageFileFormat.Visible = bIsImage;
             chkTaskImageResize.Visible = bIsImage;
         }
+
         #endregion Config GUI
 
         #region Config GUI Enable/Disable
@@ -297,7 +298,6 @@ namespace ZScreenLib
         #endregion Config GUI Enable/Disable
 
         #region Control Events
-
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
@@ -370,7 +370,7 @@ namespace ZScreenLib
             else
             {
                 tcMain.TabPages.Remove(tpImageResize);
-                Config.ImageSizeType = ImageSizeType.DEFAULT;
+                Config.ConfigImageEffects.ImageSizeType = ImageSizeType.DEFAULT;
             }
         }
 
@@ -436,11 +436,10 @@ namespace ZScreenLib
         {
             ConfigGui();
         }
+
         #endregion Control Events
 
         #region Helper Methods
-
-
 
         private void BeforeClose()
         {
@@ -458,7 +457,7 @@ namespace ZScreenLib
 
             // Quality
             Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Config.ConfigImageEffects.ImageSizeLimit = (int)nudSwitchAfter.Value;
             Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
 
             Config.ImagePngInterlaced = chkPngQualityInterlaced.Checked;
@@ -553,13 +552,13 @@ namespace ZScreenLib
 
             if (rbImageSizeDefault.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.DEFAULT;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.DEFAULT;
                 ratio = 1.0;
                 h2 = Task.Info.ImageSize.Height;
             }
             else if (rbImageSizeFixed.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.FIXED;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.FIXED;
                 if (Task.Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
                 {
                     ratio = (double)nudImageSizeFixedWidth.Value / (double)Task.Info.ImageSize.Width;
@@ -568,7 +567,7 @@ namespace ZScreenLib
             }
             else if (rbImageSizeRatio.Checked)
             {
-                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.RATIO;
+                if (bChangeConfig) Config.ConfigImageEffects.ImageSizeType = ImageSizeType.RATIO;
                 if (Task.Info.ImageSize.Width > 0)
                 {
                     ratio = (double)nudImageSizeRatio.Value / 100.0;
@@ -583,6 +582,7 @@ namespace ZScreenLib
                                   Task.Info.ImageSize.Width, Task.Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
             }
         }
+
         #endregion Helper Methods
     }
 
@@ -591,6 +591,7 @@ namespace ZScreenLib
         public bool ShowQualityTab { get; set; }
 
         public bool ShowResizeTab { get; set; }
+
         public bool ShowTabJob { get; set; }
 
         public bool ShowTasks { get; set; }

@@ -77,5 +77,11 @@ namespace HelpersLib
         {
             return Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
         }
+
+        public static int RandomNumber(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
+        }
     }
 }

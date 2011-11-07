@@ -8,6 +8,7 @@ using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib.HelperClasses;
+using ZScreenCoreLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
@@ -62,6 +63,7 @@ namespace ZScreenGUI
             pgAppSettings.SelectedObject = Engine.ConfigApp;
             pgAppConfig.SelectedObject = Engine.ConfigUI;
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
+            pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
             pgUploaders.SelectedObject = Engine.ConfigUploaders;
             pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
 
@@ -122,7 +124,7 @@ namespace ZScreenGUI
             // Selected Window
             if (cbSelectedWindowStyle.Items.Count == 0)
             {
-                cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
+                cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetEnumDescriptions());
             }
 
             cbSelectedWindowStyle.SelectedIndex = (int)Engine.ConfigUI.SelectedWindowRegionStyles;
@@ -168,26 +170,21 @@ namespace ZScreenGUI
             pgSurfaceConfig.SelectedObject = Engine.ConfigUI.SurfaceConfig;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.ConfigWorkflow.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.ConfigWorkflow.EntireScreenPattern;
             txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.ConfigWorkflow.MaxNameLength;
-
-            ZScreen_ConfigGUI_Options_Watermark();
         }
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
         {
             if (cboCropEngine.Items.Count == 0)
             {
-                cboCropEngine.Items.AddRange(typeof(CropEngineType).GetDescriptions());
+                cboCropEngine.Items.AddRange(typeof(CropEngineType).GetEnumDescriptions());
                 cboCropEngine.SelectedIndex = (int)Engine.ConfigUI.CropEngineMode;
             }
 
             // Crop Region Settings
             if (chkCropStyle.Items.Count == 0)
             {
-                chkCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
+                chkCropStyle.Items.AddRange(typeof(RegionStyles).GetEnumDescriptions());
             }
             chkCropStyle.SelectedIndex = (int)Engine.ConfigUI.CropRegionStyles;
             chkRegionRectangleInfo.Checked = Engine.ConfigUI.CropRegionRectangleInfo;
@@ -270,12 +267,11 @@ namespace ZScreenGUI
             chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
             cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
-            cbCloseDropBox.Checked = Engine.ConfigUI.CloseDropBox;
 
             // Proxy
             if (cboProxyConfig.Items.Count == 0)
             {
-                cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetDescriptions());
+                cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetEnumDescriptions());
             }
             cboProxyConfig.SelectedIndex = (int)Engine.ConfigUI.ProxyConfig;
 
@@ -287,11 +283,11 @@ namespace ZScreenGUI
 
             if (cboCloseButtonAction.Items.Count == 0)
             {
-                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
             }
             if (cboCloseButtonAction.Items.Count == 0)
             {
-                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
+                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
             }
             cboCloseButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionClose;
             cboMinimizeButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionMinimize;
@@ -301,7 +297,7 @@ namespace ZScreenGUI
             chkCheckUpdates.Checked = Engine.ConfigUI.CheckUpdates;
             if (cboReleaseChannel.Items.Count == 0)
             {
-                cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetDescriptions());
+                cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetEnumDescriptions());
                 cboReleaseChannel.SelectedIndex = (int)Engine.ConfigUI.ReleaseChannel;
             }
             chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
@@ -322,8 +318,6 @@ namespace ZScreenGUI
             chkMonText.Checked = Engine.ConfigUI.MonitorText;
             chkMonFiles.Checked = Engine.ConfigUI.MonitorFiles;
             chkMonUrls.Checked = Engine.ConfigUI.MonitorUrls;
-
-            chkOverwriteFiles.Checked = Engine.ConfigWorkflow.OverwriteFiles;
         }
 
         private void ZScreen_ConfigGUI_Options_Paths()
@@ -348,50 +342,6 @@ namespace ZScreenGUI
             gbRoot.Enabled = !Engine.IsPortable;
             gbImages.Enabled = !Engine.IsPortable;
             gbLogs.Enabled = !Engine.IsPortable;
-        }
-
-        private void ZScreen_ConfigGUI_Options_Watermark()
-        {
-            if (cboWatermarkType.Items.Count == 0)
-            {
-                cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
-            }
-
-            cboWatermarkType.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkMode;
-            if (chkWatermarkPosition.Items.Count == 0)
-            {
-                chkWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
-            }
-
-            chkWatermarkPosition.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkPositionMode;
-            nudWatermarkOffset.Value = Engine.ConfigWorkflow.WatermarkOffset;
-            cbWatermarkAddReflection.Checked = Engine.ConfigWorkflow.WatermarkAddReflection;
-            cbWatermarkAutoHide.Checked = Engine.ConfigWorkflow.WatermarkAutoHide;
-
-            txtWatermarkText.Text = Engine.ConfigWorkflow.WatermarkText;
-            pbWatermarkFontColor.BackColor = Engine.ConfigWorkflow.WatermarkFontArgb;
-            lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Engine.ConfigWorkflow.WatermarkFontTrans;
-            trackWatermarkFontTrans.Value = (int)Engine.ConfigWorkflow.WatermarkFontTrans;
-            nudWatermarkCornerRadius.Value = Engine.ConfigWorkflow.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = Engine.ConfigWorkflow.WatermarkGradient1Argb;
-            pbWatermarkGradient2.BackColor = Engine.ConfigWorkflow.WatermarkGradient2Argb;
-            pbWatermarkBorderColor.BackColor = Engine.ConfigWorkflow.WatermarkBorderArgb;
-            nudWatermarkBackTrans.Value = Engine.ConfigWorkflow.WatermarkBackTrans;
-            trackWatermarkBackgroundTrans.Value = (int)Engine.ConfigWorkflow.WatermarkBackTrans;
-            if (cbWatermarkGradientType.Items.Count == 0)
-            {
-                cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
-            }
-
-            cbWatermarkGradientType.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkGradientType;
-            cboUseCustomGradient.Checked = Engine.ConfigWorkflow.WatermarkUseCustomGradient;
-
-            txtWatermarkImageLocation.Text = Engine.ConfigWorkflow.WatermarkImageLocation;
-            cbWatermarkUseBorder.Checked = Engine.ConfigWorkflow.WatermarkUseBorder;
-            nudWatermarkImageScale.Value = Engine.ConfigWorkflow.WatermarkImageScale;
-
-            TestWatermark();
         }
 
         private void ZScreen_ConfigGUI_Options_History()

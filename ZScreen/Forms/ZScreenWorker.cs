@@ -101,8 +101,7 @@ namespace ZScreenGUI
                     Adapter.CopyImageToClipboard(e.UserState as Image);
                     break;
                 case (WorkerTask.ProgressType)103:
-                    Adapter.SaveImage(e.UserState as Image);
-                    break;
+                    throw new Exception("Unsupported progress");
                 case (WorkerTask.ProgressType)104:
                     Adapter.CopyDataToClipboard(e.UserState);
                     break;
@@ -192,7 +191,7 @@ namespace ZScreenGUI
 
                     if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
                     {
-                        string fp = Adapter.SaveImage(task.TempImage);
+                        string fp = task.WriteImageAs();
                         if (!string.IsNullOrEmpty(fp))
                         {
                             task.UpdateLocalFilePath(fp);

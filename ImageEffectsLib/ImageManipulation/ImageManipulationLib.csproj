@@ -84,11 +84,11 @@
     <Compile Include="Scale.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\trunk\GraphicsManagerLib\GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\..\GraphicsManagerLib\GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>GraphicsManagerLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\trunk\ZSS.HelpersLib\HelpersLib.csproj">
+    <ProjectReference Include="..\..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>HelpersLib</Name>
     </ProjectReference>

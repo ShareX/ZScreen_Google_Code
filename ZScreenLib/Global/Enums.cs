@@ -66,38 +66,6 @@ namespace ZScreenLib
         ScrollLock
     }
 
-    public enum WatermarkType
-    {
-        [Description("None")]
-        NONE,
-        [Description("Text")]
-        TEXT,
-        [Description("Image")]
-        IMAGE
-    }
-
-    public enum WatermarkPositionType
-    {
-        [Description("Top - Left")]
-        TOP_LEFT,
-        [Description("Top - Center")]
-        TOP,
-        [Description("Top - Right")]
-        TOP_RIGHT,
-        [Description("Center - Left")]
-        LEFT,
-        [Description("Centered")]
-        CENTER,
-        [Description("Center - Right")]
-        RIGHT,
-        [Description("Bottom - Left")]
-        BOTTOM_LEFT,
-        [Description("Bottom - Center")]
-        BOTTOM,
-        [Description("Bottom - Right")]
-        BOTTOM_RIGHT
-    }
-
     public enum RegionStyles
     {
         [Description("No Change")]
@@ -141,11 +109,6 @@ namespace ZScreenLib
         UploadText,
         UploadTextFromClipboard,
         UploadTextFromFile
-    }
-
-    public enum ImageSizeType
-    {
-        DEFAULT, FIXED, RATIO
     }
 
     public enum CropEngineType

@@ -33,6 +33,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
+using ZScreenCoreLib;
 using ZSS.ColorsLib;
 
 namespace ZScreenLib

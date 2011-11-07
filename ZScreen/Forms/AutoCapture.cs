@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using HelpersLib;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -56,7 +57,7 @@ namespace ZScreenGUI
 
         private void LoadSettings()
         {
-            cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetDescriptions());
+            cbScreenshotTypes.Items.AddRange(typeof(AutoScreenshotterJobs).GetEnumDescriptions());
             cbScreenshotTypes.SelectedIndex = (int)Engine.ConfigUI.AutoCaptureScreenshotTypes;
             nudDelay.Time = Engine.ConfigUI.AutoCaptureDelayTimes;
             nudDelay.Value = Engine.ConfigUI.AutoCaptureDelayTime;

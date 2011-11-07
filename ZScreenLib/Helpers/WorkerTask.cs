@@ -14,11 +14,9 @@ using System.Windows.Forms;
 using Crop;
 using Gif.Components;
 using GraphicsMgrLib;
-using Greenshot;
 using HelpersLib;
 using HistoryLib;
 using ImageQueue;
-using IniFile;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ScreenCapture;
 using SharpApng;
@@ -31,6 +29,7 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
+using ZScreenCoreLib;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
@@ -253,6 +252,174 @@ namespace ZScreenLib
         public Workflow WorkflowConfig { get; private set; }
 
         #endregion 0 Properties
+
+        #region 1 Constructors
+
+        private void PrepareOutputs(DestConfig ucDestOptions)
+        {
+            if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
+            {
+                WorkflowConfig.DestConfig = ucDestOptions;
+                States.Add(TaskState.Prepared);
+            }
+        }
+
+        public bool StartWork(JobLevel2 job)
+        {
+            StaticHelper.WriteLine(WorkflowConfig.DestConfig.ToString());
+
+            Job2 = job;
+
+            SetNotifyIconStatus(Info.TrayIcon, ready: false);
+
+            Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
+#if DEBUG
+            StaticHelper.WriteLine("Retrieved Window Title at " + new StackFrame().GetMethod().Name);
+#endif
+            bool success = true;
+
+            switch (Job2)
+            {
+                case JobLevel2.CaptureActiveWindow:
+                    success = CaptureActiveWindow();
+                    break;
+                case JobLevel2.CaptureEntireScreen:
+                    success = CaptureScreen();
+                    break;
+                case JobLevel2.CaptureSelectedWindow:
+                case JobLevel2.CaptureRectRegion:
+                case JobLevel2.CaptureRectRegionClipboard:
+                case JobLevel2.CaptureLastCroppedWindow:
+                    success = CaptureRegionOrWindow();
+                    break;
+                case JobLevel2.CaptureSelectedWindowFromList:
+                    success = CaptureSelectedWindow();
+                    break;
+                case JobLevel2.CaptureFreeHandRegion:
+                    success = CaptureShape();
+                    break;
+                case JobLevel2.UploadFromClipboard:
+                    success = LoadClipboardContent();
+                    break;
+            }
+
+            switch (job)
+            {
+                case JobLevel2.UploadFromExplorer:
+                    Job1 = EDataType.File;
+                    break;
+                case JobLevel2.UploadFromClipboard:
+                    if (FileSystem.IsValidLink(TempText))
+                    {
+                        Job1 = EDataType.URL;
+                    }
+                    else
+                    {
+                        Job1 = EDataType.File;
+                    }
+                    break;
+                case JobLevel2.Translate:
+                    Job1 = EDataType.Text;
+                    break;
+                default:
+                    Job1 = EDataType.Image;
+                    break;
+            }
+
+            if (TempImage != null)
+            {
+                Info.ImageSize = TempImage.Size;
+            }
+
+            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableImageSound)
+            {
+                if (File.Exists(WorkflowConfig.SoundImagePath))
+                    new SoundPlayer(WorkflowConfig.SoundImagePath).Play();
+                else
+                    new SoundPlayer(Resources.Camera).Play();
+            }
+            if (!success)
+            {
+                States.Add(TaskState.CancellationPending);
+            }
+
+            return success;
+        }
+
+        public WorkerTask(Workflow wf, bool cloneWorkflow = true)
+        {
+            Info = new TaskInfo();
+            UploadResults = new List<UploadResult>();
+            Errors = new List<string>();
+            States.Add(TaskState.Created);
+            MyWorker = new BackgroundWorker { WorkerReportsProgress = true };
+
+            if (cloneWorkflow)
+            {
+                IClone cm = new CloneManager();
+                WorkflowConfig = cm.Clone(wf);
+            }
+            else
+            {
+                WorkflowConfig = wf;
+            }
+        }
+
+        public WorkerTask(BackgroundWorker worker, Workflow wf)
+            : this(wf)
+        {
+            MyWorker = worker;
+
+            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) &&
+                WorkflowConfig.DestConfig.TaskClipboardContent.Count == 0)
+            {
+                WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
+            }
+
+            StartWork(wf.Job);
+        }
+
+        public WorkerTask(BackgroundWorker worker, TaskInfo info)
+            : this(Engine.ConfigWorkflow)
+        {
+            Info = info;
+
+            if (!string.IsNullOrEmpty(info.ExistingFilePath))
+            {
+                UpdateLocalFilePath(info.ExistingFilePath);
+            }
+
+            MyWorker = worker;
+            PrepareOutputs(info.DestConfig); // step 1
+
+            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel; // step 2
+
+            if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs) // step 3
+            {
+                var wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
+                result = wfw.ShowDialog();
+            }
+
+            if (result == DialogResult.OK)
+            {
+                if (!States.Contains(TaskState.ImageProcessed))
+                {
+                    ProcessImage(TempImage);
+                }
+            }
+
+            if (result == DialogResult.Cancel)
+            {
+                States.Add(TaskState.CancellationPending);
+            }
+
+            if (States.Contains(TaskState.CancellationPending))
+            {
+                SetNotifyIconStatus(Info.TrayIcon, ready: true);
+            }
+        }
+
+        #endregion 1 Constructors
 
         #region Capture
 
@@ -555,174 +722,6 @@ namespace ZScreenLib
 
         #endregion Checks
 
-        #region Constructors
-
-        private void PrepareOutputs(DestConfig ucDestOptions)
-        {
-            if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
-            {
-                WorkflowConfig.DestConfig = ucDestOptions;
-                States.Add(TaskState.Prepared);
-            }
-        }
-
-        public bool StartWork(JobLevel2 job)
-        {
-            StaticHelper.WriteLine(WorkflowConfig.DestConfig.ToString());
-
-            Job2 = job;
-
-            SetNotifyIconStatus(Info.TrayIcon, ready: false);
-
-            Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
-#if DEBUG
-            StaticHelper.WriteLine("Retrieved Window Title at " + new StackFrame().GetMethod().Name);
-#endif
-            bool success = true;
-
-            switch (Job2)
-            {
-                case JobLevel2.CaptureActiveWindow:
-                    success = CaptureActiveWindow();
-                    break;
-                case JobLevel2.CaptureEntireScreen:
-                    success = CaptureScreen();
-                    break;
-                case JobLevel2.CaptureSelectedWindow:
-                case JobLevel2.CaptureRectRegion:
-                case JobLevel2.CaptureRectRegionClipboard:
-                case JobLevel2.CaptureLastCroppedWindow:
-                    success = CaptureRegionOrWindow();
-                    break;
-                case JobLevel2.CaptureSelectedWindowFromList:
-                    success = CaptureSelectedWindow();
-                    break;
-                case JobLevel2.CaptureFreeHandRegion:
-                    success = CaptureShape();
-                    break;
-                case JobLevel2.UploadFromClipboard:
-                    success = LoadClipboardContent();
-                    break;
-            }
-
-            switch (job)
-            {
-                case JobLevel2.UploadFromExplorer:
-                    Job1 = EDataType.File;
-                    break;
-                case JobLevel2.UploadFromClipboard:
-                    if (FileSystem.IsValidLink(TempText))
-                    {
-                        Job1 = EDataType.URL;
-                    }
-                    else
-                    {
-                        Job1 = EDataType.File;
-                    }
-                    break;
-                case JobLevel2.Translate:
-                    Job1 = EDataType.Text;
-                    break;
-                default:
-                    Job1 = EDataType.Image;
-                    break;
-            }
-
-            if (TempImage != null)
-            {
-                Info.ImageSize = TempImage.Size;
-            }
-
-            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableImageSound)
-            {
-                if (File.Exists(WorkflowConfig.SoundImagePath))
-                    new SoundPlayer(WorkflowConfig.SoundImagePath).Play();
-                else
-                    new SoundPlayer(Resources.Camera).Play();
-            }
-            if (!success)
-            {
-                States.Add(TaskState.CancellationPending);
-            }
-
-            return success;
-        }
-
-        public WorkerTask(Workflow wf, bool cloneWorkflow = true)
-        {
-            Info = new TaskInfo();
-            UploadResults = new List<UploadResult>();
-            Errors = new List<string>();
-            States.Add(TaskState.Created);
-            MyWorker = new BackgroundWorker { WorkerReportsProgress = true };
-
-            if (cloneWorkflow)
-            {
-                IClone cm = new CloneManager();
-                WorkflowConfig = cm.Clone(wf);
-            }
-            else
-            {
-                WorkflowConfig = wf;
-            }
-        }
-
-        public WorkerTask(BackgroundWorker worker, Workflow wf)
-            : this(wf)
-        {
-            MyWorker = worker;
-
-            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) &&
-                WorkflowConfig.DestConfig.TaskClipboardContent.Count == 0)
-            {
-                WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
-            }
-
-            StartWork(wf.Job);
-        }
-
-        public WorkerTask(BackgroundWorker worker, TaskInfo info)
-            : this(Engine.ConfigWorkflow)
-        {
-            Info = info;
-
-            if (!string.IsNullOrEmpty(info.ExistingFilePath))
-            {
-                UpdateLocalFilePath(info.ExistingFilePath);
-            }
-
-            MyWorker = worker;
-            PrepareOutputs(info.DestConfig); // step 1
-
-            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel; // step 2
-
-            if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs) // step 3
-            {
-                var wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
-                result = wfw.ShowDialog();
-            }
-
-            if (result == DialogResult.OK)
-            {
-                if (!States.Contains(TaskState.ImageProcessed))
-                {
-                    ProcessImage(TempImage);
-                }
-            }
-
-            if (result == DialogResult.Cancel)
-            {
-                States.Add(TaskState.CancellationPending);
-            }
-
-            if (States.Contains(TaskState.CancellationPending))
-            {
-                SetNotifyIconStatus(Info.TrayIcon, ready: true);
-            }
-        }
-
-        #endregion Constructors
-
         #region Delegates
 
         public delegate void TaskEventHandler(WorkerTask wt);
@@ -800,7 +799,7 @@ namespace ZScreenLib
                        {
                            Type = parserType,
                            Picture = TempImage,
-                           AutoIncrementNumber = WorkflowConfig.AutoIncrement,
+                           AutoIncrementNumber = WorkflowConfig.ConfigFileNaming.AutoIncrement,
                            WindowText = Info.WindowTitleText
                        };
         }
@@ -863,7 +862,7 @@ namespace ZScreenLib
                                              @"Greenshot\Languages\");
                             if (!Directory.Exists(APPLICATIONDATA_LANGUAGE_PATH))
                                 Directory.CreateDirectory(APPLICATIONDATA_LANGUAGE_PATH);
-                            IniConfig.Init();
+                            IniFile.IniConfig.Init();
 
                             var capture = new Greenshot.Helpers.Capture(TempImage);
                             capture.CaptureDetails.Filename = Info.LocalFilePath;
@@ -873,16 +872,13 @@ namespace ZScreenLib
                             capture.CaptureDetails.AddMetaData("source", "file");
 
                             var surface = new Greenshot.Drawing.Surface(capture);
-                            var editor = new ImageEditorForm(surface,
+                            var editor = new Greenshot.ImageEditorForm(surface,
                                                              WorkflowConfig.DestConfig.Outputs.Contains(
                                                                  OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                             editor.SetImagePath(Info.LocalFilePath);
                             editor.Visible = false;
                             editor.ShowDialog();
-                            if (!editor.surface.Modified)
-                            {
-                                TempImage = editor.GetImageForExport();
-                            }
+                            TempImage = editor.GetImageForExport();
                         }
                         catch (Exception ex)
                         {
@@ -948,12 +944,12 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                var effects = new ImageEffects(WorkflowConfig);
+                var effects = new ImageEffects(WorkflowConfig.ConfigImageEffects);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
-                if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.WatermarkExcludeClipboardUpload)
+                if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.ConfigWatermark.WatermarkExcludeClipboardUpload)
                 {
-                    img = new ImageEffects(WorkflowConfig).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
+                    img = new WatermarkEffects(WorkflowConfig.ConfigWatermark).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
                 }
 
                 TempImage = img;
@@ -2083,7 +2079,7 @@ namespace ZScreenLib
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
-                    fn = new NameParser(NameParserType.EntireScreen).Convert(WorkflowConfig.EntireScreenPattern) +
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(WorkflowConfig.ConfigFileNaming.EntireScreenPattern) +
                          ".txt";
                     string destFile = acc.GetLocalhostPath(fn);
                     FileSystem.WriteText(destFile, TempText);
@@ -2126,7 +2122,7 @@ namespace ZScreenLib
             {
                 String outputFilePath = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir,
                                                                      new NameParser(NameParserType.EntireScreen).Convert
-                                                                         (WorkflowConfig.EntireScreenPattern));
+                                                                         (WorkflowConfig.ConfigFileNaming.EntireScreenPattern));
 
                 switch (WorkflowConfig.ImageFormatAnimated)
                 {
@@ -2159,6 +2155,16 @@ namespace ZScreenLib
                 StaticHelper.WriteLine("Wrote animated image: " + outputFilePath);
                 tempImages.Clear();
             }
+        }
+
+        public string WriteImageAs()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                return FileSystem.WriteImage(sfd.FileName, PrepareData()).FullName;
+            }
+            return string.Empty;
         }
 
         private void WriteText(string text)

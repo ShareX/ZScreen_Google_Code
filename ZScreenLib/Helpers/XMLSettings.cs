@@ -181,7 +181,8 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue("%link"), Description("Customizes clipboard text \n Valid Variables: %link, %size, %name and any in (Options -> File Naming)")]
         public string ClipboardFormat { get; set; }
 
-        public bool CloseDropBox = false;
+        [Category(ComponentModelStrings.InputsDropWindow), DefaultValue(false), Description("Close Drop Window after Drag n Drop")]
+        public bool CloseDropBox { get; set; }
 
         // Interaction
 
