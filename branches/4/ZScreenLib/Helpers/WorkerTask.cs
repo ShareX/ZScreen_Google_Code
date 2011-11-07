@@ -313,10 +313,6 @@ namespace ZScreenLib
                     {
                         Job1 = EDataType.URL;
                     }
-                    else
-                    {
-                        Job1 = EDataType.File;
-                    }
                     break;
                 case JobLevel2.Translate:
                     Job1 = EDataType.Text;
@@ -2277,6 +2273,7 @@ namespace ZScreenLib
                 {
                     UpdateLocalFilePath(listFiles[0]);
                 }
+                Job1 = EDataType.File;
             }
 
             return succ;
