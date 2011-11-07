@@ -38,8 +38,8 @@ namespace ZScreenGUI
 
             if (HotkeyManager.IsHotkeyRegisterFailed(out failedHotkeys))
             {
-                MessageBox.Show("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
-                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen ZUploader.",
+                MessageBox.Show(string.Format("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
+                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen {0}.", Application.ProductName),
                     "Hotkey register failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

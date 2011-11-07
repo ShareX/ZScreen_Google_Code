@@ -66,24 +66,23 @@ namespace HelpersLib
 
             ushort id = NativeMethods.GlobalAddAtom(atomName);
 
-            HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
-
             if (id == 0)
             {
-                hotkeyInfo.Error = "Unable to generate unique hotkey ID.";
-                StaticHelper.WriteLine(hotkeyInfo.Error);
+                StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
+                return HotkeyStatus.Failed;
             }
 
             if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)keyInfo.ModifiersEnum, (uint)keyInfo.KeyCode))
             {
                 NativeMethods.GlobalDeleteAtom(id);
-                hotkeyInfo.Error = string.Format("Unable to register hotkey {0}", keyInfo);
-                StaticHelper.WriteLine(hotkeyInfo.Error);
+                StaticHelper.WriteLine("Unable to register hotkey: {0}\r\nError code: {1}", keyInfo, Marshal.GetLastWin32Error());
+                return HotkeyStatus.Failed;
             }
 
+            HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
             HotkeyList.Add(hotkeyInfo);
 
-            return string.IsNullOrEmpty(hotkeyInfo.Error) ? HotkeyStatus.Registered : HotkeyStatus.Failed;
+            return HotkeyStatus.Registered;
         }
 
         public bool UnregisterHotkey(ushort id)
