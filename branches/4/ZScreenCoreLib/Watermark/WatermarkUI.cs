@@ -41,7 +41,7 @@ namespace ZScreenCoreLib
 
             codesMenu = new ContextMenuStrip();
             codesMenu.AutoClose = false;
-            codesMenu.Font = new Font("Lucida Console", 8);
+            codesMenu.Font = new XFont("Lucida Console", 8);
             codesMenu.Opacity = 0.8;
             codesMenu.ShowImageMargin = false;
         }
