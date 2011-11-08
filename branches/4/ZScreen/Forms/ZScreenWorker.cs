@@ -168,11 +168,11 @@ namespace ZScreenGUI
             {
                 if (task.IsError && task.Errors[0].Contains(ExceptionMessage.ProxyAuthenticationRequired))
                 {
-                    ProxyConfig pc = new ProxyConfig();
-                    if (pc.ShowDialog() == DialogResult.OK)
+                    ProxyUI ui = new ProxyUI();
+                    if (ui.ShowDialog() == DialogResult.OK)
                     {
-                        this.ProxyAdd(pc.Proxy);
-                        this.cboProxyConfig.SelectedIndex = (int)ProxyConfigType.ManualProxy;
+                        Engine.ConfigUI.ConfigProxy.ProxyList.Add(ui.Proxy);
+                        Engine.ConfigUI.ConfigProxy.ProxyConfigType = EProxyConfigType.ManualProxy;
                         Uploader.ProxySettings = Adapter.CheckProxySettings();
                     }
                     RetryTask(task);

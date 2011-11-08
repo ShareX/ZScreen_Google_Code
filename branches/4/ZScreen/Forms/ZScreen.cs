@@ -170,7 +170,7 @@ namespace ZScreenGUI
 
             CleanCache();
 
-            if (Engine.ConfigUI.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
+            if (Engine.ConfigUI.ConfigProxy.ProxyConfigType != EProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
                 StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive);
             }
@@ -385,18 +385,6 @@ namespace ZScreenGUI
             return acc;
         }
 
-        private ProxyInfo GetSelectedProxy()
-        {
-            ProxyInfo acc = null;
-            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 &&
-                Engine.ConfigUI.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
-            {
-                acc = Engine.ConfigUI.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
-            }
-
-            return acc;
-        }
-
         public bool UseCommandLineArg(string arg)
         {
             if (!string.IsNullOrEmpty(arg))
@@ -431,37 +419,6 @@ namespace ZScreenGUI
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowAutoCapture();
-        }
-
-        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
-        {
-            string oldDir = txtImagesDir.Text;
-            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
-                                         "Images");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.ConfigUI.UseCustomImagesDir = true;
-                Engine.ConfigUI.CustomImagesDir = dirNew;
-                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
-                ZScreen_ConfigGUI_Options_Paths();
-            }
-        }
-
-        private void btnBrowseRootDir_Click(object sender, EventArgs e)
-        {
-            string oldRootDir = txtRootFolder.Text;
-            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.SetRootFolder(dirNew);
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
-                ZScreen_ConfigGUI_Options_Paths();
-                Engine.ConfigUI = XMLSettings.Read();
-                ZScreen_ConfigGUI();
-            }
         }
 
         private void btnClearHistory_Click(object sender, EventArgs e)
@@ -559,11 +516,6 @@ namespace ZScreenGUI
             ShowDirectory(Engine.LogsDir);
         }
 
-        private void btnViewRootDir_Click(object sender, EventArgs e)
-        {
-            ShowDirectory(txtRootFolder.Text);
-        }
-
         private void btnWorkflowConfig_Click(object sender, EventArgs e)
         {
             ShowImageFormatUI();
@@ -629,11 +581,6 @@ namespace ZScreenGUI
             Engine.ConfigUI.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
         }
 
-        private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.DeleteLocal = chkDeleteLocal.Checked;
-        }
-
         private void cbFreehandCropAutoClose_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
@@ -669,15 +616,6 @@ namespace ZScreenGUI
             gbCropGridMode.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropRegionSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropShotMagnifyingGlass.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
-        }
-
-        private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
-            if (IsReady)
-            {
-                Uploader.ProxySettings = Adapter.CheckProxySettings();
-            }
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
@@ -1029,7 +967,7 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                ZScreen_ConfigGUI_Options_Paths();
+                FormsMgr.OptionsUI.ConfigurePaths();
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.UploadersConfigCustomPath))
                 {
@@ -1039,20 +977,6 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.WorkflowConfigCustomPath))
                 {
                     Engine.ConfigWorkflow = Workflow.Read(Engine.ConfigApp.WorkflowConfigCustomPath);
-                }
-            }
-        }
-
-        private void ProxySetup(IEnumerable<ProxyInfo> accs)
-        {
-            if (accs != null)
-            {
-                ucProxyAccounts.AccountsList.Items.Clear();
-                Engine.ConfigUI.ProxyList = new List<ProxyInfo>();
-                Engine.ConfigUI.ProxyList.AddRange(accs);
-                foreach (ProxyInfo acc in Engine.ConfigUI.ProxyList)
-                {
-                    ucProxyAccounts.AccountsList.Items.Add(acc);
                 }
             }
         }
@@ -1301,14 +1225,6 @@ namespace ZScreenGUI
             StaticHelper.LoadBrowser(e.LinkText);
         }
 
-        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text =
-                new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
-            txtImagesDir.Text = Engine.ImagesDir;
-        }
-
         private void UpdateAeroGlassConfig()
         {
             gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.DWM;
@@ -1397,6 +1313,14 @@ namespace ZScreenGUI
         private void tsmiOptions_Click(object sender, EventArgs e)
         {
             ShowOptions();
+        }
+
+        private void tsmiProxy_Click(object sender, EventArgs e)
+        {
+            if (FormsMgr.ShowDialogProxyConfig() == System.Windows.Forms.DialogResult.OK)
+            {
+                Uploader.ProxySettings = Adapter.CheckProxySettings();
+            }
         }
     }
 }

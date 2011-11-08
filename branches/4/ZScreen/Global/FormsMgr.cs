@@ -1,3 +1,9 @@
+using System.IO;
+using System.Windows.Forms;
+using UploadersLib;
+using ZScreenGUI.Properties;
+using ZScreenLib;
+
 #region License Information (GPL v2)
 
 /*
@@ -23,20 +29,34 @@
 
 #endregion License Information (GPL v2)
 
-using System.IO;
-using System.Windows.Forms;
-using ZScreenGUI.Properties;
-using ZScreenLib;
-
 namespace ZScreenGUI
 {
     public static class FormsMgr
     {
-        private static AboutBox AboutWindow = null;
-        private static TextViewer VersionHistoryWindow = null;
-        private static TextViewer LicenseWindow = null;
+        private static AboutBox _AboutWindow = null;
+        private static TextViewer _LicenseWindow = null;
 
         private static ZScreenOptionsUI _OptionsUI = null;
+
+        private static ProxyConfigUI _ProxyConfig = null;
+        private static TextViewer _VersionHistoryWindow = null;
+
+        private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
+        {
+            string txt = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
+            if (txt == string.Empty)
+            {
+                txt = FileSystem.GetText(manifestFileName);
+            }
+
+            if (txt != string.Empty)
+            {
+                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = Resources.zss_main };
+            }
+
+            return viewer;
+        }
+
         public static ZScreenOptionsUI OptionsUI
         {
             get
@@ -53,68 +73,71 @@ namespace ZScreenGUI
             }
         }
 
-        public static void ShowOptionsUI()
+        public static ProxyConfigUI ProxyConfig
         {
-            if (_OptionsUI != null)
+            get
             {
-                _OptionsUI.Activate();
-                _OptionsUI.Show();
+                if (_ProxyConfig == null || _ProxyConfig.IsDisposed)
+                {
+                    _ProxyConfig = new ProxyConfigUI(Engine.ConfigUI.ConfigProxy) { Icon = Resources.zss_tray };
+                }
+                return _ProxyConfig;
             }
-        }
-
-        public static void ShowLicense()
-        {
-            if (LicenseWindow == null || LicenseWindow.IsDisposed)
+            private set
             {
-                LicenseWindow = FillTextViewer(LicenseWindow, "License", "license.txt");
-            }
-
-            if (LicenseWindow != null)
-            {
-                LicenseWindow.Activate();
-                LicenseWindow.Show();
-            }
-        }
-
-        public static void ShowVersionHistory()
-        {
-            if (VersionHistoryWindow == null || VersionHistoryWindow.IsDisposed)
-            {
-                VersionHistoryWindow = FillTextViewer(VersionHistoryWindow, "Version History", "VersionHistory.txt");
-            }
-
-            if (VersionHistoryWindow != null)
-            {
-                VersionHistoryWindow.Activate();
-                VersionHistoryWindow.Show();
+                _ProxyConfig = value;
             }
         }
 
         public static void ShowAboutWindow()
         {
-            if (AboutWindow == null || AboutWindow.IsDisposed)
+            if (_AboutWindow == null || _AboutWindow.IsDisposed)
             {
-                AboutWindow = new AboutBox();
+                _AboutWindow = new AboutBox();
             }
 
-            AboutWindow.Activate();
-            AboutWindow.Show();
+            _AboutWindow.Activate();
+            _AboutWindow.Show();
         }
 
-        private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
+        public static void ShowLicense()
         {
-            string txt = FileSystem.GetTextFromFile(Path.Combine(Application.StartupPath, manifestFileName));
-            if (txt == string.Empty)
+            if (_LicenseWindow == null || _LicenseWindow.IsDisposed)
             {
-                txt = FileSystem.GetText(manifestFileName);
+                _LicenseWindow = FillTextViewer(_LicenseWindow, "License", "license.txt");
             }
 
-            if (txt != string.Empty)
+            if (_LicenseWindow != null)
             {
-                viewer = new TextViewer(string.Format("{0} - {1}", Application.ProductName, title), txt) { Icon = Resources.zss_main };
+                _LicenseWindow.Activate();
+                _LicenseWindow.Show();
+            }
+        }
+
+        public static void ShowOptionsUI()
+        {
+            OptionsUI.Activate();
+            OptionsUI.Show();
+        }
+
+        public static DialogResult ShowDialogProxyConfig()
+        {
+            ProxyConfig.Activate();
+            return ProxyConfig.ShowDialog();
+        }
+
+        public static void ShowVersionHistory()
+        {
+            if (_VersionHistoryWindow == null || _VersionHistoryWindow.IsDisposed)
+            {
+                _VersionHistoryWindow = FillTextViewer(_VersionHistoryWindow, "Version History", "VersionHistory.txt");
             }
 
-            return viewer;
+            if (_VersionHistoryWindow != null)
+            {
+                _VersionHistoryWindow.Activate();
+                _VersionHistoryWindow.Show();
+            }
         }
     }
 }

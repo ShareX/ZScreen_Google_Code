@@ -54,7 +54,7 @@ namespace ZScreenGUI
             // 
             // tsCoreMainTab
             // 
-            this.tsCoreMainTab.BackColor = System.Drawing.Color.White;
+            this.tsCoreMainTab.BackColor = System.Drawing.SystemColors.Control;
             this.tsCoreMainTab.CanOverflow = false;
             this.tsCoreMainTab.Dock = System.Windows.Forms.DockStyle.Right;
             this.tsCoreMainTab.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;

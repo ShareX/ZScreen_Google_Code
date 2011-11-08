@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Workflow");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Folder Listing");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Capture", new System.Windows.Forms.TreeNode[] {
-            treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Effects");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("History");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Saving", new System.Windows.Forms.TreeNode[] {
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Backup & Restore");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Workflow");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Folder Listing");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Capture", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Effects");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Paths");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("History");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Saving", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Backup & Restore");
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tvOptions = new System.Windows.Forms.TreeView();
             this.tcMain = new System.Windows.Forms.TabControl();
@@ -74,6 +76,7 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.pgWorkflowImageEffects = new System.Windows.Forms.PropertyGrid();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.btnClearHistory = new System.Windows.Forms.Button();
@@ -91,7 +94,23 @@
             this.btnSettingsDefault = new System.Windows.Forms.Button();
             this.btnSettingsExport = new System.Windows.Forms.Button();
             this.btnSettingsImport = new System.Windows.Forms.Button();
-            this.pgWorkflowImageEffects = new System.Windows.Forms.PropertyGrid();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.gbRoot = new System.Windows.Forms.GroupBox();
+            this.btnViewRootDir = new System.Windows.Forms.Button();
+            this.btnRelocateRootDir = new System.Windows.Forms.Button();
+            this.txtRootFolder = new System.Windows.Forms.TextBox();
+            this.gbImages = new System.Windows.Forms.GroupBox();
+            this.btnBrowseImagesDir = new System.Windows.Forms.Button();
+            this.btnMoveImageFiles = new System.Windows.Forms.Button();
+            this.lblImagesFolderPattern = new System.Windows.Forms.Label();
+            this.lblImagesFolderPatternPreview = new System.Windows.Forms.Label();
+            this.txtImagesFolderPattern = new System.Windows.Forms.TextBox();
+            this.chkDeleteLocal = new System.Windows.Forms.CheckBox();
+            this.btnViewImagesDir = new System.Windows.Forms.Button();
+            this.txtImagesDir = new System.Windows.Forms.TextBox();
+            this.gbLogs = new System.Windows.Forms.GroupBox();
+            this.btnViewCacheDir = new System.Windows.Forms.Button();
+            this.txtLogsDir = new System.Windows.Forms.TextBox();
             this.tlpMain.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -110,6 +129,10 @@
             this.gbBackupRestoreUploaders.SuspendLayout();
             this.gbBackupRestoreOutputs.SuspendLayout();
             this.gbSettingsExportImport.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            this.gbRoot.SuspendLayout();
+            this.gbImages.SuspendLayout();
+            this.gbLogs.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -132,29 +155,31 @@
             this.tvOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvOptions.Location = new System.Drawing.Point(3, 3);
             this.tvOptions.Name = "tvOptions";
-            treeNode9.Name = "tnGeneral";
-            treeNode9.Text = "General";
-            treeNode10.Name = "tnWorkflow";
-            treeNode10.Text = "Workflow";
-            treeNode11.Name = "Node1";
-            treeNode11.Text = "Folder Listing";
-            treeNode12.Name = "tnCapture";
-            treeNode12.Text = "Capture";
-            treeNode13.Name = "tnEffects";
-            treeNode13.Text = "Effects";
-            treeNode14.Name = "Node0";
-            treeNode14.Text = "History";
-            treeNode15.Name = "tnSaving";
-            treeNode15.Text = "Saving";
-            treeNode16.Name = "Node0";
-            treeNode16.Text = "Backup & Restore";
+            treeNode1.Name = "tnGeneral";
+            treeNode1.Text = "General";
+            treeNode2.Name = "tnWorkflow";
+            treeNode2.Text = "Workflow";
+            treeNode3.Name = "Node1";
+            treeNode3.Text = "Folder Listing";
+            treeNode4.Name = "tnCapture";
+            treeNode4.Text = "Capture";
+            treeNode5.Name = "tnEffects";
+            treeNode5.Text = "Effects";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "Paths";
+            treeNode7.Name = "Node0";
+            treeNode7.Text = "History";
+            treeNode8.Name = "tnSaving";
+            treeNode8.Text = "Saving";
+            treeNode9.Name = "Node0";
+            treeNode9.Text = "Backup & Restore";
             this.tvOptions.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode12,
-            treeNode13,
-            treeNode15,
-            treeNode16});
+            treeNode1,
+            treeNode2,
+            treeNode4,
+            treeNode5,
+            treeNode8,
+            treeNode9});
             this.tvOptions.Size = new System.Drawing.Size(160, 520);
             this.tvOptions.TabIndex = 0;
             // 
@@ -166,6 +191,7 @@
             this.tcMain.Controls.Add(this.tabPage6);
             this.tcMain.Controls.Add(this.tabPage4);
             this.tcMain.Controls.Add(this.tabPage5);
+            this.tcMain.Controls.Add(this.tabPage9);
             this.tcMain.Controls.Add(this.tabPage7);
             this.tcMain.Controls.Add(this.tabPage8);
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -200,7 +226,7 @@
             this.gbMisc.Location = new System.Drawing.Point(11, 15);
             this.gbMisc.Name = "gbMisc";
             this.gbMisc.Size = new System.Drawing.Size(589, 104);
-            this.gbMisc.TabIndex = 3;
+            this.gbMisc.TabIndex = 0;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
             // 
@@ -280,7 +306,7 @@
             this.gbUpdates.Location = new System.Drawing.Point(11, 232);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(589, 128);
-            this.gbUpdates.TabIndex = 5;
+            this.gbUpdates.TabIndex = 2;
             this.gbUpdates.TabStop = false;
             this.gbUpdates.Text = "Check Updates";
             // 
@@ -334,7 +360,7 @@
             this.gbWindowButtons.Location = new System.Drawing.Point(8, 128);
             this.gbWindowButtons.Name = "gbWindowButtons";
             this.gbWindowButtons.Size = new System.Drawing.Size(592, 89);
-            this.gbWindowButtons.TabIndex = 4;
+            this.gbWindowButtons.TabIndex = 1;
             this.gbWindowButtons.TabStop = false;
             this.gbWindowButtons.Text = "Windows Buttons Behavior";
             // 
@@ -395,7 +421,7 @@
             this.gbOptionsBalloonTip.Location = new System.Drawing.Point(11, 167);
             this.gbOptionsBalloonTip.Name = "gbOptionsBalloonTip";
             this.gbOptionsBalloonTip.Size = new System.Drawing.Size(581, 80);
-            this.gbOptionsBalloonTip.TabIndex = 3;
+            this.gbOptionsBalloonTip.TabIndex = 1;
             this.gbOptionsBalloonTip.TabStop = false;
             this.gbOptionsBalloonTip.Text = "Balloon Tip Options";
             // 
@@ -433,7 +459,7 @@
             this.gbAppearance.Location = new System.Drawing.Point(11, 7);
             this.gbAppearance.Name = "gbAppearance";
             this.gbAppearance.Size = new System.Drawing.Size(581, 152);
-            this.gbAppearance.TabIndex = 2;
+            this.gbAppearance.TabIndex = 0;
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
             // 
@@ -511,7 +537,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(612, 494);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "Capture";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tabPage6
@@ -521,7 +547,7 @@
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(612, 494);
-            this.tabPage6.TabIndex = 5;
+            this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Directory Indexer";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
@@ -540,9 +566,17 @@
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(612, 494);
-            this.tabPage4.TabIndex = 3;
+            this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Effects";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // pgWorkflowImageEffects
+            // 
+            this.pgWorkflowImageEffects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgWorkflowImageEffects.Location = new System.Drawing.Point(3, 3);
+            this.pgWorkflowImageEffects.Name = "pgWorkflowImageEffects";
+            this.pgWorkflowImageEffects.Size = new System.Drawing.Size(606, 488);
+            this.pgWorkflowImageEffects.TabIndex = 0;
             // 
             // tabPage5
             // 
@@ -550,7 +584,7 @@
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(612, 494);
-            this.tabPage5.TabIndex = 4;
+            this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Saving";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
@@ -563,7 +597,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(612, 494);
-            this.tabPage7.TabIndex = 6;
+            this.tabPage7.TabIndex = 7;
             this.tabPage7.Text = "History";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
@@ -572,7 +606,7 @@
             this.btnClearHistory.Location = new System.Drawing.Point(16, 77);
             this.btnClearHistory.Name = "btnClearHistory";
             this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
-            this.btnClearHistory.TabIndex = 7;
+            this.btnClearHistory.TabIndex = 3;
             this.btnClearHistory.Text = "Clear History...";
             this.btnClearHistory.UseVisualStyleBackColor = true;
             this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
@@ -583,7 +617,7 @@
             this.label1.Location = new System.Drawing.Point(16, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(172, 13);
-            this.label1.TabIndex = 4;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Maximum number of items in history";
             // 
             // cbHistorySave
@@ -592,7 +626,7 @@
             this.cbHistorySave.Location = new System.Drawing.Point(16, 45);
             this.cbHistorySave.Name = "cbHistorySave";
             this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
-            this.cbHistorySave.TabIndex = 6;
+            this.cbHistorySave.TabIndex = 2;
             this.cbHistorySave.Text = "Save successfully uploaded items to History";
             this.cbHistorySave.UseVisualStyleBackColor = true;
             this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
@@ -612,7 +646,7 @@
             -2147483648});
             this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
             this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
-            this.nudHistoryMaxItems.TabIndex = 5;
+            this.nudHistoryMaxItems.TabIndex = 1;
             this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
             // 
@@ -625,7 +659,7 @@
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage8.Size = new System.Drawing.Size(612, 494);
-            this.tabPage8.TabIndex = 7;
+            this.tabPage8.TabIndex = 8;
             this.tabPage8.Text = "Backup && Restore";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
@@ -636,7 +670,7 @@
             this.gbBackupRestoreUploaders.Location = new System.Drawing.Point(16, 280);
             this.gbBackupRestoreUploaders.Name = "gbBackupRestoreUploaders";
             this.gbBackupRestoreUploaders.Size = new System.Drawing.Size(216, 96);
-            this.gbBackupRestoreUploaders.TabIndex = 5;
+            this.gbBackupRestoreUploaders.TabIndex = 2;
             this.gbBackupRestoreUploaders.TabStop = false;
             this.gbBackupRestoreUploaders.Text = "Uploaders Config";
             // 
@@ -671,7 +705,7 @@
             this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(16, 168);
             this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
             this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 96);
-            this.gbBackupRestoreOutputs.TabIndex = 4;
+            this.gbBackupRestoreOutputs.TabIndex = 1;
             this.gbBackupRestoreOutputs.TabStop = false;
             this.gbBackupRestoreOutputs.Text = "Workflow Settings";
             // 
@@ -708,7 +742,7 @@
             this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
             this.gbSettingsExportImport.Name = "gbSettingsExportImport";
             this.gbSettingsExportImport.Size = new System.Drawing.Size(136, 136);
-            this.gbSettingsExportImport.TabIndex = 3;
+            this.gbSettingsExportImport.TabIndex = 0;
             this.gbSettingsExportImport.TabStop = false;
             this.gbSettingsExportImport.Text = "Application Settings";
             // 
@@ -747,13 +781,210 @@
             this.btnSettingsImport.UseVisualStyleBackColor = true;
             this.btnSettingsImport.Click += new System.EventHandler(this.btnSettingsImport_Click);
             // 
-            // pgWorkflowImageEffects
+            // tabPage9
             // 
-            this.pgWorkflowImageEffects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgWorkflowImageEffects.Location = new System.Drawing.Point(3, 3);
-            this.pgWorkflowImageEffects.Name = "pgWorkflowImageEffects";
-            this.pgWorkflowImageEffects.Size = new System.Drawing.Size(606, 488);
-            this.pgWorkflowImageEffects.TabIndex = 1;
+            this.tabPage9.Controls.Add(this.gbRoot);
+            this.tabPage9.Controls.Add(this.gbImages);
+            this.tabPage9.Controls.Add(this.gbLogs);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(612, 494);
+            this.tabPage9.TabIndex = 6;
+            this.tabPage9.Text = "Paths";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // gbRoot
+            // 
+            this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbRoot.Controls.Add(this.btnViewRootDir);
+            this.gbRoot.Controls.Add(this.btnRelocateRootDir);
+            this.gbRoot.Controls.Add(this.txtRootFolder);
+            this.gbRoot.Location = new System.Drawing.Point(8, 8);
+            this.gbRoot.Name = "gbRoot";
+            this.gbRoot.Size = new System.Drawing.Size(592, 64);
+            this.gbRoot.TabIndex = 0;
+            this.gbRoot.TabStop = false;
+            this.gbRoot.Text = "Root";
+            // 
+            // btnViewRootDir
+            // 
+            this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewRootDir.Location = new System.Drawing.Point(476, 22);
+            this.btnViewRootDir.Name = "btnViewRootDir";
+            this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
+            this.btnViewRootDir.TabIndex = 2;
+            this.btnViewRootDir.Text = "View Directory...";
+            this.btnViewRootDir.UseVisualStyleBackColor = true;
+            this.btnViewRootDir.Click += new System.EventHandler(this.btnViewRootDir_Click);
+            // 
+            // btnRelocateRootDir
+            // 
+            this.btnRelocateRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRelocateRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRelocateRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnRelocateRootDir.Location = new System.Drawing.Point(387, 22);
+            this.btnRelocateRootDir.Name = "btnRelocateRootDir";
+            this.btnRelocateRootDir.Size = new System.Drawing.Size(80, 24);
+            this.btnRelocateRootDir.TabIndex = 1;
+            this.btnRelocateRootDir.Text = "Relocate...";
+            this.btnRelocateRootDir.UseVisualStyleBackColor = true;
+            this.btnRelocateRootDir.Click += new System.EventHandler(this.btnBrowseRootDir_Click);
+            // 
+            // txtRootFolder
+            // 
+            this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
+            this.txtRootFolder.Name = "txtRootFolder";
+            this.txtRootFolder.ReadOnly = true;
+            this.txtRootFolder.Size = new System.Drawing.Size(355, 20);
+            this.txtRootFolder.TabIndex = 0;
+            this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
+    "";
+            // 
+            // gbImages
+            // 
+            this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImages.BackColor = System.Drawing.Color.Transparent;
+            this.gbImages.Controls.Add(this.btnBrowseImagesDir);
+            this.gbImages.Controls.Add(this.btnMoveImageFiles);
+            this.gbImages.Controls.Add(this.lblImagesFolderPattern);
+            this.gbImages.Controls.Add(this.lblImagesFolderPatternPreview);
+            this.gbImages.Controls.Add(this.txtImagesFolderPattern);
+            this.gbImages.Controls.Add(this.chkDeleteLocal);
+            this.gbImages.Controls.Add(this.btnViewImagesDir);
+            this.gbImages.Controls.Add(this.txtImagesDir);
+            this.gbImages.Location = new System.Drawing.Point(8, 80);
+            this.gbImages.Name = "gbImages";
+            this.gbImages.Size = new System.Drawing.Size(592, 120);
+            this.gbImages.TabIndex = 1;
+            this.gbImages.TabStop = false;
+            this.gbImages.Text = "Images";
+            // 
+            // btnBrowseImagesDir
+            // 
+            this.btnBrowseImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnBrowseImagesDir.Location = new System.Drawing.Point(387, 21);
+            this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
+            this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
+            this.btnBrowseImagesDir.TabIndex = 1;
+            this.btnBrowseImagesDir.Text = "Relocate...";
+            this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
+            this.btnBrowseImagesDir.Click += new System.EventHandler(this.BtnBrowseImagesDirClick);
+            // 
+            // btnMoveImageFiles
+            // 
+            this.btnMoveImageFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveImageFiles.Location = new System.Drawing.Point(404, 56);
+            this.btnMoveImageFiles.Name = "btnMoveImageFiles";
+            this.btnMoveImageFiles.Size = new System.Drawing.Size(176, 23);
+            this.btnMoveImageFiles.TabIndex = 6;
+            this.btnMoveImageFiles.Text = "Move Images to Sub-folders...";
+            this.btnMoveImageFiles.UseVisualStyleBackColor = true;
+            this.btnMoveImageFiles.Click += new System.EventHandler(this.btnMoveImageFiles_Click);
+            // 
+            // lblImagesFolderPattern
+            // 
+            this.lblImagesFolderPattern.AutoSize = true;
+            this.lblImagesFolderPattern.Location = new System.Drawing.Point(16, 59);
+            this.lblImagesFolderPattern.Name = "lblImagesFolderPattern";
+            this.lblImagesFolderPattern.Size = new System.Drawing.Size(95, 13);
+            this.lblImagesFolderPattern.TabIndex = 3;
+            this.lblImagesFolderPattern.Text = "Sub-folder Pattern:";
+            // 
+            // lblImagesFolderPatternPreview
+            // 
+            this.lblImagesFolderPatternPreview.AutoSize = true;
+            this.lblImagesFolderPatternPreview.Location = new System.Drawing.Point(232, 59);
+            this.lblImagesFolderPatternPreview.Name = "lblImagesFolderPatternPreview";
+            this.lblImagesFolderPatternPreview.Size = new System.Drawing.Size(81, 13);
+            this.lblImagesFolderPatternPreview.TabIndex = 5;
+            this.lblImagesFolderPatternPreview.Text = "Pattern preview";
+            // 
+            // txtImagesFolderPattern
+            // 
+            this.txtImagesFolderPattern.Location = new System.Drawing.Point(120, 56);
+            this.txtImagesFolderPattern.Name = "txtImagesFolderPattern";
+            this.txtImagesFolderPattern.Size = new System.Drawing.Size(100, 20);
+            this.txtImagesFolderPattern.TabIndex = 4;
+            this.txtImagesFolderPattern.TextChanged += new System.EventHandler(this.txtImagesFolderPattern_TextChanged);
+            // 
+            // chkDeleteLocal
+            // 
+            this.chkDeleteLocal.AutoSize = true;
+            this.chkDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkDeleteLocal.Location = new System.Drawing.Point(16, 88);
+            this.chkDeleteLocal.Name = "chkDeleteLocal";
+            this.chkDeleteLocal.Size = new System.Drawing.Size(283, 17);
+            this.chkDeleteLocal.TabIndex = 7;
+            this.chkDeleteLocal.Text = "Delete captured screenshots after upload is completed";
+            this.chkDeleteLocal.UseVisualStyleBackColor = true;
+            this.chkDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
+            // 
+            // btnViewImagesDir
+            // 
+            this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewImagesDir.Location = new System.Drawing.Point(476, 21);
+            this.btnViewImagesDir.Name = "btnViewImagesDir";
+            this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
+            this.btnViewImagesDir.TabIndex = 2;
+            this.btnViewImagesDir.Text = "View Directory...";
+            this.btnViewImagesDir.UseVisualStyleBackColor = true;
+            this.btnViewImagesDir.Click += new System.EventHandler(this.btnViewLocalDirectory_Click);
+            // 
+            // txtImagesDir
+            // 
+            this.txtImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImagesDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtImagesDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
+            this.txtImagesDir.Name = "txtImagesDir";
+            this.txtImagesDir.ReadOnly = true;
+            this.txtImagesDir.Size = new System.Drawing.Size(355, 20);
+            this.txtImagesDir.TabIndex = 0;
+            // 
+            // gbLogs
+            // 
+            this.gbLogs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbLogs.BackColor = System.Drawing.Color.Transparent;
+            this.gbLogs.Controls.Add(this.btnViewCacheDir);
+            this.gbLogs.Controls.Add(this.txtLogsDir);
+            this.gbLogs.Location = new System.Drawing.Point(8, 208);
+            this.gbLogs.Name = "gbLogs";
+            this.gbLogs.Size = new System.Drawing.Size(592, 64);
+            this.gbLogs.TabIndex = 2;
+            this.gbLogs.TabStop = false;
+            this.gbLogs.Text = "Logs";
+            // 
+            // btnViewCacheDir
+            // 
+            this.btnViewCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnViewCacheDir.Location = new System.Drawing.Point(472, 22);
+            this.btnViewCacheDir.Name = "btnViewCacheDir";
+            this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
+            this.btnViewCacheDir.TabIndex = 1;
+            this.btnViewCacheDir.Text = "View Directory...";
+            this.btnViewCacheDir.UseVisualStyleBackColor = true;
+            this.btnViewCacheDir.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
+            // 
+            // txtLogsDir
+            // 
+            this.txtLogsDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLogsDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtLogsDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtLogsDir.Location = new System.Drawing.Point(16, 24);
+            this.txtLogsDir.Name = "txtLogsDir";
+            this.txtLogsDir.ReadOnly = true;
+            this.txtLogsDir.Size = new System.Drawing.Size(450, 20);
+            this.txtLogsDir.TabIndex = 0;
             // 
             // ZScreenOptionsUI
             // 
@@ -791,6 +1022,13 @@
             this.gbBackupRestoreUploaders.ResumeLayout(false);
             this.gbBackupRestoreOutputs.ResumeLayout(false);
             this.gbSettingsExportImport.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
+            this.gbRoot.ResumeLayout(false);
+            this.gbRoot.PerformLayout();
+            this.gbImages.ResumeLayout(false);
+            this.gbImages.PerformLayout();
+            this.gbLogs.ResumeLayout(false);
+            this.gbLogs.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -851,6 +1089,23 @@
         internal System.Windows.Forms.Label lblTrayFlash;
         internal System.Windows.Forms.NumericUpDown nudFlashIconCount;
         internal System.Windows.Forms.PropertyGrid pgWorkflowImageEffects;
+        private System.Windows.Forms.TabPage tabPage9;
+        internal System.Windows.Forms.GroupBox gbRoot;
+        internal System.Windows.Forms.Button btnViewRootDir;
+        internal System.Windows.Forms.Button btnRelocateRootDir;
+        internal System.Windows.Forms.TextBox txtRootFolder;
+        internal System.Windows.Forms.GroupBox gbImages;
+        internal System.Windows.Forms.Button btnBrowseImagesDir;
+        private System.Windows.Forms.Button btnMoveImageFiles;
+        private System.Windows.Forms.Label lblImagesFolderPattern;
+        private System.Windows.Forms.Label lblImagesFolderPatternPreview;
+        private System.Windows.Forms.TextBox txtImagesFolderPattern;
+        internal System.Windows.Forms.CheckBox chkDeleteLocal;
+        internal System.Windows.Forms.Button btnViewImagesDir;
+        internal System.Windows.Forms.TextBox txtImagesDir;
+        internal System.Windows.Forms.GroupBox gbLogs;
+        internal System.Windows.Forms.Button btnViewCacheDir;
+        internal System.Windows.Forms.TextBox txtLogsDir;
 
     }
 }

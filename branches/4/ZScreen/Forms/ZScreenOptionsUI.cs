@@ -81,12 +81,42 @@ namespace ZScreenGUI
             // Effects
             pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
 
+            // Paths
+            ConfigurePaths();
+
             // History
             nudHistoryMaxItems.Value = Engine.ConfigUI.HistoryMaxNumber;
             cbHistorySave.Checked = Engine.ConfigUI.HistorySave;
         }
 
         #endregion 1 Constructors
+
+        internal void ConfigurePaths()
+        {
+            Engine.InitializeDefaultFolderPaths(dirCreation: false);
+
+            txtImagesDir.Text = Engine.ImagesDir;
+            txtLogsDir.Text = Engine.LogsDir;
+
+            if (Engine.ConfigApp.PreferSystemFolders)
+            {
+                txtRootFolder.Text = Engine.SettingsDir;
+                gbRoot.Text = "Settings";
+            }
+            else
+            {
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
+                gbRoot.Text = "Root";
+            }
+
+            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
+            gbRoot.Enabled = !Engine.IsPortable;
+            gbImages.Enabled = !Engine.IsPortable;
+            gbLogs.Enabled = !Engine.IsPortable;
+
+            chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
+            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
+        }
 
         #region 1 Helpers
 
@@ -446,6 +476,81 @@ namespace ZScreenGUI
             tvOptions.ExpandAll();
             // tvOptions_NodeMouseClick(sender, new TreeNodeMouseClickEventArgs(tvOptions.Nodes[0], System.Windows.Forms.MouseButtons.Left, 1, Cursor.Position.X, Cursor.Position.Y));
             tvOptions.SelectedNode = tvOptions.Nodes[0];
+        }
+
+        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
+        {
+            string oldDir = txtImagesDir.Text;
+            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
+                                         "Images");
+
+            if (!string.IsNullOrEmpty(dirNew))
+            {
+                Engine.ConfigUI.UseCustomImagesDir = true;
+                Engine.ConfigUI.CustomImagesDir = dirNew;
+                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
+                ConfigurePaths();
+            }
+        }
+
+        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
+        {
+            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text =
+                new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
+            txtImagesDir.Text = Engine.ImagesDir;
+        }
+
+        private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.ConfigUI.DeleteLocal = chkDeleteLocal.Checked;
+        }
+
+        private void btnViewRootDir_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(txtRootFolder.Text);
+        }
+
+        private void btnViewLocalDirectory_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(FileSystem.GetImagesDir());
+        }
+
+        private void btnMoveImageFiles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (FileSystem.ManageImageFolders(Engine.RootImagesDir))
+                {
+                    MessageBox.Show("Files successfully moved to save folders.");
+                }
+            }
+            catch (Exception ex)
+            {
+                StaticHelper.WriteException(ex, "Error while moving image files");
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnBrowseRootDir_Click(object sender, EventArgs e)
+        {
+            string oldRootDir = txtRootFolder.Text;
+            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
+
+            if (!string.IsNullOrEmpty(dirNew))
+            {
+                Engine.SetRootFolder(dirNew);
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
+                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
+                ConfigurePaths();
+                Engine.ConfigUI = XMLSettings.Read();
+                Loader.MainForm.ZScreen_ConfigGUI();
+            }
+        }
+
+        private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(Engine.LogsDir);
         }
     }
 }

@@ -34,14 +34,7 @@ namespace ZScreenGUI
             tpMain.ImageKey = "application_form";
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
-            tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
-
-            // Options - Proxy
-            ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
-            ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
-            ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
-            ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
 
             // Watermark Codes Menu
             codesMenu.AutoClose = false;
@@ -73,7 +66,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_Capture();
             ZScreen_ConfigGUI_Actions();
             ZScreen_ConfigGUI_Options();
-            ZScreen_ConfigGUI_Options_Paths();
             ZScreen_ConfigGUI_Options_History();
         }
 
@@ -168,9 +160,6 @@ namespace ZScreenGUI
             cbFreehandCropAutoClose.Checked = Engine.ConfigUI.FreehandCropAutoClose;
             cbFreehandCropShowRectangleBorder.Checked = Engine.ConfigUI.FreehandCropShowRectangleBorder;
             pgSurfaceConfig.SelectedObject = Engine.ConfigUI.SurfaceConfig;
-
-            // Naming Conventions
-            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
         }
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
@@ -248,22 +237,7 @@ namespace ZScreenGUI
                 this.ShowInTaskbar = Engine.ConfigApp.ShowInTaskbar;
             }
 
-            // Proxy
-            if (cboProxyConfig.Items.Count == 0)
-            {
-                cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetEnumDescriptions());
-            }
-            cboProxyConfig.SelectedIndex = (int)Engine.ConfigUI.ProxyConfig;
-
-            ProxySetup(Engine.ConfigUI.ProxyList);
-            if (ucProxyAccounts.AccountsList.Items.Count > 0)
-            {
-                ucProxyAccounts.AccountsList.SelectedIndex = Engine.ConfigUI.ProxySelected;
-            }
-
             ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
-
-            chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
             zWatcher.FolderPath = Engine.ConfigUI.FolderMonitorPath;
@@ -281,30 +255,6 @@ namespace ZScreenGUI
             chkMonText.Checked = Engine.ConfigUI.MonitorText;
             chkMonFiles.Checked = Engine.ConfigUI.MonitorFiles;
             chkMonUrls.Checked = Engine.ConfigUI.MonitorUrls;
-        }
-
-        private void ZScreen_ConfigGUI_Options_Paths()
-        {
-            Engine.InitializeDefaultFolderPaths(dirCreation: false);
-
-            txtImagesDir.Text = Engine.ImagesDir;
-            txtLogsDir.Text = Engine.LogsDir;
-
-            if (Engine.ConfigApp.PreferSystemFolders)
-            {
-                txtRootFolder.Text = Engine.SettingsDir;
-                gbRoot.Text = "Settings";
-            }
-            else
-            {
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                gbRoot.Text = "Root";
-            }
-
-            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
-            gbRoot.Enabled = !Engine.IsPortable;
-            gbImages.Enabled = !Engine.IsPortable;
-            gbLogs.Enabled = !Engine.IsPortable;
         }
 
         private void ZScreen_ConfigGUI_Options_History()

@@ -343,8 +343,8 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            StaticHelper.WriteLine("Proxy Config: " + Engine.ConfigUI.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
-            return new ProxySettings { ProxyConfig = Engine.ConfigUI.ProxyConfig, ProxyActive = Engine.ConfigUI.ProxyActive };
+            StaticHelper.WriteLine("Proxy Config: " + Engine.ConfigUI.ConfigProxy.ProxyConfigType.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
+            return new ProxySettings { ProxyConfig = Engine.ConfigUI.ConfigProxy.ProxyConfigType, ProxyActive = Engine.ConfigUI.ConfigProxy.ProxyActive };
         }
 
         public static void TestProxyAccount(ProxyInfo acc)

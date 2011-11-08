@@ -354,15 +354,11 @@ namespace ZScreenLib
 
         public PrintSettings PrintSettings = new PrintSettings();
         public bool PromptForOutputs = false;
-        public ProxyInfo ProxyActive = null;
-        public ProxyConfigType ProxyConfig = ProxyConfigType.NoProxy;
 
         //~~~~~~~~~~~~~~~
         // Proxy Settings
         //~~~~~~~~~~~~~~~
-
-        public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
-        public int ProxySelected = 0;
+        public ProxyConfig ConfigProxy = new ProxyConfig();
 
         public HotkeySetting RectangleRegionLast2 = new HotkeySetting();
 

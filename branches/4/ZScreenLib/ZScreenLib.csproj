@@ -129,12 +129,6 @@
     </Compile>
     <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
-    <Compile Include="Forms\ProxyConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ProxyConfig.Designer.cs">
-      <DependentUpon>ProxyConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\CropLight.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,12 +149,6 @@
     </Compile>
     <Compile Include="Forms\LayeredForm.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ClipboardOptions.cs">
       <SubType>Form</SubType>
@@ -274,14 +262,6 @@
       <Project>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</Project>
       <Name>ImageQueueLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lib\GreenshotPlugin\GreenshotPlugin.csproj">
-      <Project>{5B924697-4DCD-4F98-85F1-105CB84B7341}</Project>
-      <Name>GreenshotPlugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\Greenshot\Greenshot.csproj">
-      <Project>{CD642BF4-D815-4D67-A0B5-C69F0B8231AF}</Project>
-      <Name>Greenshot</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ScreenCapture.Shapes\ScreenCapture.Shapes.csproj">
       <Project>{87E2211F-3D55-4A15-B497-2586085442CF}</Project>
       <Name>ScreenCapture.Shapes</Name>
@@ -320,10 +300,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ClipboardOptions.resx">
       <DependentUpon>ClipboardOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -336,9 +312,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ProxyConfig.resx">
-      <DependentUpon>ProxyConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>

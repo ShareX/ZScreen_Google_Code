@@ -316,7 +316,7 @@ namespace UploadersLib
         private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length, string contentType, CookieCollection cookies = null)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
+            request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != EProxyConfigType.NoProxy;
             request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.ContentLength = length;
             if (!string.IsNullOrEmpty(boundary)) contentType += "; boundary=" + boundary;

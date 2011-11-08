@@ -862,6 +862,7 @@ namespace ZScreenLib
                     {
                         try
                         {
+                            /*
                             // Compatibility fixes
                             string APPLICATIONDATA_LANGUAGE_PATH =
                                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -885,6 +886,7 @@ namespace ZScreenLib
                             editor.Visible = false;
                             editor.ShowDialog();
                             TempImage = editor.GetImageForExport();
+                            */
                         }
                         catch (Exception ex)
                         {

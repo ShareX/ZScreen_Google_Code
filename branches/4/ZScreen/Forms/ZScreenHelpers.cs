@@ -138,12 +138,5 @@ namespace ZScreenGUI
 
             return false;
         }
-
-        public void ProxyAdd(ProxyInfo acc)
-        {
-            Engine.ConfigUI.ProxyList.Add(acc);
-            ucProxyAccounts.AccountsList.Items.Add(acc);
-            ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
-        }
     }
 }
