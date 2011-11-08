@@ -15,6 +15,7 @@ using HelpersLib.Hotkey;
 using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZScreenCoreLib;
 using ZScreenLib.Helpers;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;

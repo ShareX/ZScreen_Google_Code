@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Properties;
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     public partial class ActionsUI : Form
     {

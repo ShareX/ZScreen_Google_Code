@@ -11,7 +11,6 @@ using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
 using ZScreenCoreLib;
-using ZScreenLib;
 
 #region License Information (GPL v2)
 

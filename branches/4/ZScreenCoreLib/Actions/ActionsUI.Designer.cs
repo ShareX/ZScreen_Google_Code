@@ -1,4 +1,4 @@
-﻿namespace ZScreenLib
+﻿namespace ZScreenCoreLib
 {
     partial class ActionsUI
     {
