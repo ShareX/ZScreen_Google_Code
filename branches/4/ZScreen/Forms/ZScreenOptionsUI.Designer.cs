@@ -78,22 +78,6 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pgWorkflowImageEffects = new System.Windows.Forms.PropertyGrid();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.btnClearHistory = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.gbBackupRestoreUploaders = new System.Windows.Forms.GroupBox();
-            this.btnUploadersConfigExport = new System.Windows.Forms.Button();
-            this.btnUploadersConfigImport = new System.Windows.Forms.Button();
-            this.gbBackupRestoreOutputs = new System.Windows.Forms.GroupBox();
-            this.btnOutputsConfigExport = new System.Windows.Forms.Button();
-            this.btnOutputsConfigImport = new System.Windows.Forms.Button();
-            this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
-            this.btnSettingsDefault = new System.Windows.Forms.Button();
-            this.btnSettingsExport = new System.Windows.Forms.Button();
-            this.btnSettingsImport = new System.Windows.Forms.Button();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.gbRoot = new System.Windows.Forms.GroupBox();
             this.btnViewRootDir = new System.Windows.Forms.Button();
@@ -111,6 +95,22 @@
             this.gbLogs = new System.Windows.Forms.GroupBox();
             this.btnViewCacheDir = new System.Windows.Forms.Button();
             this.txtLogsDir = new System.Windows.Forms.TextBox();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.btnClearHistory = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbHistorySave = new System.Windows.Forms.CheckBox();
+            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.gbBackupRestoreUploaders = new System.Windows.Forms.GroupBox();
+            this.btnUploadersConfigExport = new System.Windows.Forms.Button();
+            this.btnUploadersConfigImport = new System.Windows.Forms.Button();
+            this.gbBackupRestoreOutputs = new System.Windows.Forms.GroupBox();
+            this.btnOutputsConfigExport = new System.Windows.Forms.Button();
+            this.btnOutputsConfigImport = new System.Windows.Forms.Button();
+            this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
+            this.btnSettingsDefault = new System.Windows.Forms.Button();
+            this.btnSettingsExport = new System.Windows.Forms.Button();
+            this.btnSettingsImport = new System.Windows.Forms.Button();
             this.tlpMain.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -123,16 +123,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
             this.tabPage6.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            this.gbRoot.SuspendLayout();
+            this.gbImages.SuspendLayout();
+            this.gbLogs.SuspendLayout();
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tabPage8.SuspendLayout();
             this.gbBackupRestoreUploaders.SuspendLayout();
             this.gbBackupRestoreOutputs.SuspendLayout();
             this.gbSettingsExportImport.SuspendLayout();
-            this.tabPage9.SuspendLayout();
-            this.gbRoot.SuspendLayout();
-            this.gbImages.SuspendLayout();
-            this.gbLogs.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -588,199 +588,6 @@
             this.tabPage5.Text = "Saving";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.btnClearHistory);
-            this.tabPage7.Controls.Add(this.label1);
-            this.tabPage7.Controls.Add(this.cbHistorySave);
-            this.tabPage7.Controls.Add(this.nudHistoryMaxItems);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(612, 494);
-            this.tabPage7.TabIndex = 7;
-            this.tabPage7.Text = "History";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // btnClearHistory
-            // 
-            this.btnClearHistory.Location = new System.Drawing.Point(16, 77);
-            this.btnClearHistory.Name = "btnClearHistory";
-            this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
-            this.btnClearHistory.TabIndex = 3;
-            this.btnClearHistory.Text = "Clear History...";
-            this.btnClearHistory.UseVisualStyleBackColor = true;
-            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Maximum number of items in history";
-            // 
-            // cbHistorySave
-            // 
-            this.cbHistorySave.AutoSize = true;
-            this.cbHistorySave.Location = new System.Drawing.Point(16, 45);
-            this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
-            this.cbHistorySave.TabIndex = 2;
-            this.cbHistorySave.Text = "Save successfully uploaded items to History";
-            this.cbHistorySave.UseVisualStyleBackColor = true;
-            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            // 
-            // nudHistoryMaxItems
-            // 
-            this.nudHistoryMaxItems.Location = new System.Drawing.Point(192, 13);
-            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudHistoryMaxItems.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
-            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
-            this.nudHistoryMaxItems.TabIndex = 1;
-            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.gbBackupRestoreUploaders);
-            this.tabPage8.Controls.Add(this.gbBackupRestoreOutputs);
-            this.tabPage8.Controls.Add(this.gbSettingsExportImport);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(612, 494);
-            this.tabPage8.TabIndex = 8;
-            this.tabPage8.Text = "Backup && Restore";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // gbBackupRestoreUploaders
-            // 
-            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigExport);
-            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigImport);
-            this.gbBackupRestoreUploaders.Location = new System.Drawing.Point(16, 280);
-            this.gbBackupRestoreUploaders.Name = "gbBackupRestoreUploaders";
-            this.gbBackupRestoreUploaders.Size = new System.Drawing.Size(216, 96);
-            this.gbBackupRestoreUploaders.TabIndex = 2;
-            this.gbBackupRestoreUploaders.TabStop = false;
-            this.gbBackupRestoreUploaders.Text = "Uploaders Config";
-            // 
-            // btnUploadersConfigExport
-            // 
-            this.btnUploadersConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnUploadersConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUploadersConfigExport.Location = new System.Drawing.Point(16, 56);
-            this.btnUploadersConfigExport.Name = "btnUploadersConfigExport";
-            this.btnUploadersConfigExport.Size = new System.Drawing.Size(184, 24);
-            this.btnUploadersConfigExport.TabIndex = 1;
-            this.btnUploadersConfigExport.Text = "Export Uploaders Configuration...";
-            this.btnUploadersConfigExport.UseVisualStyleBackColor = true;
-            this.btnUploadersConfigExport.Click += new System.EventHandler(this.btnUploadersConfigExport_Click);
-            // 
-            // btnUploadersConfigImport
-            // 
-            this.btnUploadersConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnUploadersConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUploadersConfigImport.Location = new System.Drawing.Point(16, 24);
-            this.btnUploadersConfigImport.Name = "btnUploadersConfigImport";
-            this.btnUploadersConfigImport.Size = new System.Drawing.Size(184, 24);
-            this.btnUploadersConfigImport.TabIndex = 0;
-            this.btnUploadersConfigImport.Text = "Import Uploaders Configuration...";
-            this.btnUploadersConfigImport.UseVisualStyleBackColor = true;
-            this.btnUploadersConfigImport.Click += new System.EventHandler(this.btnUploadersConfigImport_Click);
-            // 
-            // gbBackupRestoreOutputs
-            // 
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigExport);
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigImport);
-            this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(16, 168);
-            this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
-            this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 96);
-            this.gbBackupRestoreOutputs.TabIndex = 1;
-            this.gbBackupRestoreOutputs.TabStop = false;
-            this.gbBackupRestoreOutputs.Text = "Workflow Settings";
-            // 
-            // btnOutputsConfigExport
-            // 
-            this.btnOutputsConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOutputsConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOutputsConfigExport.Location = new System.Drawing.Point(16, 56);
-            this.btnOutputsConfigExport.Name = "btnOutputsConfigExport";
-            this.btnOutputsConfigExport.Size = new System.Drawing.Size(168, 24);
-            this.btnOutputsConfigExport.TabIndex = 1;
-            this.btnOutputsConfigExport.Text = "Export Workflow Configuration...";
-            this.btnOutputsConfigExport.UseVisualStyleBackColor = true;
-            this.btnOutputsConfigExport.Click += new System.EventHandler(this.btnOutputsConfigExport_Click);
-            // 
-            // btnOutputsConfigImport
-            // 
-            this.btnOutputsConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOutputsConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOutputsConfigImport.Location = new System.Drawing.Point(16, 24);
-            this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
-            this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
-            this.btnOutputsConfigImport.TabIndex = 0;
-            this.btnOutputsConfigImport.Text = "Import Workflow Configuration...";
-            this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
-            this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
-            // 
-            // gbSettingsExportImport
-            // 
-            this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
-            this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(136, 136);
-            this.gbSettingsExportImport.TabIndex = 0;
-            this.gbSettingsExportImport.TabStop = false;
-            this.gbSettingsExportImport.Text = "Application Settings";
-            // 
-            // btnSettingsDefault
-            // 
-            this.btnSettingsDefault.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsDefault.Location = new System.Drawing.Point(16, 88);
-            this.btnSettingsDefault.Name = "btnSettingsDefault";
-            this.btnSettingsDefault.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsDefault.TabIndex = 2;
-            this.btnSettingsDefault.Text = "Default Settings...";
-            this.btnSettingsDefault.UseVisualStyleBackColor = true;
-            this.btnSettingsDefault.Click += new System.EventHandler(this.btnDeleteSettings_Click);
-            // 
-            // btnSettingsExport
-            // 
-            this.btnSettingsExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsExport.Location = new System.Drawing.Point(16, 56);
-            this.btnSettingsExport.Name = "btnSettingsExport";
-            this.btnSettingsExport.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsExport.TabIndex = 1;
-            this.btnSettingsExport.Text = "Export Settings...";
-            this.btnSettingsExport.UseVisualStyleBackColor = true;
-            this.btnSettingsExport.Click += new System.EventHandler(this.btnSettingsExport_Click);
-            // 
-            // btnSettingsImport
-            // 
-            this.btnSettingsImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsImport.Location = new System.Drawing.Point(16, 24);
-            this.btnSettingsImport.Name = "btnSettingsImport";
-            this.btnSettingsImport.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsImport.TabIndex = 0;
-            this.btnSettingsImport.Text = "Import Settings...";
-            this.btnSettingsImport.UseVisualStyleBackColor = true;
-            this.btnSettingsImport.Click += new System.EventHandler(this.btnSettingsImport_Click);
-            // 
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.gbRoot);
@@ -986,6 +793,199 @@
             this.txtLogsDir.Size = new System.Drawing.Size(450, 20);
             this.txtLogsDir.TabIndex = 0;
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.btnClearHistory);
+            this.tabPage7.Controls.Add(this.label1);
+            this.tabPage7.Controls.Add(this.cbHistorySave);
+            this.tabPage7.Controls.Add(this.nudHistoryMaxItems);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(612, 494);
+            this.tabPage7.TabIndex = 7;
+            this.tabPage7.Text = "History";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // btnClearHistory
+            // 
+            this.btnClearHistory.Location = new System.Drawing.Point(16, 77);
+            this.btnClearHistory.Name = "btnClearHistory";
+            this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
+            this.btnClearHistory.TabIndex = 3;
+            this.btnClearHistory.Text = "Clear History...";
+            this.btnClearHistory.UseVisualStyleBackColor = true;
+            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Maximum number of items in history";
+            // 
+            // cbHistorySave
+            // 
+            this.cbHistorySave.AutoSize = true;
+            this.cbHistorySave.Location = new System.Drawing.Point(16, 45);
+            this.cbHistorySave.Name = "cbHistorySave";
+            this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
+            this.cbHistorySave.TabIndex = 2;
+            this.cbHistorySave.Text = "Save successfully uploaded items to History";
+            this.cbHistorySave.UseVisualStyleBackColor = true;
+            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
+            // 
+            // nudHistoryMaxItems
+            // 
+            this.nudHistoryMaxItems.Location = new System.Drawing.Point(192, 13);
+            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudHistoryMaxItems.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
+            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
+            this.nudHistoryMaxItems.TabIndex = 1;
+            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.gbBackupRestoreUploaders);
+            this.tabPage8.Controls.Add(this.gbBackupRestoreOutputs);
+            this.tabPage8.Controls.Add(this.gbSettingsExportImport);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(612, 494);
+            this.tabPage8.TabIndex = 8;
+            this.tabPage8.Text = "Backup && Restore";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // gbBackupRestoreUploaders
+            // 
+            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigExport);
+            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigImport);
+            this.gbBackupRestoreUploaders.Location = new System.Drawing.Point(16, 280);
+            this.gbBackupRestoreUploaders.Name = "gbBackupRestoreUploaders";
+            this.gbBackupRestoreUploaders.Size = new System.Drawing.Size(216, 96);
+            this.gbBackupRestoreUploaders.TabIndex = 2;
+            this.gbBackupRestoreUploaders.TabStop = false;
+            this.gbBackupRestoreUploaders.Text = "Uploaders Config";
+            // 
+            // btnUploadersConfigExport
+            // 
+            this.btnUploadersConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUploadersConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnUploadersConfigExport.Location = new System.Drawing.Point(16, 56);
+            this.btnUploadersConfigExport.Name = "btnUploadersConfigExport";
+            this.btnUploadersConfigExport.Size = new System.Drawing.Size(184, 24);
+            this.btnUploadersConfigExport.TabIndex = 1;
+            this.btnUploadersConfigExport.Text = "Export Uploaders Configuration...";
+            this.btnUploadersConfigExport.UseVisualStyleBackColor = true;
+            this.btnUploadersConfigExport.Click += new System.EventHandler(this.btnUploadersConfigExport_Click);
+            // 
+            // btnUploadersConfigImport
+            // 
+            this.btnUploadersConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUploadersConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnUploadersConfigImport.Location = new System.Drawing.Point(16, 24);
+            this.btnUploadersConfigImport.Name = "btnUploadersConfigImport";
+            this.btnUploadersConfigImport.Size = new System.Drawing.Size(184, 24);
+            this.btnUploadersConfigImport.TabIndex = 0;
+            this.btnUploadersConfigImport.Text = "Import Uploaders Configuration...";
+            this.btnUploadersConfigImport.UseVisualStyleBackColor = true;
+            this.btnUploadersConfigImport.Click += new System.EventHandler(this.btnUploadersConfigImport_Click);
+            // 
+            // gbBackupRestoreOutputs
+            // 
+            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigExport);
+            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigImport);
+            this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(16, 168);
+            this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
+            this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 96);
+            this.gbBackupRestoreOutputs.TabIndex = 1;
+            this.gbBackupRestoreOutputs.TabStop = false;
+            this.gbBackupRestoreOutputs.Text = "Workflow Settings";
+            // 
+            // btnOutputsConfigExport
+            // 
+            this.btnOutputsConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnOutputsConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOutputsConfigExport.Location = new System.Drawing.Point(16, 56);
+            this.btnOutputsConfigExport.Name = "btnOutputsConfigExport";
+            this.btnOutputsConfigExport.Size = new System.Drawing.Size(168, 24);
+            this.btnOutputsConfigExport.TabIndex = 1;
+            this.btnOutputsConfigExport.Text = "Export Workflow Configuration...";
+            this.btnOutputsConfigExport.UseVisualStyleBackColor = true;
+            this.btnOutputsConfigExport.Click += new System.EventHandler(this.btnOutputsConfigExport_Click);
+            // 
+            // btnOutputsConfigImport
+            // 
+            this.btnOutputsConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnOutputsConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOutputsConfigImport.Location = new System.Drawing.Point(16, 24);
+            this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
+            this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
+            this.btnOutputsConfigImport.TabIndex = 0;
+            this.btnOutputsConfigImport.Text = "Import Workflow Configuration...";
+            this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
+            this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
+            // 
+            // gbSettingsExportImport
+            // 
+            this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
+            this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
+            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
+            this.gbSettingsExportImport.Name = "gbSettingsExportImport";
+            this.gbSettingsExportImport.Size = new System.Drawing.Size(136, 136);
+            this.gbSettingsExportImport.TabIndex = 0;
+            this.gbSettingsExportImport.TabStop = false;
+            this.gbSettingsExportImport.Text = "Application Settings";
+            // 
+            // btnSettingsDefault
+            // 
+            this.btnSettingsDefault.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingsDefault.Location = new System.Drawing.Point(16, 88);
+            this.btnSettingsDefault.Name = "btnSettingsDefault";
+            this.btnSettingsDefault.Size = new System.Drawing.Size(104, 24);
+            this.btnSettingsDefault.TabIndex = 2;
+            this.btnSettingsDefault.Text = "Default Settings...";
+            this.btnSettingsDefault.UseVisualStyleBackColor = true;
+            this.btnSettingsDefault.Click += new System.EventHandler(this.btnDeleteSettings_Click);
+            // 
+            // btnSettingsExport
+            // 
+            this.btnSettingsExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingsExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSettingsExport.Location = new System.Drawing.Point(16, 56);
+            this.btnSettingsExport.Name = "btnSettingsExport";
+            this.btnSettingsExport.Size = new System.Drawing.Size(104, 24);
+            this.btnSettingsExport.TabIndex = 1;
+            this.btnSettingsExport.Text = "Export Settings...";
+            this.btnSettingsExport.UseVisualStyleBackColor = true;
+            this.btnSettingsExport.Click += new System.EventHandler(this.btnSettingsExport_Click);
+            // 
+            // btnSettingsImport
+            // 
+            this.btnSettingsImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingsImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSettingsImport.Location = new System.Drawing.Point(16, 24);
+            this.btnSettingsImport.Name = "btnSettingsImport";
+            this.btnSettingsImport.Size = new System.Drawing.Size(104, 24);
+            this.btnSettingsImport.TabIndex = 0;
+            this.btnSettingsImport.Text = "Import Settings...";
+            this.btnSettingsImport.UseVisualStyleBackColor = true;
+            this.btnSettingsImport.Click += new System.EventHandler(this.btnSettingsImport_Click);
+            // 
             // ZScreenOptionsUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1015,13 +1015,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
-            this.tabPage8.ResumeLayout(false);
-            this.gbBackupRestoreUploaders.ResumeLayout(false);
-            this.gbBackupRestoreOutputs.ResumeLayout(false);
-            this.gbSettingsExportImport.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.gbRoot.ResumeLayout(false);
             this.gbRoot.PerformLayout();
@@ -1029,6 +1022,13 @@
             this.gbImages.PerformLayout();
             this.gbLogs.ResumeLayout(false);
             this.gbLogs.PerformLayout();
+            this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.gbBackupRestoreUploaders.ResumeLayout(false);
+            this.gbBackupRestoreOutputs.ResumeLayout(false);
+            this.gbSettingsExportImport.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

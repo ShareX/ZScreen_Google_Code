@@ -2546,7 +2546,7 @@ namespace ZScreenGUI
             this.Controls.Add(this.msApp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.msApp;
-            this.MinimumSize = new System.Drawing.Size(982, 504);
+            this.MinimumSize = new System.Drawing.Size(990, 508);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

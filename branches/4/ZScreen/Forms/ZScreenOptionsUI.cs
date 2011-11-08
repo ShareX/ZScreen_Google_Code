@@ -36,6 +36,7 @@ namespace ZScreenGUI
 
             chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
             chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
+
             chkOpenMainWindow.Checked = Engine.ConfigApp.ShowMainWindow;
 
             if (Loader.MainForm.IsReady && !Engine.ConfigApp.ShowInTaskbar)
@@ -43,8 +44,8 @@ namespace ZScreenGUI
                 this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
             }
 
-            cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
-            cbAutoSaveSettings.Checked = Engine.ConfigUI.AutoSaveSettings;
+            cbShowHelpBalloonTips.Checked = Config.ShowHelpBalloonTips;
+            cbAutoSaveSettings.Checked = Config.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.ConfigApp.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
 
@@ -67,13 +68,13 @@ namespace ZScreenGUI
             }
 
             // Workflow
-            nudFlashIconCount.Value = Engine.ConfigUI.FlashTrayCount;
-            chkCaptureFallback.Checked = Engine.ConfigUI.CaptureEntireScreenOnError;
-            chkShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
-            cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
-            chkTwitterEnable.Checked = Engine.ConfigUI.TwitterEnabled;
+            nudFlashIconCount.Value = Config.FlashTrayCount;
+            chkCaptureFallback.Checked = Config.CaptureEntireScreenOnError;
+            chkShowPopup.Checked = Config.ShowBalloonTip;
+            chkBalloonTipOpenLink.Checked = Config.BalloonTipOpenLink;
+            cbShowUploadDuration.Checked = Config.ShowUploadDuration;
+            cbCompleteSound.Checked = Config.CompleteSound;
+            chkTwitterEnable.Checked = Config.TwitterEnabled;
 
             // Directory Indexer
             pgIndexer.SelectedObject = config.IndexerConfig;
@@ -85,38 +86,11 @@ namespace ZScreenGUI
             ConfigurePaths();
 
             // History
-            nudHistoryMaxItems.Value = Engine.ConfigUI.HistoryMaxNumber;
-            cbHistorySave.Checked = Engine.ConfigUI.HistorySave;
+            nudHistoryMaxItems.Value = Config.HistoryMaxNumber;
+            cbHistorySave.Checked = Config.HistorySave;
         }
 
         #endregion 1 Constructors
-
-        internal void ConfigurePaths()
-        {
-            Engine.InitializeDefaultFolderPaths(dirCreation: false);
-
-            txtImagesDir.Text = Engine.ImagesDir;
-            txtLogsDir.Text = Engine.LogsDir;
-
-            if (Engine.ConfigApp.PreferSystemFolders)
-            {
-                txtRootFolder.Text = Engine.SettingsDir;
-                gbRoot.Text = "Settings";
-            }
-            else
-            {
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                gbRoot.Text = "Root";
-            }
-
-            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
-            gbRoot.Enabled = !Engine.IsPortable;
-            gbImages.Enabled = !Engine.IsPortable;
-            gbLogs.Enabled = !Engine.IsPortable;
-
-            chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
-            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
-        }
 
         #region 1 Helpers
 
@@ -192,6 +166,18 @@ namespace ZScreenGUI
 
         #endregion 0 Backup & Restore
 
+        private void AddNodesToList(TreeNodeCollection nodes)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                Nodes.Add(nodes[i]);
+                if (nodes[i].Nodes.Count > 0)
+                {
+                    AddNodesToList(nodes[i].Nodes);
+                }
+            }
+        }
+
         #region Check Updates
 
         public void CheckUpdates()
@@ -246,18 +232,6 @@ namespace ZScreenGUI
 
         #endregion Check Updates
 
-        private void AddNodesToList(TreeNodeCollection nodes)
-        {
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                Nodes.Add(nodes[i]);
-                if (nodes[i].Nodes.Count > 0)
-                {
-                    AddNodesToList(nodes[i].Nodes);
-                }
-            }
-        }
-
         private void LoadSettingsDefault()
         {
             Engine.ConfigUI = new XMLSettings();
@@ -266,6 +240,37 @@ namespace ZScreenGUI
         }
 
         #endregion 1 Helpers
+
+        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
+        {
+            string oldDir = txtImagesDir.Text;
+            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
+                                         "Images");
+
+            if (!string.IsNullOrEmpty(dirNew))
+            {
+                Engine.ConfigUI.UseCustomImagesDir = true;
+                Engine.ConfigUI.CustomImagesDir = dirNew;
+                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
+                ConfigurePaths();
+            }
+        }
+
+        private void btnBrowseRootDir_Click(object sender, EventArgs e)
+        {
+            string oldRootDir = txtRootFolder.Text;
+            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
+
+            if (!string.IsNullOrEmpty(dirNew))
+            {
+                Engine.SetRootFolder(dirNew);
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
+                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
+                ConfigurePaths();
+                Engine.ConfigUI = XMLSettings.Read();
+                Loader.MainForm.ZScreen_ConfigGUI();
+            }
+        }
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
@@ -292,6 +297,22 @@ namespace ZScreenGUI
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 LoadSettingsDefault();
+            }
+        }
+
+        private void btnMoveImageFiles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (FileSystem.ManageImageFolders(Engine.RootImagesDir))
+                {
+                    MessageBox.Show("Files successfully moved to save folders.");
+                }
+            }
+            catch (Exception ex)
+            {
+                StaticHelper.WriteException(ex, "Error while moving image files");
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -325,9 +346,24 @@ namespace ZScreenGUI
             UploadersConfigImport();
         }
 
+        private void btnViewLocalDirectory_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(FileSystem.GetImagesDir());
+        }
+
+        private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(Engine.LogsDir);
+        }
+
+        private void btnViewRootDir_Click(object sender, EventArgs e)
+        {
+            StaticHelper.ShowDirectory(txtRootFolder.Text);
+        }
+
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.AutoSaveSettings = cbAutoSaveSettings.Checked;
+            Config.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
 
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
@@ -342,7 +378,12 @@ namespace ZScreenGUI
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CompleteSound = cbCompleteSound.Checked;
+            Config.CompleteSound = cbCompleteSound.Checked;
+        }
+
+        private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.DeleteLocal = chkDeleteLocal.Checked;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
@@ -367,19 +408,19 @@ namespace ZScreenGUI
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-            Loader.MainForm.ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
+            Config.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+            Loader.MainForm.ttZScreen.Active = Config.ShowHelpBalloonTips;
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ShowBalloonTip = chkShowPopup.Checked;
+            Config.ShowBalloonTip = chkShowPopup.Checked;
             gbOptionsBalloonTip.Enabled = chkShowPopup.Checked;
         }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ShowUploadDuration = cbShowUploadDuration.Checked;
+            Config.ShowUploadDuration = cbShowUploadDuration.Checked;
         }
 
         private void cbStartWin_CheckedChanged(object sender, EventArgs e)
@@ -389,12 +430,12 @@ namespace ZScreenGUI
 
         private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
+            Config.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
         }
 
         private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
+            Config.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
         }
 
         private void chkShellExt_CheckedChanged(object sender, EventArgs e)
@@ -411,7 +452,7 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.TwitterEnabled = chkTwitterEnable.Checked;
+            Config.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
@@ -428,9 +469,36 @@ namespace ZScreenGUI
             }
         }
 
+        internal void ConfigurePaths()
+        {
+            Engine.InitializeDefaultFolderPaths(dirCreation: false);
+
+            txtImagesDir.Text = Engine.ImagesDir;
+            txtLogsDir.Text = Engine.LogsDir;
+
+            if (Engine.ConfigApp.PreferSystemFolders)
+            {
+                txtRootFolder.Text = Engine.SettingsDir;
+                gbRoot.Text = "Settings";
+            }
+            else
+            {
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
+                gbRoot.Text = "Root";
+            }
+
+            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
+            gbRoot.Enabled = !Engine.IsPortable;
+            gbImages.Enabled = !Engine.IsPortable;
+            gbLogs.Enabled = !Engine.IsPortable;
+
+            chkDeleteLocal.Checked = Config.DeleteLocal;
+            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
+        }
+
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.FlashTrayCount = nudFlashIconCount.Value;
+            Config.FlashTrayCount = nudFlashIconCount.Value;
         }
 
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
@@ -446,6 +514,14 @@ namespace ZScreenGUI
             {
                 tcMain.TabPages.Add(tabPage.First<TabPage>());
             }
+        }
+
+        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
+        {
+            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text =
+                new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
+            txtImagesDir.Text = Engine.ImagesDir;
         }
 
         private void ZScreenOptionsUI_Load(object sender, EventArgs e)
@@ -476,81 +552,6 @@ namespace ZScreenGUI
             tvOptions.ExpandAll();
             // tvOptions_NodeMouseClick(sender, new TreeNodeMouseClickEventArgs(tvOptions.Nodes[0], System.Windows.Forms.MouseButtons.Left, 1, Cursor.Position.X, Cursor.Position.Y));
             tvOptions.SelectedNode = tvOptions.Nodes[0];
-        }
-
-        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
-        {
-            string oldDir = txtImagesDir.Text;
-            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
-                                         "Images");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.ConfigUI.UseCustomImagesDir = true;
-                Engine.ConfigUI.CustomImagesDir = dirNew;
-                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
-                ConfigurePaths();
-            }
-        }
-
-        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text =
-                new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
-            txtImagesDir.Text = Engine.ImagesDir;
-        }
-
-        private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.DeleteLocal = chkDeleteLocal.Checked;
-        }
-
-        private void btnViewRootDir_Click(object sender, EventArgs e)
-        {
-            StaticHelper.ShowDirectory(txtRootFolder.Text);
-        }
-
-        private void btnViewLocalDirectory_Click(object sender, EventArgs e)
-        {
-            StaticHelper.ShowDirectory(FileSystem.GetImagesDir());
-        }
-
-        private void btnMoveImageFiles_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (FileSystem.ManageImageFolders(Engine.RootImagesDir))
-                {
-                    MessageBox.Show("Files successfully moved to save folders.");
-                }
-            }
-            catch (Exception ex)
-            {
-                StaticHelper.WriteException(ex, "Error while moving image files");
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btnBrowseRootDir_Click(object sender, EventArgs e)
-        {
-            string oldRootDir = txtRootFolder.Text;
-            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.SetRootFolder(dirNew);
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
-                ConfigurePaths();
-                Engine.ConfigUI = XMLSettings.Read();
-                Loader.MainForm.ZScreen_ConfigGUI();
-            }
-        }
-
-        private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
-        {
-            StaticHelper.ShowDirectory(Engine.LogsDir);
         }
     }
 }

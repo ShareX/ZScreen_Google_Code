@@ -144,7 +144,6 @@ namespace ZScreenLib
 
         public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
         public bool AutoCaptureWaitUploads = true;
-
         public bool AutoSaveSettings = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -169,6 +168,7 @@ namespace ZScreenLib
         public bool BackupApplicationSettings { get; set; }
 
         public bool BalloonTipOpenLink = true;
+
         public bool CaptureEntireScreenOnError = false;
 
         // General - Check Updates
@@ -185,15 +185,21 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.InputsDropWindow), DefaultValue(false), Description("Close Drop Window after Drag n Drop")]
         public bool CloseDropBox { get; set; }
 
+        public bool CompleteSound = true;
+
         // Interaction
 
-        public bool CompleteSound = true;
         public List<int> ConfClipboardContent = new List<int>();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
         public ActionsConfig ConfigActions = new ActionsConfig();
+
+        //~~~~~~~~~~~~~~~
+        // Proxy Settings
+        //~~~~~~~~~~~~~~~
+        public ProxyConfig ConfigProxy = new ProxyConfig();
         public List<int> ConfLinkFormat = new List<int>();
         public List<int> ConfOutputs = new List<int>();
         public XColor CropBorderArgb = Color.FromArgb(255, 0, 255);
@@ -236,11 +242,11 @@ namespace ZScreenLib
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string CustomImagesDir { get; set; }
 
+        public bool DeleteLocal = false;
+
         //~~~~~~~~~
         // Paths
         //~~~~~~~~~
-
-        public bool DeleteLocal = false;
 
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
         public bool EnableAutoMemoryTrim { get; set; }
@@ -259,6 +265,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool FirstRun = true;
+
         public decimal FlashTrayCount = 2;
 
         // Options / Watch Folder
@@ -278,22 +285,19 @@ namespace ZScreenLib
         public bool FreehandCropShowHelpText = true;
         public bool FreehandCropShowRectangleBorder = false;
 
+        public int HistoryMaxNumber = 100;
+        public bool HistorySave = true;
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public int HistoryMaxNumber = 100;
-        public bool HistorySave = true;
         public HotkeySetting HotkeyActiveWindow2 = new HotkeySetting(Keys.Alt | Keys.PrintScreen);
         public HotkeySetting HotkeyAutoCapture2 = new HotkeySetting();
         public HotkeySetting HotkeyCaptureRectangeRegionClipboard2 = new HotkeySetting(Keys.Control | Keys.Alt | Keys.PrintScreen);
 
         public HotkeySetting HotkeyClipboardUpload2 = new HotkeySetting(Keys.Control | Keys.PageUp);
         public HotkeySetting HotkeyDropWindow2 = new HotkeySetting();
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  Hotkeys
-        //~~~~~~~~~~~~~~~~~~~~~
         public HotkeySetting HotkeyEntireScreen2 = new HotkeySetting(Keys.PrintScreen);
         public HotkeySetting HotkeyFreeHandRegion2 = new HotkeySetting(Keys.Control | Keys.Shift | Keys.PrintScreen);
         public HotkeySetting HotkeyRectangleRegion2 = new HotkeySetting(Keys.Control | Keys.PrintScreen);
@@ -317,9 +321,10 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
         public bool ImageUploadRetryOnTimeout { get; set; }
 
+        public IndexerConfig IndexerConfig = new IndexerConfig();
+
         // Indexer
 
-        public IndexerConfig IndexerConfig = new IndexerConfig();
         public Rectangle LastCapture = Rectangle.Empty;
         public Point LastDropBoxPosition = Point.Empty;
 
@@ -328,7 +333,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
 
-        public bool MakeJPGBackgroundWhite = true;
         public bool MonitorFiles = false;
 
         // General - Monitor Clipboard
@@ -336,12 +340,8 @@ namespace ZScreenLib
         public bool MonitorImages = false;
         public bool MonitorText = false;
         public bool MonitorUrls = false;
+
         public List<int> MyFileUploaders = new List<int>();
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  Main
-        //~~~~~~~~~~~~~~~~~~~~~
-
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
         public List<int> MyURLShorteners = new List<int>();
@@ -354,11 +354,6 @@ namespace ZScreenLib
 
         public PrintSettings PrintSettings = new PrintSettings();
         public bool PromptForOutputs = false;
-
-        //~~~~~~~~~~~~~~~
-        // Proxy Settings
-        //~~~~~~~~~~~~~~~
-        public ProxyConfig ConfigProxy = new ProxyConfig();
 
         public HotkeySetting RectangleRegionLast2 = new HotkeySetting();
 
@@ -412,13 +407,13 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(false), Description("Allows you to choose the FTP account before uploading.")]
         public bool ShowFTPSettingsBeforeUploading { get; set; }
 
+        public bool ShowHelpBalloonTips = true;
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General - Program
-        public bool ShowHelpBalloonTips = true;
-
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }
 
@@ -444,9 +439,9 @@ namespace ZScreenLib
 
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
 
-        // Twitter
-
         public bool TwitterEnabled = false;
+
+        // Twitter
 
         [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(30000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
         public int UploadDurationLimit { get; set; }
