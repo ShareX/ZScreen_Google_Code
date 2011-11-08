@@ -64,8 +64,7 @@ namespace ZScreenGUI
 
         private void ShowOptions()
         {
-            ZScreenOptionsUI ui = new ZScreenOptionsUI(Engine.ConfigUI) { Icon = this.Icon };
-            ui.Show();
+            FormsMgr.ShowOptionsUI();
         }
 
         private void ShowWatermarkUI()
@@ -146,77 +145,5 @@ namespace ZScreenGUI
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
-
-        #region Backup & Restore
-
-        private void AppSettingsImport()
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                XMLSettings temp = XMLSettings.Read(dlg.FileName);
-                temp.FirstRun = false;
-                Engine.ConfigUI = temp;
-                ZScreen_ConfigGUI();
-            }
-        }
-
-        private void AppSettingsExport()
-        {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            dlg.FileName = Engine.SettingsFileName;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Engine.ConfigUI.Write(dlg.FileName);
-            }
-        }
-
-        private void WorkflowConfigImport()
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Workflow temp = Workflow.Read(dlg.FileName);
-                Engine.ConfigWorkflow = temp;
-            }
-        }
-
-        private void WorkflowConfigExport()
-        {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            dlg.FileName = Engine.WorkflowConfigFileName;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Engine.ConfigWorkflow.Write(dlg.FileName);
-            }
-        }
-
-        private void UploadersConfigImport()
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                UploadersConfig temp = UploadersConfig.Read(dlg.FileName);
-                if (temp != null)
-                {
-                    Engine.ConfigUploaders = temp;
-                }
-            }
-        }
-
-        private void UploadersConfigExport()
-        {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
-            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            dlg.FileName = Engine.UploadersConfigFileName;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Engine.ConfigUploaders.Write(dlg.FileName);
-            }
-        }
-
-        #endregion Backup & Restore
     }
 }

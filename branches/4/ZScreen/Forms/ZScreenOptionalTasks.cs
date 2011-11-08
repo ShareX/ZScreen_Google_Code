@@ -42,60 +42,6 @@ namespace ZScreenGUI
     {
         private Timer tmrTinyPicRegCodeUpdater = new Timer() { Interval = 3 * 3600 * 1000, Enabled = true };
 
-        #region Check Updates
-
-        public void CheckUpdates()
-        {
-            btnCheckUpdate.Enabled = false;
-            lblUpdateInfo.Text = "Checking for Updates...";
-            BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
-            updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
-            updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
-            updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
-            updateThread.RunWorkerAsync();
-        }
-
-        private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            switch (e.ProgressPercentage)
-            {
-                case 1:
-                    lblUpdateInfo.Text = (string)e.UserState;
-                    break;
-            }
-        }
-
-        private void updateThread_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = (BackgroundWorker)sender;
-            NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
-            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName,
-                new Version(Adapter.AssemblyVersion),
-                Engine.ConfigUI.ReleaseChannel, Adapter.CheckProxySettings().GetWebProxy, nvwo);
-
-            updateChecker.CheckUpdate();
-
-            string status;
-            if (updateChecker.UpdateInfo.Status == UpdateStatus.UpdateCheckFailed)
-            {
-                status = "Update check failed";
-            }
-            else
-            {
-                status = updateChecker.UpdateInfo.ToString();
-            }
-
-            worker.ReportProgress(1, status);
-            updateChecker.ShowPrompt();
-        }
-
-        private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            btnCheckUpdate.Enabled = true;
-        }
-
-        #endregion Check Updates
-
         #region Cache Cleaner Methods
 
         public void CleanCache()

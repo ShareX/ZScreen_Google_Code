@@ -54,7 +54,7 @@ namespace ZScreenGUI
             UploadManager.ListViewControl = lvUploads;
         }
 
-        private void ZScreen_ConfigGUI()
+        internal void ZScreen_ConfigGUI()
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
@@ -63,7 +63,6 @@ namespace ZScreenGUI
             pgAppSettings.SelectedObject = Engine.ConfigApp;
             pgAppConfig.SelectedObject = Engine.ConfigUI;
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
-            pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
             pgUploaders.SelectedObject = Engine.ConfigUploaders;
 
             ZScreen_ConfigGUI_Form();
@@ -105,8 +104,8 @@ namespace ZScreenGUI
             ucDestOptions.ReconfigOutputsUI();
             ucDestOptions.EnableDisableDestControls();
 
+            chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
             chkShowWorkflowWizard.Checked = Engine.ConfigUI.PromptForOutputs;
-            chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;
             chkShowUploadResults.Checked = Engine.ConfigUI.ShowUploadResultsWindow;
         }
 
@@ -118,6 +117,8 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Capture()
         {
+            chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;
+
             ZScreen_ConfigGUI_Capture_CropShot();
 
             // Selected Window
@@ -241,31 +242,11 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_Options()
         {
             // General
-            chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
-            chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
-            chkOpenMainWindow.Checked = Engine.ConfigApp.ShowMainWindow;
 
             if (IsReady && !Engine.ConfigApp.ShowInTaskbar)
             {
-                this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
                 this.ShowInTaskbar = Engine.ConfigApp.ShowInTaskbar;
             }
-
-            cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
-            cbAutoSaveSettings.Checked = Engine.ConfigUI.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.ConfigApp.Windows7TaskbarIntegration;
-            chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
-
-            chkTwitterEnable.Checked = Engine.ConfigUI.TwitterEnabled;
-
-            // Interaction
-            chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
-            nudFlashIconCount.Value = Engine.ConfigUI.FlashTrayCount;
-            chkCaptureFallback.Checked = Engine.ConfigUI.CaptureEntireScreenOnError;
-            chkShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
-            cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
 
             // Proxy
             if (cboProxyConfig.Items.Count == 0)
@@ -280,25 +261,8 @@ namespace ZScreenGUI
                 ucProxyAccounts.AccountsList.SelectedIndex = Engine.ConfigUI.ProxySelected;
             }
 
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
-            }
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
-            }
-            cboCloseButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionClose;
-            cboMinimizeButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionMinimize;
-
             ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
 
-            chkCheckUpdates.Checked = Engine.ConfigUI.CheckUpdates;
-            if (cboReleaseChannel.Items.Count == 0)
-            {
-                cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetEnumDescriptions());
-                cboReleaseChannel.SelectedIndex = (int)Engine.ConfigUI.ReleaseChannel;
-            }
             chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
@@ -345,8 +309,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Options_History()
         {
-            nudHistoryMaxItems.Value = Engine.ConfigUI.HistoryMaxNumber;
-            cbHistorySave.Checked = Engine.ConfigUI.HistorySave;
         }
 
         private void ZScreen_ConfigGUI_TrayMenu()

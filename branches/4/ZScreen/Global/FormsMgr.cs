@@ -36,6 +36,32 @@ namespace ZScreenGUI
         private static TextViewer VersionHistoryWindow = null;
         private static TextViewer LicenseWindow = null;
 
+        private static ZScreenOptionsUI _OptionsUI = null;
+        public static ZScreenOptionsUI OptionsUI
+        {
+            get
+            {
+                if (_OptionsUI == null || _OptionsUI.IsDisposed)
+                {
+                    _OptionsUI = new ZScreenOptionsUI(Engine.ConfigUI) { Icon = Resources.zss_tray };
+                }
+                return _OptionsUI;
+            }
+            private set
+            {
+                _OptionsUI = value;
+            }
+        }
+
+        public static void ShowOptionsUI()
+        {
+            if (_OptionsUI != null)
+            {
+                _OptionsUI.Activate();
+                _OptionsUI.Show();
+            }
+        }
+
         public static void ShowLicense()
         {
             if (LicenseWindow == null || LicenseWindow.IsDisposed)
