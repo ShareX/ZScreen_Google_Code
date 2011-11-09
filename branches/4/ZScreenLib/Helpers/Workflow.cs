@@ -135,8 +135,6 @@ namespace ZScreenLib
         [XmlIgnore(), Category(ComponentModelStrings.OutputsClipboard), Description("Background color of images captured to clipboard.")]
         public Color ClipboardBackgroundColor { get; set; }
 
-        public ImageEffectsConfig ConfigImageEffects = new ImageEffectsConfig();
-
         public WatermarkConfig ConfigWatermark = new WatermarkConfig();
 
         // Image Editor

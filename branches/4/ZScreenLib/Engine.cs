@@ -64,6 +64,8 @@ namespace ZScreenLib
         private static readonly string PortableRootFolder = ApplicationName; // using relative paths
         public static readonly string DocsAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
+        #region 100 Properties - File Names
+
         public static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         public static readonly string HistoryFileName = "UploadersHistory.xml";
         public static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
@@ -71,6 +73,11 @@ namespace ZScreenLib
         public const string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
         public const string UploadersConfigFileName = "UploadersConfig.xml";
         public const string WorkflowConfigFileName = "WorkflowConfig.xml";
+        public const string OptionsFileName = "ZScreenOptions.xml";
+
+        #endregion 100 Properties - File Names
+
+        #region 101 Properties - Folder Paths
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
@@ -82,11 +89,15 @@ namespace ZScreenLib
         internal static readonly string zTextDir = Path.Combine(DocsAppFolder, "Text");
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
-        #region Config Objects
+        #endregion 101 Properties - Folder Paths
+
+        #region 102 Properties - Config Objects
 
         public static AppSettings ConfigApp = AppSettings.Read();
 
         public static XMLSettings ConfigUI { get; set; }
+
+        public static ZScreenOptions ConfigOptions = new ZScreenOptions();
 
         public static Workflow ConfigWorkflow { get; set; }
 
@@ -94,7 +105,7 @@ namespace ZScreenLib
 
         public static GoogleTranslatorConfig ConfigGT { get; set; }
 
-        #endregion Config Objects
+        #endregion 102 Properties - Config Objects
 
         public static string RootAppFolder = ConfigApp.PreferSystemFolders ? zRoamingAppDataFolder : DocsAppFolder;
 
@@ -168,6 +179,14 @@ namespace ZScreenLib
             {
                 DateTime now = FastDateTime.Now;
                 return Path.Combine(LogsDir, string.Format(LogFileName, now.ToString("yyyy-MM")));
+            }
+        }
+
+        public static string OptionsFilePath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, OptionsFileName);
             }
         }
 
@@ -413,7 +432,7 @@ namespace ZScreenLib
             if (!File.Exists(cssIndexer))
             {
                 ZSS.IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
-                ConfigUI.IndexerConfig.CssFilePath = cssIndexer;
+                ConfigOptions.IndexerConfig.CssFilePath = cssIndexer;
             }
         }
 
@@ -499,7 +518,12 @@ namespace ZScreenLib
         {
             LoggerTimer timer = EngineLogger.StartTimer("LoadSettings started");
 
-            Thread settingsThread = new Thread(() =>
+            Thread threadOptions = new Thread(() =>
+            {
+                Engine.ConfigOptions = ZScreenOptions.Read(OptionsFilePath);
+            });
+
+            Thread threadMainFormSettings = new Thread(() =>
             {
                 if (string.IsNullOrEmpty(fp))
                 {
@@ -511,30 +535,30 @@ namespace ZScreenLib
                 }
             });
 
-            Thread workflowConfigThread = new Thread(() =>
+            Thread threadWorkflow = new Thread(() =>
             {
                 Engine.ConfigWorkflow = Workflow.Read(WorkflowConfigPath);
             });
 
-            Thread uploadersConfigThread = new Thread(() =>
+            Thread threadUploadersConfig = new Thread(() =>
             {
                 Engine.ConfigUploaders = UploadersConfig.Read(UploadersConfigPath);
             });
 
-            Thread googleTranslateThread = new Thread(() =>
+            Thread threadGt = new Thread(() =>
             {
                 Engine.ConfigGT = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
             });
 
-            settingsThread.Start();
-            googleTranslateThread.Start();
-            workflowConfigThread.Start();
-            uploadersConfigThread.Start();
+            threadOptions.Start();
+            threadMainFormSettings.Start();
+            threadGt.Start();
+            threadWorkflow.Start();
+            threadUploadersConfig.Start();
 
-            settingsThread.Join();
-            // googleTranslateThread.Join(); not necessary wait for this finish
-            workflowConfigThread.Join();
-            uploadersConfigThread.Join();
+            threadMainFormSettings.Join();
+            threadWorkflow.Join();
+            threadUploadersConfig.Join();
 
             timer.WriteLineTime("LoadSettings finished");
 

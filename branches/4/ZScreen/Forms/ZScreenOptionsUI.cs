@@ -18,7 +18,7 @@ namespace ZScreenGUI
     {
         #region 0 Properties
 
-        private XMLSettings Config = null;
+        private ZScreenOptions Config = null;
         List<TreeNode> Nodes = new List<TreeNode>();
         List<TabPage> TabPages = new List<TabPage>();
 
@@ -26,7 +26,7 @@ namespace ZScreenGUI
 
         #region 1 Constructors
 
-        public ZScreenOptionsUI(XMLSettings config)
+        public ZScreenOptionsUI(ZScreenOptions config)
         {
             InitializeComponent();
 
@@ -44,7 +44,7 @@ namespace ZScreenGUI
                 this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
             }
 
-            cbShowHelpBalloonTips.Checked = Config.ShowHelpBalloonTips;
+            cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Config.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.ConfigApp.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
@@ -80,7 +80,7 @@ namespace ZScreenGUI
             pgIndexer.SelectedObject = config.IndexerConfig;
 
             // Effects
-            pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
+            pgWorkflowImageEffects.SelectedObject = Config.ConfigImageEffects;
 
             // Paths
             ConfigurePaths();
@@ -94,7 +94,7 @@ namespace ZScreenGUI
 
         #region 1 Helpers
 
-        #region 0 Backup & Restore
+        #region Backup & Restore
 
         private void AppSettingsExport()
         {
@@ -164,7 +164,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion 0 Backup & Restore
+        #endregion Backup & Restore
 
         private void AddNodesToList(TreeNodeCollection nodes)
         {
@@ -408,8 +408,8 @@ namespace ZScreenGUI
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
-            Config.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-            Loader.MainForm.ttZScreen.Active = Config.ShowHelpBalloonTips;
+            Engine.ConfigUI.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+            Loader.MainForm.ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -544,7 +544,7 @@ namespace ZScreenGUI
         {
             tvOptions.ExpandAll();
             // tvOptions_NodeMouseClick(sender, new TreeNodeMouseClickEventArgs(tvOptions.Nodes[0], System.Windows.Forms.MouseButtons.Left, 1, Cursor.Position.X, Cursor.Position.Y));
-            tvOptions.SelectedNode = tvOptions.Nodes[0];
+            tvOptions.SelectedNode = tvOptions.Nodes[1];
         }
     }
 }

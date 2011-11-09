@@ -225,7 +225,7 @@ namespace ZScreenGUI
             int maxNum = 100;
             if (Engine.ConfigUI != null)
             {
-                maxNum = Engine.ConfigUI.HistoryMaxNumber;
+                maxNum = Engine.ConfigOptions.HistoryMaxNumber;
             }
             new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }

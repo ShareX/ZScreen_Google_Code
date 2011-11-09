@@ -209,7 +209,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Actions()
         {
-            chkPerformActions.Checked = Engine.ConfigWorkflow.PerformActions && Engine.ConfigUI.PromptForOutputs;
+            chkPerformActions.Checked = Engine.ConfigWorkflow.PerformActions;
             chkPerformActions.Enabled = !Engine.ConfigUI.PromptForOutputs;
             tsmEditinImageSoftware.Checked = Engine.ConfigWorkflow.PerformActions;
 

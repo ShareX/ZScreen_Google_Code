@@ -70,6 +70,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -224,6 +225,7 @@
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\RichTextBoxMenu.cs" />
+    <Compile Include="ZScreenOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crop2\Crop2\Crop2.csproj">

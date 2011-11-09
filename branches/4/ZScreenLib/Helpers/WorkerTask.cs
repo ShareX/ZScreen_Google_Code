@@ -540,7 +540,7 @@ namespace ZScreenLib
                 {
                     StaticHelper.WriteException(ex, "Error while capturing region");
                     Errors.Add(ex.Message);
-                    if (Engine.ConfigUI.CaptureEntireScreenOnError)
+                    if (Engine.ConfigOptions.CaptureEntireScreenOnError)
                     {
                         CaptureScreen();
                     }
@@ -719,7 +719,7 @@ namespace ZScreenLib
                     StaticHelper.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(),
                                                          Engine.ConfigUI.ShortenUrlAfterUploadAfter));
                 }
-                return Engine.ConfigUI.TwitterEnabled || bShortenUrlJob || bLongUrl ||
+                return Engine.ConfigOptions.TwitterEnabled || bShortenUrlJob || bLongUrl ||
                        Engine.ConfigUI.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);
             }
 
@@ -950,7 +950,7 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                var effects = new ImageEffects(WorkflowConfig.ConfigImageEffects);
+                var effects = new ImageEffects(Engine.ConfigOptions.ConfigImageEffects);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
                 if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.ConfigWatermark.WatermarkExcludeClipboardUpload)
@@ -1116,7 +1116,7 @@ namespace ZScreenLib
                 else
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
-                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat,
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat,
                                                          bTargetFileSize: false);
                     string fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, TempImage, imageFormat, GetNameParser());
                     string imgfp = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir, fn);
@@ -1219,8 +1219,8 @@ namespace ZScreenLib
                 Job3 = JobLevel3.IndexFolder;
 
                 var settings = new IndexerAdapter();
-                settings.LoadConfig(Engine.ConfigUI.IndexerConfig);
-                Engine.ConfigUI.IndexerConfig.FolderList.Clear();
+                settings.LoadConfig(Engine.ConfigOptions.IndexerConfig);
+                Engine.ConfigOptions.IndexerConfig.FolderList.Clear();
                 string ext = ".log";
                 if (WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
                 {
@@ -1363,7 +1363,7 @@ namespace ZScreenLib
 
         private void FlashIcon()
         {
-            for (int i = 0; i < (int)Engine.ConfigUI.FlashTrayCount; i++)
+            for (int i = 0; i < (int)Engine.ConfigOptions.FlashTrayCount; i++)
             {
                 MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_uploaded);
                 Thread.Sleep(250);
@@ -1402,7 +1402,7 @@ namespace ZScreenLib
             {
                 StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
                 EImageFormat imageFormat;
-                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat, bTargetFileSize: true);
+                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat, bTargetFileSize: true);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -2078,7 +2078,7 @@ namespace ZScreenLib
                 else if (TempImage != null)
                 {
                     EImageFormat imageFormat;
-                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat);
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat);
                     fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, TempImage, imageFormat, GetNameParser());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);

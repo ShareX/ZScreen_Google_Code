@@ -8,7 +8,7 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat,
+        public static MemoryStream PrepareImage(Workflow wf, ZScreenOptions zo, Image img, out EImageFormat imageFormat,
             bool bConvert = true, bool bTargetFileSize = true)
         {
             imageFormat = wf.ImageFormat;
@@ -17,7 +17,7 @@ namespace ZScreenLib
             if (bConvert)
             {
                 long streamLength = stream.Length / 1024;
-                int sizeLimit = wf.ConfigImageEffects.ImageSizeLimit * 1024;
+                int sizeLimit = zo.ConfigImageEffects.ImageSizeLimit * 1024;
 
                 if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
                 {
@@ -56,7 +56,7 @@ namespace ZScreenLib
                                                 workflow.ImageFormat.GetDescription(),
                                                 stream.Length / 1024,
                                                 workflow.ImageFormat2.GetDescription(),
-                                                workflow.ConfigImageEffects.ImageSizeLimit));
+                                                Engine.ConfigOptions.ConfigImageEffects.ImageSizeLimit));
 
             if (workflow.ImageFormat2 == EImageFormat.JPEG)
             {

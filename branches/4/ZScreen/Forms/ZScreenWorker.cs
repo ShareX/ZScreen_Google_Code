@@ -134,7 +134,7 @@ namespace ZScreenGUI
                     break;
                 case WorkerTask.ProgressType.ShowBalloonTip:
                     WorkerTask task = e.UserState as WorkerTask;
-                    if (Engine.ConfigUI.ShowBalloonTip)
+                    if (Engine.ConfigOptions.ShowBalloonTip)
                     {
                         ShowBalloonTip(task);
                     }
@@ -210,7 +210,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case EDataType.Image:
-                            if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.DeleteLocal && File.Exists(task.Info.LocalFilePath))
+                            if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigOptions.DeleteLocal && File.Exists(task.Info.LocalFilePath))
                             {
                                 try
                                 {
@@ -224,7 +224,7 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    if (Engine.ConfigUI.TwitterEnabled)
+                    if (Engine.ConfigOptions.TwitterEnabled)
                     {
                         Adapter.TwitterMsg(task);
                     }
@@ -236,7 +236,7 @@ namespace ZScreenGUI
 
                     if (task.UploadResults.Count > 0 || File.Exists(task.Info.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
-                        if (Engine.ConfigUI.CompleteSound)
+                        if (Engine.ConfigOptions.CompleteSound)
                         {
                             if (Engine.ConfigWorkflow.EnableSoundTaskCompleted && !string.IsNullOrEmpty(Engine.ConfigWorkflow.SoundPath) && File.Exists(Engine.ConfigWorkflow.SoundPath))
                                 new SoundPlayer(Engine.ConfigWorkflow.SoundPath).Play();
@@ -244,7 +244,7 @@ namespace ZScreenGUI
                                 SystemSounds.Exclamation.Play();
                         }
 
-                        if (Engine.ConfigUI.ShowBalloonTip)
+                        if (Engine.ConfigOptions.ShowBalloonTip)
                         {
                             ShowBalloonTip(task);
                         }
@@ -780,7 +780,7 @@ namespace ZScreenGUI
 
         public void AddHistoryItem(WorkerTask task)
         {
-            if (Engine.ConfigUI.HistorySave)
+            if (Engine.ConfigOptions.HistorySave)
             {
                 foreach (UploadResult ur in task.UploadResults)
                 {

@@ -144,7 +144,6 @@ namespace ZScreenLib
 
         public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
         public bool AutoCaptureWaitUploads = true;
-        public bool AutoSaveSettings = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
@@ -167,10 +166,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.AppPaths), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
 
-        public bool BalloonTipOpenLink = true;
-
-        public bool CaptureEntireScreenOnError = false;
-
         // General - Check Updates
 
         public bool CheckUpdates = true;
@@ -184,8 +179,6 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.InputsDropWindow), DefaultValue(false), Description("Close Drop Window after Drag n Drop")]
         public bool CloseDropBox { get; set; }
-
-        public bool CompleteSound = true;
 
         // Interaction
 
@@ -242,8 +235,6 @@ namespace ZScreenLib
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string CustomImagesDir { get; set; }
 
-        public bool DeleteLocal = false;
-
         //~~~~~~~~~
         // Paths
         //~~~~~~~~~
@@ -265,8 +256,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool FirstRun = true;
-
-        public decimal FlashTrayCount = 2;
+        public bool ShowHelpBalloonTips = true;
 
         // Options / Watch Folder
 
@@ -284,9 +274,6 @@ namespace ZScreenLib
 
         public bool FreehandCropShowHelpText = true;
         public bool FreehandCropShowRectangleBorder = false;
-
-        public int HistoryMaxNumber = 100;
-        public bool HistorySave = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
@@ -320,8 +307,6 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
         public bool ImageUploadRetryOnTimeout { get; set; }
-
-        public IndexerConfig IndexerConfig = new IndexerConfig();
 
         // Indexer
 
@@ -399,15 +384,11 @@ namespace ZScreenLib
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
 
-        public bool ShowBalloonTip = true;
-
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
         public bool ShowClipboardContentViewer { get; set; }
 
         [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(false), Description("Allows you to choose the FTP account before uploading.")]
         public bool ShowFTPSettingsBeforeUploading { get; set; }
-
-        public bool ShowHelpBalloonTips = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
@@ -423,8 +404,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.App), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
 
-        public bool ShowUploadDuration = true;
-
         // Options / General
 
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
@@ -438,8 +417,6 @@ namespace ZScreenLib
         public bool TinyPicSizeCheck { get; set; }
 
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
-
-        public bool TwitterEnabled = false;
 
         // Twitter
 

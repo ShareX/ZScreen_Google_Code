@@ -239,7 +239,7 @@ namespace ZScreenGUI
                 {
                     Hide();
                     DelayedTrimMemoryUse();
-                    if (Engine.ConfigUI.AutoSaveSettings) Engine.WriteSettingsAsync();
+                    if (Engine.ConfigOptions.AutoSaveSettings) Engine.WriteSettingsAsync();
                     e.Cancel = true;
                 }
             }

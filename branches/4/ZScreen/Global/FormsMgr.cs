@@ -63,7 +63,7 @@ namespace ZScreenGUI
             {
                 if (_OptionsUI == null || _OptionsUI.IsDisposed)
                 {
-                    _OptionsUI = new ZScreenOptionsUI(Engine.ConfigUI) { Icon = Resources.zss_tray };
+                    _OptionsUI = new ZScreenOptionsUI(Engine.ConfigOptions) { Icon = Resources.zss_tray };
                 }
                 return _OptionsUI;
             }
