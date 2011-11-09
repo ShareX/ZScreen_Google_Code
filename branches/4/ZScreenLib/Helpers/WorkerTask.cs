@@ -327,7 +327,7 @@ namespace ZScreenLib
                 Info.ImageSize = TempImage.Size;
             }
 
-            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableSoundTaskBegin)
+            if (success && Job3 != JobLevel3.ShortenURL && Job2 != JobLevel2.UploadFromExplorer && WorkflowConfig.EnableSoundTaskBegin)
             {
                 if (File.Exists(WorkflowConfig.SoundImagePath))
                     new SoundPlayer(WorkflowConfig.SoundImagePath).Play();
