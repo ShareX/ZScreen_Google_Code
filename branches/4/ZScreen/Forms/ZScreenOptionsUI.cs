@@ -440,14 +440,7 @@ namespace ZScreenGUI
 
         private void chkShellExt_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkShellExt.Checked)
-            {
-                RegistryHelper.RegisterShellContextMenu();
-            }
-            else
-            {
-                RegistryHelper.UnregisterShellContextMenu();
-            }
+            RegistryHelper.SetShellContextMenu(chkShellExt.Checked);
         }
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
