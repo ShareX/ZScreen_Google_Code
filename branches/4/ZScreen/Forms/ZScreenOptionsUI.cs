@@ -94,6 +94,18 @@ namespace ZScreenGUI
 
         #region 1 Helpers
 
+        private void AddNodesToList(TreeNodeCollection nodes)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                Nodes.Add(nodes[i]);
+                if (nodes[i].Nodes.Count > 0)
+                {
+                    AddNodesToList(nodes[i].Nodes);
+                }
+            }
+        }
+
         #region Backup & Restore
 
         private void AppSettingsExport()
@@ -109,7 +121,11 @@ namespace ZScreenGUI
 
         private void AppSettingsImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Filter = StaticHelper.FILTER_XML_FILES,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
@@ -166,18 +182,6 @@ namespace ZScreenGUI
 
         #endregion Backup & Restore
 
-        private void AddNodesToList(TreeNodeCollection nodes)
-        {
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                Nodes.Add(nodes[i]);
-                if (nodes[i].Nodes.Count > 0)
-                {
-                    AddNodesToList(nodes[i].Nodes);
-                }
-            }
-        }
-
         #region Check Updates
 
         public void CheckUpdates()
@@ -231,6 +235,33 @@ namespace ZScreenGUI
         }
 
         #endregion Check Updates
+
+        internal void ConfigurePaths()
+        {
+            Engine.InitializeDefaultFolderPaths(dirCreation: false);
+
+            txtImagesDir.Text = Engine.ImagesDir;
+            txtLogsDir.Text = Engine.LogsDir;
+
+            if (Engine.ConfigApp.PreferSystemFolders)
+            {
+                txtRootFolder.Text = Engine.SettingsDir;
+                gbRoot.Text = "Settings";
+            }
+            else
+            {
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
+                gbRoot.Text = "Root";
+            }
+
+            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
+            gbRoot.Enabled = !Engine.IsPortable;
+            gbImages.Enabled = !Engine.IsPortable;
+            gbLogs.Enabled = !Engine.IsPortable;
+
+            chkDeleteLocal.Checked = Config.DeleteLocal;
+            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
+        }
 
         private void LoadSettingsDefault()
         {
@@ -462,33 +493,6 @@ namespace ZScreenGUI
             }
         }
 
-        internal void ConfigurePaths()
-        {
-            Engine.InitializeDefaultFolderPaths(dirCreation: false);
-
-            txtImagesDir.Text = Engine.ImagesDir;
-            txtLogsDir.Text = Engine.LogsDir;
-
-            if (Engine.ConfigApp.PreferSystemFolders)
-            {
-                txtRootFolder.Text = Engine.SettingsDir;
-                gbRoot.Text = "Settings";
-            }
-            else
-            {
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                gbRoot.Text = "Root";
-            }
-
-            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
-            gbRoot.Enabled = !Engine.IsPortable;
-            gbImages.Enabled = !Engine.IsPortable;
-            gbLogs.Enabled = !Engine.IsPortable;
-
-            chkDeleteLocal.Checked = Config.DeleteLocal;
-            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
-        }
-
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
         {
             Config.FlashTrayCount = nudFlashIconCount.Value;
@@ -533,6 +537,8 @@ namespace ZScreenGUI
 
             tcMain.TabPages.Clear();
             tcMain.TabPages.Add(TabPages[0]);
+
+            CheckUpdates();
         }
 
         private void ZScreenOptionsUI_Resize(object sender, EventArgs e)
@@ -543,8 +549,7 @@ namespace ZScreenGUI
         private void ZScreenOptionsUI_Shown(object sender, EventArgs e)
         {
             tvOptions.ExpandAll();
-            // tvOptions_NodeMouseClick(sender, new TreeNodeMouseClickEventArgs(tvOptions.Nodes[0], System.Windows.Forms.MouseButtons.Left, 1, Cursor.Position.X, Cursor.Position.Y));
-            tvOptions.SelectedNode = tvOptions.Nodes[1];
+            tvOptions.Focus(); // automatically selects first node
         }
     }
 }

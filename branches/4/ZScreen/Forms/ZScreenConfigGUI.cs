@@ -17,6 +17,8 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : ZScreenCoreUI
     {
+        private bool _Windows7TaskbarIntegrated = false;
+
         private void ZScreen_Preconfig()
         {
             // Tab Image List
@@ -286,7 +288,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (!IsDisposed && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
+            else if (!IsDisposed && !_Windows7TaskbarIntegrated && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
             {
                 try
                 {
@@ -354,7 +356,7 @@ namespace ZScreenGUI
                         Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload, openHistory);
                         Engine.zJumpList.Refresh();
                     }
-
+                    _Windows7TaskbarIntegrated = true;
                     StaticHelper.WriteLine("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)

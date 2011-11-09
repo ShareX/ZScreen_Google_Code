@@ -180,9 +180,6 @@
     <Compile Include="Forms\ZScreenTray.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ZScreenUserControls.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Global\ImageEditorHelper.cs" />
