@@ -164,6 +164,12 @@ namespace ZUploader
             }
 
             IsSilentRun = CLIHelper.CheckArgs(args, "s", "silent");
+
+            if (CLIHelper.CheckArgs(args, "p", "portable") && !Directory.Exists(PortablePersonalPath))
+            {
+                Directory.CreateDirectory(PortablePersonalPath);
+            }
+
             IsPortable = Directory.Exists(PortablePersonalPath);
 
             Application.EnableVisualStyles();
@@ -238,13 +244,7 @@ namespace ZUploader
             {
                 Action d = () =>
                 {
-                    if (mainForm.WindowState == FormWindowState.Minimized)
-                    {
-                        mainForm.WindowState = FormWindowState.Normal;
-                    }
-
-                    mainForm.BringToFront();
-                    mainForm.Activate();
+                    mainForm.ShowActivate();
                     mainForm.UseCommandLineArgs(args.CommandLineArgs);
                 };
 

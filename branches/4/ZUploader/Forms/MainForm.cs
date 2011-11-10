@@ -374,6 +374,22 @@ namespace ZUploader
             }
         }
 
+        public void ShowActivate()
+        {
+            if (!Visible)
+            {
+                Show();
+            }
+
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+
+            BringToFront();
+            Activate();
+        }
+
         #region Form events
 
         protected override void SetVisibleCore(bool value)
@@ -394,7 +410,7 @@ namespace ZUploader
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            Activate();
+            ShowActivate();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -635,18 +651,7 @@ namespace ZUploader
 
         private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (!Visible)
-            {
-                Show();
-            }
-
-            if (WindowState == FormWindowState.Minimized)
-            {
-                WindowState = FormWindowState.Normal;
-            }
-
-            BringToFront();
-            Activate();
+            ShowActivate();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
