@@ -33,30 +33,14 @@ namespace ZScreenGUI
             HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.ConfigUI.HotkeyScreenColorPicker2, ShowScreenColorPicker);
             HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.ConfigUI.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
             HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionClipboard, Engine.ConfigUI.HotkeyCaptureRectangeRegionClipboard2, CaptureRectRegionClipboard);
-        }
 
-        private void UpdateHotkeys(bool resetKeys = false)
-        {
-            List<HotkeyInfo> hkiList = new List<HotkeyInfo>();
+            string failedHotkeys;
 
-            foreach (ZScreenHotkey hk in Enum.GetValues(typeof(ZScreenHotkey)))
+            if (HotkeyManager.IsHotkeyRegisterFailed(out failedHotkeys))
             {
-            }
-
-            StringBuilder sbErrors = new StringBuilder();
-
-            foreach (HotkeyInfo hki in hkiList)
-            {
-                if (hki != null && !string.IsNullOrEmpty(hki.Error))
-                {
-                    sbErrors.AppendLine(hki.Error);
-                }
-            }
-
-            if (sbErrors.Length > 0)
-            {
-                sbErrors.AppendLine("\nPlease reconfigure different hotkeys or quit the conflicting application and start over.");
-                MessageBox.Show(sbErrors.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
+                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen {0}.", Application.ProductName),
+                    "Hotkey register failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

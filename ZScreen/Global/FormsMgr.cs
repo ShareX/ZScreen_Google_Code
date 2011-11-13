@@ -1,3 +1,9 @@
+using System.IO;
+using System.Windows.Forms;
+using UploadersLib;
+using ZScreenGUI.Properties;
+using ZScreenLib;
+
 #region License Information (GPL v2)
 
 /*
@@ -23,57 +29,17 @@
 
 #endregion License Information (GPL v2)
 
-using System.IO;
-using System.Windows.Forms;
-using ZScreenGUI.Properties;
-using ZScreenLib;
-
 namespace ZScreenGUI
 {
     public static class FormsMgr
     {
-        private static AboutBox AboutWindow = null;
-        private static TextViewer VersionHistoryWindow = null;
-        private static TextViewer LicenseWindow = null;
+        private static AboutBox _AboutWindow = null;
+        private static TextViewer _LicenseWindow = null;
 
-        public static void ShowLicense()
-        {
-            if (LicenseWindow == null || LicenseWindow.IsDisposed)
-            {
-                LicenseWindow = FillTextViewer(LicenseWindow, "License", "license.txt");
-            }
+        private static ZScreenOptionsUI _OptionsUI = null;
 
-            if (LicenseWindow != null)
-            {
-                LicenseWindow.Activate();
-                LicenseWindow.Show();
-            }
-        }
-
-        public static void ShowVersionHistory()
-        {
-            if (VersionHistoryWindow == null || VersionHistoryWindow.IsDisposed)
-            {
-                VersionHistoryWindow = FillTextViewer(VersionHistoryWindow, "Version History", "VersionHistory.txt");
-            }
-
-            if (VersionHistoryWindow != null)
-            {
-                VersionHistoryWindow.Activate();
-                VersionHistoryWindow.Show();
-            }
-        }
-
-        public static void ShowAboutWindow()
-        {
-            if (AboutWindow == null || AboutWindow.IsDisposed)
-            {
-                AboutWindow = new AboutBox();
-            }
-
-            AboutWindow.Activate();
-            AboutWindow.Show();
-        }
+        private static ProxyConfigUI _ProxyConfig = null;
+        private static TextViewer _VersionHistoryWindow = null;
 
         private static TextViewer FillTextViewer(TextViewer viewer, string title, string manifestFileName)
         {
@@ -89,6 +55,89 @@ namespace ZScreenGUI
             }
 
             return viewer;
+        }
+
+        public static ZScreenOptionsUI OptionsUI
+        {
+            get
+            {
+                if (_OptionsUI == null || _OptionsUI.IsDisposed)
+                {
+                    _OptionsUI = new ZScreenOptionsUI(Engine.ConfigOptions) { Icon = Resources.zss_tray };
+                }
+                return _OptionsUI;
+            }
+            private set
+            {
+                _OptionsUI = value;
+            }
+        }
+
+        public static ProxyConfigUI ProxyConfig
+        {
+            get
+            {
+                if (_ProxyConfig == null || _ProxyConfig.IsDisposed)
+                {
+                    _ProxyConfig = new ProxyConfigUI(Engine.ConfigUI.ConfigProxy) { Icon = Resources.zss_tray };
+                }
+                return _ProxyConfig;
+            }
+            private set
+            {
+                _ProxyConfig = value;
+            }
+        }
+
+        public static void ShowAboutWindow()
+        {
+            if (_AboutWindow == null || _AboutWindow.IsDisposed)
+            {
+                _AboutWindow = new AboutBox();
+            }
+
+            _AboutWindow.Activate();
+            _AboutWindow.Show();
+        }
+
+        public static void ShowLicense()
+        {
+            if (_LicenseWindow == null || _LicenseWindow.IsDisposed)
+            {
+                _LicenseWindow = FillTextViewer(_LicenseWindow, "License", "license.txt");
+            }
+
+            if (_LicenseWindow != null)
+            {
+                _LicenseWindow.Activate();
+                _LicenseWindow.Show();
+            }
+        }
+
+        public static void ShowOptionsUI()
+        {
+            OptionsUI.Activate();
+            OptionsUI.Show();
+        }
+
+        public static DialogResult ShowDialogProxyConfig()
+        {
+            ProxyConfig.Activate();
+            return ProxyConfig.ShowDialog();
+        }
+
+        public static void ShowVersionHistory()
+        {
+            if (_VersionHistoryWindow == null || _VersionHistoryWindow.IsDisposed)
+            {
+                _VersionHistoryWindow = FillTextViewer(_VersionHistoryWindow, "Version History", "VersionHistory.txt");
+            }
+
+            if (_VersionHistoryWindow != null)
+            {
+                _VersionHistoryWindow.Activate();
+                _VersionHistoryWindow.Show();
+            }
         }
     }
 }

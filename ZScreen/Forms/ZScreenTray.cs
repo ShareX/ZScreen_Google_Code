@@ -45,7 +45,7 @@ namespace ZScreenGUI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (Engine.ConfigUI != null && Engine.ConfigUI.BalloonTipOpenLink)
+            if (Engine.ConfigUI != null && Engine.ConfigOptions.BalloonTipOpenLink)
             {
                 try
                 {
@@ -162,7 +162,7 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (Engine.ConfigUI.ShowUploadDuration && task.UploadDuration > 0)
+                if (Engine.ConfigOptions.ShowUploadDuration && task.UploadDuration > 0)
                 {
                     sbMsg.AppendLine("Upload duration: " + task.UploadDuration + " ms");
                 }

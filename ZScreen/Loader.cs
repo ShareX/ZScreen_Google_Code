@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace ZScreenGUI
 {
     public static class Loader
     {
-        public static bool IsMultiInstance { get; private set; }
+        private static readonly string ApplicationName = Application.ProductName;
 
         public static string CommandLineArg { get; private set; }
 
@@ -46,6 +47,8 @@ namespace ZScreenGUI
         public static ZScreen MainForm { get; private set; }
 
         public static GoogleTranslateGUI MyGTGUI { get; set; }
+
+        public static List<string> LibNames = new List<string>();
 
         [STAThread]
         private static void Main(string[] args)
@@ -57,7 +60,7 @@ namespace ZScreenGUI
 
                 if (CommandLineArg.Contains("-m"))
                 {
-                    IsMultiInstance = true;
+                    Engine.IsMultiInstance = true;
                 }
                 else if (args.Length > 1 && args[0] == "/doc")
                 {
@@ -70,19 +73,25 @@ namespace ZScreenGUI
                 }
             }
 
-            if (!IsMultiInstance)
+            if (!Engine.IsMultiInstance)
             {
                 if (!ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback)) return;
             }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
 
             if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
             {
                 Application.Run(MainForm = new ZScreen());
                 // Application.Run(CoreUI = new ZScreenSnap());
             }
+        }
+
+        private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            LibNames.Add(Path.GetFileName(args.LoadedAssembly.FullName));
         }
 
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)

@@ -34,7 +34,6 @@ namespace HelpersLib
         public Keys Key { get; private set; }
         public Action HotkeyPress { get; set; }
         public int Tag { get; set; }
-        public string Error { get; set; }
 
         public HotkeyInfo(ushort id, Keys key, Action hotkeyPress = null, int tag = -1)
         {

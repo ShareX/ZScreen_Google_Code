@@ -26,6 +26,7 @@
 using System.IO;
 using HelpersLib;
 using Microsoft.Win32;
+using ZScreenCoreLib;
 using ZScreenLib;
 
 namespace ZScreenGUI

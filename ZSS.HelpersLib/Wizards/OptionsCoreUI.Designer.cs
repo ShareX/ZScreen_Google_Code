@@ -1,6 +1,6 @@
-﻿namespace ZScreenGUI
+﻿namespace HelpersLib
 {
-    partial class ZScreenOptionsCoreUI
+    partial class OptionsCoreUI
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Capture");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Effects");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Saving");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Hotkeys");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Capture");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Effects");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Saving");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Hotkeys");
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tvOptions = new System.Windows.Forms.TreeView();
             this.tcMain = new System.Windows.Forms.TabControl();
@@ -65,22 +65,22 @@
             this.tvOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvOptions.Location = new System.Drawing.Point(3, 3);
             this.tvOptions.Name = "tvOptions";
-            treeNode6.Name = "tnGeneral";
-            treeNode6.Text = "General";
-            treeNode7.Name = "tnCapture";
-            treeNode7.Text = "Capture";
-            treeNode8.Name = "tnEffects";
-            treeNode8.Text = "Effects";
-            treeNode9.Name = "tnSaving";
-            treeNode9.Text = "Saving";
-            treeNode10.Name = "tnHotkeys";
-            treeNode10.Text = "Hotkeys";
+            treeNode1.Name = "tnGeneral";
+            treeNode1.Text = "General";
+            treeNode2.Name = "tnCapture";
+            treeNode2.Text = "Capture";
+            treeNode3.Name = "tnEffects";
+            treeNode3.Text = "Effects";
+            treeNode4.Name = "tnSaving";
+            treeNode4.Text = "Saving";
+            treeNode5.Name = "tnHotkeys";
+            treeNode5.Text = "Hotkeys";
             this.tvOptions.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5});
             this.tvOptions.Size = new System.Drawing.Size(160, 510);
             this.tvOptions.TabIndex = 0;
             // 
@@ -148,15 +148,15 @@
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // ZScreenOptions
+            // OptionsCoreUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 516);
             this.Controls.Add(this.tlpMain);
-            this.Name = "ZScreenOptions";
-            this.Text = "ZScreenOptions";
-            this.Load += new System.EventHandler(this.ZScreenOptions_Load);
+            this.Name = "OptionsCoreUI";
+            this.Text = "Options";
+            this.Load += new System.EventHandler(this.ZScreenOptionsCoreUI_Load);
             this.tlpMain.ResumeLayout(false);
             this.tcMain.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -165,14 +165,14 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private System.Windows.Forms.TreeView tvOptions;
-        private System.Windows.Forms.TabControl tcMain;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
+        protected System.Windows.Forms.TableLayoutPanel tlpMain;
+        protected System.Windows.Forms.TreeView tvOptions;
+        protected System.Windows.Forms.TabControl tcMain;
+        protected System.Windows.Forms.TabPage tabPage1;
+        protected System.Windows.Forms.TabPage tabPage2;
+        protected System.Windows.Forms.TabPage tabPage3;
+        protected System.Windows.Forms.TabPage tabPage4;
+        protected System.Windows.Forms.TabPage tabPage5;
 
     }
 }

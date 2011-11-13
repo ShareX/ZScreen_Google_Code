@@ -148,7 +148,7 @@ namespace ZScreenLib
                         lvi.SubItems[8].Text = string.Empty;
                         lvi.ImageIndex = 1;
 
-                        if (Engine.ConfigUI.CompleteSound)
+                        if (Engine.ConfigOptions.CompleteSound)
                         {
                             SystemSounds.Asterisk.Play();
                         }
@@ -172,19 +172,13 @@ namespace ZScreenLib
                                 ZAppHelper.CopyTextSafely(url);
                             }
 
-                            if (Engine.ConfigUI.HistorySave)
+                            if (Engine.ConfigOptions.HistorySave)
                             {
                                 HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem());
                             }
-
-                            //if (Engine.niTray.Visible)
-                            //{
-                            //    Program.mainForm.niTray.Tag = info.Result.URL;
-                            //    Program.mainForm.niTray.ShowBalloonTip(5000, "ZUploader - Upload completed", info.Result.URL, ToolTipIcon.Info);
-                            //}
                         }
 
-                        if (Engine.ConfigUI.CompleteSound)
+                        if (Engine.ConfigOptions.CompleteSound)
                         {
                             SystemSounds.Exclamation.Play();
                         }

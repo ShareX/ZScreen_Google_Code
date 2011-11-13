@@ -71,7 +71,7 @@ namespace HelpersLib.Hotkey
 
         private void UpdateHotkeyStatus()
         {
-            switch (Setting.IsActive)
+            switch (Setting.HotkeyStatus)
             {
                 case HotkeyStatus.Failed:
                     lblIsHotkeyActive.BackColor = Color.IndianRed;

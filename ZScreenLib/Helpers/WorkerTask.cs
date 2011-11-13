@@ -313,10 +313,6 @@ namespace ZScreenLib
                     {
                         Job1 = EDataType.URL;
                     }
-                    else
-                    {
-                        Job1 = EDataType.File;
-                    }
                     break;
                 case JobLevel2.Translate:
                     Job1 = EDataType.Text;
@@ -331,12 +327,22 @@ namespace ZScreenLib
                 Info.ImageSize = TempImage.Size;
             }
 
-            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableImageSound)
+            if (success && Job3 != JobLevel3.ShortenURL && Job2 != JobLevel2.UploadFromExplorer && WorkflowConfig.EnableSoundTaskBegin)
             {
                 if (File.Exists(WorkflowConfig.SoundImagePath))
                     new SoundPlayer(WorkflowConfig.SoundImagePath).Play();
                 else
-                    new SoundPlayer(Resources.Camera).Play();
+                {
+                    string soundPath = Path.Combine(Application.StartupPath, "Camera.wav");
+                    if (File.Exists(soundPath))
+                    {
+                        new SoundPlayer(soundPath).Play();
+                    }
+                    else
+                    {
+                        new SoundPlayer(Resources.Camera).Play();
+                    }
+                }
             }
             if (!success)
             {
@@ -534,7 +540,7 @@ namespace ZScreenLib
                 {
                     StaticHelper.WriteException(ex, "Error while capturing region");
                     Errors.Add(ex.Message);
-                    if (Engine.ConfigUI.CaptureEntireScreenOnError)
+                    if (Engine.ConfigOptions.CaptureEntireScreenOnError)
                     {
                         CaptureScreen();
                     }
@@ -713,7 +719,7 @@ namespace ZScreenLib
                     StaticHelper.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(),
                                                          Engine.ConfigUI.ShortenUrlAfterUploadAfter));
                 }
-                return Engine.ConfigUI.TwitterEnabled || bShortenUrlJob || bLongUrl ||
+                return Engine.ConfigOptions.TwitterEnabled || bShortenUrlJob || bLongUrl ||
                        Engine.ConfigUI.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);
             }
 
@@ -943,10 +949,12 @@ namespace ZScreenLib
                     }
                 }
 
-                // Watermark
-                var effects = new ImageEffects(WorkflowConfig.ConfigImageEffects);
+                // Effects
+                var effects = new ImageEffects(Engine.ConfigOptions.ConfigImageEffects);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
+
+                // Watermark
                 if (Job2 != JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.ConfigWatermark.WatermarkExcludeClipboardUpload)
                 {
                     img = new WatermarkEffects(WorkflowConfig.ConfigWatermark).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
@@ -1110,7 +1118,7 @@ namespace ZScreenLib
                 else
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
-                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat,
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat,
                                                          bTargetFileSize: false);
                     string fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, TempImage, imageFormat, GetNameParser());
                     string imgfp = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir, fn);
@@ -1213,8 +1221,8 @@ namespace ZScreenLib
                 Job3 = JobLevel3.IndexFolder;
 
                 var settings = new IndexerAdapter();
-                settings.LoadConfig(Engine.ConfigUI.IndexerConfig);
-                Engine.ConfigUI.IndexerConfig.FolderList.Clear();
+                settings.LoadConfig(Engine.ConfigOptions.IndexerConfig);
+                Engine.ConfigOptions.IndexerConfig.FolderList.Clear();
                 string ext = ".log";
                 if (WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
                 {
@@ -1357,7 +1365,7 @@ namespace ZScreenLib
 
         private void FlashIcon()
         {
-            for (int i = 0; i < (int)Engine.ConfigUI.FlashTrayCount; i++)
+            for (int i = 0; i < (int)Engine.ConfigOptions.FlashTrayCount; i++)
             {
                 MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_uploaded);
                 Thread.Sleep(250);
@@ -1396,7 +1404,7 @@ namespace ZScreenLib
             {
                 StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
                 EImageFormat imageFormat;
-                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat, bTargetFileSize: true);
+                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat, bTargetFileSize: true);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -2072,7 +2080,7 @@ namespace ZScreenLib
                 else if (TempImage != null)
                 {
                     EImageFormat imageFormat;
-                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, TempImage, out imageFormat);
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat);
                     fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, TempImage, imageFormat, GetNameParser());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);
@@ -2277,6 +2285,7 @@ namespace ZScreenLib
                 {
                     UpdateLocalFilePath(listFiles[0]);
                 }
+                Job1 = EDataType.File;
             }
 
             return succ;

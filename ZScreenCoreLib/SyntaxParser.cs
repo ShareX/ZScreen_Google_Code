@@ -1,4 +1,4 @@
-﻿namespace ZScreenLib
+﻿namespace ZScreenCoreLib
 {
     public static class SyntaxParser
     {

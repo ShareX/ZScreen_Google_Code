@@ -82,8 +82,7 @@ namespace ZScreenGUI
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            ZScreenOptionsCoreUI zo = new ZScreenOptionsCoreUI();
-            zo.ShowDialog();
+            FormsMgr.ShowOptionsUI();
         }
 
         #region ToolStrip Helper Methods

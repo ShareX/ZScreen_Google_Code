@@ -45,7 +45,10 @@ namespace HelpersLib.Hotkey
         public ToolStripMenuItem MenuItem { get; set; }
 
         [XmlIgnore]
-        public HotkeyStatus IsActive { get; set; }
+        public HotkeyStatus HotkeyStatus { get; set; }
+
+        [XmlIgnore]
+        public string Description { get; set; }
 
         public HotkeySetting()
         {

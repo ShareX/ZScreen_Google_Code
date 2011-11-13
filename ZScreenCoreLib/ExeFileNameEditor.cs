@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     internal class ExeFileNameEditor : FileNameEditor
     {

@@ -135,6 +135,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -146,6 +147,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AutoCapture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +165,12 @@
     <Compile Include="Forms\DropWindow.Designer.cs">
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ZScreenOptionsUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenOptionsUI.Designer.cs">
+      <DependentUpon>ZScreenOptionsUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ZScreenConfigGUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,9 +178,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ZScreenTray.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ZScreenUserControls.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Global\FormsMgr.cs" />
@@ -218,12 +228,13 @@
     <Compile Include="Forms\ZScreenCoreUI.Designer.cs">
       <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZScreenOptionsCoreUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ZScreenOptions.Designer.cs">
-      <DependentUpon>ZScreenOptionsCoreUI.cs</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZScreenOptionsUI.resx">
+      <DependentUpon>ZScreenOptionsUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -239,9 +250,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ZScreenCoreUI.resx">
       <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ZScreenOptions.resx">
-      <DependentUpon>ZScreenOptionsCoreUI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
