@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -66,6 +67,7 @@ namespace ScreenCapture
 
                         NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                         NativeMethods.SetWindowPos(form.Handle, handle, rect.X, rect.Y, rect.Width, rect.Height, NativeMethods.SWP_NOACTIVATE);
+                        Thread.Sleep(10);
                         Application.DoEvents();
 
                         whiteBackground = (Bitmap)Screenshot.CaptureRectangleNative(rect);
@@ -81,7 +83,6 @@ namespace ScreenCapture
                         whiteBackground2 = (Bitmap)Screenshot.CaptureRectangleNative(rect);
 
                         form.Close();
-                        Application.DoEvents();
                     }
 
                     Bitmap transparentImage;
@@ -93,7 +94,8 @@ namespace ScreenCapture
                     }
                     else
                     {
-                        transparentImage = whiteBackground;
+                        StaticHelper.WriteLine("Transparent capture failed.");
+                        transparentImage = whiteBackground2;
                     }
 
                     if (cursor != null)
