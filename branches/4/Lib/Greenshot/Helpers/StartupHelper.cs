@@ -19,13 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Security;
-using System.Security.AccessControl;
-using System.Security.Permissions;
-using System.Security.Principal;
-using System.Text;
 using System.Windows.Forms;
-
 using Microsoft.Win32;
 
 namespace Greenshot.Helpers {

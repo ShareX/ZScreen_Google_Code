@@ -16,14 +16,8 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.Serialization;
-using System.Windows.Forms;
-
-using Greenshot.Configuration;
 using Greenshot.Drawing.Fields;
-using Greenshot.Drawing.Filters;
 using Greenshot.Plugin.Drawing;
 
 namespace Greenshot.Drawing.Filters {

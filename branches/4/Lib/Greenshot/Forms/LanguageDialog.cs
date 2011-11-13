@@ -19,9 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -69,11 +66,15 @@ namespace Greenshot.Forms {
 			if (language.CurrentLanguage != null) {
 				LOG.DebugFormat("Selecting {0}", language.CurrentLanguage);
 				this.comboBoxLanguage.SelectedValue = language.CurrentLanguage;
+			} else {
+				this.comboBoxLanguage.SelectedValue = Thread.CurrentThread.CurrentUICulture.Name;
 			}
 		}
 		
 		void BtnOKClick(object sender, EventArgs e) {
 			properOkPressed = true;
+			// Fix for Bug #3431100 
+			language.SetLanguage(SelectedLanguage);
 			this.Close();
 		}
 		

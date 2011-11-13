@@ -127,6 +127,7 @@ namespace Greenshot.Configuration {
 		editor_title,
 		editor_uponelevel,
 		editor_uptotop,
+		editor_autocrop,
 		error,
 		error_multipleinstances,
 		error_nowriteaccess,

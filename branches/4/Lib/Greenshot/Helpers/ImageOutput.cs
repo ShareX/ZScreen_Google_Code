@@ -19,7 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -149,18 +148,18 @@ namespace Greenshot.Helpers
 		/// <param name="image"></param>
 		/// <returns></returns>
 		public static string SaveToTmpFile(Image image) {
-			string tmpFile = Path.Combine(Path.GetTempPath(),Path.GetRandomFileName() + "." + conf.OutputFileFormat.ToString());
-			// Prevent problems with "spaces", which causes a problem in e.g. Outlook 2007
-			tmpFile = tmpFile.Replace(" ", "_");
-			tmpFile = tmpFile.Replace("%", "_");
-			LOG.Debug("Creating TMP File : " + tmpFile);
+			string tmpFile = Path.GetRandomFileName() + "." + conf.OutputFileFormat.ToString();
+			// Prevent problems with "other characters", which could cause problems
+			tmpFile = Regex.Replace(tmpFile, @"[^\d\w\.]", "");
+			string tmpPath = Path.Combine(Path.GetTempPath(), tmpFile);
+			LOG.Debug("Creating TMP File : " + tmpPath);
 			
 			try {
-				ImageOutput.Save(image, tmpFile, conf.OutputFileJpegQuality, false);
+				ImageOutput.Save(image, tmpPath, conf.OutputFileJpegQuality, false);
 			} catch (Exception) {
 				return null;
 			}
-			return tmpFile;
+			return tmpPath;
 		}
 
 		/// <summary>

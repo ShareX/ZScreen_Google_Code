@@ -24,7 +24,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-using Greenshot.Configuration;
 using Greenshot.Plugin;
 using GreenshotPlugin.Core;
 using IniFile;

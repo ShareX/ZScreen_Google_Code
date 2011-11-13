@@ -868,7 +868,7 @@ namespace ZScreenLib
                                              @"Greenshot\Languages\");
                             if (!Directory.Exists(APPLICATIONDATA_LANGUAGE_PATH))
                                 Directory.CreateDirectory(APPLICATIONDATA_LANGUAGE_PATH);
-                            IniFile.IniConfig.Init();
+                            Greenshot.MainForm.Start(new string[0]);
 
                             var capture = new Greenshot.Helpers.Capture(TempImage);
                             capture.CaptureDetails.Filename = Info.LocalFilePath;
@@ -880,7 +880,7 @@ namespace ZScreenLib
                             var surface = new Greenshot.Drawing.Surface(capture);
                             var editor = new Greenshot.ImageEditorForm(surface,
                                                              WorkflowConfig.DestConfig.Outputs.Contains(
-                                                                 OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
+                                                                 OutputEnum.LocalDisk)) { Icon = Resources.zss_tray };
                             editor.SetImagePath(Info.LocalFilePath);
                             editor.Visible = false;
                             editor.ShowDialog();

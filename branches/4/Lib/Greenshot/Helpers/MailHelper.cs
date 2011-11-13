@@ -21,20 +21,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-using Greenshot.Configuration;
 using Greenshot.Helpers.OfficeInterop;
 using Greenshot.Plugin;
 using GreenshotPlugin.Core;
 using IniFile;
-using Microsoft.Win32;
 
 /// <summary>
 /// Author: Andrew Baker
@@ -74,10 +71,12 @@ namespace Greenshot.Helpers {
 				pattern = "greenshot ${capturetime}";
 			}
 			string filename = FilenameHelper.GetFilenameFromPattern(pattern, conf.OutputFileFormat, captureDetails);
+			// Prevent problems with "other characters", which causes a problem in e.g. Outlook 2007 or break our HTML
+			filename = Regex.Replace(filename, @"[^\d\w\.]", "_");
+			// Remove multiple "_"
+			filename = Regex.Replace(filename, @"_+", "_");
 			string tmpFile = Path.Combine(Path.GetTempPath(),filename);
-			// Prevent problems with "spaces", which causes a problem in e.g. Outlook 2007
-			tmpFile = tmpFile.Replace(" ", "_");
-			tmpFile = tmpFile.Replace("%", "_");
+
 			LOG.Debug("Creating TMP File for Email: " + tmpFile);
 			
 			// Catching any exception to prevent that the user can't write in the directory.

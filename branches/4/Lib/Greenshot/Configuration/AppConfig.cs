@@ -19,24 +19,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 
-using Greenshot.Drawing;
-using Greenshot.Drawing.Fields;
-using Greenshot.Helpers;
 using Greenshot.UnmanagedHelpers;
-using GreenshotPlugin.Controls;
 using GreenshotPlugin.Core;
 using IniFile;
 

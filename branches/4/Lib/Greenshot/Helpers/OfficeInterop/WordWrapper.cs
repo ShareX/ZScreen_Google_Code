@@ -20,32 +20,52 @@
  */
 using System;
 using Greenshot.Interop;
-using Greenshot.Plugin;
 
 namespace Greenshot.Helpers.OfficeInterop {
 	// See http://msdn.microsoft.com/de-de/library/microsoft.office.interop.word.applicationclass_members%28v=Office.11%29.aspx
 	[ComProgId("Word.Application")]
 	public interface IWordApplication : Common {
 		IWordDocument ActiveDocument { get; }
-		ISelection Selection {get;}
-		IDocuments Documents {get;}
-		bool Visible {get; set;}
+		ISelection Selection { get; }
+		IDocuments Documents { get; }
+		bool Visible { get; set; }
 	}
 
 	// See: http://msdn.microsoft.com/de-de/library/microsoft.office.interop.word.documents_members(v=office.11).aspx
 	public interface IDocuments : Common {
-		int Count {get;}
+		int Count { get; }
 		void Add(ref object Template, ref object NewTemplate, ref object DocumentType, ref object Visible);
 	}
 
 	// See: http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.document.aspx
 	public interface IWordDocument : Common {
-		IWordApplication Application{ get;}
+		IWordApplication Application{ get; }
+		Window ActiveWindow { get; }
 	}
 	
+	// See: http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.window_members.aspx
+	public interface Window : Common {
+		Pane ActivePane { get; }
+	}
+
+	// See: http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.pane_members.aspx
+	public interface Pane : Common {
+		View View { get; }
+	}
+	
+	// See: http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.view_members.aspx
+	public interface View : Common {
+		Zoom Zoom { get; }
+	}
+	
+	// See: http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.zoom_members.aspx
+	public interface Zoom : Common {
+		int Percentage { get; set; }
+	}
+		
 	// See: http://msdn.microsoft.com/de-de/library/microsoft.office.interop.word.selection_members(v=office.11).aspx
 	public interface ISelection : Common {
-		IInlineShapes InlineShapes { get;}
+		IInlineShapes InlineShapes { get; }
 		void InsertAfter(string text);
 	}
 	
@@ -63,6 +83,15 @@ namespace Greenshot.Helpers.OfficeInterop {
 		public static bool InsertIntoExistingDocument(IWordDocument wordDocument, string tmpFile) {
 			if (wordDocument.Application.Selection != null) {
 				AddPictureToSelection(wordDocument.Application.Selection, tmpFile);
+				try {
+					wordDocument.ActiveWindow.ActivePane.View.Zoom.Percentage = 100;
+				} catch(Exception e) {
+					if (e.InnerException != null) {
+						LOG.WarnFormat("Couldn't set zoom to 100, error: {0}", e.InnerException.Message);
+					} else {
+						LOG.WarnFormat("Couldn't set zoom to 100, error: {0}", e.Message);
+					}
+				}
 				return true;
 			}
 			return false;

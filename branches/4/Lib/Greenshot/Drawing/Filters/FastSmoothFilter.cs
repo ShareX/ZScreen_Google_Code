@@ -21,7 +21,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.Serialization;
 
 using Greenshot.Drawing.Fields;
 using Greenshot.Plugin.Drawing;

@@ -24,7 +24,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-using Greenshot.Helpers.IEInterop;
 using GreenshotPlugin.Core;
 using IniFile;
 
