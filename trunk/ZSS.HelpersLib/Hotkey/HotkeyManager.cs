@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace HelpersLib.Hotkey
@@ -81,7 +82,7 @@ namespace HelpersLib.Hotkey
         [Description("Twitter Client")]
         TwitterClient,
         [Description("Capture Rectangular Region to Clipboard")]
-        RectangleRegionClipboard,
+        RectangleRegionClipboard
     }
 
     public enum JBirdHotkey
@@ -105,34 +106,47 @@ namespace HelpersLib.Hotkey
 
         public void AddHotkey(ZUploaderHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
-            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+            AddHotkey((int)hotkeyEnum, hotkeyEnum.GetDescription(), hotkeySetting, action, menuItem);
         }
 
         public void AddHotkey(ZScreenHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
-            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+            AddHotkey((int)hotkeyEnum, hotkeyEnum.GetDescription(), hotkeySetting, action, menuItem);
         }
 
         public void AddHotkey(JBirdHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
-            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+            AddHotkey((int)hotkeyEnum, hotkeyEnum.GetDescription(), hotkeySetting, action, menuItem);
         }
 
-        private void AddHotkey(int hotkeyId, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
+        private void AddHotkey(int hotkeyId, string hotkeyDescription, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
             hotkeySetting.Tag = hotkeyId;
+            hotkeySetting.Description = hotkeyDescription;
             hotkeySetting.Action = action;
             hotkeySetting.MenuItem = menuItem;
             Settings.Add(hotkeySetting);
             hotkeySetting.UpdateMenuItemShortcut();
-            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId);
+            hotkeySetting.HotkeyStatus = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId);
         }
 
         public HotkeyStatus UpdateHotkey(HotkeySetting setting)
         {
             setting.UpdateMenuItemShortcut();
-            setting.IsActive = hotkeyForm.ChangeHotkey(setting.Tag, setting.Hotkey, setting.Action);
-            return setting.IsActive;
+            setting.HotkeyStatus = hotkeyForm.ChangeHotkey(setting.Tag, setting.Hotkey, setting.Action);
+            return setting.HotkeyStatus;
+        }
+
+        public bool IsHotkeyRegisterFailed(out string failedHotkeys)
+        {
+            failedHotkeys = null;
+            bool status = false;
+            var failedHotkeysList = Settings.Where(x => x.HotkeyStatus == HotkeyStatus.Failed);
+            if (status = failedHotkeysList.Count() > 0)
+            {
+                failedHotkeys = string.Join("\r\n", failedHotkeysList.Select(x => x.Description + ": " + x.ToString()).ToArray());
+            }
+            return status;
         }
     }
 }

@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -33,6 +34,7 @@ namespace HelpersLib
     {
         private static string WindowsStartupRun = @"Software\Microsoft\Windows\CurrentVersion\Run";
         private static string ApplicationPath = string.Format("\"{0}\"", Application.ExecutablePath);
+        private static string StartupPath = ApplicationPath + " -silent";
 
         private static string ShellExtMenuFiles = @"Software\Classes\*\shell\" + Application.ProductName;
         private static string ShellExtMenuFilesCmd = ShellExtMenuFiles + @"\command";
@@ -40,15 +42,15 @@ namespace HelpersLib
         private static string ShellExtMenuFolders = @"Software\Classes\Folder\shell\" + Application.ProductName;
         private static string ShellExtMenuFoldersCmd = ShellExtMenuFolders + @"\command";
 
-        private static string ShellExtDesc = "Open with " + Application.ProductName;
+        private static string ShellExtDesc = "Upload using " + Application.ProductName;
         private static string ShellExtPath = string.Format("{0} \"%1\"", ApplicationPath);
 
         public static bool CheckStartWithWindows()
         {
-            return CheckRegistry(WindowsStartupRun, Application.ProductName);
+            return CheckRegistry(WindowsStartupRun, Application.ProductName, StartupPath);
         }
 
-        public static void SetStartWithWindows(bool startWithWindows, string args = null)
+        public static void SetStartWithWindows(bool startWithWindows)
         {
             using (RegistryKey regkey = Registry.CurrentUser.OpenSubKey(WindowsStartupRun, true))
             {
@@ -56,14 +58,7 @@ namespace HelpersLib
                 {
                     if (startWithWindows)
                     {
-                        string applicationPath = ApplicationPath;
-
-                        if (!string.IsNullOrEmpty(args))
-                        {
-                            applicationPath += " " + args;
-                        }
-
-                        regkey.SetValue(Application.ProductName, applicationPath, RegistryValueKind.String);
+                        regkey.SetValue(Application.ProductName, StartupPath, RegistryValueKind.String);
                     }
                     else
                     {
@@ -76,6 +71,18 @@ namespace HelpersLib
         public static bool CheckShellContextMenu()
         {
             return CheckRegistry(ShellExtMenuFilesCmd) && CheckRegistry(ShellExtMenuFoldersCmd);
+        }
+
+        public static void SetShellContextMenu(bool shellContextMenu)
+        {
+            if (shellContextMenu)
+            {
+                RegisterShellContextMenu();
+            }
+            else
+            {
+                UnregisterShellContextMenu();
+            }
         }
 
         public static void RegisterShellContextMenu()
@@ -116,12 +123,16 @@ namespace HelpersLib
             }
         }
 
-        private static bool CheckRegistry(string path, string name = null)
+        private static bool CheckRegistry(string path, string name = null, string value = null)
         {
-            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(path))
+            string registryValue = GetRegistryValue(path, name);
+
+            if (registryValue != null)
             {
-                return rk != null && rk.GetValue(name, null) as string != null;
+                return value == null || registryValue.Equals(value, StringComparison.InvariantCultureIgnoreCase);
             }
+
+            return false;
         }
 
         private static string GetRegistryValue(string path, string name = null)
@@ -130,15 +141,11 @@ namespace HelpersLib
             {
                 if (rk != null)
                 {
-                    string temp = rk.GetValue(name, null) as string;
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        temp = temp.Replace("\"", "");
-                    }
-                    return temp;
+                    return rk.GetValue(name, null) as string;
                 }
             }
-            return string.Empty;
+
+            return null;
         }
     }
 }

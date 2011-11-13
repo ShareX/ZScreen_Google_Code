@@ -63,6 +63,15 @@ namespace ZUploader
                 () => CaptureRegion(new PolygonRegion(), false), tsmiPolygon);
             HotkeyManager.AddHotkey(ZUploaderHotkey.FreeHandRegion, Program.Settings.HotkeyFreeHandRegion,
                 () => CaptureRegion(new FreeHandRegion(), false), tsmiFreeHand);
+
+            string failedHotkeys;
+
+            if (HotkeyManager.IsHotkeyRegisterFailed(out failedHotkeys))
+            {
+                MessageBox.Show("Unable to register hotkey(s):\r\n\r\n" + failedHotkeys +
+                    "\r\n\r\nPlease select a different hotkey or quit the conflicting application and reopen ZUploader.",
+                    "Hotkey register failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private new void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)
@@ -80,9 +89,14 @@ namespace ZUploader
                 Screenshot.DrawCursor = Program.Settings.ShowCursor;
                 img = capture();
 
-                if (img != null && Program.Settings.AutoPlaySound && File.Exists("Camera.wav"))
+                if (img != null && Program.Settings.AutoPlaySound)
                 {
-                    new SoundPlayer("Camera.wav").Play();
+                    string soundPath = Path.Combine(Application.StartupPath, "Camera.wav");
+
+                    if (File.Exists(soundPath))
+                    {
+                        new SoundPlayer(soundPath).Play();
+                    }
                 }
             }
             catch (Exception ex)

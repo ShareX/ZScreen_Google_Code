@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     public class ActionsConfig
     {

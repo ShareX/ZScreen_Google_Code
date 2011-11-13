@@ -73,6 +73,11 @@ namespace HelpersLib
             }
         }
 
+        public static void ShowDirectory(string dir)
+        {
+            Process.Start("explorer.exe", dir);
+        }
+
         public static bool IsWindows8()
         {
             return Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;

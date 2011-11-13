@@ -15,6 +15,7 @@ using HelpersLib.Hotkey;
 using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZScreenCoreLib;
 using ZScreenLib.Helpers;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
@@ -144,8 +145,6 @@ namespace ZScreenLib
         public AutoScreenshotterJobs AutoCaptureScreenshotTypes = AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN;
         public bool AutoCaptureWaitUploads = true;
 
-        public bool AutoSaveSettings = true;
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
@@ -167,9 +166,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.AppPaths), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
 
-        public bool BalloonTipOpenLink = true;
-        public bool CaptureEntireScreenOnError = false;
-
         // General - Check Updates
 
         public bool CheckUpdates = true;
@@ -186,13 +182,17 @@ namespace ZScreenLib
 
         // Interaction
 
-        public bool CompleteSound = true;
         public List<int> ConfClipboardContent = new List<int>();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
         public ActionsConfig ConfigActions = new ActionsConfig();
+
+        //~~~~~~~~~~~~~~~
+        // Proxy Settings
+        //~~~~~~~~~~~~~~~
+        public ProxyConfig ConfigProxy = new ProxyConfig();
         public List<int> ConfLinkFormat = new List<int>();
         public List<int> ConfOutputs = new List<int>();
         public XColor CropBorderArgb = Color.FromArgb(255, 0, 255);
@@ -239,8 +239,6 @@ namespace ZScreenLib
         // Paths
         //~~~~~~~~~
 
-        public bool DeleteLocal = false;
-
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
         public bool EnableAutoMemoryTrim { get; set; }
 
@@ -258,7 +256,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool FirstRun = true;
-        public decimal FlashTrayCount = 2;
+        public bool ShowHelpBalloonTips = true;
 
         // Options / Watch Folder
 
@@ -281,18 +279,12 @@ namespace ZScreenLib
         //  History
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public int HistoryMaxNumber = 100;
-        public bool HistorySave = true;
         public HotkeySetting HotkeyActiveWindow2 = new HotkeySetting(Keys.Alt | Keys.PrintScreen);
         public HotkeySetting HotkeyAutoCapture2 = new HotkeySetting();
         public HotkeySetting HotkeyCaptureRectangeRegionClipboard2 = new HotkeySetting(Keys.Control | Keys.Alt | Keys.PrintScreen);
 
         public HotkeySetting HotkeyClipboardUpload2 = new HotkeySetting(Keys.Control | Keys.PageUp);
         public HotkeySetting HotkeyDropWindow2 = new HotkeySetting();
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  Hotkeys
-        //~~~~~~~~~~~~~~~~~~~~~
         public HotkeySetting HotkeyEntireScreen2 = new HotkeySetting(Keys.PrintScreen);
         public HotkeySetting HotkeyFreeHandRegion2 = new HotkeySetting(Keys.Control | Keys.Shift | Keys.PrintScreen);
         public HotkeySetting HotkeyRectangleRegion2 = new HotkeySetting(Keys.Control | Keys.PrintScreen);
@@ -318,7 +310,6 @@ namespace ZScreenLib
 
         // Indexer
 
-        public IndexerConfig IndexerConfig = new IndexerConfig();
         public Rectangle LastCapture = Rectangle.Empty;
         public Point LastDropBoxPosition = Point.Empty;
 
@@ -327,7 +318,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
 
-        public bool MakeJPGBackgroundWhite = true;
         public bool MonitorFiles = false;
 
         // General - Monitor Clipboard
@@ -335,12 +325,8 @@ namespace ZScreenLib
         public bool MonitorImages = false;
         public bool MonitorText = false;
         public bool MonitorUrls = false;
+
         public List<int> MyFileUploaders = new List<int>();
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  Main
-        //~~~~~~~~~~~~~~~~~~~~~
-
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
         public List<int> MyURLShorteners = new List<int>();
@@ -353,15 +339,6 @@ namespace ZScreenLib
 
         public PrintSettings PrintSettings = new PrintSettings();
         public bool PromptForOutputs = false;
-        public ProxyInfo ProxyActive = null;
-        public ProxyConfigType ProxyConfig = ProxyConfigType.NoProxy;
-
-        //~~~~~~~~~~~~~~~
-        // Proxy Settings
-        //~~~~~~~~~~~~~~~
-
-        public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
-        public int ProxySelected = 0;
 
         public HotkeySetting RectangleRegionLast2 = new HotkeySetting();
 
@@ -407,8 +384,6 @@ namespace ZScreenLib
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
 
-        public bool ShowBalloonTip = true;
-
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
         public bool ShowClipboardContentViewer { get; set; }
 
@@ -420,8 +395,6 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General - Program
-        public bool ShowHelpBalloonTips = true;
-
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }
 
@@ -430,8 +403,6 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.App), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
-
-        public bool ShowUploadDuration = true;
 
         // Options / General
 
@@ -448,8 +419,6 @@ namespace ZScreenLib
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
 
         // Twitter
-
-        public bool TwitterEnabled = false;
 
         [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(30000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
         public int UploadDurationLimit { get; set; }

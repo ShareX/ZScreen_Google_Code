@@ -210,7 +210,7 @@ namespace ZUploader
         {
             if (loaded)
             {
-                RegistryHelper.SetStartWithWindows(cbStartWithWindows.Checked, "-silent");
+                RegistryHelper.SetStartWithWindows(cbStartWithWindows.Checked);
             }
         }
 
@@ -218,14 +218,7 @@ namespace ZUploader
         {
             if (loaded)
             {
-                if (cbShellContextMenu.Checked)
-                {
-                    RegistryHelper.RegisterShellContextMenu();
-                }
-                else
-                {
-                    RegistryHelper.UnregisterShellContextMenu();
-                }
+                RegistryHelper.SetShellContextMenu(cbShellContextMenu.Checked);
             }
         }
 

@@ -29,7 +29,7 @@ using Starksoft.Net.Proxy;
 
 namespace UploadersLib.HelperClasses
 {
-    public enum ProxyConfigType
+    public enum EProxyConfigType
     {
         [Description("No proxy")]
         NoProxy,
@@ -41,7 +41,7 @@ namespace UploadersLib.HelperClasses
 
     public class ProxySettings
     {
-        public ProxyConfigType ProxyConfig { get; set; }
+        public EProxyConfigType ProxyConfig { get; set; }
 
         public ProxyInfo ProxyActive { get; set; }
 
@@ -51,14 +51,14 @@ namespace UploadersLib.HelperClasses
             {
                 switch (ProxyConfig)
                 {
-                    case ProxyConfigType.ManualProxy:
+                    case EProxyConfigType.ManualProxy:
                         if (ProxyActive != null)
                         {
                             NetworkCredential credential = new NetworkCredential(ProxyActive.UserName, ProxyActive.Password);
                             return new WebProxy(ProxyActive.GetAddress(), true, null, credential);
                         }
                         break;
-                    case ProxyConfigType.SystemProxy:
+                    case EProxyConfigType.SystemProxy:
                         return HttpWebRequest.DefaultWebProxy;
                 }
 
@@ -101,7 +101,7 @@ namespace UploadersLib.HelperClasses
 
         public IProxyClient GetProxyClient()
         {
-            if (ProxyConfig != ProxyConfigType.NoProxy && ProxyActive != null)
+            if (ProxyConfig != EProxyConfigType.NoProxy && ProxyActive != null)
             {
                 return GetProxyClient(ProxyActive);
             }

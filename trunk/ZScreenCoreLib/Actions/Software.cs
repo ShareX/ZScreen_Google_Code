@@ -29,7 +29,7 @@ using System.Drawing.Design;
 using System.IO;
 using HelpersLib;
 
-namespace ZScreenLib
+namespace ZScreenCoreLib
 {
     public class Software
     {

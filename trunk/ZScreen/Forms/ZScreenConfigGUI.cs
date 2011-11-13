@@ -17,6 +17,8 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : ZScreenCoreUI
     {
+        private bool _Windows7TaskbarIntegrated = false;
+
         private void ZScreen_Preconfig()
         {
             // Tab Image List
@@ -34,14 +36,7 @@ namespace ZScreenGUI
             tpMain.ImageKey = "application_form";
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
-            tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
-
-            // Options - Proxy
-            ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
-            ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
-            ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
-            ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
 
             // Watermark Codes Menu
             codesMenu.AutoClose = false;
@@ -54,7 +49,7 @@ namespace ZScreenGUI
             UploadManager.ListViewControl = lvUploads;
         }
 
-        private void ZScreen_ConfigGUI()
+        internal void ZScreen_ConfigGUI()
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
@@ -63,9 +58,7 @@ namespace ZScreenGUI
             pgAppSettings.SelectedObject = Engine.ConfigApp;
             pgAppConfig.SelectedObject = Engine.ConfigUI;
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
-            pgWorkflowImageEffects.SelectedObject = Engine.ConfigWorkflow.ConfigImageEffects;
             pgUploaders.SelectedObject = Engine.ConfigUploaders;
-            pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
 
             ZScreen_ConfigGUI_Form();
             ZScreen_ConfigGUI_TrayMenu();
@@ -75,7 +68,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_Capture();
             ZScreen_ConfigGUI_Actions();
             ZScreen_ConfigGUI_Options();
-            ZScreen_ConfigGUI_Options_Paths();
             ZScreen_ConfigGUI_Options_History();
         }
 
@@ -106,8 +98,8 @@ namespace ZScreenGUI
             ucDestOptions.ReconfigOutputsUI();
             ucDestOptions.EnableDisableDestControls();
 
+            chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
             chkShowWorkflowWizard.Checked = Engine.ConfigUI.PromptForOutputs;
-            chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;
             chkShowUploadResults.Checked = Engine.ConfigUI.ShowUploadResultsWindow;
         }
 
@@ -119,6 +111,8 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Capture()
         {
+            chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;
+
             ZScreen_ConfigGUI_Capture_CropShot();
 
             // Selected Window
@@ -168,9 +162,6 @@ namespace ZScreenGUI
             cbFreehandCropAutoClose.Checked = Engine.ConfigUI.FreehandCropAutoClose;
             cbFreehandCropShowRectangleBorder.Checked = Engine.ConfigUI.FreehandCropShowRectangleBorder;
             pgSurfaceConfig.SelectedObject = Engine.ConfigUI.SurfaceConfig;
-
-            // Naming Conventions
-            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
         }
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
@@ -220,7 +211,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Actions()
         {
-            chkPerformActions.Checked = Engine.ConfigWorkflow.PerformActions && Engine.ConfigUI.PromptForOutputs;
+            chkPerformActions.Checked = Engine.ConfigWorkflow.PerformActions;
             chkPerformActions.Enabled = !Engine.ConfigUI.PromptForOutputs;
             tsmEditinImageSoftware.Checked = Engine.ConfigWorkflow.PerformActions;
 
@@ -242,65 +233,13 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_Options()
         {
             // General
-            chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
-            chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
-            chkOpenMainWindow.Checked = Engine.ConfigApp.ShowMainWindow;
 
             if (IsReady && !Engine.ConfigApp.ShowInTaskbar)
             {
-                this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
                 this.ShowInTaskbar = Engine.ConfigApp.ShowInTaskbar;
             }
 
-            cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
-            cbAutoSaveSettings.Checked = Engine.ConfigUI.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.ConfigApp.Windows7TaskbarIntegration;
-            chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
-
-            chkTwitterEnable.Checked = Engine.ConfigUI.TwitterEnabled;
-
-            // Interaction
-            chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
-            nudFlashIconCount.Value = Engine.ConfigUI.FlashTrayCount;
-            chkCaptureFallback.Checked = Engine.ConfigUI.CaptureEntireScreenOnError;
-            chkShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
-            cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
-
-            // Proxy
-            if (cboProxyConfig.Items.Count == 0)
-            {
-                cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetEnumDescriptions());
-            }
-            cboProxyConfig.SelectedIndex = (int)Engine.ConfigUI.ProxyConfig;
-
-            ProxySetup(Engine.ConfigUI.ProxyList);
-            if (ucProxyAccounts.AccountsList.Items.Count > 0)
-            {
-                ucProxyAccounts.AccountsList.SelectedIndex = Engine.ConfigUI.ProxySelected;
-            }
-
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboMinimizeButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
-            }
-            if (cboCloseButtonAction.Items.Count == 0)
-            {
-                cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetEnumDescriptions());
-            }
-            cboCloseButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionClose;
-            cboMinimizeButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionMinimize;
-
             ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
-
-            chkCheckUpdates.Checked = Engine.ConfigUI.CheckUpdates;
-            if (cboReleaseChannel.Items.Count == 0)
-            {
-                cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetEnumDescriptions());
-                cboReleaseChannel.SelectedIndex = (int)Engine.ConfigUI.ReleaseChannel;
-            }
-            chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
             zWatcher.FolderPath = Engine.ConfigUI.FolderMonitorPath;
@@ -320,34 +259,8 @@ namespace ZScreenGUI
             chkMonUrls.Checked = Engine.ConfigUI.MonitorUrls;
         }
 
-        private void ZScreen_ConfigGUI_Options_Paths()
-        {
-            Engine.InitializeDefaultFolderPaths(dirCreation: false);
-
-            txtImagesDir.Text = Engine.ImagesDir;
-            txtLogsDir.Text = Engine.LogsDir;
-
-            if (Engine.ConfigApp.PreferSystemFolders)
-            {
-                txtRootFolder.Text = Engine.SettingsDir;
-                gbRoot.Text = "Settings";
-            }
-            else
-            {
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                gbRoot.Text = "Root";
-            }
-
-            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
-            gbRoot.Enabled = !Engine.IsPortable;
-            gbImages.Enabled = !Engine.IsPortable;
-            gbLogs.Enabled = !Engine.IsPortable;
-        }
-
         private void ZScreen_ConfigGUI_Options_History()
         {
-            nudHistoryMaxItems.Value = Engine.ConfigUI.HistoryMaxNumber;
-            cbHistorySave.Checked = Engine.ConfigUI.HistorySave;
         }
 
         private void ZScreen_ConfigGUI_TrayMenu()
@@ -375,7 +288,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (!IsDisposed && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
+            else if (!IsDisposed && !_Windows7TaskbarIntegrated && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
             {
                 try
                 {
@@ -443,7 +356,7 @@ namespace ZScreenGUI
                         Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload, openHistory);
                         Engine.zJumpList.Refresh();
                     }
-
+                    _Windows7TaskbarIntegrated = true;
                     StaticHelper.WriteLine("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)

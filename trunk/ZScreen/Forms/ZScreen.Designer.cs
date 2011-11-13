@@ -176,76 +176,6 @@ namespace ZScreenGUI
             this.chkMonFiles = new System.Windows.Forms.CheckBox();
             this.chkMonImages = new System.Windows.Forms.CheckBox();
             this.chkMonText = new System.Windows.Forms.CheckBox();
-            this.tpOptions = new System.Windows.Forms.TabPage();
-            this.tcOptions = new System.Windows.Forms.TabControl();
-            this.tpWorkflow = new System.Windows.Forms.TabPage();
-            this.gbOptionsBalloonTip = new System.Windows.Forms.GroupBox();
-            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
-            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.gbAppearance = new System.Windows.Forms.GroupBox();
-            this.chkShowPopup = new System.Windows.Forms.CheckBox();
-            this.chkTwitterEnable = new System.Windows.Forms.CheckBox();
-            this.cbCompleteSound = new System.Windows.Forms.CheckBox();
-            this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
-            this.lblTrayFlash = new System.Windows.Forms.Label();
-            this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
-            this.tpOptionsGeneral = new System.Windows.Forms.TabPage();
-            this.gbUpdates = new System.Windows.Forms.GroupBox();
-            this.cboReleaseChannel = new System.Windows.Forms.ComboBox();
-            this.lblUpdateInfo = new System.Windows.Forms.Label();
-            this.btnCheckUpdate = new System.Windows.Forms.Button();
-            this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
-            this.gbMisc = new System.Windows.Forms.GroupBox();
-            this.chkShellExt = new System.Windows.Forms.CheckBox();
-            this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
-            this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
-            this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
-            this.chkOpenMainWindow = new System.Windows.Forms.CheckBox();
-            this.chkStartWin = new System.Windows.Forms.CheckBox();
-            this.gbWindowButtons = new System.Windows.Forms.GroupBox();
-            this.cboCloseButtonAction = new System.Windows.Forms.ComboBox();
-            this.cboMinimizeButtonAction = new System.Windows.Forms.ComboBox();
-            this.lblCloseButtonAction = new System.Windows.Forms.Label();
-            this.lblMinimizeButtonAction = new System.Windows.Forms.Label();
-            this.tpPaths = new System.Windows.Forms.TabPage();
-            this.gbRoot = new System.Windows.Forms.GroupBox();
-            this.btnViewRootDir = new System.Windows.Forms.Button();
-            this.btnRelocateRootDir = new System.Windows.Forms.Button();
-            this.txtRootFolder = new System.Windows.Forms.TextBox();
-            this.gbImages = new System.Windows.Forms.GroupBox();
-            this.btnBrowseImagesDir = new System.Windows.Forms.Button();
-            this.btnMoveImageFiles = new System.Windows.Forms.Button();
-            this.lblImagesFolderPattern = new System.Windows.Forms.Label();
-            this.lblImagesFolderPatternPreview = new System.Windows.Forms.Label();
-            this.txtImagesFolderPattern = new System.Windows.Forms.TextBox();
-            this.chkDeleteLocal = new System.Windows.Forms.CheckBox();
-            this.btnViewImagesDir = new System.Windows.Forms.Button();
-            this.txtImagesDir = new System.Windows.Forms.TextBox();
-            this.gbLogs = new System.Windows.Forms.GroupBox();
-            this.btnViewCacheDir = new System.Windows.Forms.Button();
-            this.txtLogsDir = new System.Windows.Forms.TextBox();
-            this.tpTreeGUI = new System.Windows.Forms.TabPage();
-            this.pgIndexer = new System.Windows.Forms.PropertyGrid();
-            this.tpProxy = new System.Windows.Forms.TabPage();
-            this.gpProxySettings = new System.Windows.Forms.GroupBox();
-            this.cboProxyConfig = new System.Windows.Forms.ComboBox();
-            this.ucProxyAccounts = new UploadersLib.AccountsControl();
-            this.tpHistoryOptions = new System.Windows.Forms.TabPage();
-            this.btnClearHistory = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
-            this.tpBackupRestore = new System.Windows.Forms.TabPage();
-            this.gbBackupRestoreUploaders = new System.Windows.Forms.GroupBox();
-            this.btnUploadersConfigExport = new System.Windows.Forms.Button();
-            this.btnUploadersConfigImport = new System.Windows.Forms.Button();
-            this.gbBackupRestoreOutputs = new System.Windows.Forms.GroupBox();
-            this.btnOutputsConfigExport = new System.Windows.Forms.Button();
-            this.btnOutputsConfigImport = new System.Windows.Forms.Button();
-            this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
-            this.btnSettingsDefault = new System.Windows.Forms.Button();
-            this.btnSettingsExport = new System.Windows.Forms.Button();
-            this.btnSettingsImport = new System.Windows.Forms.Button();
             this.tpAdvanced = new System.Windows.Forms.TabPage();
             this.tcAdvanced = new System.Windows.Forms.TabControl();
             this.tpAdvancedDebug = new System.Windows.Forms.TabPage();
@@ -255,11 +185,7 @@ namespace ZScreenGUI
             this.tpAdvancedSettings = new System.Windows.Forms.TabPage();
             this.pgAppConfig = new System.Windows.Forms.PropertyGrid();
             this.tpAdvancedWorkflow = new System.Windows.Forms.TabPage();
-            this.tcWorkflow = new System.Windows.Forms.TabControl();
-            this.tpWorkflowGeneral = new System.Windows.Forms.TabPage();
             this.pgWorkflow = new System.Windows.Forms.PropertyGrid();
-            this.tpWorkflowImageEffects = new System.Windows.Forms.TabPage();
-            this.pgWorkflowImageEffects = new System.Windows.Forms.PropertyGrid();
             this.tpAdvanedUploaders = new System.Windows.Forms.TabPage();
             this.pgUploaders = new System.Windows.Forms.PropertyGrid();
             this.tpAdvancedStats = new System.Windows.Forms.TabPage();
@@ -315,6 +241,9 @@ namespace ZScreenGUI
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiConfigureActions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOutputs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiProxy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
@@ -363,38 +292,12 @@ namespace ZScreenGUI
             this.tpFreehandCropShot.SuspendLayout();
             this.tpCaptureClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
-            this.tpOptions.SuspendLayout();
-            this.tcOptions.SuspendLayout();
-            this.tpWorkflow.SuspendLayout();
-            this.gbOptionsBalloonTip.SuspendLayout();
-            this.gbAppearance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
-            this.tpOptionsGeneral.SuspendLayout();
-            this.gbUpdates.SuspendLayout();
-            this.gbMisc.SuspendLayout();
-            this.gbWindowButtons.SuspendLayout();
-            this.tpPaths.SuspendLayout();
-            this.gbRoot.SuspendLayout();
-            this.gbImages.SuspendLayout();
-            this.gbLogs.SuspendLayout();
-            this.tpTreeGUI.SuspendLayout();
-            this.tpProxy.SuspendLayout();
-            this.gpProxySettings.SuspendLayout();
-            this.tpHistoryOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
-            this.tpBackupRestore.SuspendLayout();
-            this.gbBackupRestoreUploaders.SuspendLayout();
-            this.gbBackupRestoreOutputs.SuspendLayout();
-            this.gbSettingsExportImport.SuspendLayout();
             this.tpAdvanced.SuspendLayout();
             this.tcAdvanced.SuspendLayout();
             this.tpAdvancedDebug.SuspendLayout();
             this.tpAdvancedCore.SuspendLayout();
             this.tpAdvancedSettings.SuspendLayout();
             this.tpAdvancedWorkflow.SuspendLayout();
-            this.tcWorkflow.SuspendLayout();
-            this.tpWorkflowGeneral.SuspendLayout();
-            this.tpWorkflowImageEffects.SuspendLayout();
             this.tpAdvanedUploaders.SuspendLayout();
             this.tpAdvancedStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
@@ -441,13 +344,13 @@ namespace ZScreenGUI
             this.toolStripSeparator3,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 424);
+            this.cmTray.Size = new System.Drawing.Size(201, 424);
             // 
             // tsmEntireScreen
             // 
             this.tsmEntireScreen.Image = global::ZScreenGUI.Properties.Resources.monitor;
             this.tsmEntireScreen.Name = "tsmEntireScreen";
-            this.tsmEntireScreen.Size = new System.Drawing.Size(205, 22);
+            this.tsmEntireScreen.Size = new System.Drawing.Size(200, 22);
             this.tsmEntireScreen.Text = "Entire Screen";
             this.tsmEntireScreen.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
@@ -455,7 +358,7 @@ namespace ZScreenGUI
             // 
             this.tsmSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
             this.tsmSelectedWindow.Name = "tsmSelectedWindow";
-            this.tsmSelectedWindow.Size = new System.Drawing.Size(205, 22);
+            this.tsmSelectedWindow.Size = new System.Drawing.Size(200, 22);
             this.tsmSelectedWindow.Text = "Selected Window...";
             this.tsmSelectedWindow.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
@@ -463,7 +366,7 @@ namespace ZScreenGUI
             // 
             this.tsmCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
             this.tsmCropShot.Name = "tsmCropShot";
-            this.tsmCropShot.Size = new System.Drawing.Size(205, 22);
+            this.tsmCropShot.Size = new System.Drawing.Size(200, 22);
             this.tsmCropShot.Text = "Crop Shot...";
             this.tsmCropShot.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
@@ -471,7 +374,7 @@ namespace ZScreenGUI
             // 
             this.tsmLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
             this.tsmLastCropShot.Name = "tsmLastCropShot";
-            this.tsmLastCropShot.Size = new System.Drawing.Size(205, 22);
+            this.tsmLastCropShot.Size = new System.Drawing.Size(200, 22);
             this.tsmLastCropShot.Text = "Last Crop Shot";
             this.tsmLastCropShot.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
@@ -479,7 +382,7 @@ namespace ZScreenGUI
             // 
             this.tsmCaptureShape.Image = global::ZScreenGUI.Properties.Resources.shape_square_edit;
             this.tsmCaptureShape.Name = "tsmCaptureShape";
-            this.tsmCaptureShape.Size = new System.Drawing.Size(205, 22);
+            this.tsmCaptureShape.Size = new System.Drawing.Size(200, 22);
             this.tsmCaptureShape.Text = "Capture Shape";
             this.tsmCaptureShape.Click += new System.EventHandler(this.tsmFreehandCropShot_Click);
             // 
@@ -487,34 +390,34 @@ namespace ZScreenGUI
             // 
             this.autoScreenshotsToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.images_stack;
             this.autoScreenshotsToolStripMenuItem.Name = "autoScreenshotsToolStripMenuItem";
-            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.autoScreenshotsToolStripMenuItem.Text = "Auto Capture...";
             this.autoScreenshotsToolStripMenuItem.Click += new System.EventHandler(this.autoScreenshotsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmEditinImageSoftware
             // 
             this.tsmEditinImageSoftware.CheckOnClick = true;
             this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
             this.tsmEditinImageSoftware.Text = "Perform Custom Actions";
             this.tsmEditinImageSoftware.Click += new System.EventHandler(this.tsmEditinImageSoftware_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmFileUpload
             // 
             this.tsmFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
             this.tsmFileUpload.Name = "tsmFileUpload";
-            this.tsmFileUpload.Size = new System.Drawing.Size(205, 22);
+            this.tsmFileUpload.Size = new System.Drawing.Size(200, 22);
             this.tsmFileUpload.Text = "File Upload...";
             this.tsmFileUpload.Click += new System.EventHandler(this.tsmFileUpload_Click);
             // 
@@ -522,7 +425,7 @@ namespace ZScreenGUI
             // 
             this.tsmClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
             this.tsmClipboardUpload.Name = "tsmClipboardUpload";
-            this.tsmClipboardUpload.Size = new System.Drawing.Size(205, 22);
+            this.tsmClipboardUpload.Size = new System.Drawing.Size(200, 22);
             this.tsmClipboardUpload.Text = "Clipboard Upload...";
             this.tsmClipboardUpload.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
@@ -530,7 +433,7 @@ namespace ZScreenGUI
             // 
             this.tsmDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
             this.tsmDragDropWindow.Name = "tsmDragDropWindow";
-            this.tsmDragDropWindow.Size = new System.Drawing.Size(205, 22);
+            this.tsmDragDropWindow.Size = new System.Drawing.Size(200, 22);
             this.tsmDragDropWindow.Text = "Drag && Drop Window...";
             this.tsmDragDropWindow.Click += new System.EventHandler(this.tsmDropWindow_Click);
             // 
@@ -538,7 +441,7 @@ namespace ZScreenGUI
             // 
             this.tsmLanguageTranslator.Image = global::ZScreenGUI.Properties.Resources.comments;
             this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
-            this.tsmLanguageTranslator.Size = new System.Drawing.Size(205, 22);
+            this.tsmLanguageTranslator.Size = new System.Drawing.Size(200, 22);
             this.tsmLanguageTranslator.Text = "Language Translator";
             this.tsmLanguageTranslator.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
@@ -546,21 +449,21 @@ namespace ZScreenGUI
             // 
             this.tsmScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
             this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
-            this.tsmScreenColorPicker.Size = new System.Drawing.Size(205, 22);
+            this.tsmScreenColorPicker.Size = new System.Drawing.Size(200, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmiTabs
             // 
             this.tsmiTabs.DoubleClickEnabled = true;
             this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
             this.tsmiTabs.Name = "tsmiTabs";
-            this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
+            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
             this.tsmiTabs.Text = "Show Main Window...";
             this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
@@ -568,7 +471,7 @@ namespace ZScreenGUI
             // 
             this.historyToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.pictures;
             this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            this.historyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.historyToolStripMenuItem.Text = "&History...";
             this.historyToolStripMenuItem.Click += new System.EventHandler(this.historyToolStripMenuItem_Click);
             // 
@@ -576,7 +479,7 @@ namespace ZScreenGUI
             // 
             this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(200, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
@@ -584,7 +487,7 @@ namespace ZScreenGUI
             // 
             this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmFTPClient.Name = "tsmFTPClient";
-            this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
+            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
             this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
             // 
@@ -596,14 +499,14 @@ namespace ZScreenGUI
             this.tsmAbout});
             this.tsmHelp.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(200, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
             this.tsmLicense.Image = global::ZScreenGUI.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(169, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -611,7 +514,7 @@ namespace ZScreenGUI
             // 
             this.tsmVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(169, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -619,20 +522,20 @@ namespace ZScreenGUI
             // 
             this.tsmAbout.Image = global::ZScreenGUI.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(169, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmExitZScreen
             // 
             this.tsmExitZScreen.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(200, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.tsmExitZScreen_Click);
             // 
@@ -657,14 +560,13 @@ namespace ZScreenGUI
             this.tcMain.Controls.Add(this.tpMain);
             this.tcMain.Controls.Add(this.tpHotkeys);
             this.tcMain.Controls.Add(this.tpMainInput);
-            this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcMain.Location = new System.Drawing.Point(2, 26);
             this.tcMain.Multiline = true;
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(804, 438);
+            this.tcMain.Size = new System.Drawing.Size(825, 446);
             this.tcMain.TabIndex = 1;
             this.tcMain.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcMain_Selecting);
             // 
@@ -682,7 +584,7 @@ namespace ZScreenGUI
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(796, 412);
+            this.tpMain.Size = new System.Drawing.Size(817, 420);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
@@ -726,10 +628,10 @@ namespace ZScreenGUI
             this.tsbLinkBugs,
             this.tsbLinkHome});
             this.tsLinks.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.tsLinks.Location = new System.Drawing.Point(3, 385);
+            this.tsLinks.Location = new System.Drawing.Point(3, 393);
             this.tsLinks.Name = "tsLinks";
             this.tsLinks.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsLinks.Size = new System.Drawing.Size(790, 24);
+            this.tsLinks.Size = new System.Drawing.Size(811, 24);
             this.tsLinks.TabIndex = 5;
             this.tsLinks.Text = "toolStrip1";
             // 
@@ -739,7 +641,7 @@ namespace ZScreenGUI
             this.tsbLinkTutorials.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsbLinkTutorials.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkTutorials.Name = "tsbLinkTutorials";
-            this.tsbLinkTutorials.Size = new System.Drawing.Size(73, 21);
+            this.tsbLinkTutorials.Size = new System.Drawing.Size(68, 21);
             this.tsbLinkTutorials.Text = "Tutorials";
             this.tsbLinkTutorials.Click += new System.EventHandler(this.tsbLinkHelp_Click);
             // 
@@ -749,7 +651,7 @@ namespace ZScreenGUI
             this.tsbLinkBugs.Image = global::ZScreenGUI.Properties.Resources.bug;
             this.tsbLinkBugs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkBugs.Name = "tsbLinkBugs";
-            this.tsbLinkBugs.Size = new System.Drawing.Size(127, 21);
+            this.tsbLinkBugs.Size = new System.Drawing.Size(117, 21);
             this.tsbLinkBugs.Text = "Bugs/Suggestions?";
             this.tsbLinkBugs.Click += new System.EventHandler(this.tsbLinkIssues_Click);
             // 
@@ -759,7 +661,7 @@ namespace ZScreenGUI
             this.tsbLinkHome.Image = global::ZScreenGUI.Properties.Resources.world_go;
             this.tsbLinkHome.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkHome.Name = "tsbLinkHome";
-            this.tsbLinkHome.Size = new System.Drawing.Size(89, 21);
+            this.tsbLinkHome.Size = new System.Drawing.Size(81, 21);
             this.tsbLinkHome.Text = "Home Page";
             this.tsbLinkHome.Click += new System.EventHandler(this.tsbLinkHome_Click);
             // 
@@ -833,7 +735,7 @@ namespace ZScreenGUI
             this.chkShowWorkflowWizard.TabIndex = 2;
             this.chkShowWorkflowWizard.Text = "Prompt for Workflow Wizard";
             this.ttZScreen.SetToolTip(this.chkShowWorkflowWizard, "When enabled a prompt will be displayed when each\r\nscreenshot is taken allowing y" +
-        "ou to manually specify a filename.");
+                    "ou to manually specify a filename.");
             this.chkShowWorkflowWizard.UseVisualStyleBackColor = true;
             this.chkShowWorkflowWizard.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
@@ -848,14 +750,14 @@ namespace ZScreenGUI
             // 
             // pbPreview
             // 
-            this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreview.BackColor = System.Drawing.Color.White;
             this.pbPreview.DisableViewer = false;
             this.pbPreview.Location = new System.Drawing.Point(392, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(401, 398);
+            this.pbPreview.Size = new System.Drawing.Size(422, 406);
             this.pbPreview.TabIndex = 4;
             // 
             // tpHotkeys
@@ -867,7 +769,7 @@ namespace ZScreenGUI
             this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotkeys.Size = new System.Drawing.Size(796, 412);
+            this.tpHotkeys.Size = new System.Drawing.Size(804, 416);
             this.tpHotkeys.TabIndex = 1;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
@@ -877,7 +779,7 @@ namespace ZScreenGUI
             this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hmHotkeys.Location = new System.Drawing.Point(3, 3);
             this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(790, 383);
+            this.hmHotkeys.Size = new System.Drawing.Size(798, 387);
             this.hmHotkeys.TabIndex = 0;
             // 
             // btnResetHotkeys
@@ -897,9 +799,9 @@ namespace ZScreenGUI
             this.lblHotkeyStatus.BackColor = System.Drawing.Color.WhiteSmoke;
             this.lblHotkeyStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblHotkeyStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblHotkeyStatus.Location = new System.Drawing.Point(3, 386);
+            this.lblHotkeyStatus.Location = new System.Drawing.Point(3, 390);
             this.lblHotkeyStatus.Name = "lblHotkeyStatus";
-            this.lblHotkeyStatus.Size = new System.Drawing.Size(790, 23);
+            this.lblHotkeyStatus.Size = new System.Drawing.Size(798, 23);
             this.lblHotkeyStatus.TabIndex = 2;
             this.lblHotkeyStatus.Text = "Click on a Hotkey to set";
             this.lblHotkeyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -911,7 +813,7 @@ namespace ZScreenGUI
             this.tpMainInput.Location = new System.Drawing.Point(4, 22);
             this.tpMainInput.Name = "tpMainInput";
             this.tpMainInput.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainInput.Size = new System.Drawing.Size(796, 412);
+            this.tpMainInput.Size = new System.Drawing.Size(804, 416);
             this.tpMainInput.TabIndex = 2;
             this.tpMainInput.Text = "Capture";
             this.tpMainInput.UseVisualStyleBackColor = true;
@@ -929,7 +831,7 @@ namespace ZScreenGUI
             this.tcCapture.Location = new System.Drawing.Point(3, 3);
             this.tcCapture.Name = "tcCapture";
             this.tcCapture.SelectedIndex = 0;
-            this.tcCapture.Size = new System.Drawing.Size(790, 406);
+            this.tcCapture.Size = new System.Drawing.Size(798, 410);
             this.tcCapture.TabIndex = 0;
             // 
             // tpActivewindow
@@ -941,7 +843,7 @@ namespace ZScreenGUI
             this.tpActivewindow.Location = new System.Drawing.Point(4, 22);
             this.tpActivewindow.Name = "tpActivewindow";
             this.tpActivewindow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpActivewindow.Size = new System.Drawing.Size(782, 380);
+            this.tpActivewindow.Size = new System.Drawing.Size(790, 384);
             this.tpActivewindow.TabIndex = 0;
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;
@@ -1014,7 +916,7 @@ namespace ZScreenGUI
             this.chkActiveWindowCleanBackground.Size = new System.Drawing.Size(421, 17);
             this.chkActiveWindowCleanBackground.TabIndex = 2;
             this.chkActiveWindowCleanBackground.Text = "Enable transparency (and clear \"dirty\" Aero background in Windows Vista or higher" +
-    ")";
+                ")";
             this.ttZScreen.SetToolTip(this.chkActiveWindowCleanBackground, "Clears background area that does not belong to the Active Window");
             this.chkActiveWindowCleanBackground.UseVisualStyleBackColor = true;
             this.chkActiveWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
@@ -1050,7 +952,7 @@ namespace ZScreenGUI
             this.chkShowCursor.TabIndex = 1;
             this.chkShowCursor.Text = "Show Cursor in Screenshots";
             this.ttZScreen.SetToolTip(this.chkShowCursor, "When enabled your mouse cursor icon will be captured \r\nas it appeared when the sc" +
-        "reenshot was taken.");
+                    "reenshot was taken.");
             this.chkShowCursor.UseVisualStyleBackColor = true;
             this.chkShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
             // 
@@ -1098,7 +1000,7 @@ namespace ZScreenGUI
             this.tpSelectedWindow.ImageKey = "application_double.png";
             this.tpSelectedWindow.Location = new System.Drawing.Point(4, 22);
             this.tpSelectedWindow.Name = "tpSelectedWindow";
-            this.tpSelectedWindow.Size = new System.Drawing.Size(782, 380);
+            this.tpSelectedWindow.Size = new System.Drawing.Size(790, 384);
             this.tpSelectedWindow.TabIndex = 1;
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
@@ -1288,7 +1190,7 @@ namespace ZScreenGUI
             this.tpCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpCropShot.Name = "tpCropShot";
             this.tpCropShot.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShot.Size = new System.Drawing.Size(782, 380);
+            this.tpCropShot.Size = new System.Drawing.Size(790, 384);
             this.tpCropShot.TabIndex = 2;
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
@@ -1804,7 +1706,7 @@ namespace ZScreenGUI
             this.tpCropShotLast.Location = new System.Drawing.Point(4, 22);
             this.tpCropShotLast.Name = "tpCropShotLast";
             this.tpCropShotLast.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShotLast.Size = new System.Drawing.Size(782, 380);
+            this.tpCropShotLast.Size = new System.Drawing.Size(790, 384);
             this.tpCropShotLast.TabIndex = 3;
             this.tpCropShotLast.Text = "Last Crop Shot";
             this.tpCropShotLast.UseVisualStyleBackColor = true;
@@ -1826,7 +1728,7 @@ namespace ZScreenGUI
             this.tpCaptureShape.Location = new System.Drawing.Point(4, 22);
             this.tpCaptureShape.Name = "tpCaptureShape";
             this.tpCaptureShape.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureShape.Size = new System.Drawing.Size(782, 380);
+            this.tpCaptureShape.Size = new System.Drawing.Size(790, 384);
             this.tpCaptureShape.TabIndex = 4;
             this.tpCaptureShape.Text = "Shape";
             this.tpCaptureShape.UseVisualStyleBackColor = true;
@@ -1836,7 +1738,7 @@ namespace ZScreenGUI
             this.pgSurfaceConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgSurfaceConfig.Location = new System.Drawing.Point(3, 3);
             this.pgSurfaceConfig.Name = "pgSurfaceConfig";
-            this.pgSurfaceConfig.Size = new System.Drawing.Size(776, 374);
+            this.pgSurfaceConfig.Size = new System.Drawing.Size(784, 378);
             this.pgSurfaceConfig.TabIndex = 0;
             // 
             // tpFreehandCropShot
@@ -1848,7 +1750,7 @@ namespace ZScreenGUI
             this.tpFreehandCropShot.ImageKey = "shape_square_edit.png";
             this.tpFreehandCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpFreehandCropShot.Name = "tpFreehandCropShot";
-            this.tpFreehandCropShot.Size = new System.Drawing.Size(782, 380);
+            this.tpFreehandCropShot.Size = new System.Drawing.Size(790, 384);
             this.tpFreehandCropShot.TabIndex = 5;
             this.tpFreehandCropShot.Text = "Freehand Crop Shot";
             this.tpFreehandCropShot.UseVisualStyleBackColor = true;
@@ -1903,7 +1805,7 @@ namespace ZScreenGUI
             this.tpCaptureClipboard.Location = new System.Drawing.Point(4, 22);
             this.tpCaptureClipboard.Name = "tpCaptureClipboard";
             this.tpCaptureClipboard.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureClipboard.Size = new System.Drawing.Size(782, 380);
+            this.tpCaptureClipboard.Size = new System.Drawing.Size(790, 384);
             this.tpCaptureClipboard.TabIndex = 6;
             this.tpCaptureClipboard.Text = "Clipboard";
             this.tpCaptureClipboard.UseVisualStyleBackColor = true;
@@ -1965,838 +1867,14 @@ namespace ZScreenGUI
             this.chkMonText.UseVisualStyleBackColor = true;
             this.chkMonText.CheckedChanged += new System.EventHandler(this.chkMonText_CheckedChanged);
             // 
-            // tpOptions
-            // 
-            this.tpOptions.Controls.Add(this.tcOptions);
-            this.tpOptions.ImageKey = "(none)";
-            this.tpOptions.Location = new System.Drawing.Point(4, 22);
-            this.tpOptions.Name = "tpOptions";
-            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(796, 412);
-            this.tpOptions.TabIndex = 3;
-            this.tpOptions.Text = "Options";
-            this.tpOptions.UseVisualStyleBackColor = true;
-            // 
-            // tcOptions
-            // 
-            this.tcOptions.Controls.Add(this.tpWorkflow);
-            this.tcOptions.Controls.Add(this.tpOptionsGeneral);
-            this.tcOptions.Controls.Add(this.tpPaths);
-            this.tcOptions.Controls.Add(this.tpTreeGUI);
-            this.tcOptions.Controls.Add(this.tpProxy);
-            this.tcOptions.Controls.Add(this.tpHistoryOptions);
-            this.tcOptions.Controls.Add(this.tpBackupRestore);
-            this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcOptions.Location = new System.Drawing.Point(3, 3);
-            this.tcOptions.Name = "tcOptions";
-            this.tcOptions.SelectedIndex = 0;
-            this.tcOptions.Size = new System.Drawing.Size(790, 406);
-            this.tcOptions.TabIndex = 0;
-            // 
-            // tpWorkflow
-            // 
-            this.tpWorkflow.Controls.Add(this.gbOptionsBalloonTip);
-            this.tpWorkflow.Controls.Add(this.gbAppearance);
-            this.tpWorkflow.Location = new System.Drawing.Point(4, 22);
-            this.tpWorkflow.Name = "tpWorkflow";
-            this.tpWorkflow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWorkflow.Size = new System.Drawing.Size(782, 380);
-            this.tpWorkflow.TabIndex = 0;
-            this.tpWorkflow.Text = "Workflow";
-            this.tpWorkflow.UseVisualStyleBackColor = true;
-            // 
-            // gbOptionsBalloonTip
-            // 
-            this.gbOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
-            this.gbOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
-            this.gbOptionsBalloonTip.Location = new System.Drawing.Point(8, 168);
-            this.gbOptionsBalloonTip.Name = "gbOptionsBalloonTip";
-            this.gbOptionsBalloonTip.Size = new System.Drawing.Size(749, 80);
-            this.gbOptionsBalloonTip.TabIndex = 1;
-            this.gbOptionsBalloonTip.TabStop = false;
-            this.gbOptionsBalloonTip.Text = "Balloon Tip Options";
-            // 
-            // chkBalloonTipOpenLink
-            // 
-            this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 24);
-            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(189, 17);
-            this.chkBalloonTipOpenLink.TabIndex = 0;
-            this.chkBalloonTipOpenLink.Text = "Open URL/File on balloon tip click";
-            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
-            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
-            // 
-            // cbShowUploadDuration
-            // 
-            this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 48);
-            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
-            this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
-            this.cbShowUploadDuration.TabIndex = 1;
-            this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
-            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
-            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
-            // 
-            // gbAppearance
-            // 
-            this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.gbAppearance.Controls.Add(this.chkShowPopup);
-            this.gbAppearance.Controls.Add(this.chkTwitterEnable);
-            this.gbAppearance.Controls.Add(this.cbCompleteSound);
-            this.gbAppearance.Controls.Add(this.chkCaptureFallback);
-            this.gbAppearance.Controls.Add(this.lblTrayFlash);
-            this.gbAppearance.Controls.Add(this.nudFlashIconCount);
-            this.gbAppearance.Location = new System.Drawing.Point(8, 8);
-            this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(749, 152);
-            this.gbAppearance.TabIndex = 0;
-            this.gbAppearance.TabStop = false;
-            this.gbAppearance.Text = "After completing a task";
-            // 
-            // chkShowPopup
-            // 
-            this.chkShowPopup.AutoSize = true;
-            this.chkShowPopup.Location = new System.Drawing.Point(16, 120);
-            this.chkShowPopup.Name = "chkShowPopup";
-            this.chkShowPopup.Size = new System.Drawing.Size(250, 17);
-            this.chkShowPopup.TabIndex = 5;
-            this.chkShowPopup.Text = "Show balloon tip after upload/task is completed";
-            this.chkShowPopup.UseVisualStyleBackColor = true;
-            this.chkShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
-            // 
-            // chkTwitterEnable
-            // 
-            this.chkTwitterEnable.AutoSize = true;
-            this.chkTwitterEnable.Location = new System.Drawing.Point(16, 72);
-            this.chkTwitterEnable.Name = "chkTwitterEnable";
-            this.chkTwitterEnable.Size = new System.Drawing.Size(202, 17);
-            this.chkTwitterEnable.TabIndex = 2;
-            this.chkTwitterEnable.Text = "Update status in Twitter automatically";
-            this.chkTwitterEnable.UseVisualStyleBackColor = true;
-            this.chkTwitterEnable.CheckedChanged += new System.EventHandler(this.chkTwitterEnable_CheckedChanged);
-            // 
-            // cbCompleteSound
-            // 
-            this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 24);
-            this.cbCompleteSound.Name = "cbCompleteSound";
-            this.cbCompleteSound.Size = new System.Drawing.Size(224, 17);
-            this.cbCompleteSound.TabIndex = 0;
-            this.cbCompleteSound.Text = "Play sound after upload/task is completed";
-            this.cbCompleteSound.UseVisualStyleBackColor = true;
-            this.cbCompleteSound.CheckedChanged += new System.EventHandler(this.cbCompleteSound_CheckedChanged);
-            // 
-            // chkCaptureFallback
-            // 
-            this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 48);
-            this.chkCaptureFallback.Name = "chkCaptureFallback";
-            this.chkCaptureFallback.Size = new System.Drawing.Size(206, 17);
-            this.chkCaptureFallback.TabIndex = 1;
-            this.chkCaptureFallback.Text = "Capture entire screen if Crop Shot fails";
-            this.chkCaptureFallback.UseVisualStyleBackColor = true;
-            this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
-            // 
-            // lblTrayFlash
-            // 
-            this.lblTrayFlash.AutoSize = true;
-            this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTrayFlash.Location = new System.Drawing.Point(16, 96);
-            this.lblTrayFlash.Name = "lblTrayFlash";
-            this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
-            this.lblTrayFlash.TabIndex = 3;
-            this.lblTrayFlash.Text = "Number of times tray icon should flash after an upload is complete";
-            // 
-            // nudFlashIconCount
-            // 
-            this.nudFlashIconCount.Location = new System.Drawing.Point(333, 95);
-            this.nudFlashIconCount.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudFlashIconCount.Name = "nudFlashIconCount";
-            this.nudFlashIconCount.Size = new System.Drawing.Size(58, 20);
-            this.nudFlashIconCount.TabIndex = 4;
-            this.nudFlashIconCount.ValueChanged += new System.EventHandler(this.nudFlashIconCount_ValueChanged);
-            // 
-            // tpOptionsGeneral
-            // 
-            this.tpOptionsGeneral.Controls.Add(this.gbUpdates);
-            this.tpOptionsGeneral.Controls.Add(this.gbMisc);
-            this.tpOptionsGeneral.Controls.Add(this.gbWindowButtons);
-            this.tpOptionsGeneral.Location = new System.Drawing.Point(4, 22);
-            this.tpOptionsGeneral.Name = "tpOptionsGeneral";
-            this.tpOptionsGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptionsGeneral.Size = new System.Drawing.Size(782, 380);
-            this.tpOptionsGeneral.TabIndex = 1;
-            this.tpOptionsGeneral.Text = "General";
-            this.tpOptionsGeneral.UseVisualStyleBackColor = true;
-            // 
-            // gbUpdates
-            // 
-            this.gbUpdates.Controls.Add(this.cboReleaseChannel);
-            this.gbUpdates.Controls.Add(this.lblUpdateInfo);
-            this.gbUpdates.Controls.Add(this.btnCheckUpdate);
-            this.gbUpdates.Controls.Add(this.chkCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 184);
-            this.gbUpdates.Name = "gbUpdates";
-            this.gbUpdates.Size = new System.Drawing.Size(760, 128);
-            this.gbUpdates.TabIndex = 2;
-            this.gbUpdates.TabStop = false;
-            this.gbUpdates.Text = "Check Updates";
-            // 
-            // cboReleaseChannel
-            // 
-            this.cboReleaseChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboReleaseChannel.FormattingEnabled = true;
-            this.cboReleaseChannel.Location = new System.Drawing.Point(240, 24);
-            this.cboReleaseChannel.Name = "cboReleaseChannel";
-            this.cboReleaseChannel.Size = new System.Drawing.Size(121, 21);
-            this.cboReleaseChannel.TabIndex = 1;
-            this.cboReleaseChannel.SelectedIndexChanged += new System.EventHandler(this.cboReleaseChannel_SelectedIndexChanged);
-            // 
-            // lblUpdateInfo
-            // 
-            this.lblUpdateInfo.AutoSize = true;
-            this.lblUpdateInfo.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblUpdateInfo.Location = new System.Drawing.Point(24, 56);
-            this.lblUpdateInfo.Name = "lblUpdateInfo";
-            this.lblUpdateInfo.Size = new System.Drawing.Size(116, 16);
-            this.lblUpdateInfo.TabIndex = 3;
-            this.lblUpdateInfo.Text = "Update information";
-            // 
-            // btnCheckUpdate
-            // 
-            this.btnCheckUpdate.Location = new System.Drawing.Point(368, 24);
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(104, 24);
-            this.btnCheckUpdate.TabIndex = 2;
-            this.btnCheckUpdate.Text = "Check Update";
-            this.btnCheckUpdate.UseVisualStyleBackColor = true;
-            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
-            // 
-            // chkCheckUpdates
-            // 
-            this.chkCheckUpdates.AutoSize = true;
-            this.chkCheckUpdates.Location = new System.Drawing.Point(16, 24);
-            this.chkCheckUpdates.Name = "chkCheckUpdates";
-            this.chkCheckUpdates.Size = new System.Drawing.Size(224, 17);
-            this.chkCheckUpdates.TabIndex = 0;
-            this.chkCheckUpdates.Text = "Automatically check updates at startup for";
-            this.chkCheckUpdates.UseVisualStyleBackColor = true;
-            this.chkCheckUpdates.CheckedChanged += new System.EventHandler(this.cbCheckUpdates_CheckedChanged);
-            // 
-            // gbMisc
-            // 
-            this.gbMisc.BackColor = System.Drawing.Color.Transparent;
-            this.gbMisc.Controls.Add(this.chkShellExt);
-            this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
-            this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
-            this.gbMisc.Controls.Add(this.cbShowHelpBalloonTips);
-            this.gbMisc.Controls.Add(this.chkOpenMainWindow);
-            this.gbMisc.Controls.Add(this.chkStartWin);
-            this.gbMisc.Location = new System.Drawing.Point(8, 8);
-            this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(760, 104);
-            this.gbMisc.TabIndex = 0;
-            this.gbMisc.TabStop = false;
-            this.gbMisc.Text = "Program";
-            // 
-            // chkShellExt
-            // 
-            this.chkShellExt.AutoSize = true;
-            this.chkShellExt.Location = new System.Drawing.Point(424, 48);
-            this.chkShellExt.Name = "chkShellExt";
-            this.chkShellExt.Size = new System.Drawing.Size(270, 17);
-            this.chkShellExt.TabIndex = 3;
-            this.chkShellExt.Text = "Show \"Open using ZScreen\" in Shell Context Menu";
-            this.ttZScreen.SetToolTip(this.chkShellExt, "Use ZUploader for context menu uploads.\r\nZScreen is not recommended for this.");
-            this.chkShellExt.UseVisualStyleBackColor = true;
-            this.chkShellExt.CheckedChanged += new System.EventHandler(this.chkShellExt_CheckedChanged);
-            // 
-            // chkWindows7TaskbarIntegration
-            // 
-            this.chkWindows7TaskbarIntegration.AutoSize = true;
-            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(424, 24);
-            this.chkWindows7TaskbarIntegration.Name = "chkWindows7TaskbarIntegration";
-            this.chkWindows7TaskbarIntegration.Size = new System.Drawing.Size(173, 17);
-            this.chkWindows7TaskbarIntegration.TabIndex = 1;
-            this.chkWindows7TaskbarIntegration.Text = "Windows 7 &Taskbar integration";
-            this.chkWindows7TaskbarIntegration.UseVisualStyleBackColor = true;
-            this.chkWindows7TaskbarIntegration.CheckedChanged += new System.EventHandler(this.chkWindows7TaskbarIntegration_CheckedChanged);
-            // 
-            // cbAutoSaveSettings
-            // 
-            this.cbAutoSaveSettings.AutoSize = true;
-            this.cbAutoSaveSettings.Location = new System.Drawing.Point(424, 72);
-            this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
-            this.cbAutoSaveSettings.Size = new System.Drawing.Size(245, 17);
-            this.cbAutoSaveSettings.TabIndex = 5;
-            this.cbAutoSaveSettings.Text = "Save settings when ZScreen minimizing to tray";
-            this.ttZScreen.SetToolTip(this.cbAutoSaveSettings, resources.GetString("cbAutoSaveSettings.ToolTip"));
-            this.cbAutoSaveSettings.UseVisualStyleBackColor = true;
-            this.cbAutoSaveSettings.CheckedChanged += new System.EventHandler(this.cbAutoSaveSettings_CheckedChanged);
-            // 
-            // cbShowHelpBalloonTips
-            // 
-            this.cbShowHelpBalloonTips.AutoSize = true;
-            this.cbShowHelpBalloonTips.Location = new System.Drawing.Point(16, 72);
-            this.cbShowHelpBalloonTips.Name = "cbShowHelpBalloonTips";
-            this.cbShowHelpBalloonTips.Size = new System.Drawing.Size(156, 17);
-            this.cbShowHelpBalloonTips.TabIndex = 4;
-            this.cbShowHelpBalloonTips.Text = "Show Help via Balloon Tips";
-            this.cbShowHelpBalloonTips.UseVisualStyleBackColor = true;
-            this.cbShowHelpBalloonTips.CheckedChanged += new System.EventHandler(this.cbShowHelpBalloonTips_CheckedChanged);
-            // 
-            // chkOpenMainWindow
-            // 
-            this.chkOpenMainWindow.AutoSize = true;
-            this.chkOpenMainWindow.Location = new System.Drawing.Point(16, 48);
-            this.chkOpenMainWindow.Name = "chkOpenMainWindow";
-            this.chkOpenMainWindow.Size = new System.Drawing.Size(158, 17);
-            this.chkOpenMainWindow.TabIndex = 2;
-            this.chkOpenMainWindow.Text = "Open Main Window on load";
-            this.chkOpenMainWindow.UseVisualStyleBackColor = true;
-            this.chkOpenMainWindow.CheckedChanged += new System.EventHandler(this.cbOpenMainWindow_CheckedChanged);
-            // 
-            // chkStartWin
-            // 
-            this.chkStartWin.AutoSize = true;
-            this.chkStartWin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkStartWin.Location = new System.Drawing.Point(16, 24);
-            this.chkStartWin.Name = "chkStartWin";
-            this.chkStartWin.Size = new System.Drawing.Size(117, 17);
-            this.chkStartWin.TabIndex = 0;
-            this.chkStartWin.Text = "Start with Windows";
-            this.chkStartWin.UseVisualStyleBackColor = true;
-            this.chkStartWin.CheckedChanged += new System.EventHandler(this.cbStartWin_CheckedChanged);
-            // 
-            // gbWindowButtons
-            // 
-            this.gbWindowButtons.Controls.Add(this.cboCloseButtonAction);
-            this.gbWindowButtons.Controls.Add(this.cboMinimizeButtonAction);
-            this.gbWindowButtons.Controls.Add(this.lblCloseButtonAction);
-            this.gbWindowButtons.Controls.Add(this.lblMinimizeButtonAction);
-            this.gbWindowButtons.Location = new System.Drawing.Point(8, 120);
-            this.gbWindowButtons.Name = "gbWindowButtons";
-            this.gbWindowButtons.Size = new System.Drawing.Size(760, 56);
-            this.gbWindowButtons.TabIndex = 1;
-            this.gbWindowButtons.TabStop = false;
-            this.gbWindowButtons.Text = "Windows Buttons Behavior";
-            // 
-            // cboCloseButtonAction
-            // 
-            this.cboCloseButtonAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCloseButtonAction.FormattingEnabled = true;
-            this.cboCloseButtonAction.Location = new System.Drawing.Point(544, 20);
-            this.cboCloseButtonAction.Name = "cboCloseButtonAction";
-            this.cboCloseButtonAction.Size = new System.Drawing.Size(144, 21);
-            this.cboCloseButtonAction.TabIndex = 3;
-            this.cboCloseButtonAction.SelectedIndexChanged += new System.EventHandler(this.cbCloseButtonAction_SelectedIndexChanged);
-            // 
-            // cboMinimizeButtonAction
-            // 
-            this.cboMinimizeButtonAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMinimizeButtonAction.FormattingEnabled = true;
-            this.cboMinimizeButtonAction.Location = new System.Drawing.Point(136, 20);
-            this.cboMinimizeButtonAction.Name = "cboMinimizeButtonAction";
-            this.cboMinimizeButtonAction.Size = new System.Drawing.Size(144, 21);
-            this.cboMinimizeButtonAction.TabIndex = 1;
-            this.cboMinimizeButtonAction.SelectedIndexChanged += new System.EventHandler(this.cbMinimizeButtonAction_SelectedIndexChanged);
-            // 
-            // lblCloseButtonAction
-            // 
-            this.lblCloseButtonAction.AutoSize = true;
-            this.lblCloseButtonAction.Location = new System.Drawing.Point(440, 24);
-            this.lblCloseButtonAction.Name = "lblCloseButtonAction";
-            this.lblCloseButtonAction.Size = new System.Drawing.Size(101, 13);
-            this.lblCloseButtonAction.TabIndex = 2;
-            this.lblCloseButtonAction.Text = "Close button action:";
-            // 
-            // lblMinimizeButtonAction
-            // 
-            this.lblMinimizeButtonAction.AutoSize = true;
-            this.lblMinimizeButtonAction.Location = new System.Drawing.Point(16, 24);
-            this.lblMinimizeButtonAction.Name = "lblMinimizeButtonAction";
-            this.lblMinimizeButtonAction.Size = new System.Drawing.Size(115, 13);
-            this.lblMinimizeButtonAction.TabIndex = 0;
-            this.lblMinimizeButtonAction.Text = "Minimize button action:";
-            // 
-            // tpPaths
-            // 
-            this.tpPaths.Controls.Add(this.gbRoot);
-            this.tpPaths.Controls.Add(this.gbImages);
-            this.tpPaths.Controls.Add(this.gbLogs);
-            this.tpPaths.Location = new System.Drawing.Point(4, 22);
-            this.tpPaths.Name = "tpPaths";
-            this.tpPaths.Size = new System.Drawing.Size(782, 380);
-            this.tpPaths.TabIndex = 2;
-            this.tpPaths.Text = "Paths";
-            this.tpPaths.UseVisualStyleBackColor = true;
-            // 
-            // gbRoot
-            // 
-            this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbRoot.Controls.Add(this.btnViewRootDir);
-            this.gbRoot.Controls.Add(this.btnRelocateRootDir);
-            this.gbRoot.Controls.Add(this.txtRootFolder);
-            this.gbRoot.Location = new System.Drawing.Point(8, 8);
-            this.gbRoot.Name = "gbRoot";
-            this.gbRoot.Size = new System.Drawing.Size(759, 64);
-            this.gbRoot.TabIndex = 0;
-            this.gbRoot.TabStop = false;
-            this.gbRoot.Text = "Root";
-            // 
-            // btnViewRootDir
-            // 
-            this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(643, 22);
-            this.btnViewRootDir.Name = "btnViewRootDir";
-            this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
-            this.btnViewRootDir.TabIndex = 2;
-            this.btnViewRootDir.Text = "View Directory...";
-            this.btnViewRootDir.UseVisualStyleBackColor = true;
-            this.btnViewRootDir.Click += new System.EventHandler(this.btnViewRootDir_Click);
-            // 
-            // btnRelocateRootDir
-            // 
-            this.btnRelocateRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRelocateRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRelocateRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRelocateRootDir.Location = new System.Drawing.Point(554, 22);
-            this.btnRelocateRootDir.Name = "btnRelocateRootDir";
-            this.btnRelocateRootDir.Size = new System.Drawing.Size(80, 24);
-            this.btnRelocateRootDir.TabIndex = 1;
-            this.btnRelocateRootDir.Text = "Relocate...";
-            this.btnRelocateRootDir.UseVisualStyleBackColor = true;
-            this.btnRelocateRootDir.Click += new System.EventHandler(this.btnBrowseRootDir_Click);
-            // 
-            // txtRootFolder
-            // 
-            this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
-            this.txtRootFolder.Name = "txtRootFolder";
-            this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(522, 20);
-            this.txtRootFolder.TabIndex = 0;
-            this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
-    "";
-            // 
-            // gbImages
-            // 
-            this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbImages.BackColor = System.Drawing.Color.Transparent;
-            this.gbImages.Controls.Add(this.btnBrowseImagesDir);
-            this.gbImages.Controls.Add(this.btnMoveImageFiles);
-            this.gbImages.Controls.Add(this.lblImagesFolderPattern);
-            this.gbImages.Controls.Add(this.lblImagesFolderPatternPreview);
-            this.gbImages.Controls.Add(this.txtImagesFolderPattern);
-            this.gbImages.Controls.Add(this.chkDeleteLocal);
-            this.gbImages.Controls.Add(this.btnViewImagesDir);
-            this.gbImages.Controls.Add(this.txtImagesDir);
-            this.gbImages.Location = new System.Drawing.Point(8, 80);
-            this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(759, 120);
-            this.gbImages.TabIndex = 1;
-            this.gbImages.TabStop = false;
-            this.gbImages.Text = "Images";
-            // 
-            // btnBrowseImagesDir
-            // 
-            this.btnBrowseImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImagesDir.Location = new System.Drawing.Point(554, 21);
-            this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
-            this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseImagesDir.TabIndex = 1;
-            this.btnBrowseImagesDir.Text = "Relocate...";
-            this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
-            this.btnBrowseImagesDir.Click += new System.EventHandler(this.BtnBrowseImagesDirClick);
-            // 
-            // btnMoveImageFiles
-            // 
-            this.btnMoveImageFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveImageFiles.Location = new System.Drawing.Point(571, 56);
-            this.btnMoveImageFiles.Name = "btnMoveImageFiles";
-            this.btnMoveImageFiles.Size = new System.Drawing.Size(176, 23);
-            this.btnMoveImageFiles.TabIndex = 6;
-            this.btnMoveImageFiles.Text = "Move Images to Sub-folders...";
-            this.btnMoveImageFiles.UseVisualStyleBackColor = true;
-            this.btnMoveImageFiles.Click += new System.EventHandler(this.btnMoveImageFiles_Click);
-            // 
-            // lblImagesFolderPattern
-            // 
-            this.lblImagesFolderPattern.AutoSize = true;
-            this.lblImagesFolderPattern.Location = new System.Drawing.Point(16, 59);
-            this.lblImagesFolderPattern.Name = "lblImagesFolderPattern";
-            this.lblImagesFolderPattern.Size = new System.Drawing.Size(95, 13);
-            this.lblImagesFolderPattern.TabIndex = 3;
-            this.lblImagesFolderPattern.Text = "Sub-folder Pattern:";
-            // 
-            // lblImagesFolderPatternPreview
-            // 
-            this.lblImagesFolderPatternPreview.AutoSize = true;
-            this.lblImagesFolderPatternPreview.Location = new System.Drawing.Point(232, 59);
-            this.lblImagesFolderPatternPreview.Name = "lblImagesFolderPatternPreview";
-            this.lblImagesFolderPatternPreview.Size = new System.Drawing.Size(81, 13);
-            this.lblImagesFolderPatternPreview.TabIndex = 5;
-            this.lblImagesFolderPatternPreview.Text = "Pattern preview";
-            // 
-            // txtImagesFolderPattern
-            // 
-            this.txtImagesFolderPattern.Location = new System.Drawing.Point(120, 56);
-            this.txtImagesFolderPattern.Name = "txtImagesFolderPattern";
-            this.txtImagesFolderPattern.Size = new System.Drawing.Size(100, 20);
-            this.txtImagesFolderPattern.TabIndex = 4;
-            this.ttZScreen.SetToolTip(this.txtImagesFolderPattern, "%y = Year\r\n%mo = Month\r\n%mon = Month Name\r\n%d = Day");
-            this.txtImagesFolderPattern.TextChanged += new System.EventHandler(this.txtImagesFolderPattern_TextChanged);
-            // 
-            // chkDeleteLocal
-            // 
-            this.chkDeleteLocal.AutoSize = true;
-            this.chkDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkDeleteLocal.Location = new System.Drawing.Point(16, 88);
-            this.chkDeleteLocal.Name = "chkDeleteLocal";
-            this.chkDeleteLocal.Size = new System.Drawing.Size(283, 17);
-            this.chkDeleteLocal.TabIndex = 7;
-            this.chkDeleteLocal.Text = "Delete captured screenshots after upload is completed";
-            this.chkDeleteLocal.UseVisualStyleBackColor = true;
-            this.chkDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
-            // 
-            // btnViewImagesDir
-            // 
-            this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewImagesDir.Location = new System.Drawing.Point(643, 21);
-            this.btnViewImagesDir.Name = "btnViewImagesDir";
-            this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
-            this.btnViewImagesDir.TabIndex = 2;
-            this.btnViewImagesDir.Text = "View Directory...";
-            this.btnViewImagesDir.UseVisualStyleBackColor = true;
-            this.btnViewImagesDir.Click += new System.EventHandler(this.btnViewLocalDirectory_Click);
-            // 
-            // txtImagesDir
-            // 
-            this.txtImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImagesDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtImagesDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
-            this.txtImagesDir.Name = "txtImagesDir";
-            this.txtImagesDir.ReadOnly = true;
-            this.txtImagesDir.Size = new System.Drawing.Size(522, 20);
-            this.txtImagesDir.TabIndex = 0;
-            // 
-            // gbLogs
-            // 
-            this.gbLogs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbLogs.BackColor = System.Drawing.Color.Transparent;
-            this.gbLogs.Controls.Add(this.btnViewCacheDir);
-            this.gbLogs.Controls.Add(this.txtLogsDir);
-            this.gbLogs.Location = new System.Drawing.Point(8, 208);
-            this.gbLogs.Name = "gbLogs";
-            this.gbLogs.Size = new System.Drawing.Size(759, 64);
-            this.gbLogs.TabIndex = 2;
-            this.gbLogs.TabStop = false;
-            this.gbLogs.Text = "Logs";
-            // 
-            // btnViewCacheDir
-            // 
-            this.btnViewCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewCacheDir.Location = new System.Drawing.Point(639, 22);
-            this.btnViewCacheDir.Name = "btnViewCacheDir";
-            this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
-            this.btnViewCacheDir.TabIndex = 1;
-            this.btnViewCacheDir.Text = "View Directory...";
-            this.btnViewCacheDir.UseVisualStyleBackColor = true;
-            this.btnViewCacheDir.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
-            // 
-            // txtLogsDir
-            // 
-            this.txtLogsDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLogsDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtLogsDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtLogsDir.Location = new System.Drawing.Point(16, 24);
-            this.txtLogsDir.Name = "txtLogsDir";
-            this.txtLogsDir.ReadOnly = true;
-            this.txtLogsDir.Size = new System.Drawing.Size(617, 20);
-            this.txtLogsDir.TabIndex = 0;
-            // 
-            // tpTreeGUI
-            // 
-            this.tpTreeGUI.Controls.Add(this.pgIndexer);
-            this.tpTreeGUI.Location = new System.Drawing.Point(4, 22);
-            this.tpTreeGUI.Name = "tpTreeGUI";
-            this.tpTreeGUI.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTreeGUI.Size = new System.Drawing.Size(782, 380);
-            this.tpTreeGUI.TabIndex = 3;
-            this.tpTreeGUI.Text = "Directory Indexer";
-            this.tpTreeGUI.UseVisualStyleBackColor = true;
-            // 
-            // pgIndexer
-            // 
-            this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgIndexer.Location = new System.Drawing.Point(3, 3);
-            this.pgIndexer.Name = "pgIndexer";
-            this.pgIndexer.Size = new System.Drawing.Size(776, 374);
-            this.pgIndexer.TabIndex = 0;
-            // 
-            // tpProxy
-            // 
-            this.tpProxy.Controls.Add(this.gpProxySettings);
-            this.tpProxy.Controls.Add(this.ucProxyAccounts);
-            this.tpProxy.Location = new System.Drawing.Point(4, 22);
-            this.tpProxy.Name = "tpProxy";
-            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProxy.Size = new System.Drawing.Size(782, 380);
-            this.tpProxy.TabIndex = 4;
-            this.tpProxy.Text = "Proxy";
-            this.tpProxy.UseVisualStyleBackColor = true;
-            // 
-            // gpProxySettings
-            // 
-            this.gpProxySettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gpProxySettings.Controls.Add(this.cboProxyConfig);
-            this.gpProxySettings.Location = new System.Drawing.Point(16, 287);
-            this.gpProxySettings.Name = "gpProxySettings";
-            this.gpProxySettings.Size = new System.Drawing.Size(742, 72);
-            this.gpProxySettings.TabIndex = 1;
-            this.gpProxySettings.TabStop = false;
-            this.gpProxySettings.Text = "Proxy Settings";
-            // 
-            // cboProxyConfig
-            // 
-            this.cboProxyConfig.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboProxyConfig.FormattingEnabled = true;
-            this.cboProxyConfig.Location = new System.Drawing.Point(16, 24);
-            this.cboProxyConfig.Name = "cboProxyConfig";
-            this.cboProxyConfig.Size = new System.Drawing.Size(264, 21);
-            this.cboProxyConfig.TabIndex = 0;
-            this.cboProxyConfig.SelectedIndexChanged += new System.EventHandler(this.cboProxyConfig_SelectedIndexChanged);
-            // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(770, 286);
-            this.ucProxyAccounts.TabIndex = 0;
-            // 
-            // tpHistoryOptions
-            // 
-            this.tpHistoryOptions.Controls.Add(this.btnClearHistory);
-            this.tpHistoryOptions.Controls.Add(this.label1);
-            this.tpHistoryOptions.Controls.Add(this.cbHistorySave);
-            this.tpHistoryOptions.Controls.Add(this.nudHistoryMaxItems);
-            this.tpHistoryOptions.Location = new System.Drawing.Point(4, 22);
-            this.tpHistoryOptions.Name = "tpHistoryOptions";
-            this.tpHistoryOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryOptions.Size = new System.Drawing.Size(782, 380);
-            this.tpHistoryOptions.TabIndex = 5;
-            this.tpHistoryOptions.Text = "History";
-            this.tpHistoryOptions.UseVisualStyleBackColor = true;
-            // 
-            // btnClearHistory
-            // 
-            this.btnClearHistory.Location = new System.Drawing.Point(16, 77);
-            this.btnClearHistory.Name = "btnClearHistory";
-            this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
-            this.btnClearHistory.TabIndex = 3;
-            this.btnClearHistory.Text = "Clear History...";
-            this.btnClearHistory.UseVisualStyleBackColor = true;
-            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Maximum number of items in history";
-            // 
-            // cbHistorySave
-            // 
-            this.cbHistorySave.AutoSize = true;
-            this.cbHistorySave.Location = new System.Drawing.Point(16, 45);
-            this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
-            this.cbHistorySave.TabIndex = 2;
-            this.cbHistorySave.Text = "Save successfully uploaded items to History";
-            this.cbHistorySave.UseVisualStyleBackColor = true;
-            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            // 
-            // nudHistoryMaxItems
-            // 
-            this.nudHistoryMaxItems.Location = new System.Drawing.Point(192, 13);
-            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudHistoryMaxItems.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
-            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
-            this.nudHistoryMaxItems.TabIndex = 1;
-            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
-            // 
-            // tpBackupRestore
-            // 
-            this.tpBackupRestore.Controls.Add(this.gbBackupRestoreUploaders);
-            this.tpBackupRestore.Controls.Add(this.gbBackupRestoreOutputs);
-            this.tpBackupRestore.Controls.Add(this.gbSettingsExportImport);
-            this.tpBackupRestore.Location = new System.Drawing.Point(4, 22);
-            this.tpBackupRestore.Name = "tpBackupRestore";
-            this.tpBackupRestore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBackupRestore.Size = new System.Drawing.Size(782, 380);
-            this.tpBackupRestore.TabIndex = 6;
-            this.tpBackupRestore.Text = "Backup & Restore";
-            this.tpBackupRestore.UseVisualStyleBackColor = true;
-            // 
-            // gbBackupRestoreUploaders
-            // 
-            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigExport);
-            this.gbBackupRestoreUploaders.Controls.Add(this.btnUploadersConfigImport);
-            this.gbBackupRestoreUploaders.Location = new System.Drawing.Point(384, 16);
-            this.gbBackupRestoreUploaders.Name = "gbBackupRestoreUploaders";
-            this.gbBackupRestoreUploaders.Size = new System.Drawing.Size(216, 136);
-            this.gbBackupRestoreUploaders.TabIndex = 2;
-            this.gbBackupRestoreUploaders.TabStop = false;
-            this.gbBackupRestoreUploaders.Text = "Uploaders Config";
-            // 
-            // btnUploadersConfigExport
-            // 
-            this.btnUploadersConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnUploadersConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUploadersConfigExport.Location = new System.Drawing.Point(16, 56);
-            this.btnUploadersConfigExport.Name = "btnUploadersConfigExport";
-            this.btnUploadersConfigExport.Size = new System.Drawing.Size(184, 24);
-            this.btnUploadersConfigExport.TabIndex = 1;
-            this.btnUploadersConfigExport.Text = "Export Uploaders Configuration...";
-            this.btnUploadersConfigExport.UseVisualStyleBackColor = true;
-            this.btnUploadersConfigExport.Click += new System.EventHandler(this.btnUploadersConfigExport_Click);
-            // 
-            // btnUploadersConfigImport
-            // 
-            this.btnUploadersConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnUploadersConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUploadersConfigImport.Location = new System.Drawing.Point(16, 24);
-            this.btnUploadersConfigImport.Name = "btnUploadersConfigImport";
-            this.btnUploadersConfigImport.Size = new System.Drawing.Size(184, 24);
-            this.btnUploadersConfigImport.TabIndex = 0;
-            this.btnUploadersConfigImport.Text = "Import Uploaders Configuration...";
-            this.btnUploadersConfigImport.UseVisualStyleBackColor = true;
-            this.btnUploadersConfigImport.Click += new System.EventHandler(this.btnUploadersConfigImport_Click);
-            // 
-            // gbBackupRestoreOutputs
-            // 
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigExport);
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigImport);
-            this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(168, 16);
-            this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
-            this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 136);
-            this.gbBackupRestoreOutputs.TabIndex = 1;
-            this.gbBackupRestoreOutputs.TabStop = false;
-            this.gbBackupRestoreOutputs.Text = "Workflow Settings";
-            // 
-            // btnOutputsConfigExport
-            // 
-            this.btnOutputsConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOutputsConfigExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOutputsConfigExport.Location = new System.Drawing.Point(16, 56);
-            this.btnOutputsConfigExport.Name = "btnOutputsConfigExport";
-            this.btnOutputsConfigExport.Size = new System.Drawing.Size(168, 24);
-            this.btnOutputsConfigExport.TabIndex = 1;
-            this.btnOutputsConfigExport.Text = "Export Workflow Configuration...";
-            this.btnOutputsConfigExport.UseVisualStyleBackColor = true;
-            this.btnOutputsConfigExport.Click += new System.EventHandler(this.btnOutputsConfigExport_Click);
-            // 
-            // btnOutputsConfigImport
-            // 
-            this.btnOutputsConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOutputsConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOutputsConfigImport.Location = new System.Drawing.Point(16, 24);
-            this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
-            this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
-            this.btnOutputsConfigImport.TabIndex = 0;
-            this.btnOutputsConfigImport.Text = "Import Workflow Configuration...";
-            this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
-            this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
-            // 
-            // gbSettingsExportImport
-            // 
-            this.gbSettingsExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSettingsExportImport.BackColor = System.Drawing.Color.Transparent;
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
-            this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
-            this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(119, 136);
-            this.gbSettingsExportImport.TabIndex = 0;
-            this.gbSettingsExportImport.TabStop = false;
-            this.gbSettingsExportImport.Text = "Application Settings";
-            // 
-            // btnSettingsDefault
-            // 
-            this.btnSettingsDefault.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsDefault.Location = new System.Drawing.Point(16, 88);
-            this.btnSettingsDefault.Name = "btnSettingsDefault";
-            this.btnSettingsDefault.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsDefault.TabIndex = 2;
-            this.btnSettingsDefault.Text = "Default Settings...";
-            this.btnSettingsDefault.UseVisualStyleBackColor = true;
-            this.btnSettingsDefault.Click += new System.EventHandler(this.btnDeleteSettings_Click);
-            // 
-            // btnSettingsExport
-            // 
-            this.btnSettingsExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsExport.Location = new System.Drawing.Point(16, 56);
-            this.btnSettingsExport.Name = "btnSettingsExport";
-            this.btnSettingsExport.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsExport.TabIndex = 1;
-            this.btnSettingsExport.Text = "Export Settings...";
-            this.btnSettingsExport.UseVisualStyleBackColor = true;
-            this.btnSettingsExport.Click += new System.EventHandler(this.btnSettingsExport_Click);
-            // 
-            // btnSettingsImport
-            // 
-            this.btnSettingsImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingsImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSettingsImport.Location = new System.Drawing.Point(16, 24);
-            this.btnSettingsImport.Name = "btnSettingsImport";
-            this.btnSettingsImport.Size = new System.Drawing.Size(104, 24);
-            this.btnSettingsImport.TabIndex = 0;
-            this.btnSettingsImport.Text = "Import Settings...";
-            this.btnSettingsImport.UseVisualStyleBackColor = true;
-            this.btnSettingsImport.Click += new System.EventHandler(this.btnSettingsImport_Click);
-            // 
             // tpAdvanced
             // 
             this.tpAdvanced.Controls.Add(this.tcAdvanced);
             this.tpAdvanced.Location = new System.Drawing.Point(4, 22);
             this.tpAdvanced.Name = "tpAdvanced";
             this.tpAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanced.Size = new System.Drawing.Size(796, 412);
-            this.tpAdvanced.TabIndex = 4;
+            this.tpAdvanced.Size = new System.Drawing.Size(804, 416);
+            this.tpAdvanced.TabIndex = 3;
             this.tpAdvanced.Text = "Advanced";
             this.tpAdvanced.UseVisualStyleBackColor = true;
             // 
@@ -2812,7 +1890,7 @@ namespace ZScreenGUI
             this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
             this.tcAdvanced.Name = "tcAdvanced";
             this.tcAdvanced.SelectedIndex = 0;
-            this.tcAdvanced.Size = new System.Drawing.Size(790, 406);
+            this.tcAdvanced.Size = new System.Drawing.Size(798, 410);
             this.tcAdvanced.TabIndex = 0;
             this.tcAdvanced.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcAdvanced_Selected);
             // 
@@ -2822,7 +1900,7 @@ namespace ZScreenGUI
             this.tpAdvancedDebug.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedDebug.Name = "tpAdvancedDebug";
             this.tpAdvancedDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedDebug.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvancedDebug.Size = new System.Drawing.Size(790, 384);
             this.tpAdvancedDebug.TabIndex = 0;
             this.tpAdvancedDebug.Text = "Debug";
             this.tpAdvancedDebug.UseVisualStyleBackColor = true;
@@ -2835,7 +1913,7 @@ namespace ZScreenGUI
             this.rtbDebugLog.Location = new System.Drawing.Point(3, 3);
             this.rtbDebugLog.Name = "rtbDebugLog";
             this.rtbDebugLog.ReadOnly = true;
-            this.rtbDebugLog.Size = new System.Drawing.Size(776, 374);
+            this.rtbDebugLog.Size = new System.Drawing.Size(784, 378);
             this.rtbDebugLog.TabIndex = 0;
             this.rtbDebugLog.Text = "";
             this.rtbDebugLog.WordWrap = false;
@@ -2846,7 +1924,7 @@ namespace ZScreenGUI
             this.tpAdvancedCore.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedCore.Name = "tpAdvancedCore";
             this.tpAdvancedCore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedCore.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvancedCore.Size = new System.Drawing.Size(790, 384);
             this.tpAdvancedCore.TabIndex = 1;
             this.tpAdvancedCore.Text = "Core";
             this.tpAdvancedCore.UseVisualStyleBackColor = true;
@@ -2857,7 +1935,7 @@ namespace ZScreenGUI
             this.pgAppSettings.HelpVisible = false;
             this.pgAppSettings.Location = new System.Drawing.Point(3, 3);
             this.pgAppSettings.Name = "pgAppSettings";
-            this.pgAppSettings.Size = new System.Drawing.Size(776, 374);
+            this.pgAppSettings.Size = new System.Drawing.Size(784, 378);
             this.pgAppSettings.TabIndex = 0;
             this.pgAppSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppSettings_PropertyValueChanged);
             // 
@@ -2867,7 +1945,7 @@ namespace ZScreenGUI
             this.tpAdvancedSettings.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedSettings.Name = "tpAdvancedSettings";
             this.tpAdvancedSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedSettings.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvancedSettings.Size = new System.Drawing.Size(790, 384);
             this.tpAdvancedSettings.TabIndex = 2;
             this.tpAdvancedSettings.Text = "Settings";
             this.tpAdvancedSettings.UseVisualStyleBackColor = true;
@@ -2877,68 +1955,28 @@ namespace ZScreenGUI
             this.pgAppConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgAppConfig.Location = new System.Drawing.Point(3, 3);
             this.pgAppConfig.Name = "pgAppConfig";
-            this.pgAppConfig.Size = new System.Drawing.Size(776, 374);
+            this.pgAppConfig.Size = new System.Drawing.Size(784, 378);
             this.pgAppConfig.TabIndex = 0;
             this.pgAppConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppConfig_PropertyValueChanged);
             // 
             // tpAdvancedWorkflow
             // 
-            this.tpAdvancedWorkflow.Controls.Add(this.tcWorkflow);
+            this.tpAdvancedWorkflow.Controls.Add(this.pgWorkflow);
             this.tpAdvancedWorkflow.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedWorkflow.Name = "tpAdvancedWorkflow";
             this.tpAdvancedWorkflow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(790, 384);
             this.tpAdvancedWorkflow.TabIndex = 3;
             this.tpAdvancedWorkflow.Text = "Workflow";
             this.tpAdvancedWorkflow.UseVisualStyleBackColor = true;
-            // 
-            // tcWorkflow
-            // 
-            this.tcWorkflow.Controls.Add(this.tpWorkflowGeneral);
-            this.tcWorkflow.Controls.Add(this.tpWorkflowImageEffects);
-            this.tcWorkflow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcWorkflow.Location = new System.Drawing.Point(3, 3);
-            this.tcWorkflow.Name = "tcWorkflow";
-            this.tcWorkflow.SelectedIndex = 0;
-            this.tcWorkflow.Size = new System.Drawing.Size(776, 374);
-            this.tcWorkflow.TabIndex = 0;
-            // 
-            // tpWorkflowGeneral
-            // 
-            this.tpWorkflowGeneral.Controls.Add(this.pgWorkflow);
-            this.tpWorkflowGeneral.Location = new System.Drawing.Point(4, 22);
-            this.tpWorkflowGeneral.Name = "tpWorkflowGeneral";
-            this.tpWorkflowGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWorkflowGeneral.Size = new System.Drawing.Size(768, 348);
-            this.tpWorkflowGeneral.TabIndex = 0;
-            this.tpWorkflowGeneral.Text = "General";
             // 
             // pgWorkflow
             // 
             this.pgWorkflow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgWorkflow.Location = new System.Drawing.Point(3, 3);
             this.pgWorkflow.Name = "pgWorkflow";
-            this.pgWorkflow.Size = new System.Drawing.Size(762, 342);
+            this.pgWorkflow.Size = new System.Drawing.Size(784, 378);
             this.pgWorkflow.TabIndex = 0;
-            // 
-            // tpWorkflowImageEffects
-            // 
-            this.tpWorkflowImageEffects.Controls.Add(this.pgWorkflowImageEffects);
-            this.tpWorkflowImageEffects.Location = new System.Drawing.Point(4, 22);
-            this.tpWorkflowImageEffects.Name = "tpWorkflowImageEffects";
-            this.tpWorkflowImageEffects.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWorkflowImageEffects.Size = new System.Drawing.Size(768, 348);
-            this.tpWorkflowImageEffects.TabIndex = 1;
-            this.tpWorkflowImageEffects.Text = "Image Effects";
-            this.tpWorkflowImageEffects.UseVisualStyleBackColor = true;
-            // 
-            // pgWorkflowImageEffects
-            // 
-            this.pgWorkflowImageEffects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgWorkflowImageEffects.Location = new System.Drawing.Point(3, 3);
-            this.pgWorkflowImageEffects.Name = "pgWorkflowImageEffects";
-            this.pgWorkflowImageEffects.Size = new System.Drawing.Size(762, 342);
-            this.pgWorkflowImageEffects.TabIndex = 0;
             // 
             // tpAdvanedUploaders
             // 
@@ -2946,7 +1984,7 @@ namespace ZScreenGUI
             this.tpAdvanedUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpAdvanedUploaders.Name = "tpAdvanedUploaders";
             this.tpAdvanedUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanedUploaders.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvanedUploaders.Size = new System.Drawing.Size(790, 384);
             this.tpAdvanedUploaders.TabIndex = 4;
             this.tpAdvanedUploaders.Text = "Uploaders";
             this.tpAdvanedUploaders.UseVisualStyleBackColor = true;
@@ -2956,7 +1994,7 @@ namespace ZScreenGUI
             this.pgUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgUploaders.Location = new System.Drawing.Point(3, 3);
             this.pgUploaders.Name = "pgUploaders";
-            this.pgUploaders.Size = new System.Drawing.Size(776, 374);
+            this.pgUploaders.Size = new System.Drawing.Size(784, 378);
             this.pgUploaders.TabIndex = 0;
             // 
             // tpAdvancedStats
@@ -2967,7 +2005,7 @@ namespace ZScreenGUI
             this.tpAdvancedStats.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedStats.Name = "tpAdvancedStats";
             this.tpAdvancedStats.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedStats.Size = new System.Drawing.Size(782, 380);
+            this.tpAdvancedStats.Size = new System.Drawing.Size(790, 384);
             this.tpAdvancedStats.TabIndex = 5;
             this.tpAdvancedStats.Text = "Statistics";
             this.tpAdvancedStats.UseVisualStyleBackColor = true;
@@ -2975,7 +2013,7 @@ namespace ZScreenGUI
             // btnOpenZScreenTester
             // 
             this.btnOpenZScreenTester.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenZScreenTester.Location = new System.Drawing.Point(607, 330);
+            this.btnOpenZScreenTester.Location = new System.Drawing.Point(599, 326);
             this.btnOpenZScreenTester.Name = "btnOpenZScreenTester";
             this.btnOpenZScreenTester.Size = new System.Drawing.Size(160, 23);
             this.btnOpenZScreenTester.TabIndex = 2;
@@ -2985,14 +2023,14 @@ namespace ZScreenGUI
             // 
             // gbStatistics
             // 
-            this.gbStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbStatistics.Controls.Add(this.btnDebugStart);
             this.gbStatistics.Controls.Add(this.rtbStats);
             this.gbStatistics.Location = new System.Drawing.Point(8, 8);
             this.gbStatistics.Name = "gbStatistics";
-            this.gbStatistics.Size = new System.Drawing.Size(774, 304);
+            this.gbStatistics.Size = new System.Drawing.Size(766, 300);
             this.gbStatistics.TabIndex = 0;
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Statistics";
@@ -3009,29 +2047,29 @@ namespace ZScreenGUI
             // 
             // rtbStats
             // 
-            this.rtbStats.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbStats.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbStats.BackColor = System.Drawing.Color.WhiteSmoke;
             this.rtbStats.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.rtbStats.Location = new System.Drawing.Point(16, 56);
             this.rtbStats.Name = "rtbStats";
             this.rtbStats.ReadOnly = true;
-            this.rtbStats.Size = new System.Drawing.Size(744, 238);
+            this.rtbStats.Size = new System.Drawing.Size(736, 234);
             this.rtbStats.TabIndex = 1;
             this.rtbStats.Text = "";
             this.rtbStats.WordWrap = false;
             // 
             // gbLastSource
             // 
-            this.gbLastSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbLastSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbLastSource.Controls.Add(this.btnOpenSourceString);
             this.gbLastSource.Controls.Add(this.btnOpenSourceText);
             this.gbLastSource.Controls.Add(this.btnOpenSourceBrowser);
-            this.gbLastSource.Location = new System.Drawing.Point(8, 322);
+            this.gbLastSource.Location = new System.Drawing.Point(8, 318);
             this.gbLastSource.Name = "gbLastSource";
-            this.gbLastSource.Size = new System.Drawing.Size(408, 64);
+            this.gbLastSource.Size = new System.Drawing.Size(400, 64);
             this.gbLastSource.TabIndex = 1;
             this.gbLastSource.TabStop = false;
             this.gbLastSource.Text = "Last Source";
@@ -3264,8 +2302,8 @@ namespace ZScreenGUI
             // 
             // txtImageBamSecret
             // 
-            this.txtImageBamSecret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageBamSecret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageBamSecret.Location = new System.Drawing.Point(63, 52);
             this.txtImageBamSecret.Name = "txtImageBamSecret";
             this.txtImageBamSecret.Size = new System.Drawing.Size(393, 20);
@@ -3282,8 +2320,8 @@ namespace ZScreenGUI
             // 
             // txtImageBamApiKey
             // 
-            this.txtImageBamApiKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageBamApiKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageBamApiKey.Location = new System.Drawing.Point(62, 22);
             this.txtImageBamApiKey.Name = "txtImageBamApiKey";
             this.txtImageBamApiKey.Size = new System.Drawing.Size(394, 20);
@@ -3340,14 +2378,15 @@ namespace ZScreenGUI
             // 
             // msApp
             // 
-            this.msApp.BackColor = System.Drawing.Color.Silver;
+            this.msApp.BackColor = System.Drawing.Color.Transparent;
             this.msApp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.tsmiConfigure,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.msApp.Location = new System.Drawing.Point(2, 2);
             this.msApp.Name = "msApp";
-            this.msApp.Size = new System.Drawing.Size(804, 24);
+            this.msApp.Size = new System.Drawing.Size(825, 24);
             this.msApp.TabIndex = 0;
             this.msApp.Text = "menuStrip1";
             // 
@@ -3358,7 +2397,7 @@ namespace ZScreenGUI
             this.toolStripSeparator,
             this.tsmiExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // tsmiFileUpload
@@ -3367,20 +2406,20 @@ namespace ZScreenGUI
             this.tsmiFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmiFileUpload.Name = "tsmiFileUpload";
             this.tsmiFileUpload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiFileUpload.Size = new System.Drawing.Size(146, 22);
+            this.tsmiFileUpload.Size = new System.Drawing.Size(151, 22);
             this.tsmiFileUpload.Text = "&Open";
             this.tsmiFileUpload.Click += new System.EventHandler(this.tsmiFileUpload_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(148, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(146, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(151, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -3394,39 +2433,39 @@ namespace ZScreenGUI
             this.tsmiConfigureActions,
             this.tsmiOutputs});
             this.tsmiConfigure.Name = "tsmiConfigure";
-            this.tsmiConfigure.Size = new System.Drawing.Size(72, 20);
+            this.tsmiConfigure.Size = new System.Drawing.Size(66, 20);
             this.tsmiConfigure.Text = "&Configure";
             // 
             // tsmiConfigureFileNaming
             // 
             this.tsmiConfigureFileNaming.Name = "tsmiConfigureFileNaming";
-            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(157, 22);
+            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(164, 22);
             this.tsmiConfigureFileNaming.Text = "&File Naming...";
             this.tsmiConfigureFileNaming.Click += new System.EventHandler(this.tsmiConfigureFileNaming_Click);
             // 
             // tsmiImageSettings
             // 
             this.tsmiImageSettings.Name = "tsmiImageSettings";
-            this.tsmiImageSettings.Size = new System.Drawing.Size(157, 22);
+            this.tsmiImageSettings.Size = new System.Drawing.Size(164, 22);
             this.tsmiImageSettings.Text = "&Image Format...";
             this.tsmiImageSettings.Click += new System.EventHandler(this.tsmiImageSettings_Click);
             // 
             // tsmiWatermark
             // 
             this.tsmiWatermark.Name = "tsmiWatermark";
-            this.tsmiWatermark.Size = new System.Drawing.Size(157, 22);
+            this.tsmiWatermark.Size = new System.Drawing.Size(164, 22);
             this.tsmiWatermark.Text = "&Watermark...";
             this.tsmiWatermark.Click += new System.EventHandler(this.tsmiWatermark_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
             // 
             // tsmiConfigureActions
             // 
             this.tsmiConfigureActions.Name = "tsmiConfigureActions";
-            this.tsmiConfigureActions.Size = new System.Drawing.Size(157, 22);
+            this.tsmiConfigureActions.Size = new System.Drawing.Size(164, 22);
             this.tsmiConfigureActions.Text = "&Actions...";
             this.tsmiConfigureActions.Click += new System.EventHandler(this.tsmiConfigureActions_Click);
             // 
@@ -3435,9 +2474,35 @@ namespace ZScreenGUI
             this.tsmiOutputs.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmiOutputs.Name = "tsmiOutputs";
             this.tsmiOutputs.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiOutputs.Size = new System.Drawing.Size(157, 22);
+            this.tsmiOutputs.Size = new System.Drawing.Size(164, 22);
             this.tsmiOutputs.Text = "&Outputs...";
             this.tsmiOutputs.Click += new System.EventHandler(this.tsmiOutputs_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiProxy,
+            this.tsmiOptions});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // tsmiProxy
+            // 
+            this.tsmiProxy.Image = global::ZScreenGUI.Properties.Resources.world_edit;
+            this.tsmiProxy.Name = "tsmiProxy";
+            this.tsmiProxy.Size = new System.Drawing.Size(167, 22);
+            this.tsmiProxy.Text = "&Proxy Settings...";
+            this.tsmiProxy.Click += new System.EventHandler(this.tsmiProxy_Click);
+            // 
+            // tsmiOptions
+            // 
+            this.tsmiOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
+            this.tsmiOptions.Name = "tsmiOptions";
+            this.tsmiOptions.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.tsmiOptions.Size = new System.Drawing.Size(167, 22);
+            this.tsmiOptions.Text = "&Options...";
+            this.tsmiOptions.Click += new System.EventHandler(this.tsmiOptions_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -3446,27 +2511,27 @@ namespace ZScreenGUI
             this.toolStripSeparator10,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // tsmiVersionHistory
             // 
             this.tsmiVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmiVersionHistory.Name = "tsmiVersionHistory";
-            this.tsmiVersionHistory.Size = new System.Drawing.Size(163, 22);
+            this.tsmiVersionHistory.Size = new System.Drawing.Size(169, 22);
             this.tsmiVersionHistory.Text = "&Version History...";
             this.tsmiVersionHistory.Click += new System.EventHandler(this.tsmiVersionHistory_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(166, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.information;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -3476,12 +2541,12 @@ namespace ZScreenGUI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(966, 466);
+            this.ClientSize = new System.Drawing.Size(982, 474);
             this.Controls.Add(this.tcMain);
             this.Controls.Add(this.msApp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.msApp;
-            this.MinimumSize = new System.Drawing.Size(982, 504);
+            this.MinimumSize = new System.Drawing.Size(990, 508);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -3554,47 +2619,12 @@ namespace ZScreenGUI
             this.tpCaptureClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
-            this.tpOptions.ResumeLayout(false);
-            this.tcOptions.ResumeLayout(false);
-            this.tpWorkflow.ResumeLayout(false);
-            this.gbOptionsBalloonTip.ResumeLayout(false);
-            this.gbOptionsBalloonTip.PerformLayout();
-            this.gbAppearance.ResumeLayout(false);
-            this.gbAppearance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).EndInit();
-            this.tpOptionsGeneral.ResumeLayout(false);
-            this.gbUpdates.ResumeLayout(false);
-            this.gbUpdates.PerformLayout();
-            this.gbMisc.ResumeLayout(false);
-            this.gbMisc.PerformLayout();
-            this.gbWindowButtons.ResumeLayout(false);
-            this.gbWindowButtons.PerformLayout();
-            this.tpPaths.ResumeLayout(false);
-            this.gbRoot.ResumeLayout(false);
-            this.gbRoot.PerformLayout();
-            this.gbImages.ResumeLayout(false);
-            this.gbImages.PerformLayout();
-            this.gbLogs.ResumeLayout(false);
-            this.gbLogs.PerformLayout();
-            this.tpTreeGUI.ResumeLayout(false);
-            this.tpProxy.ResumeLayout(false);
-            this.gpProxySettings.ResumeLayout(false);
-            this.tpHistoryOptions.ResumeLayout(false);
-            this.tpHistoryOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
-            this.tpBackupRestore.ResumeLayout(false);
-            this.gbBackupRestoreUploaders.ResumeLayout(false);
-            this.gbBackupRestoreOutputs.ResumeLayout(false);
-            this.gbSettingsExportImport.ResumeLayout(false);
             this.tpAdvanced.ResumeLayout(false);
             this.tcAdvanced.ResumeLayout(false);
             this.tpAdvancedDebug.ResumeLayout(false);
             this.tpAdvancedCore.ResumeLayout(false);
             this.tpAdvancedSettings.ResumeLayout(false);
             this.tpAdvancedWorkflow.ResumeLayout(false);
-            this.tcWorkflow.ResumeLayout(false);
-            this.tpWorkflowGeneral.ResumeLayout(false);
-            this.tpWorkflowImageEffects.ResumeLayout(false);
             this.tpAdvanedUploaders.ResumeLayout(false);
             this.tpAdvancedStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
@@ -3612,11 +2642,6 @@ namespace ZScreenGUI
             this.PerformLayout();
 
         }
-
-        internal System.Windows.Forms.GroupBox gbLogs;
-        internal System.Windows.Forms.GroupBox gbImages;
-        internal System.Windows.Forms.Button btnBrowseImagesDir;
-        private System.Windows.Forms.GroupBox gbWindowButtons;
         private System.Windows.Forms.CheckBox chkPerformActions;
 
         #endregion Windows Form Designer generated code
@@ -3712,37 +2737,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.NumericUpDown nudSelectedWindowBorderSize;
         internal System.Windows.Forms.Label lblSelectedWindowBorderSize;
         internal System.Windows.Forms.PictureBox pbSelectedWindowBorderColor;
-        internal System.Windows.Forms.GroupBox gbAppearance;
-        internal System.Windows.Forms.CheckBox cbCompleteSound;
-        internal System.Windows.Forms.CheckBox chkCaptureFallback;
-        internal System.Windows.Forms.CheckBox cbShowUploadDuration;
-        internal System.Windows.Forms.CheckBox chkBalloonTipOpenLink;
-        internal System.Windows.Forms.CheckBox chkShowPopup;
-        internal System.Windows.Forms.Label lblTrayFlash;
-        internal System.Windows.Forms.NumericUpDown nudFlashIconCount;
-        internal System.Windows.Forms.TabPage tpOptions;
-        internal System.Windows.Forms.TabControl tcOptions;
-        internal System.Windows.Forms.TabPage tpOptionsGeneral;
-        internal System.Windows.Forms.GroupBox gbUpdates;
-        internal System.Windows.Forms.Label lblUpdateInfo;
-        internal System.Windows.Forms.Button btnCheckUpdate;
-        internal System.Windows.Forms.CheckBox chkCheckUpdates;
-        internal System.Windows.Forms.GroupBox gbMisc;
-        internal System.Windows.Forms.CheckBox chkOpenMainWindow;
-        internal System.Windows.Forms.CheckBox chkStartWin;
-        internal System.Windows.Forms.TabPage tpPaths;
-        internal System.Windows.Forms.GroupBox gbRoot;
-        internal System.Windows.Forms.Button btnViewRootDir;
-        internal System.Windows.Forms.Button btnRelocateRootDir;
-        internal System.Windows.Forms.TextBox txtRootFolder;
-        internal System.Windows.Forms.CheckBox chkDeleteLocal;
-        internal System.Windows.Forms.Button btnViewImagesDir;
-        internal System.Windows.Forms.TextBox txtImagesDir;
-        internal System.Windows.Forms.Button btnSettingsDefault;
-        internal System.Windows.Forms.Button btnSettingsExport;
-        internal System.Windows.Forms.Button btnSettingsImport;
-        internal System.Windows.Forms.Button btnViewCacheDir;
-        internal System.Windows.Forms.TextBox txtLogsDir;
         internal System.Windows.Forms.TabPage tpAdvancedStats;
         internal System.Windows.Forms.GroupBox gbStatistics;
         internal System.Windows.Forms.Button btnDebugStart;
@@ -3760,20 +2754,10 @@ namespace ZScreenGUI
         internal System.Windows.Forms.GroupBox gbImageSettings;
         internal System.Windows.Forms.GroupBox gbCropRegion;
         internal System.Windows.Forms.ToolTip ttZScreen;
-        internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.Label lblScreenshotDelay;
         internal System.Windows.Forms.GroupBox gbCropDynamicRegionBorderColorSettings;
-        private System.Windows.Forms.TabPage tpProxy;
-        internal System.Windows.Forms.GroupBox gpProxySettings;
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
-        private System.Windows.Forms.TabPage tpTreeGUI;
-        private System.Windows.Forms.PropertyGrid pgIndexer;
         private System.Windows.Forms.CheckBox chkSelectedWindowCaptureObjects;
-        private System.Windows.Forms.CheckBox cbAutoSaveSettings;
-        private System.Windows.Forms.TextBox txtImagesFolderPattern;
-        private System.Windows.Forms.Label lblImagesFolderPatternPreview;
-        private System.Windows.Forms.Label lblImagesFolderPattern;
-        private System.Windows.Forms.Button btnMoveImageFiles;
         private System.Windows.Forms.TabPage tpDestImageBam;
         internal System.Windows.Forms.Label lblImageBamSecret;
         internal System.Windows.Forms.TextBox txtImageBamSecret;
@@ -3789,9 +2773,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnImageBamRemoveGallery;
         private System.Windows.Forms.CheckBox chkImageBamContentNSFW;
         internal System.Windows.Forms.RichTextBox rtbStats;
-        private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
-        private System.Windows.Forms.CheckBox chkShellExt;
-        private System.Windows.Forms.CheckBox chkTwitterEnable;
         private System.Windows.Forms.Button btnOpenZScreenTester;
         private System.Windows.Forms.CheckBox chkActiveWindowCleanBackground;
         private System.Windows.Forms.CheckBox chkSelectedWindowShowCheckers;
@@ -3805,34 +2786,19 @@ namespace ZScreenGUI
         private System.Windows.Forms.TabPage tpActivewindow;
         private System.Windows.Forms.TabPage tpAdvancedDebug;
         private System.Windows.Forms.RichTextBox rtbDebugLog;
-        private System.Windows.Forms.ComboBox cboCloseButtonAction;
-        private System.Windows.Forms.ComboBox cboMinimizeButtonAction;
-        private System.Windows.Forms.Label lblMinimizeButtonAction;
-        private System.Windows.Forms.Label lblCloseButtonAction;
-        internal System.Windows.Forms.GroupBox gbSettingsExportImport;
         private System.Windows.Forms.Button btnResetHotkeys;
         private System.Windows.Forms.TabPage tpFreehandCropShot;
         private System.Windows.Forms.CheckBox cbFreehandCropShowHelpText;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
-        internal AccountsControl ucProxyAccounts;
-        internal System.Windows.Forms.ComboBox cboProxyConfig;
-        internal System.Windows.Forms.CheckBox cbHistorySave;
-        internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
         private System.Windows.Forms.TabPage tpCaptureClipboard;
-        private System.Windows.Forms.GroupBox gbOptionsBalloonTip;
         private System.Windows.Forms.CheckBox chkShortenURL;
-        private System.Windows.Forms.ComboBox cboReleaseChannel;
-        private System.Windows.Forms.Button btnClearHistory;
         private System.Windows.Forms.ToolStripMenuItem tsmCaptureShape;
         private System.Windows.Forms.ToolStripMenuItem tsmFileUpload;
-        private System.Windows.Forms.TabPage tpHistoryOptions;
         private TabControl tcAdvanced;
         private TabPage tpAdvancedSettings;
-        private TabPage tpBackupRestore;
         private PropertyGrid pgAppSettings;
         internal DestSelector ucDestOptions;
         private CheckBox chkShowUploadResults;
@@ -3842,9 +2808,6 @@ namespace ZScreenGUI
         private TabPage tpAdvancedWorkflow;
         internal PropertyGrid pgWorkflow;
         private TabPage tpAdvancedCore;
-        internal Button btnOutputsConfigExport;
-        internal Button btnOutputsConfigImport;
-        private GroupBox gbBackupRestoreOutputs;
         private TabPage tpCaptureShape;
         internal PropertyGrid pgSurfaceConfig;
         internal GroupBox gbCropEngine;
@@ -3865,9 +2828,6 @@ namespace ZScreenGUI
         private ColumnHeader chHost;
         private ColumnHeader chURL;
         private HelpersLib.Hotkey.HotkeyManagerControl hmHotkeys;
-        private GroupBox gbBackupRestoreUploaders;
-        internal Button btnUploadersConfigExport;
-        internal Button btnUploadersConfigImport;
         private GroupBox gbCaptureGdi;
         internal GroupBox gbCaptureEngine;
         private ComboBox cboCaptureEngine;
@@ -3879,11 +2839,6 @@ namespace ZScreenGUI
         private TabPage tpAdvanedUploaders;
         internal PropertyGrid pgUploaders;
         private Button btnActionsUI;
-        private TabPage tpWorkflow;
-        private TabControl tcWorkflow;
-        private TabPage tpWorkflowGeneral;
-        private TabPage tpWorkflowImageEffects;
-        internal PropertyGrid pgWorkflowImageEffects;
         private MenuStrip msApp;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem tsmiFileUpload;
@@ -3900,5 +2855,8 @@ namespace ZScreenGUI
         private ToolStripMenuItem tsmiConfigureActions;
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripMenuItem tsmiOutputs;
+        private ToolStripMenuItem toolsToolStripMenuItem;
+        private ToolStripMenuItem tsmiOptions;
+        private ToolStripMenuItem tsmiProxy;
     }
 }

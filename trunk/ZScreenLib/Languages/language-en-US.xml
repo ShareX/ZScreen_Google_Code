@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<language description="English" ietf="en-US" version="0.8.1">
+<language description="English" ietf="en-US" version="0.8.1" languagegroup="1">
   <resources>
-	<!--
-	Note to translator: uncomment entry "about_translation" to have
-	your efforts honored in the "About Greenshot" dialog
+	<!--    
+	Note to translator: uncomment entry "about_translation" to have 
+	your efforts honored in the "About Greenshot" dialog 
 	-->
 	<resource name="about_translation">
 		<!--English translation by YOUR_NAME-->
@@ -96,7 +96,7 @@ Greenshot comes with ABSOLUTELY NO WARRANTY. This is free software, and you are 
 Details about the GNU General Public License:
 	</resource>
 	<resource name="error_openlink">
-		Could not open link.
+		Could not open link '{0}'.
 	</resource>
 	<resource name="error_save">
 		Could not save screenshot, please find a suitable location.
@@ -532,6 +532,9 @@ time, e.g. 11_58_32 (plus extension defined in the settings)
 	</resource>
 	<resource name="editor_match_capture_size">
 		Match capture size
+	</resource>
+	<resource name="editor_autocrop">
+		Auto crop
 	</resource>
 	<resource name="settings_waittime">
 		Milliseconds to wait before capture

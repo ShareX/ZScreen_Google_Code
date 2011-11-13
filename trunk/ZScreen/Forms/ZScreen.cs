@@ -163,14 +163,14 @@ namespace ZScreenGUI
 
             if (Engine.ConfigUI.CheckUpdates)
             {
-                CheckUpdates();
+                FormsMgr.OptionsUI.CheckUpdates();
             }
 
             PerformOnlineTasks();
 
             CleanCache();
 
-            if (Engine.ConfigUI.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
+            if (Engine.ConfigUI.ConfigProxy.ProxyConfigType != EProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
                 StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive);
             }
@@ -179,8 +179,6 @@ namespace ZScreenGUI
             {
                 FileSystem.BackupSettings();
             }
-
-            UpdateHotkeys(false);
 
             if (Engine.ConfigUI.FirstRun)
             {
@@ -241,7 +239,7 @@ namespace ZScreenGUI
                 {
                     Hide();
                     DelayedTrimMemoryUse();
-                    if (Engine.ConfigUI.AutoSaveSettings) Engine.WriteSettingsAsync();
+                    if (Engine.ConfigOptions.AutoSaveSettings) Engine.WriteSettingsAsync();
                     e.Cancel = true;
                 }
             }
@@ -336,7 +334,7 @@ namespace ZScreenGUI
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
 
-            if (Engine.IsMultipleInstance)
+            if (Engine.IsMultiInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(),
                                       string.Format("Another instance of {0} is already running...",
@@ -387,18 +385,6 @@ namespace ZScreenGUI
             return acc;
         }
 
-        private ProxyInfo GetSelectedProxy()
-        {
-            ProxyInfo acc = null;
-            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 &&
-                Engine.ConfigUI.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
-            {
-                acc = Engine.ConfigUI.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
-            }
-
-            return acc;
-        }
-
         public bool UseCommandLineArg(string arg)
         {
             if (!string.IsNullOrEmpty(arg))
@@ -435,42 +421,6 @@ namespace ZScreenGUI
             ShowAutoCapture();
         }
 
-        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
-        {
-            string oldDir = txtImagesDir.Text;
-            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
-                                         "Images");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.ConfigUI.UseCustomImagesDir = true;
-                Engine.ConfigUI.CustomImagesDir = dirNew;
-                FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
-                ZScreen_ConfigGUI_Options_Paths();
-            }
-        }
-
-        private void btnBrowseRootDir_Click(object sender, EventArgs e)
-        {
-            string oldRootDir = txtRootFolder.Text;
-            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Root directory...");
-
-            if (!string.IsNullOrEmpty(dirNew))
-            {
-                Engine.SetRootFolder(dirNew);
-                txtRootFolder.Text = Engine.ConfigApp.RootDir;
-                FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
-                ZScreen_ConfigGUI_Options_Paths();
-                Engine.ConfigUI = XMLSettings.Read();
-                ZScreen_ConfigGUI();
-            }
-        }
-
-        private void btnCheckUpdate_Click(object sender, EventArgs e)
-        {
-            CheckUpdates();
-        }
-
         private void btnClearHistory_Click(object sender, EventArgs e)
         {
             if (File.Exists(Engine.HistoryPath))
@@ -497,15 +447,6 @@ namespace ZScreenGUI
             }
 
             mDebug.DebugTimer.Enabled = !mDebug.DebugTimer.Enabled;
-        }
-
-        private void btnDeleteSettings_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Do you really want to revert settings to default values?", Application.ProductName,
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                LoadSettingsDefault();
-            }
         }
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
@@ -555,16 +496,6 @@ namespace ZScreenGUI
             new TesterGUI().ShowDialog();
         }
 
-        private void btnOutputsConfigExport_Click(object sender, EventArgs e)
-        {
-            WorkflowConfigExport();
-        }
-
-        private void btnOutputsConfigImport_Click(object sender, EventArgs e)
-        {
-            WorkflowConfigImport();
-        }
-
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
             StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs");
@@ -575,26 +506,6 @@ namespace ZScreenGUI
             Engine.ConfigWorkflow.ConfigFileNaming.AutoIncrement = 0;
         }
 
-        private void btnSettingsExport_Click(object sender, EventArgs e)
-        {
-            AppSettingsExport();
-        }
-
-        private void btnSettingsImport_Click(object sender, EventArgs e)
-        {
-            AppSettingsImport();
-        }
-
-        private void btnUploadersConfigExport_Click(object sender, EventArgs e)
-        {
-            UploadersConfigExport();
-        }
-
-        private void btnUploadersConfigImport_Click(object sender, EventArgs e)
-        {
-            UploadersConfigImport();
-        }
-
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
             ShowDirectory(FileSystem.GetImagesDir());
@@ -603,11 +514,6 @@ namespace ZScreenGUI
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
         {
             ShowDirectory(Engine.LogsDir);
-        }
-
-        private void btnViewRootDir_Click(object sender, EventArgs e)
-        {
-            ShowDirectory(txtRootFolder.Text);
         }
 
         private void btnWorkflowConfig_Click(object sender, EventArgs e)
@@ -638,26 +544,6 @@ namespace ZScreenGUI
 
                 tsiSelectedWindow.Tag = window;
             }
-        }
-
-        private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.AutoSaveSettings = cbAutoSaveSettings.Checked;
-        }
-
-        private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.CheckUpdates = chkCheckUpdates.Checked;
-        }
-
-        private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigApp.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
-        }
-
-        private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.CompleteSound = cbCompleteSound.Checked;
         }
 
         private void cbCropDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
@@ -695,11 +581,6 @@ namespace ZScreenGUI
             Engine.ConfigUI.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
         }
 
-        private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.DeleteLocal = chkDeleteLocal.Checked;
-        }
-
         private void cbFreehandCropAutoClose_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
@@ -720,16 +601,6 @@ namespace ZScreenGUI
             Engine.ConfigUI.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
         }
 
-        private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.HistorySave = cbHistorySave.Checked;
-        }
-
-        private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigApp.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
-        }
-
         private void cboCaptureEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.ConfigWorkflow.CaptureEngineMode2 = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
@@ -745,25 +616,6 @@ namespace ZScreenGUI
             gbCropGridMode.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropRegionSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropShotMagnifyingGlass.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
-        }
-
-        private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigApp.ShowMainWindow = chkOpenMainWindow.Checked;
-        }
-
-        private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
-            if (IsReady)
-            {
-                Uploader.ProxySettings = Adapter.CheckProxySettings();
-            }
-        }
-
-        private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
@@ -829,28 +681,6 @@ namespace ZScreenGUI
             Engine.ConfigWorkflow.DrawCursor = chkShowCursor.Checked;
         }
 
-        private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-            ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
-        }
-
-        private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ShowBalloonTip = chkShowPopup.Checked;
-            gbOptionsBalloonTip.Enabled = chkShowPopup.Checked;
-        }
-
-        private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.ShowUploadDuration = cbShowUploadDuration.Checked;
-        }
-
-        public void cbStartWin_CheckedChanged(object sender, EventArgs e)
-        {
-            RegistryHelper.SetStartWithWindows(chkStartWin.Checked);
-        }
-
         private void chkActiveWindowDwmCustomColor_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigWorkflow.ActiveWindowDwmUseCustomBackground = chkActiveWindowDwmCustomColor.Checked;
@@ -859,16 +689,6 @@ namespace ZScreenGUI
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigWorkflow.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
-        }
-
-        private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
-        }
-
-        private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
         }
 
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
@@ -906,18 +726,6 @@ namespace ZScreenGUI
             Engine.ConfigUI.MonitorUrls = chkMonUrls.Checked;
         }
 
-        private void chkShellExt_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkShellExt.Checked)
-            {
-                RegistryHelper.RegisterShellContextMenu();
-            }
-            else
-            {
-                RegistryHelper.UnregisterShellContextMenu();
-            }
-        }
-
         private void chkShortenURL_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.ShortenUrlAfterUpload = chkShortenURL.Checked;
@@ -926,25 +734,6 @@ namespace ZScreenGUI
         private void chkShowUploadResults_CheckedChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.ShowUploadResultsWindow = chkShowUploadResults.Checked;
-        }
-
-        private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.TwitterEnabled = chkTwitterEnable.Checked;
-        }
-
-        private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsReady)
-            {
-                if (chkWindows7TaskbarIntegration.Checked)
-                {
-                    Engine.ConfigApp.ShowInTaskbar = true;
-                    // Application requires to be shown in Taskbar for Windows 7 Integration
-                }
-                Engine.ConfigApp.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
-                ZScreen_Windows7onlyTasks();
-            }
         }
 
         public override void ClipboardUpload()
@@ -1045,13 +834,6 @@ namespace ZScreenGUI
             StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
         }
 
-        private void LoadSettingsDefault()
-        {
-            Engine.ConfigUI = new XMLSettings();
-            ZScreen_ConfigGUI();
-            Engine.ConfigUI.FirstRun = false;
-        }
-
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.CropBorderSize = nudCropBorderSize.Value;
@@ -1100,16 +882,6 @@ namespace ZScreenGUI
         private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
-        }
-
-        private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.FlashTrayCount = nudFlashIconCount.Value;
-        }
-
-        private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigUI.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
@@ -1195,7 +967,7 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                ZScreen_ConfigGUI_Options_Paths();
+                FormsMgr.OptionsUI.ConfigurePaths();
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.UploadersConfigCustomPath))
                 {
@@ -1205,20 +977,6 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.WorkflowConfigCustomPath))
                 {
                     Engine.ConfigWorkflow = Workflow.Read(Engine.ConfigApp.WorkflowConfigCustomPath);
-                }
-            }
-        }
-
-        private void ProxySetup(IEnumerable<ProxyInfo> accs)
-        {
-            if (accs != null)
-            {
-                ucProxyAccounts.AccountsList.Items.Clear();
-                Engine.ConfigUI.ProxyList = new List<ProxyInfo>();
-                Engine.ConfigUI.ProxyList.AddRange(accs);
-                foreach (ProxyInfo acc in Engine.ConfigUI.ProxyList)
-                {
-                    ucProxyAccounts.AccountsList.Items.Add(acc);
                 }
             }
         }
@@ -1467,14 +1225,6 @@ namespace ZScreenGUI
             StaticHelper.LoadBrowser(e.LinkText);
         }
 
-        private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text =
-                new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
-            txtImagesDir.Text = Engine.ImagesDir;
-        }
-
         private void UpdateAeroGlassConfig()
         {
             gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.DWM;
@@ -1558,6 +1308,19 @@ namespace ZScreenGUI
         private void tsmiOutputs_Click(object sender, EventArgs e)
         {
             ucDestOptions.tsbDestConfig_Click(sender, e);
+        }
+
+        private void tsmiOptions_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
+
+        private void tsmiProxy_Click(object sender, EventArgs e)
+        {
+            if (FormsMgr.ShowDialogProxyConfig() == System.Windows.Forms.DialogResult.OK)
+            {
+                Uploader.ProxySettings = Adapter.CheckProxySettings();
+            }
         }
     }
 }
