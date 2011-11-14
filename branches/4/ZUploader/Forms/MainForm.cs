@@ -55,17 +55,22 @@ namespace ZUploader
         {
             LoadSettings();
 
-            if (!Program.IsSilentRun)
-            {
-                SplashForm.CloseSplash();
-            }
-
             InitHotkeys();
             UseCommandLineArgs(Environment.GetCommandLineArgs());
 
             IsReady = true;
 
             Program.MyLogger.WriteLine("Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
+        }
+
+        private void AfterShownJobs()
+        {
+            if (!Program.IsSilentRun)
+            {
+                SplashForm.CloseSplash();
+            }
+
+            ShowActivate();
         }
 
         private void InitControls()
@@ -410,12 +415,12 @@ namespace ZUploader
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            ShowActivate();
+            AfterShownJobs();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            this.Refresh();
+            Refresh();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

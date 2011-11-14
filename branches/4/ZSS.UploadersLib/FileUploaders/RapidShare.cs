@@ -32,13 +32,12 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class RapidShare : FileUploader
     {
-        private const string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
+        private const string rapidshareURL = "https://api.rapidshare.com/cgi-bin/rsapi.cgi";
+        private const string rapidshareUploadURL = "https://rs{0}.rapidshare.com/cgi-bin/rsapi.cgi";
 
         public AccountType AccountType { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
-        public bool CheckFileSize, CheckFileMD5;
 
         public RapidShare(AccountType accountType = AccountType.Anonymous, string username = null, string password = null)
         {
@@ -53,14 +52,21 @@ namespace UploadersLib.FileUploaders
 
             if (string.IsNullOrEmpty(url))
             {
-                Errors.Add("Upload server URL is empty.");
+                Errors.Add("RapidShare next upload server URL is empty.");
                 return null;
             }
 
             Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "upload");
 
-            if (AccountType == AccountType.User && !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+            if (AccountType == AccountType.User)
             {
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+                {
+                    Errors.Add("RapidShare account username or password is empty.");
+                    return null;
+                }
+
                 args.Add("login", Username);
                 args.Add("password", Password);
             }
@@ -71,11 +77,16 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                UploadInfo info = new UploadInfo(response);
+                if (response.StartsWith("ERROR: "))
+                {
+                    Errors.Add(response.Substring(7));
+                }
+                else if (response.StartsWith("COMPLETE\n"))
+                {
+                    RapidShareUploadInfo info = new RapidShareUploadInfo(response);
 
-                result.URL = info.URL;
-                result.DeletionURL = info.KillCodeURL;
-                result.Source = response;
+                    result.URL = info.URL;
+                }
             }
 
             return result;
@@ -90,44 +101,34 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                return string.Format("http://rs{0}.rapidshare.com/cgi-bin/upload.cgi", response);
+                return string.Format(rapidshareUploadURL, response);
             }
 
             return string.Empty;
         }
 
-        public class UploadInfo
+        public class RapidShareUploadInfo
         {
-            public string Info;
-            public string FileID;
+            public string FileID; // The file ID (you might get an already existing file ID if the identical file already exists in your account AND in the same folder.)
+            public string FileName;
+            public string FileSize; // Received size in bytes.
+            public string MD5; // Lower case MD5 hex of the sent data.
             public string URL;
-            public string KillCodeURL;
-            public string KillCode;
-            public string Size;
-            public string MD5;
-            public string Status;
 
-            public UploadInfo(string info)
+            public RapidShareUploadInfo(string response)
             {
-                Info = info;
-                FileID = GetFirstValue(info, @"/files/(\d+)/");
-                URL = GetFirstValue(info, @"File1\.1=(.+?)\n");
-                KillCodeURL = GetFirstValue(info, @"File1\.2=(.+?)\n");
-                KillCode = GetFirstValue(info, @"File1\.2=.+?killcode=(\d+)\n");
-                Size = GetFirstValue(info, @"File1\.3=(\d+?)\n");
-                MD5 = GetFirstValue(info, @"File1\.4=(\w+?)\n");
-                Status = GetFirstValue(info, @"File1\.5=(.+?)\n");
-            }
+                response = response.Substring(9).Trim('\n');
 
-            private string GetFirstValue(string input, string pattern)
-            {
-                Match regex = Regex.Match(input, pattern);
-                if (regex.Groups.Count > 1)
+                string[] split = response.Split(',');
+
+                if (split.Length > 3)
                 {
-                    return regex.Groups[1].Value;
+                    FileID = split[0];
+                    FileName = split[1];
+                    FileSize = split[2];
+                    MD5 = split[3];
+                    URL = string.Format("https://rapidshare.com/files/{0}/{1}", FileID, FileName);
                 }
-
-                return string.Empty;
             }
         }
     }
