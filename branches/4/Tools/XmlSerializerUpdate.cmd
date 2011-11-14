@@ -10,5 +10,3 @@ Sgen.exe /a:"..\ZScreen\bin\x86\Release\UploadersLib.dll" /f /t:"UploadersLib.Up
 
 Sgen.exe /a:"..\ZUploader\bin\Release\ZUploader.exe" /f /t:"ZUploader.Settings" /v
 Sgen.exe /a:"..\ZUploader\bin\Release\UploadersLib.dll" /f /t:"UploadersLib.UploadersConfig" /v
-
-pause
