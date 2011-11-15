@@ -156,7 +156,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
-            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
             this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
@@ -1350,18 +1349,18 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 56);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Password";
+            this.label7.Text = "Password:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(8, 24);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.Size = new System.Drawing.Size(58, 13);
             this.label9.TabIndex = 0;
-            this.label9.Text = "Username";
+            this.label9.Text = "Username:";
             // 
             // txtMinusPassword
             // 
@@ -1658,7 +1657,6 @@
             // 
             // tpRapidShare
             // 
-            this.tpRapidShare.Controls.Add(this.atcRapidShareAccountType);
             this.tpRapidShare.Controls.Add(this.lblRapidSharePassword);
             this.tpRapidShare.Controls.Add(this.lblRapidSharePremiumUsername);
             this.tpRapidShare.Controls.Add(this.txtRapidSharePassword);
@@ -1671,36 +1669,27 @@
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
             // 
-            // atcRapidShareAccountType
-            // 
-            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
-            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcRapidShareAccountType.TabIndex = 0;
-            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
-            // 
             // lblRapidSharePassword
             // 
             this.lblRapidSharePassword.AutoSize = true;
-            this.lblRapidSharePassword.Location = new System.Drawing.Point(16, 88);
+            this.lblRapidSharePassword.Location = new System.Drawing.Point(16, 56);
             this.lblRapidSharePassword.Name = "lblRapidSharePassword";
-            this.lblRapidSharePassword.Size = new System.Drawing.Size(53, 13);
+            this.lblRapidSharePassword.Size = new System.Drawing.Size(56, 13);
             this.lblRapidSharePassword.TabIndex = 3;
-            this.lblRapidSharePassword.Text = "Password";
+            this.lblRapidSharePassword.Text = "Password:";
             // 
             // lblRapidSharePremiumUsername
             // 
             this.lblRapidSharePremiumUsername.AutoSize = true;
-            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 56);
+            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 24);
             this.lblRapidSharePremiumUsername.Name = "lblRapidSharePremiumUsername";
-            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(55, 13);
+            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(58, 13);
             this.lblRapidSharePremiumUsername.TabIndex = 1;
-            this.lblRapidSharePremiumUsername.Text = "Username";
+            this.lblRapidSharePremiumUsername.Text = "Username:";
             // 
             // txtRapidSharePassword
             // 
-            this.txtRapidSharePassword.Location = new System.Drawing.Point(80, 84);
+            this.txtRapidSharePassword.Location = new System.Drawing.Point(80, 52);
             this.txtRapidSharePassword.Name = "txtRapidSharePassword";
             this.txtRapidSharePassword.PasswordChar = '*';
             this.txtRapidSharePassword.Size = new System.Drawing.Size(136, 20);
@@ -1709,7 +1698,7 @@
             // 
             // txtRapidShareUsername
             // 
-            this.txtRapidShareUsername.Location = new System.Drawing.Point(80, 52);
+            this.txtRapidShareUsername.Location = new System.Drawing.Point(80, 20);
             this.txtRapidShareUsername.Name = "txtRapidShareUsername";
             this.txtRapidShareUsername.Size = new System.Drawing.Size(136, 20);
             this.txtRapidShareUsername.TabIndex = 2;
@@ -2837,7 +2826,6 @@
         private GUI.AccountTypeControl atcImgurAccountType;
         private GUI.AccountTypeControl atcSendSpaceAccountType;
         private System.Windows.Forms.TextBox txtRapidSharePremiumUserName;
-        private GUI.AccountTypeControl atcRapidShareAccountType;
         private GUI.AccountTypeControl actRapidShareAccountType;
         private System.Windows.Forms.TabPage tpEmail;
         private System.Windows.Forms.TextBox txtEmailPassword;

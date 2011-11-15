@@ -78,7 +78,7 @@ namespace UploadersLib
 
         // Imgur
 
-        public AccountType ImgurAccountType = AccountType.User;
+        public AccountType ImgurAccountType = AccountType.Anonymous;
         public ImgurThumbnailType ImgurThumbnailType = ImgurThumbnailType.Large_Thumbnail;
         public OAuthInfo ImgurOAuthInfo = null;
 
@@ -147,7 +147,6 @@ namespace UploadersLib
 
         // RapidShare
 
-        public AccountType RapidShareUserAccountType = AccountType.Anonymous;
         public string RapidShareUsername = string.Empty;
         public string RapidSharePassword = string.Empty;
 
@@ -217,19 +216,20 @@ namespace UploadersLib
         {
             switch (ut)
             {
-                case FileUploaderType.CustomUploader:
-                    return CustomUploadersList.Count > 0;
                 case FileUploaderType.Dropbox:
-                    return DropboxAccountInfo != null;
-                case FileUploaderType.FTP:
-                    return FTPAccountList2.Count > 0;
+                    return DropboxOAuthInfo != null && !string.IsNullOrEmpty(DropboxOAuthInfo.UserToken) && !string.IsNullOrEmpty(DropboxOAuthInfo.UserSecret);
+                case FileUploaderType.RapidShare:
+                    return !string.IsNullOrEmpty(RapidShareUsername) && !string.IsNullOrEmpty(RapidSharePassword);
+                case FileUploaderType.SendSpace:
+                    return SendSpaceAccountType == AccountType.Anonymous || (!string.IsNullOrEmpty(SendSpaceUsername) && !string.IsNullOrEmpty(SendSpacePassword));
                 case FileUploaderType.Minus:
                     return MinusConfig != null && MinusConfig.MinusUser != null;
-                case FileUploaderType.RapidShare:
-                    return true;
-                case FileUploaderType.SendSpace:
-                    return true;
+                case FileUploaderType.CustomUploader:
+                    return CustomUploadersList != null && CustomUploadersList.Count > 0;
+                case FileUploaderType.FTP:
+                    return FTPAccountList2 != null && FTPAccountList2.Count > 0;
             }
+
             return false;
         }
 
@@ -287,26 +287,18 @@ namespace UploadersLib
         {
             switch (ut)
             {
-                case ImageUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
                 case ImageUploaderType.FLICKR:
                     return !string.IsNullOrEmpty(FlickrAuthInfo.Token);
                 case ImageUploaderType.IMAGESHACK:
-                    return ImageShackAccountType == AccountType.Anonymous ||
-                        ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(ImageShackRegistrationCode);
+                    return ImageShackAccountType == AccountType.Anonymous || !string.IsNullOrEmpty(ImageShackRegistrationCode);
+                case ImageUploaderType.TINYPIC:
+                    return TinyPicAccountType == AccountType.Anonymous || !string.IsNullOrEmpty(TinyPicRegistrationCode);
                 case ImageUploaderType.IMGUR:
-                    return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.ConsumerKey);
+                    return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.UserToken) && !string.IsNullOrEmpty(ImgurOAuthInfo.UserSecret);
                 case ImageUploaderType.MEDIAWIKI:
                     return MediaWikiAccountList.Count > 0;
                 case ImageUploaderType.Photobucket:
                     return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null;
-                case ImageUploaderType.TINYPIC:
-                    return TinyPicAccountType == AccountType.Anonymous ||
-                            TinyPicAccountType == AccountType.User && !string.IsNullOrEmpty(TinyPicRegistrationCode);
                 case ImageUploaderType.TWITPIC:
                     return !string.IsNullOrEmpty(TwitPicPassword);
                 case ImageUploaderType.TWITSNAPS:
@@ -315,6 +307,12 @@ namespace UploadersLib
                     return true;
                 case ImageUploaderType.YFROG:
                     return !string.IsNullOrEmpty(YFrogPassword);
+                case ImageUploaderType.FileUploader:
+                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
+                    {
+                        if (IsActive(fu)) return true;
+                    }
+                    return false;
             }
 
             return false;

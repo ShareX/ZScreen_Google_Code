@@ -529,11 +529,6 @@ namespace UploadersLib
 
         #region RapidShare
 
-        private void atcRapidShareAccountType_AccountTypeChanged(AccountType accountType)
-        {
-            Config.RapidShareUserAccountType = accountType;
-        }
-
         private void txtRapidShareUsername_TextChanged(object sender, EventArgs e)
         {
             Config.RapidShareUsername = txtRapidShareUsername.Text;

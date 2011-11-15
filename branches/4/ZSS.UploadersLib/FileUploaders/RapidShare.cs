@@ -35,19 +35,23 @@ namespace UploadersLib.FileUploaders
         private const string rapidshareURL = "https://api.rapidshare.com/cgi-bin/rsapi.cgi";
         private const string rapidshareUploadURL = "https://rs{0}.rapidshare.com/cgi-bin/rsapi.cgi";
 
-        public AccountType AccountType { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public RapidShare(AccountType accountType = AccountType.Anonymous, string username = null, string password = null)
+        public RapidShare(string username, string password)
         {
-            AccountType = accountType;
             Username = username;
             Password = password;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            {
+                Errors.Add("RapidShare account username or password is empty.");
+                return null;
+            }
+
             string url = NextUploadServer();
 
             if (string.IsNullOrEmpty(url))
@@ -58,18 +62,8 @@ namespace UploadersLib.FileUploaders
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("sub", "upload");
-
-            if (AccountType == AccountType.User)
-            {
-                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
-                {
-                    Errors.Add("RapidShare account username or password is empty.");
-                    return null;
-                }
-
-                args.Add("login", Username);
-                args.Add("password", Password);
-            }
+            args.Add("login", Username);
+            args.Add("password", Password);
 
             string response = UploadData(stream, url, fileName, "filecontent", args);
 
@@ -84,7 +78,6 @@ namespace UploadersLib.FileUploaders
                 else if (response.StartsWith("COMPLETE\n"))
                 {
                     RapidShareUploadInfo info = new RapidShareUploadInfo(response);
-
                     result.URL = info.URL;
                 }
             }

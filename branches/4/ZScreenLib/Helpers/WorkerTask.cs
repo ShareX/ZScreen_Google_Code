@@ -1609,16 +1609,9 @@ namespace ZScreenLib
                 {
                     us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
-                /*
-            else if (MyLinkUploaders.Contains(UrlShortenerType.Debli))
-            {
-                us = new DebliURLShortener();
-            }
-            */
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
                 {
-                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey,
-                                                Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
+                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey, Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
@@ -1685,15 +1678,11 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.Minus:
-                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig,
-                                             new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
+                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
                     break;
                 case FileUploaderType.Dropbox:
-                    string uploadPath =
-                        new NameParser { IsFolderPath = true }.Convert(
-                            Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
-                    fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath,
-                                               Engine.ConfigUploaders.DropboxAccountInfo);
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
+                    fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo);
                     break;
                 case FileUploaderType.SendSpace:
                     fileUploader = new SendSpace(ZKeys.SendSpaceKey);
@@ -1703,21 +1692,15 @@ namespace ZScreenLib
                             SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
                             break;
                         case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey,
-                                                               Engine.ConfigUploaders.SendSpaceUsername,
-                                                               Engine.ConfigUploaders.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.ConfigUploaders.SendSpaceUsername, Engine.ConfigUploaders.SendSpacePassword);
                             break;
                     }
                     break;
                 case FileUploaderType.RapidShare:
-                    fileUploader = new RapidShare(Engine.ConfigUploaders.RapidShareUserAccountType,
-                                                  Engine.ConfigUploaders.RapidShareUsername,
-                                                  Engine.ConfigUploaders.RapidSharePassword);
+                    fileUploader = new RapidShare(Engine.ConfigUploaders.RapidShareUsername, Engine.ConfigUploaders.RapidSharePassword);
                     break;
                 case FileUploaderType.CustomUploader:
-                    fileUploader =
-                        new CustomUploader(
-                            Engine.ConfigUploaders.CustomUploadersList[Engine.ConfigUploaders.CustomUploaderSelected]);
+                    fileUploader = new CustomUploader(Engine.ConfigUploaders.CustomUploadersList[Engine.ConfigUploaders.CustomUploaderSelected]);
                     break;
             }
 
