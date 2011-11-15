@@ -207,7 +207,7 @@ namespace ZScreenGUI
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZS);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_DONATE_ZS);
         }
 
         #endregion ToolStrip methods

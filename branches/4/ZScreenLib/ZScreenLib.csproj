@@ -122,6 +122,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Forms\WorkflowConfigUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +143,7 @@
     <Compile Include="Helpers\WorkerTaskHelper.cs" />
     <Compile Include="Helpers\Workflow.cs" />
     <Compile Include="Helpers\WorkflowSettings.cs" />
+    <Compile Include="Helpers\XmlFileNameEditor.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
     </Compile>

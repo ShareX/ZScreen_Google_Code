@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UploadersLib.HelperClasses;
 
@@ -39,10 +40,11 @@ namespace UploadersLib.FileUploaders
         public string Password { get; set; }
         public string FolderID { get; set; }
 
-        public RapidShare(string username, string password)
+        public RapidShare(string username, string password, string folderID = null)
         {
             Username = username;
             Password = password;
+            FolderID = folderID;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
@@ -91,18 +93,6 @@ namespace UploadersLib.FileUploaders
             return result;
         }
 
-        private List<RapidShareFolderInfo> ListRealFolders()
-        {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("sub", "listrealfolders");
-            args.Add("login", Username);
-            args.Add("password", Password);
-
-            string response = SendGetRequest(rapidshareURL, args);
-
-            return RapidShareFolderInfo.GetFolderInfos(response);
-        }
-
         private string NextUploadServer()
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -116,6 +106,18 @@ namespace UploadersLib.FileUploaders
             }
 
             return string.Empty;
+        }
+
+        public RapidShareFolderInfo GetRootFolderWithChilds()
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "listrealfolders");
+            args.Add("login", Username);
+            args.Add("password", Password);
+
+            string response = SendGetRequest(rapidshareURL, args);
+
+            return RapidShareFolderInfo.GetRootFolderWithChilds(response);
         }
     }
 
@@ -162,6 +164,14 @@ namespace UploadersLib.FileUploaders
         public string UploadACL { get; private set; }
         public string DownloadACL { get; private set; }
 
+        public List<RapidShareFolderInfo> ChildFolders = new List<RapidShareFolderInfo>();
+
+        public RapidShareFolderInfo(string id, string name)
+        {
+            RealFolderID = id;
+            FolderName = name;
+        }
+
         public RapidShareFolderInfo(string response)
         {
             string[] split = response.Split(',');
@@ -192,6 +202,33 @@ namespace UploadersLib.FileUploaders
             }
 
             return list;
+        }
+
+        public static RapidShareFolderInfo GetRootFolderWithChilds(string response)
+        {
+            RapidShareFolderInfo root = new RapidShareFolderInfo("0", "root");
+
+            List<RapidShareFolderInfo> list = GetFolderInfos(response);
+            list.Add(root);
+
+            foreach (RapidShareFolderInfo folderInfo in list)
+            {
+                if (folderInfo.RealFolderID != "0")
+                {
+                    foreach (RapidShareFolderInfo folderInfo2 in list)
+                    {
+                        if (folderInfo.ParentRealFolderID == folderInfo2.RealFolderID)
+                        {
+                            folderInfo2.ChildFolders.Add(folderInfo);
+                            folderInfo2.ChildFolders = folderInfo2.ChildFolders.OrderBy(x => x.FolderName).ToList();
+                        }
+                    }
+                }
+            }
+
+            root.ChildFolders = root.ChildFolders.OrderBy(x => x.FolderName).ToList();
+
+            return root;
         }
     }
 }

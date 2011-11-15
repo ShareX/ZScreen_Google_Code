@@ -34,7 +34,7 @@ namespace ZScreenGUI.UserControls
             if (makeURLClickable)
             {
                 rtb.DetectUrls = true;
-                rtb.LinkClicked += (v1, v2) => StaticHelper.LoadBrowser(v2.LinkText);
+                rtb.LinkClicked += (v1, v2) => ZAppHelper.LoadBrowserAsync(v2.LinkText);
             }
         }
 

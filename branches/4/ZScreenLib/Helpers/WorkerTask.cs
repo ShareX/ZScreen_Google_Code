@@ -1697,7 +1697,8 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.RapidShare:
-                    fileUploader = new RapidShare(Engine.ConfigUploaders.RapidShareUsername, Engine.ConfigUploaders.RapidSharePassword);
+                    fileUploader = new RapidShare(Engine.ConfigUploaders.RapidShareUsername, Engine.ConfigUploaders.RapidSharePassword,
+                        Engine.ConfigUploaders.RapidShareFolderID);
                     break;
                 case FileUploaderType.CustomUploader:
                     fileUploader = new CustomUploader(Engine.ConfigUploaders.CustomUploadersList[Engine.ConfigUploaders.CustomUploaderSelected]);

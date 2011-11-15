@@ -205,7 +205,7 @@ namespace ZScreenLib
                     Bitmap blackBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
 
                     // Capture rounded corners with except for Windows 8
-                    if (StaticHelper.IsWindows8())
+                    if (ZAppHelper.IsWindows8())
                     {
                         form.BackColor = Color.Red;
                         form.Refresh();
@@ -373,7 +373,7 @@ namespace ZScreenLib
         /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>
         private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
         {
-            if (StaticHelper.IsWindows8())
+            if (ZAppHelper.IsWindows8())
             {
                 // Windows 8 UI does not have round corners
                 return windowImage;

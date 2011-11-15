@@ -35,7 +35,7 @@ namespace ZScreenLib
                         this.pbPreview.LoadImage(task.Info.LocalFilePath, ur.URL);
                         break;
                     }
-                    else if(task.TempImage != null)
+                    else if (task.TempImage != null)
                     {
                         this.pbPreview.LoadImage(task.TempImage);
                     }
@@ -175,7 +175,7 @@ namespace ZScreenLib
         {
             if (urTask != null && !string.IsNullOrEmpty(urTask.Info.LocalFilePath))
             {
-                StaticHelper.LoadBrowser(urTask.Info.LocalFilePath);
+                ZAppHelper.LoadBrowserAsync(urTask.Info.LocalFilePath);
             }
         }
 
@@ -217,7 +217,7 @@ namespace ZScreenLib
         {
             if (FileSystem.IsValidLink(e.Node.Text))
             {
-                StaticHelper.LoadBrowser(e.Node.Text);
+                ZAppHelper.LoadBrowserAsync(e.Node.Text);
             }
 
             btnCopyLink_Click(sender, e);

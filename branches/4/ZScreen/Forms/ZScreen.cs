@@ -451,7 +451,7 @@ namespace ZScreenGUI
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/p/zscreen/wiki/FTPAccounts");
         }
 
         private void btnFTPOpenClient_Click(object sender, EventArgs e)
@@ -461,12 +461,12 @@ namespace ZScreenGUI
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
+            ZAppHelper.LoadBrowserAsync("http://my.imageshack.us/v_images.php");
         }
 
         private void btnGalleryTinyPic_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://tinypic.com/yourstuff.php");
+            ZAppHelper.LoadBrowserAsync("http://tinypic.com/yourstuff.php");
         }
 
         private void btnLastCropShotReset_Click(object sender, EventArgs e)
@@ -498,7 +498,7 @@ namespace ZScreenGUI
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs");
+            ZAppHelper.LoadBrowserAsync("http://profile.imageshack.us/prefs");
         }
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
@@ -826,12 +826,12 @@ namespace ZScreenGUI
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_ISSUES);
         }
 
         private void llProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_WIKIPAGES);
         }
 
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
@@ -1131,7 +1131,7 @@ namespace ZScreenGUI
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZS);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_DONATE_ZS);
         }
 
         private void tsbDonate_MouseEnter(object sender, EventArgs e)
@@ -1141,17 +1141,17 @@ namespace ZScreenGUI
 
         private void tsbLinkHelp_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_WIKIPAGES);
         }
 
         private void tsbLinkHome_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_WEBSITE);
         }
 
         private void tsbLinkIssues_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_ISSUES);
         }
 
         public void tsddbSelectedWindow_DropDownOpening(object sender, EventArgs e)
@@ -1222,7 +1222,7 @@ namespace ZScreenGUI
 
         private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(e.LinkText);
+            ZAppHelper.LoadBrowserAsync(e.LinkText);
         }
 
         private void UpdateAeroGlassConfig()

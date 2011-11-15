@@ -35,6 +35,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
@@ -42,8 +43,9 @@ namespace HelpersLib
 {
     public static class ZAppHelper
     {
+        public static readonly Random Random = new Random();
+
         private static readonly object ClipboardLock = new object();
-        private static readonly Random Random = new Random();
 
         private static bool IsValidFile(string path, Type enumType)
         {
@@ -363,9 +365,14 @@ namespace HelpersLib
             return result.ToString();
         }
 
+        public static void OpenFolder(string directory)
+        {
+            Process.Start("explorer.exe", directory);
+        }
+
         public static void OpenFolderWithFile(string filePath)
         {
-            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", filePath));
+            OpenFolder(string.Format("/select,\"{0}\"", filePath));
         }
 
         public static string GetDefaultWebProxyHost()
@@ -388,12 +395,17 @@ namespace HelpersLib
             return new Version(Math.Max(version.Major, 0), Math.Max(version.Minor, 0), Math.Max(version.Build, 0), Math.Max(version.Revision, 0));
         }
 
-        internal static double ToDouble(this Version value)
+        public static bool IsWindows8()
         {
-            return Math.Max(value.Major, 0) * Math.Pow(10, 12) +
-                   Math.Max(value.Minor, 0) * Math.Pow(10, 9) +
-                   Math.Max(value.Build, 0) * Math.Pow(10, 6) +
-                   Math.Max(value.Revision, 0);
+            return Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
+        }
+
+        public static void LoadBrowserAsync(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                ThreadPool.QueueUserWorkItem(x => Process.Start(url));
+            }
         }
     }
 }

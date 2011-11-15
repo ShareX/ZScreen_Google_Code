@@ -315,7 +315,8 @@ namespace ZUploader
                     }
                     break;
                 case FileDestination.RapidShare:
-                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUsername, Program.UploadersConfig.RapidSharePassword);
+                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUsername, Program.UploadersConfig.RapidSharePassword,
+                        Program.UploadersConfig.RapidShareFolderID);
                     break;
                 case FileDestination.Minus:
                     fileUploader = new Minus(Program.UploadersConfig.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));

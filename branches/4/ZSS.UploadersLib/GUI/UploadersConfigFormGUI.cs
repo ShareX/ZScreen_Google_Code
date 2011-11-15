@@ -259,6 +259,7 @@ namespace UploadersLib
 
             txtRapidShareUsername.Text = Config.RapidShareUsername;
             txtRapidSharePassword.Text = Config.RapidSharePassword;
+            txtRapidShareFolderID.Text = Config.RapidShareFolderID;
 
             // SendSpace
 
@@ -613,7 +614,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.TwitterOAuthInfoList[Config.TwitterSelectedAccount] = acc;
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                     ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
                 }
             }

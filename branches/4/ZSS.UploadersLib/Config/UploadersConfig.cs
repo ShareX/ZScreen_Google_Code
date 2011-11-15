@@ -37,14 +37,10 @@ namespace UploadersLib
     [Serializable]
     public class UploadersConfig
     {
-        #region Constructor
-
         public UploadersConfig()
         {
-            ApplyDefaultValues(this);
+            PasswordsEncryptionStrength2 = EncryptionStrength.High;
         }
-
-        #endregion Constructor
 
         #region General
 
@@ -149,6 +145,7 @@ namespace UploadersLib
 
         public string RapidShareUsername = string.Empty;
         public string RapidSharePassword = string.Empty;
+        public string RapidShareFolderID = string.Empty;
 
         // SendSpace
 
@@ -202,16 +199,6 @@ namespace UploadersLib
 
         #region Helper Methods
 
-        public static void ApplyDefaultValues(object self)
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
-        }
-
         public bool IsActive(FileUploaderType ut)
         {
             switch (ut)
@@ -239,16 +226,11 @@ namespace UploadersLib
 
             CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength2 };
 
-            this.TinyPicPassword =
-                bEncrypt ? crypt.Encrypt(this.TinyPicPassword) :
-            crypt.Decrypt(this.TinyPicPassword);
+            this.TinyPicPassword = bEncrypt ? crypt.Encrypt(this.TinyPicPassword) : crypt.Decrypt(this.TinyPicPassword);
 
-            this.RapidSharePassword =
-                bEncrypt ? crypt.Encrypt(this.RapidSharePassword) :
-            crypt.Decrypt(this.RapidSharePassword);
+            this.RapidSharePassword = bEncrypt ? crypt.Encrypt(this.RapidSharePassword) : crypt.Decrypt(this.RapidSharePassword);
 
-            this.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.SendSpacePassword) :
-            crypt.Decrypt(this.SendSpacePassword);
+            this.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.SendSpacePassword) : crypt.Decrypt(this.SendSpacePassword);
 
             foreach (FTPAccount acc in this.FTPAccountList2)
             {
@@ -261,11 +243,9 @@ namespace UploadersLib
                 acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
             }
 
-            this.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.TwitPicPassword) :
-                crypt.Decrypt(this.TwitPicPassword);
+            this.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.TwitPicPassword) : crypt.Decrypt(this.TwitPicPassword);
 
-            this.EmailPassword = bEncrypt ? crypt.Encrypt(this.EmailPassword) :
-            crypt.Decrypt(this.EmailPassword);
+            this.EmailPassword = bEncrypt ? crypt.Encrypt(this.EmailPassword) : crypt.Decrypt(this.EmailPassword);
         }
 
         public bool IsActive(TextUploaderType ut)
@@ -340,17 +320,17 @@ namespace UploadersLib
             bool succ = true;
 
             // encrypt before interim save
-            if (this.PasswordsSecureUsingEncryption)
+            if (PasswordsSecureUsingEncryption)
             {
-                this.CryptPasswords(bEncrypt: true);
+                CryptPasswords(true);
             }
 
             succ = SettingsHelper.Save(this, filePath, SerializationType.Xml);
 
             // decrypt after interim save
-            if (this.PasswordsSecureUsingEncryption)
+            if (PasswordsSecureUsingEncryption)
             {
-                this.CryptPasswords(bEncrypt: false);
+                CryptPasswords(false);
             }
 
             return succ;

@@ -258,7 +258,7 @@ namespace ZScreenCoreLib
 
                 for (int x = 0; x < count; x++)
                 {
-                    int r = StaticHelper.RandomNumber(0, numbers.Count - 1);
+                    int r = ZAppHelper.Random.Next(0, numbers.Count - 1);
                     mLogoRandomList.Add(numbers[r]);
                     numbers.RemoveAt(r);
                 }
@@ -278,17 +278,17 @@ namespace ZScreenCoreLib
                     break;
                 case 4:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(100, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(ZAppHelper.Random.Next(100, 300)));
                     break;
                 case 5:
                     logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.InverseFilter());
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(-300, -100)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(ZAppHelper.Random.Next(-300, -100)));
                     break;
                 case 6:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(150, 300)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(ZAppHelper.Random.Next(150, 300)));
                     break;
                 case 7:
-                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(StaticHelper.RandomNumber(-300, -150)));
+                    logo = ColorMatrices.ApplyColorMatrix(bmp, ColorMatrices.SaturationFilter(ZAppHelper.Random.Next(-300, -150)));
                     break;
             }
 

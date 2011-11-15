@@ -280,7 +280,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.URL))
             {
-                StaticHelper.LoadBrowser(result.URL);
+                ZAppHelper.LoadBrowserAsync(result.URL);
             }
         }
 
@@ -497,7 +497,7 @@ namespace ZUploader
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZU);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_DONATE_ZU);
         }
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
@@ -665,7 +665,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(url))
             {
-                StaticHelper.LoadBrowser(url);
+                ZAppHelper.LoadBrowserAsync(url);
             }
         }
 

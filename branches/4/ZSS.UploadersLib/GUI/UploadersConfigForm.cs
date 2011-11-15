@@ -49,6 +49,11 @@ namespace UploadersLib
             Text = string.Format("Outputs Configuration - {0}", uploadersConfig.FilePath);
         }
 
+        private void UploadersConfigForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
         private void UploadersConfigForm_Resize(object sender, EventArgs e)
         {
             Refresh();
@@ -75,14 +80,14 @@ namespace UploadersLib
 
         private void btnImageShackOpenRegistrationCode_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs/");
+            ZAppHelper.LoadBrowserAsync("http://profile.imageshack.us/prefs/");
         }
 
         private void btnImageShackOpenPublicProfile_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Config.ImageShackUsername))
             {
-                StaticHelper.LoadBrowser("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
+                ZAppHelper.LoadBrowserAsync("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
             }
             else
             {
@@ -92,7 +97,7 @@ namespace UploadersLib
 
         private void btnImageShackOpenMyImages_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
+            ZAppHelper.LoadBrowserAsync("http://my.imageshack.us/v_images.php");
         }
 
         #endregion ImageShack
@@ -163,7 +168,7 @@ namespace UploadersLib
 
         private void btnTinyPicOpenMyImages_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://tinypic.com/yourstuff.php");
+            ZAppHelper.LoadBrowserAsync("http://tinypic.com/yourstuff.php");
         }
 
         #endregion TinyPic
@@ -308,12 +313,12 @@ namespace UploadersLib
 
         private void pbDropboxLogo_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("https://www.dropbox.com");
+            ZAppHelper.LoadBrowserAsync("https://www.dropbox.com");
         }
 
         private void btnDropboxRegister_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("https://www.dropbox.com/register");
+            ZAppHelper.LoadBrowserAsync("https://www.dropbox.com/register");
         }
 
         private void btnDropboxShowFiles_Click(object sender, EventArgs e)
@@ -454,7 +459,7 @@ namespace UploadersLib
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/p/zscreen/wiki/FTPAccounts");
         }
 
         private void btnFTPImport_Click(object sender, EventArgs e)
@@ -537,6 +542,46 @@ namespace UploadersLib
         private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
         {
             Config.RapidSharePassword = txtRapidSharePassword.Text;
+        }
+
+        private void txtRapidShareFolderID_TextChanged(object sender, EventArgs e)
+        {
+            Config.RapidShareFolderID = txtRapidShareFolderID.Text;
+        }
+
+        private void btnRapidShareRefreshFolders_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Config.RapidShareUsername) || string.IsNullOrEmpty(Config.RapidSharePassword))
+            {
+                MessageBox.Show("RapidShare account username or password is empty.", "RapidShare refresh folders list failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                tvRapidShareFolders.Nodes.Clear();
+                RapidShareFolderInfo root = new RapidShare(Config.RapidShareUsername, Config.RapidSharePassword).GetRootFolderWithChilds();
+                RapidShareRecursiveAddChilds(tvRapidShareFolders.Nodes, root);
+                tvRapidShareFolders.ExpandAll();
+            }
+        }
+
+        private void RapidShareRecursiveAddChilds(TreeNodeCollection treeNodes, RapidShareFolderInfo folderInfo)
+        {
+            TreeNode treeNode = treeNodes.Add(folderInfo.FolderName);
+            treeNode.Tag = folderInfo;
+
+            foreach (RapidShareFolderInfo folderInfo2 in folderInfo.ChildFolders)
+            {
+                RapidShareRecursiveAddChilds(treeNode.Nodes, folderInfo2);
+            }
+        }
+
+        private void tvRapidShareFolders_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node != null && e.Node.Tag is RapidShareFolderInfo)
+            {
+                RapidShareFolderInfo folderInfo = (RapidShareFolderInfo)e.Node.Tag;
+                txtRapidShareFolderID.Text = folderInfo.RealFolderID;
+            }
         }
 
         #endregion RapidShare
@@ -739,7 +784,7 @@ namespace UploadersLib
 
         private void txtCustomUploaderLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(e.LinkText);
+            ZAppHelper.LoadBrowserAsync(e.LinkText);
         }
 
         #endregion Custom Uploader
@@ -777,17 +822,6 @@ namespace UploadersLib
         }
 
         #endregion URL Shorteners
-
-        private void btnGmailAuth_Click(object sender, EventArgs e)
-        {
-            Gmail gmail = new Gmail("mcored@gmail.com", new OAuthInfo(APIKeys.GoogleConsumerKey, APIKeys.GoogleConsumerSecret));
-            StaticHelper.LoadBrowser(gmail.GetAuthorizationURL());
-        }
-
-        private void UploadersConfigForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-        }
 
         #region Other Services
 
