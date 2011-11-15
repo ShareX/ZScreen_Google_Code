@@ -37,6 +37,7 @@ namespace UploadersLib.FileUploaders
 
         public string Username { get; set; }
         public string Password { get; set; }
+        public string FolderID { get; set; }
 
         public RapidShare(string username, string password)
         {
@@ -65,6 +66,11 @@ namespace UploadersLib.FileUploaders
             args.Add("login", Username);
             args.Add("password", Password);
 
+            if (!string.IsNullOrEmpty(FolderID))
+            {
+                args.Add("folder", FolderID);
+            }
+
             string response = UploadData(stream, url, fileName, "filecontent", args);
 
             UploadResult result = new UploadResult(response);
@@ -85,6 +91,18 @@ namespace UploadersLib.FileUploaders
             return result;
         }
 
+        private List<RapidShareFolderInfo> ListRealFolders()
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "listrealfolders");
+            args.Add("login", Username);
+            args.Add("password", Password);
+
+            string response = SendGetRequest(rapidshareURL, args);
+
+            return RapidShareFolderInfo.GetFolderInfos(response);
+        }
+
         private string NextUploadServer()
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -99,30 +117,81 @@ namespace UploadersLib.FileUploaders
 
             return string.Empty;
         }
+    }
 
-        public class RapidShareUploadInfo
+    public class RapidShareUploadInfo
+    {
+        public string FileID { get; private set; }
+        public string FileName { get; private set; }
+        public string FileSize { get; private set; }
+        public string MD5 { get; private set; }
+
+        public string URL
         {
-            public string FileID; // The file ID (you might get an already existing file ID if the identical file already exists in your account AND in the same folder.)
-            public string FileName;
-            public string FileSize; // Received size in bytes.
-            public string MD5; // Lower case MD5 hex of the sent data.
-            public string URL;
-
-            public RapidShareUploadInfo(string response)
+            get
             {
-                response = response.Substring(9).Trim('\n');
-
-                string[] split = response.Split(',');
-
-                if (split.Length > 3)
+                if (!string.IsNullOrEmpty(FileID) && !string.IsNullOrEmpty(FileName))
                 {
-                    FileID = split[0];
-                    FileName = split[1];
-                    FileSize = split[2];
-                    MD5 = split[3];
-                    URL = string.Format("https://rapidshare.com/files/{0}/{1}", FileID, FileName);
+                    return string.Format("https://rapidshare.com/files/{0}/{1}", FileID, FileName);
+                }
+
+                return null;
+            }
+        }
+
+        public RapidShareUploadInfo(string response)
+        {
+            string[] split = response.Substring(9).Trim('\n').Split(',');
+
+            if (split.Length > 3)
+            {
+                FileID = split[0];
+                FileName = split[1];
+                FileSize = split[2];
+                MD5 = split[3];
+            }
+        }
+    }
+
+    public class RapidShareFolderInfo
+    {
+        public string RealFolderID { get; private set; }
+        public string ParentRealFolderID { get; private set; }
+        public string FolderName { get; private set; }
+        public string BrowseACL { get; private set; }
+        public string UploadACL { get; private set; }
+        public string DownloadACL { get; private set; }
+
+        public RapidShareFolderInfo(string response)
+        {
+            string[] split = response.Split(',');
+
+            if (split.Length > 5)
+            {
+                RealFolderID = split[0];
+                ParentRealFolderID = split[1];
+                FolderName = split[2];
+                BrowseACL = split[3];
+                UploadACL = split[4];
+                DownloadACL = split[5];
+            }
+        }
+
+        public static List<RapidShareFolderInfo> GetFolderInfos(string response)
+        {
+            List<RapidShareFolderInfo> list = new List<RapidShareFolderInfo>();
+
+            if (!string.IsNullOrEmpty(response) && response != "NONE")
+            {
+                string[] split = response.Trim('\n').Split('\n');
+
+                foreach (string folderInfo in split)
+                {
+                    list.Add(new RapidShareFolderInfo(folderInfo));
                 }
             }
+
+            return list;
         }
     }
 }
