@@ -38,30 +38,44 @@ namespace HelpersLib
         public int Right;
         public int Bottom;
 
-        public RECT(int left_, int top_, int right_, int bottom_)
+        public RECT(int left, int top, int right, int bottom)
         {
-            Left = left_;
-            Top = top_;
-            Right = right_;
-            Bottom = bottom_;
+            Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
         }
 
-        public int Height { get { return Bottom - Top; } }
-
-        public int Width { get { return Right - Left; } }
-
-        public Size Size { get { return new Size(Width, Height); } }
-
-        public Point Location { get { return new Point(Left, Top); } }
-
-        public Rectangle ToRectangle()
+        public int Height
         {
-            return Rectangle.FromLTRB(Left, Top, Right, Bottom);
+            get
+            {
+                return Bottom - Top;
+            }
         }
 
-        public static RECT FromRectangle(Rectangle rectangle)
+        public int Width
         {
-            return new RECT(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+            get
+            {
+                return Right - Left;
+            }
+        }
+
+        public Size Size
+        {
+            get
+            {
+                return new Size(Width, Height);
+            }
+        }
+
+        public Point Location
+        {
+            get
+            {
+                return new Point(Left, Top);
+            }
         }
 
         public override int GetHashCode()
@@ -73,30 +87,40 @@ namespace HelpersLib
 
         public static implicit operator Rectangle(RECT rect)
         {
-            return rect.ToRectangle();
+            return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
         public static implicit operator RECT(Rectangle rect)
         {
-            return FromRectangle(rect);
+            return new RECT(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct SIZE
     {
-        public int x;
-        public int y;
+        public int Width;
+        public int Height;
 
         public SIZE(int width, int height)
         {
-            x = width;
-            y = height;
+            Width = width;
+            Height = height;
+        }
+
+        public static explicit operator Size(SIZE s)
+        {
+            return new Size(s.Width, s.Height);
+        }
+
+        public static explicit operator SIZE(Size s)
+        {
+            return new SIZE(s.Width, s.Height);
         }
 
         public override string ToString()
         {
-            return string.Format("{0}x{1}", x, y);
+            return string.Format("{0}x{1}", Width, Height);
         }
     }
 
@@ -108,8 +132,8 @@ namespace HelpersLib
 
         public POINT(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         public static explicit operator Point(POINT p)

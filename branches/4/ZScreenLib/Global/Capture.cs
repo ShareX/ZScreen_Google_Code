@@ -168,19 +168,19 @@ namespace ZScreenLib
                 StaticHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
                 StaticHelper.WriteLine("Window    Size: " + size.ToString());
 #endif
-                if (size.x <= 0 || size.y <= 0)
+                if (size.Width <= 0 || size.Height <= 0)
                 {
                     return null;
                 }
 
                 form.Location = new Point(windowRect.X, windowRect.Y);
-                form.Size = new Size(size.x, size.y);
+                form.Size = (Size)size;
 
                 DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
                 props.dwFlags = NativeMethods.DWM_TNP_VISIBLE | NativeMethods.DWM_TNP_RECTDESTINATION | NativeMethods.DWM_TNP_OPACITY;
                 props.fVisible = true;
                 props.opacity = (byte)255;
-                props.rcDestination = new RECT(0, 0, size.x, size.y);
+                props.rcDestination = new RECT(0, 0, size.Width, size.Height);
 
                 NativeMethods.DwmUpdateThumbnailProperties(thumb, ref props);
 
