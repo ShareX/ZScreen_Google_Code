@@ -1207,7 +1207,7 @@ namespace ZScreenGUI
 
         private void tsmSettings_Click(object sender, EventArgs e)
         {
-            ShowWindow();
+            FormsMgr.ShowOptionsUI();
         }
 
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
