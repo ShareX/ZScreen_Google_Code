@@ -98,8 +98,7 @@ namespace ZScreenGUI
                     Adapter.PrintText(e.UserState as string);
                     break;
                 case (WorkerTask.ProgressType)102:
-                    Adapter.CopyImageToClipboard(e.UserState as Image);
-                    break;
+                    throw new Exception("Unsupported progress");
                 case (WorkerTask.ProgressType)103:
                     throw new Exception("Unsupported progress");
                 case (WorkerTask.ProgressType)104:
@@ -112,7 +111,7 @@ namespace ZScreenGUI
                     }
                     else if (e.UserState is Image)
                     {
-                        Adapter.CopyImageToClipboard((Image)e.UserState);
+                        Adapter.CopyImageToClipboard((Image)e.UserState, false);
                     }
 
                     break;

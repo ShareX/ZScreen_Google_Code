@@ -138,12 +138,12 @@ namespace ZScreenLib
             {
                 using (Image img = GraphicsMgr.GetImageSafely(urTask.Info.LocalFilePath))
                 {
-                    Adapter.CopyImageToClipboard(img);
+                    Adapter.CopyImageToClipboard(img, urTask.WorkflowConfig.ClipboardForceBmp);
                 }
             }
             else if (urTask.TempImage != null)
             {
-                Adapter.CopyImageToClipboard(urTask.TempImage);
+                Adapter.CopyImageToClipboard(urTask.TempImage, urTask.WorkflowConfig.ClipboardForceBmp);
             }
         }
 

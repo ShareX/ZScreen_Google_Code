@@ -75,11 +75,18 @@ namespace ZScreenLib
             Clipboard.SetDataObject(data, true);
         }
 
-        public static void CopyImageToClipboard(Image img)
+        public static void CopyImageToClipboard(Image img, bool bCompatible)
         {
             if (img != null)
             {
-                CopyMultiFormatBitmapToClipboard(img);
+                if (bCompatible)
+                {
+                    CopyMultiFormatBitmapToClipboard(img);
+                }
+                else
+                {
+                    CopyMultiFormatBitmapToClipboardPng(img);
+                }
             }
         }
 
@@ -101,7 +108,7 @@ namespace ZScreenLib
             }
         }
 
-        private static void CopyMultiFormatBitmapToClipboard2(this Image image)
+        private static void CopyMultiFormatBitmapToClipboardPng(this Image image)
         {
             using (var opaque = image.CreateOpaqueBitmap(Color.White))
             using (var stream = new MemoryStream())
@@ -134,7 +141,7 @@ namespace ZScreenLib
             {
                 using (Image img = Image.FromFile(filePath))
                 {
-                    CopyImageToClipboard(img);
+                    CopyImageToClipboard(img, false);
                 }
 
                 StaticHelper.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));

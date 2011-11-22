@@ -190,6 +190,9 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
 
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("Extended compatibility for images copied to Clipboard")]
+        public bool ClipboardForceBmp { get; set; }
+
         public DestConfig DestConfig = new DestConfig();
 
         #endregion Outputs

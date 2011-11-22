@@ -299,7 +299,7 @@ namespace ZScreenLib
 
                     if (task.JobIsImageToClipboard())
                     {
-                        Adapter.CopyImageToClipboard(task.TempImage);
+                        Adapter.CopyImageToClipboard(task.TempImage, task.WorkflowConfig.ClipboardForceBmp);
                     }
                     else if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                     {
