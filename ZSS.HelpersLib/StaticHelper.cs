@@ -31,9 +31,6 @@ namespace HelpersLib
 {
     public static class StaticHelper
     {
-        public const string FILTER_XML_FILES = "XML Files(*.xml)|*.xml";
-        public const string FILTER_EXE_FILES = "All Files(*.exe)|*.exe";
-
         public static Logger MyLogger { private get; set; }
 
         public static void WriteLine(string message)
@@ -63,30 +60,6 @@ namespace HelpersLib
             {
                 Debug.WriteLine(e);
             }
-        }
-
-        public static void LoadBrowser(string url)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                ThreadPool.QueueUserWorkItem(x => Process.Start(url));
-            }
-        }
-
-        public static void ShowDirectory(string dir)
-        {
-            Process.Start("explorer.exe", dir);
-        }
-
-        public static bool IsWindows8()
-        {
-            return Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
-        }
-
-        public static int RandomNumber(int min, int max)
-        {
-            Random random = new Random();
-            return random.Next(min, max);
         }
     }
 }

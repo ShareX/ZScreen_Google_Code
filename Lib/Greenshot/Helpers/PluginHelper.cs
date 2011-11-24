@@ -23,12 +23,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
-using Greenshot.Configuration;
 using Greenshot.Plugin;
-using GreenshotPlugin.Controls;
 using GreenshotPlugin.Core;
 using IniFile;
 

@@ -150,7 +150,8 @@ namespace UploadersLib.FileUploaders
         {
             if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
             {
-                throw new Exception("UserToken or UserSecret is empty. Login is required.");
+                Errors.Add("UserToken or UserSecret is empty. Login is required.");
+                return null;
             }
 
             string url = ZAppHelper.CombineURL(URLFiles, UploadPath);

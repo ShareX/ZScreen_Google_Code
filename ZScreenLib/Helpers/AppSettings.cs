@@ -6,8 +6,9 @@ using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using HelpersLib;
 
-namespace HelpersLib
+namespace ZScreenLib
 {
     public class AppSettings
     {

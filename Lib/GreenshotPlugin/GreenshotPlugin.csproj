@@ -69,10 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controls\HotkeyControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\BackgroundForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,9 +83,11 @@
     <Compile Include="Core\ExtensionAttribute.cs" />
     <Compile Include="Core\GreenshotResources.cs" />
     <Compile Include="Core\IEHelper.cs" />
+    <Compile Include="Core\LogHelper.cs" />
     <Compile Include="Core\NetworkHelper.cs" />
     <Compile Include="Core\Objects.cs" />
     <Compile Include="Core\PluginUtils.cs" />
+    <Compile Include="Core\SourceForgeHelper.cs" />
     <Compile Include="IniFile\IniAttributes.cs" />
     <Compile Include="IniFile\IniConfig.cs" />
     <Compile Include="IniFile\IniReader.cs" />
@@ -103,6 +101,7 @@
     <Compile Include="Interfaces\Plugin\PluginInterfaces.cs" />
     <Compile Include="Interop\ComProgIdAttribute.cs" />
     <Compile Include="Interop\COMWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Core\GreenshotResources.resx">
       <DependentUpon>GreenshotResources.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,9 +110,19 @@
     <Folder Include="Interfaces\Drawing\Filters\" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
-      <ProductName>Microsoft.Net.Framework.3.5.SP1</ProductName>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>

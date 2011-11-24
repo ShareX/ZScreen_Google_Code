@@ -83,7 +83,7 @@ namespace HelpersLib
         {
             if (!string.IsNullOrEmpty(BugReportPath))
             {
-                StaticHelper.LoadBrowser(BugReportPath);
+                ZAppHelper.LoadBrowserAsync(BugReportPath);
             }
         }
 

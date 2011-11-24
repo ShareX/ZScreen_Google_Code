@@ -97,27 +97,27 @@ namespace HistoryLib
 
         public void OpenURL()
         {
-            if (HistoryItem != null && IsURLExist) StaticHelper.LoadBrowser(HistoryItem.URL);
+            if (HistoryItem != null && IsURLExist) ZAppHelper.LoadBrowserAsync(HistoryItem.URL);
         }
 
         public void OpenShortenedURL()
         {
-            if (HistoryItem != null && IsShortenedURLExist) StaticHelper.LoadBrowser(HistoryItem.ShortenedURL);
+            if (HistoryItem != null && IsShortenedURLExist) ZAppHelper.LoadBrowserAsync(HistoryItem.ShortenedURL);
         }
 
         public void OpenThumbnailURL()
         {
-            if (HistoryItem != null && IsThumbnailURLExist) StaticHelper.LoadBrowser(HistoryItem.ThumbnailURL);
+            if (HistoryItem != null && IsThumbnailURLExist) ZAppHelper.LoadBrowserAsync(HistoryItem.ThumbnailURL);
         }
 
         public void OpenDeletionURL()
         {
-            if (HistoryItem != null && IsDeletionURLExist) StaticHelper.LoadBrowser(HistoryItem.DeletionURL);
+            if (HistoryItem != null && IsDeletionURLExist) ZAppHelper.LoadBrowserAsync(HistoryItem.DeletionURL);
         }
 
         public void OpenFile()
         {
-            if (HistoryItem != null && IsFileExist) StaticHelper.LoadBrowser(HistoryItem.Filepath);
+            if (HistoryItem != null && IsFileExist) ZAppHelper.LoadBrowserAsync(HistoryItem.Filepath);
         }
 
         public void OpenFolder()

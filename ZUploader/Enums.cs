@@ -61,12 +61,12 @@ namespace ZUploader
 
     public enum FileDestination
     {
+        [Description("dropbox.com")]
+        Dropbox,
         [Description("rapidshare.com")]
         RapidShare,
         [Description("sendspace.com")]
         SendSpace,
-        [Description("dropbox.com")]
-        Dropbox,
         [Description("minus.com")]
         Minus,
         [Description("Custom Uploader")]

@@ -20,8 +20,6 @@
  */
 using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Collections;
 
 namespace Greenshot.Helpers.IEInterop {
     /// <summary><para><c>IHTMLDocument2</c> interface.</para></summary>

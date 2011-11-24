@@ -41,6 +41,8 @@ namespace HelpersLib.Hotkey
         PrintScreen,
         [Description("Active Window")]
         ActiveWindow,
+        [Description("Active Monitor")]
+        ActiveMonitor,
         [Description("Rectangle Region")]
         RectangleRegion,
         [Description("Rounded Rectangle Region")]

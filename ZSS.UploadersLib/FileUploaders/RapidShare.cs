@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UploadersLib.HelperClasses;
 
@@ -32,37 +33,44 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class RapidShare : FileUploader
     {
-        private const string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
+        private const string rapidshareURL = "https://api.rapidshare.com/cgi-bin/rsapi.cgi";
+        private const string rapidshareUploadURL = "https://rs{0}.rapidshare.com/cgi-bin/rsapi.cgi";
 
-        public AccountType AccountType { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string FolderID { get; set; }
 
-        public bool CheckFileSize, CheckFileMD5;
-
-        public RapidShare(AccountType accountType = AccountType.Anonymous, string username = null, string password = null)
+        public RapidShare(string username, string password, string folderID = null)
         {
-            AccountType = accountType;
             Username = username;
             Password = password;
+            FolderID = folderID;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            {
+                Errors.Add("RapidShare account username or password is empty.");
+                return null;
+            }
+
             string url = NextUploadServer();
 
             if (string.IsNullOrEmpty(url))
             {
-                Errors.Add("Upload server URL is empty.");
+                Errors.Add("RapidShare next upload server URL is empty.");
                 return null;
             }
 
             Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "upload");
+            args.Add("login", Username);
+            args.Add("password", Password);
 
-            if (AccountType == AccountType.User && !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+            if (!string.IsNullOrEmpty(FolderID))
             {
-                args.Add("login", Username);
-                args.Add("password", Password);
+                args.Add("folder", FolderID);
             }
 
             string response = UploadData(stream, url, fileName, "filecontent", args);
@@ -71,11 +79,15 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                UploadInfo info = new UploadInfo(response);
-
-                result.URL = info.URL;
-                result.DeletionURL = info.KillCodeURL;
-                result.Source = response;
+                if (response.StartsWith("ERROR: "))
+                {
+                    Errors.Add(response.Substring(7));
+                }
+                else if (response.StartsWith("COMPLETE\n"))
+                {
+                    RapidShareUploadInfo info = new RapidShareUploadInfo(response);
+                    result.URL = info.URL;
+                }
             }
 
             return result;
@@ -90,45 +102,133 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                return string.Format("http://rs{0}.rapidshare.com/cgi-bin/upload.cgi", response);
+                return string.Format(rapidshareUploadURL, response);
             }
 
             return string.Empty;
         }
 
-        public class UploadInfo
+        public RapidShareFolderInfo GetRootFolderWithChilds()
         {
-            public string Info;
-            public string FileID;
-            public string URL;
-            public string KillCodeURL;
-            public string KillCode;
-            public string Size;
-            public string MD5;
-            public string Status;
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "listrealfolders");
+            args.Add("login", Username);
+            args.Add("password", Password);
 
-            public UploadInfo(string info)
-            {
-                Info = info;
-                FileID = GetFirstValue(info, @"/files/(\d+)/");
-                URL = GetFirstValue(info, @"File1\.1=(.+?)\n");
-                KillCodeURL = GetFirstValue(info, @"File1\.2=(.+?)\n");
-                KillCode = GetFirstValue(info, @"File1\.2=.+?killcode=(\d+)\n");
-                Size = GetFirstValue(info, @"File1\.3=(\d+?)\n");
-                MD5 = GetFirstValue(info, @"File1\.4=(\w+?)\n");
-                Status = GetFirstValue(info, @"File1\.5=(.+?)\n");
-            }
+            string response = SendGetRequest(rapidshareURL, args);
 
-            private string GetFirstValue(string input, string pattern)
+            return RapidShareFolderInfo.GetRootFolderWithChilds(response);
+        }
+    }
+
+    public class RapidShareUploadInfo
+    {
+        public string FileID { get; private set; }
+        public string FileName { get; private set; }
+        public string FileSize { get; private set; }
+        public string MD5 { get; private set; }
+
+        public string URL
+        {
+            get
             {
-                Match regex = Regex.Match(input, pattern);
-                if (regex.Groups.Count > 1)
+                if (!string.IsNullOrEmpty(FileID) && !string.IsNullOrEmpty(FileName))
                 {
-                    return regex.Groups[1].Value;
+                    return string.Format("https://rapidshare.com/files/{0}/{1}", FileID, FileName);
                 }
 
-                return string.Empty;
+                return null;
             }
+        }
+
+        public RapidShareUploadInfo(string response)
+        {
+            string[] split = response.Substring(9).Trim('\n').Split(',');
+
+            if (split.Length > 3)
+            {
+                FileID = split[0];
+                FileName = split[1];
+                FileSize = split[2];
+                MD5 = split[3];
+            }
+        }
+    }
+
+    public class RapidShareFolderInfo
+    {
+        public string RealFolderID { get; private set; }
+        public string ParentRealFolderID { get; private set; }
+        public string FolderName { get; private set; }
+        public string BrowseACL { get; private set; }
+        public string UploadACL { get; private set; }
+        public string DownloadACL { get; private set; }
+
+        public List<RapidShareFolderInfo> ChildFolders = new List<RapidShareFolderInfo>();
+
+        public RapidShareFolderInfo(string id, string name)
+        {
+            RealFolderID = id;
+            FolderName = name;
+        }
+
+        public RapidShareFolderInfo(string response)
+        {
+            string[] split = response.Split(',');
+
+            if (split.Length > 5)
+            {
+                RealFolderID = split[0];
+                ParentRealFolderID = split[1];
+                FolderName = split[2];
+                BrowseACL = split[3];
+                UploadACL = split[4];
+                DownloadACL = split[5];
+            }
+        }
+
+        public static List<RapidShareFolderInfo> GetFolderInfos(string response)
+        {
+            List<RapidShareFolderInfo> list = new List<RapidShareFolderInfo>();
+
+            if (!string.IsNullOrEmpty(response) && response != "NONE")
+            {
+                string[] split = response.Trim('\n').Split('\n');
+
+                foreach (string folderInfo in split)
+                {
+                    list.Add(new RapidShareFolderInfo(folderInfo));
+                }
+            }
+
+            return list;
+        }
+
+        public static RapidShareFolderInfo GetRootFolderWithChilds(string response)
+        {
+            RapidShareFolderInfo root = new RapidShareFolderInfo("0", "root");
+
+            List<RapidShareFolderInfo> list = GetFolderInfos(response);
+            list.Add(root);
+
+            foreach (RapidShareFolderInfo folderInfo in list)
+            {
+                if (folderInfo.RealFolderID != "0")
+                {
+                    foreach (RapidShareFolderInfo folderInfo2 in list)
+                    {
+                        if (folderInfo.ParentRealFolderID == folderInfo2.RealFolderID)
+                        {
+                            folderInfo2.ChildFolders.Add(folderInfo);
+                            folderInfo2.ChildFolders = folderInfo2.ChildFolders.OrderBy(x => x.FolderName).ToList();
+                        }
+                    }
+                }
+            }
+
+            root.ChildFolders = root.ChildFolders.OrderBy(x => x.FolderName).ToList();
+
+            return root;
         }
     }
 }

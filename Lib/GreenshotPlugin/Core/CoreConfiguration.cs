@@ -30,6 +30,9 @@ namespace GreenshotPlugin.Core {
 	public enum Destination {
 		Editor, FileDefault, FileWithDialog, Clipboard, Printer, EMail
 	}
+	public enum ClipboardFormat {
+		PNG, DIB, HTML
+	}
 	public enum OutputFormat {
 		bmp, gif, jpg, png, tiff
 	}
@@ -72,6 +75,8 @@ namespace GreenshotPlugin.Core {
 		public bool IsFirstLaunch;
 		[IniProperty("Destinations", Separator=",", Description="Which destinations? Options are: Editor, FileDefault, FileWithDialog, Clipboard, Printer, EMail", DefaultValue="Editor")]
 		public List<Destination> OutputDestinations = new List<Destination>();
+		[IniProperty("ClipboardFormats", Separator=",", Description="Specify which formats we copy on the clipboard? Options are: PNG,HTML and DIB", DefaultValue="PNG,HTML,DIB")]
+		public List<ClipboardFormat> ClipboardFormats = new List<ClipboardFormat>();
 
 		[IniProperty("CaptureMousepointer", Description="Should the mouse be captured?", DefaultValue="true")]
 		public bool CaptureMousepointer;
@@ -131,6 +136,8 @@ namespace GreenshotPlugin.Core {
 		public bool UseProxy;
 		[IniProperty("IECapture", Description="Enable/disable IE capture", DefaultValue="True")]
 		public bool IECapture;
+		[IniProperty("AutoCropDifference", Description="Sets how to compare the colors for the autocrop detection, the higher the more is 'selected'. Possible values are from 0 to 255, where everything above ~150 doesn't make much sense!", DefaultValue="10")]
+		public int AutoCropDifference;
 
 		[IniProperty("IncludePlugins", Description="Comma separated list of Plugins which are allowed. If something in the list, than every plugin not in the list will not be loaded!")]
 		public List<string> IncludePlugins;
@@ -147,7 +154,7 @@ namespace GreenshotPlugin.Core {
 		public bool ThumnailPreview;
 
 		// change to false for releases
-		public bool CheckUnstable = true;
+		public bool CheckUnstable = false;
 
 		/// <summary>
 		/// Supply values we can't put as defaults
@@ -222,6 +229,16 @@ namespace GreenshotPlugin.Core {
 			// Check for Outlook, if it's not installed force email format to MAPI
 			if (OutputEMailFormat != EmailFormat.MAPI && !EmailConfigHelper.HasOutlook()) {
 				OutputEMailFormat = EmailFormat.MAPI;
+			}
+			// Prevent both settings at once, bug #3435056
+			if (OutputDestinations.Contains(Destination.Clipboard) && OutputFileCopyPathToClipboard) {
+				OutputFileCopyPathToClipboard = false;
+			}
+			if (AutoCropDifference < 0) {
+				AutoCropDifference = 0;
+			}
+			if (AutoCropDifference > 255) {
+				AutoCropDifference = 255;
 			}
 		}
 	}

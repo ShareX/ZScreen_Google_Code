@@ -20,12 +20,9 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Printing;
 using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
@@ -35,7 +32,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 using Greenshot.Configuration;
-using Greenshot.Drawing;
 using Greenshot.Experimental;
 using Greenshot.Forms;
 using Greenshot.Help;
@@ -53,31 +49,233 @@ namespace Greenshot
     /// </summary>
     public partial class MainForm : Form
     {
-        private const string LOG4NET_FILE = "log4net.xml";
         private static log4net.ILog LOG = null;
         private static Mutex applicationMutex = null;
         private static CoreConfiguration conf;
+        public static string LogFileLocation = null;
 
-        public static void InitializeLog4NET()
+        public static void Start(string[] args)
         {
-            // Setup log4j, currently the file is called log4net.xml
-            string pafLog4NetFilename = Path.Combine(Application.StartupPath, @"App\Greenshot\" + LOG4NET_FILE);
-            string log4netFilename = Path.Combine(Application.StartupPath, LOG4NET_FILE);
-            if (File.Exists(log4netFilename))
-            {
-                log4net.Config.XmlConfigurator.Configure(new FileInfo(log4netFilename));
-            }
-            else if (File.Exists(pafLog4NetFilename))
-            {
-                log4net.Config.XmlConfigurator.Configure(new FileInfo(pafLog4NetFilename));
-            }
-            else
-            {
-                MessageBox.Show("Can't find file " + LOG4NET_FILE);
-            }
+            bool isAlreadyRunning = false;
+            List<string> filesToOpen = new List<string>();
 
-            // Setup the LOG
+            // Set the Thread name, is better than "1"
+            // Init Log4NET
+            LogFileLocation = LogHelper.InitializeLog4NET();
+            // Get logger
             LOG = log4net.LogManager.GetLogger(typeof(MainForm));
+
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+            // Log the startup
+            LOG.Info("Starting: " + EnvironmentInfo.EnvironmentToString(false));
+
+            IniConfig.Init();
+            AppConfig.UpgradeToIni();
+            // Read configuration
+            conf = IniConfig.GetIniSection<CoreConfiguration>();
+            try
+            {
+                // Fix for Bug 2495900, Multi-user Environment
+                // check whether there's an local instance running already
+
+                try
+                {
+                    // Added Mutex Security, hopefully this prevents the UnauthorizedAccessException more gracefully
+                    // See an example in Bug #3131534
+                    SecurityIdentifier sid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
+                    MutexSecurity mutexsecurity = new MutexSecurity();
+                    mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.FullControl, AccessControlType.Allow));
+                    mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.ChangePermissions, AccessControlType.Deny));
+                    mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.Delete, AccessControlType.Deny));
+
+                    bool created = false;
+                    // 1) Create Mutex
+                    applicationMutex = new Mutex(false, @"Local\F48E86D3-E34C-4DB7-8F8F-9A0EA55F0D08", out created, mutexsecurity);
+                    // 2) Get the right to it, this returns false if it's already locked
+                    if (!applicationMutex.WaitOne(0, false))
+                    {
+                        LOG.Debug("Greenshot seems already to be running!");
+                        isAlreadyRunning = true;
+                        // Clean up
+                        applicationMutex.Close();
+                        applicationMutex = null;
+                    }
+                }
+                catch (AbandonedMutexException e)
+                {
+                    // Another Greenshot instance didn't cleanup correctly!
+                    // we can ignore the exception, it happend on the "waitone" but still the mutex belongs to us
+                    LOG.Warn("Greenshot didn't cleanup correctly!", e);
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    LOG.Warn("Greenshot is most likely already running for a different user in the same session, can't create mutex due to error: ", e);
+                    isAlreadyRunning = true;
+                }
+                catch (Exception e)
+                {
+                    LOG.Warn("Problem obtaining the Mutex, assuming it was already taken!", e);
+                    isAlreadyRunning = true;
+                }
+
+                if (args.Length > 0 && LOG.IsDebugEnabled)
+                {
+                    StringBuilder argumentString = new StringBuilder();
+                    for (int argumentNr = 0; argumentNr < args.Length; argumentNr++)
+                    {
+                        argumentString.Append("[").Append(args[argumentNr]).Append("] ");
+                    }
+                    LOG.Debug("Greenshot arguments: " + argumentString.ToString());
+                }
+
+                for (int argumentNr = 0; argumentNr < args.Length; argumentNr++)
+                {
+                    string argument = args[argumentNr];
+                    // Help
+                    if (argument.ToLower().Equals("/help"))
+                    {
+                        // Try to attach to the console
+                        bool attachedToConsole = Kernel32.AttachConsole(Kernel32.ATTACHCONSOLE_ATTACHPARENTPROCESS);
+                        // If attach didn't work, open a console
+                        if (!attachedToConsole)
+                        {
+                            Kernel32.AllocConsole();
+                        }
+                        StringBuilder helpOutput = new StringBuilder();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("Greenshot commandline options:");
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("\t/help");
+                        helpOutput.AppendLine("\t\tThis help.");
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("\t/exit");
+                        helpOutput.AppendLine("\t\tTries to close all running instances.");
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("\t/reload");
+                        helpOutput.AppendLine("\t\tReload the configuration of Greenshot.");
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("\t/language [language code]");
+                        helpOutput.AppendLine("\t\tSet the language of Greenshot, e.g. greenshot /language en-EN.");
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine();
+                        helpOutput.AppendLine("\t[filename]");
+                        helpOutput.AppendLine("\t\tOpen the bitmap files in the running Greenshot instance or start a new instance");
+                        Console.WriteLine(helpOutput.ToString());
+
+                        // If attach didn't work, wait for key otherwise the console will close to quickly
+                        if (!attachedToConsole)
+                        {
+                            Console.ReadKey();
+                        }
+                        FreeMutex();
+                        return;
+                    }
+
+                    if (argument.ToLower().Equals("/exit"))
+                    {
+                        // unregister application on uninstall (allow uninstall)
+                        try
+                        {
+                            LOG.Info("Sending all instances the exit command.");
+                            // Pass Exit to running instance, if any
+                            SendData(new CopyDataTransport(CommandEnum.Exit));
+                        }
+                        catch (Exception e)
+                        {
+                            LOG.Warn("Exception by exit.", e);
+                        }
+                        FreeMutex();
+                        return;
+                    }
+
+                    // Reload the configuration
+                    if (argument.ToLower().Equals("/reload"))
+                    {
+                        // Modify configuration
+                        LOG.Info("Reloading configuration!");
+                        // Update running instances
+                        SendData(new CopyDataTransport(CommandEnum.ReloadConfig));
+                        FreeMutex();
+                        return;
+                    }
+
+                    // Stop running
+                    if (argument.ToLower().Equals("/norun"))
+                    {
+                        // Make an exit possible
+                        FreeMutex();
+                        return;
+                    }
+
+                    // Language
+                    if (argument.ToLower().Equals("/language"))
+                    {
+                        conf.Language = args[++argumentNr];
+                        IniConfig.Save();
+                        continue;
+                    }
+
+                    // Files to open
+                    filesToOpen.Add(argument);
+                }
+
+                // Finished parsing the command line arguments, see if we need to do anything
+                CopyDataTransport transport = new CopyDataTransport();
+                if (filesToOpen.Count > 0)
+                {
+                    foreach (string fileToOpen in filesToOpen)
+                    {
+                        transport.AddCommand(CommandEnum.OpenFile, fileToOpen);
+                    }
+                }
+
+                if (isAlreadyRunning)
+                {
+                    // We didn't initialize the language yet, do it here just for the message box
+                    ILanguage lang = Language.GetInstance();
+                    if (filesToOpen.Count > 0)
+                    {
+                        SendData(transport);
+                    }
+                    else
+                    {
+                        MessageBox.Show(lang.GetString(LangKey.error_multipleinstances), lang.GetString(LangKey.error));
+                    }
+                    FreeMutex();
+                    Application.Exit();
+                    return;
+                }
+
+                // if language is not set, show language dialog
+                if (string.IsNullOrEmpty(conf.Language))
+                {
+                    LanguageDialog languageDialog = LanguageDialog.GetInstance();
+                    languageDialog.ShowDialog();
+                    conf.Language = languageDialog.SelectedLanguage;
+                    IniConfig.Save();
+                }
+
+                // Check if it's the first time launch?
+                if (conf.IsFirstLaunch)
+                {
+                    conf.IsFirstLaunch = false;
+                    IniConfig.Save();
+                    transport.AddCommand(CommandEnum.FirstLaunch);
+                }
+
+                MainForm mainForm = new MainForm(transport);
+            }
+            catch (Exception ex)
+            {
+                LOG.Error("Exception in startup.", ex);
+                Application_ThreadException(MainForm.ActiveForm, new ThreadExceptionEventArgs(ex));
+            }
         }
 
         /// <summary>
@@ -114,6 +312,7 @@ namespace Greenshot
         private ILanguage lang;
         private ToolTip tooltip;
         private CaptureForm captureForm = null;
+        private CopyData copyData = null;
 
         // Thumbnail preview
         private FormWithoutActivation thumbnailForm = null;
@@ -124,11 +323,9 @@ namespace Greenshot
         public MainForm(CopyDataTransport dataTransport)
         {
             instance = this;
-            conf = IniConfig.GetIniSection<CoreConfiguration>();
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
-            this.Hide();
             InitializeComponent();
             lang = Language.GetInstance();
             IniConfig.IniChanged += new FileSystemEventHandler(ReloadConfiguration);
@@ -136,9 +333,74 @@ namespace Greenshot
             tooltip = new ToolTip();
 
             UpdateUI();
-            InitializeQuickSettingsMenu();
 
-            // captureForm = new CaptureForm();
+            captureForm = new CaptureForm();
+
+            // Load all the plugins
+            PluginHelper.instance.LoadPlugins(this, captureForm);
+
+            // Create a new instance of the class: copyData = new CopyData();
+            copyData = new CopyData();
+
+            // Assign the handle:
+            copyData.AssignHandle(this.Handle);
+            // Create the channel to send on:
+            copyData.Channels.Add("Greenshot");
+            // Hook up received event:
+            copyData.CopyDataReceived += new CopyDataReceivedEventHandler(CopyDataDataReceived);
+
+            if (dataTransport != null)
+            {
+                HandleDataTransport(dataTransport);
+            }
+            ClipboardHelper.RegisterClipboardViewer(this.Handle);
+        }
+
+        /// <summary>
+        /// DataReceivedEventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="dataReceivedEventArgs"></param>
+        private void CopyDataDataReceived(object sender, CopyDataReceivedEventArgs copyDataReceivedEventArgs)
+        {
+            // Cast the data to the type of object we sent:
+            CopyDataTransport dataTransport = (CopyDataTransport)copyDataReceivedEventArgs.Data;
+            HandleDataTransport(dataTransport);
+        }
+
+        private void HandleDataTransport(CopyDataTransport dataTransport)
+        {
+            foreach (KeyValuePair<CommandEnum, string> command in dataTransport.Commands)
+            {
+                LOG.Debug("Data received, Command = " + command.Key + ", Data: " + command.Value);
+                switch (command.Key)
+                {
+                    case CommandEnum.Exit:
+                        exit();
+                        break;
+                    case CommandEnum.FirstLaunch:
+                        LOG.Info("FirstLaunch: Created new configuration.");
+                        break;
+                    case CommandEnum.ReloadConfig:
+                        IniConfig.Reload();
+                        ReloadConfiguration(null, null);
+                        break;
+                    case CommandEnum.OpenFile:
+                        string filename = command.Value;
+                        if (File.Exists(filename))
+                        {
+                            captureForm.MakeCapture(filename);
+                        }
+                        else
+                        {
+                            LOG.Warn("No such file: " + filename);
+                        }
+                        break;
+                    default:
+                        LOG.Error("Unknown command!");
+                        break;
+                }
+            }
         }
 
         private void ReloadConfiguration(object source, FileSystemEventArgs e)
@@ -148,6 +410,8 @@ namespace Greenshot
             {
                 // Even update language when needed
                 UpdateUI();
+                // Update the hotkey
+                // Make sure the current hotkeys are disabled
             });
         }
 
@@ -155,23 +419,6 @@ namespace Greenshot
         {
             get { return contextMenu; }
         }
-
-        #region hotkeys
-
-        protected override void WndProc(ref Message m)
-        {
-            if (ClipboardHelper.HandleClipboardMessages(ref m))
-            {
-                return;
-            }
-            if (HotkeyControl.HandleMessages(ref m))
-            {
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
-        #endregion hotkeys
 
         public void UpdateUI()
         {
@@ -223,7 +470,7 @@ namespace Greenshot
         private void CaptureFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png, *.jpg, *.gif, *.bmp, *.ico)|*.png; *.jpg; *.jpeg; *.gif; *.bmp; *.ico";
+            openFileDialog.Filter = "Image files (*.png, *.jpg, *.gif, *.bmp, *.ico, *.tiff, *.wmf)|*.png; *.jpg; *.jpeg; *.gif; *.bmp; *.ico; *.tiff; *.wmf";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(openFileDialog.FileName))
@@ -268,14 +515,7 @@ namespace Greenshot
 
         private void ContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (Clipboard.ContainsImage())
-            {
-                contextmenu_captureclipboard.Enabled = true;
-            }
-            else
-            {
-                contextmenu_captureclipboard.Enabled = false;
-            }
+            contextmenu_captureclipboard.Enabled = ClipboardHelper.ContainsImage();
             contextmenu_capturelastregion.Enabled = RuntimeConfig.LastCapturedRegion != Rectangle.Empty;
 
             // IE context menu code
@@ -541,7 +781,6 @@ namespace Greenshot
         {
             SettingsForm settings = new SettingsForm();
             settings.ShowDialog();
-            InitializeQuickSettingsMenu();
             this.Hide();
         }
 
@@ -559,37 +798,6 @@ namespace Greenshot
         private void Contextmenu_exitClick(object sender, EventArgs e)
         {
             exit();
-        }
-
-        private void InitializeQuickSettingsMenu()
-        {
-            this.contextmenu_quicksettings.DropDownItems.Clear();
-            // screenshot destination
-            ToolStripMenuSelectList selectList = new ToolStripMenuSelectList("destination", true);
-            selectList.Text = lang.GetString(LangKey.settings_destination);
-            selectList.AddItem(lang.GetString(LangKey.settings_destination_editor), Destination.Editor, conf.OutputDestinations.Contains(Destination.Editor));
-            selectList.AddItem(lang.GetString(LangKey.settings_destination_clipboard), Destination.Clipboard, conf.OutputDestinations.Contains(Destination.Clipboard));
-            selectList.AddItem(lang.GetString(LangKey.quicksettings_destination_file), Destination.FileDefault, conf.OutputDestinations.Contains(Destination.FileDefault));
-            selectList.AddItem(lang.GetString(LangKey.settings_destination_fileas), Destination.FileWithDialog, conf.OutputDestinations.Contains(Destination.FileWithDialog));
-            selectList.AddItem(lang.GetString(LangKey.settings_destination_printer), Destination.Printer, conf.OutputDestinations.Contains(Destination.Printer));
-            selectList.AddItem(lang.GetString(LangKey.settings_destination_email), Destination.EMail, conf.OutputDestinations.Contains(Destination.EMail));
-            selectList.CheckedChanged += new EventHandler(this.QuickSettingItemChanged);
-            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
-            // print options
-            selectList = new ToolStripMenuSelectList("printoptions", true);
-            selectList.Text = lang.GetString(LangKey.settings_printoptions);
-            selectList.AddItem(lang.GetString(LangKey.printoptions_allowshrink), "AllowPrintShrink", conf.OutputPrintAllowShrink);
-            selectList.AddItem(lang.GetString(LangKey.printoptions_allowenlarge), "AllowPrintEnlarge", conf.OutputPrintAllowEnlarge);
-            selectList.AddItem(lang.GetString(LangKey.printoptions_allowrotate), "AllowPrintRotate", conf.OutputPrintAllowRotate);
-            selectList.AddItem(lang.GetString(LangKey.printoptions_allowcenter), "AllowPrintCenter", conf.OutputPrintCenter);
-            selectList.CheckedChanged += new EventHandler(this.QuickSettingItemChanged);
-            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
-            // effects
-            selectList = new ToolStripMenuSelectList("effects", true);
-            selectList.Text = lang.GetString(LangKey.settings_visualization);
-            selectList.AddItem(lang.GetString(LangKey.settings_playsound), "PlaySound", conf.PlayCameraSound);
-            selectList.CheckedChanged += new EventHandler(this.QuickSettingItemChanged);
-            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
         }
 
         private void QuickSettingItemChanged(object sender, EventArgs e)
@@ -643,12 +851,6 @@ namespace Greenshot
             new BugReportForm(exceptionText).ShowDialog();
         }
 
-        private void NotifyIconClick(object sender, EventArgs eventArgs)
-        {
-            MethodInfo oMethodInfo = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-            oMethodInfo.Invoke(notifyIcon, null);
-        }
-
         /// <summary>
         /// The Contextmenu_OpenRecent currently opens the last know save location
         /// </summary>
@@ -688,6 +890,10 @@ namespace Greenshot
         /// </summary>
         public void exit()
         {
+            ClipboardHelper.DeregisterClipboardViewer(this.Handle);
+
+            LOG.Info("Exit: " + EnvironmentInfo.EnvironmentToString(false));
+
             // Close all open forms (except this), use a separate List to make sure we don't get a "InvalidOperationException: Collection was modified"
             List<Form> formsToClose = new List<Form>();
             foreach (Form form in Application.OpenForms)
@@ -743,14 +949,6 @@ namespace Greenshot
 
             // Remove the application mutex
             FreeMutex();
-
-            // make the icon invisible otherwise it stays even after exit!!
-            if (notifyIcon != null)
-            {
-                notifyIcon.Visible = false;
-                notifyIcon.Dispose();
-                notifyIcon = null;
-            }
         }
     }
 }

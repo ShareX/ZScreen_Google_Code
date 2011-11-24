@@ -18,9 +18,10 @@ namespace ZScreenGUI
     {
         #region 0 Properties
 
+        private const string FILTER_XML_FILES = "XML Files(*.xml)|*.xml";
         private ZScreenOptions Config = null;
-        List<TreeNode> Nodes = new List<TreeNode>();
-        List<TabPage> TabPages = new List<TabPage>();
+        private List<TreeNode> Nodes = new List<TreeNode>();
+        private List<TabPage> TabPages = new List<TabPage>();
 
         #endregion 0 Properties
 
@@ -110,7 +111,7 @@ namespace ZScreenGUI
 
         private void AppSettingsExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.SettingsFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -123,7 +124,7 @@ namespace ZScreenGUI
         {
             OpenFileDialog dlg = new OpenFileDialog
             {
-                Filter = StaticHelper.FILTER_XML_FILES,
+                Filter = FILTER_XML_FILES,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -137,7 +138,7 @@ namespace ZScreenGUI
 
         private void UploadersConfigExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -148,7 +149,7 @@ namespace ZScreenGUI
 
         private void UploadersConfigImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 UploadersConfig temp = UploadersConfig.Read(dlg.FileName);
@@ -161,7 +162,7 @@ namespace ZScreenGUI
 
         private void WorkflowConfigExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.WorkflowConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -172,7 +173,7 @@ namespace ZScreenGUI
 
         private void WorkflowConfigImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Workflow temp = Workflow.Read(dlg.FileName);
@@ -379,17 +380,17 @@ namespace ZScreenGUI
 
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
-            StaticHelper.ShowDirectory(FileSystem.GetImagesDir());
+            ZAppHelper.OpenFolder(FileSystem.GetImagesDir());
         }
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
         {
-            StaticHelper.ShowDirectory(Engine.LogsDir);
+            ZAppHelper.OpenFolder(Engine.LogsDir);
         }
 
         private void btnViewRootDir_Click(object sender, EventArgs e)
         {
-            StaticHelper.ShowDirectory(txtRootFolder.Text);
+            ZAppHelper.OpenFolder(txtRootFolder.Text);
         }
 
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)

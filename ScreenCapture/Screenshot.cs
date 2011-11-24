@@ -27,6 +27,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using HelpersLib;
 
 namespace ScreenCapture
@@ -79,6 +80,13 @@ namespace ScreenCapture
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
             return CaptureWindow(handle);
+        }
+
+        public static Image CaptureActiveMonitor()
+        {
+            Rectangle bounds = CaptureHelpers.GetActiveScreenBounds();
+
+            return CaptureRectangle(bounds);
         }
 
         // Managed can't use SourceCopy | CaptureBlt because of .NET bug

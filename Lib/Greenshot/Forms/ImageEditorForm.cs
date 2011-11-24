@@ -20,24 +20,18 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
-using System.Resources;
-using System.Threading;
 using System.Windows.Forms;
 
 using Greenshot.Configuration;
 using Greenshot.Drawing;
 using Greenshot.Drawing.Fields;
 using Greenshot.Drawing.Fields.Binding;
-using Greenshot.Experimental;
 using Greenshot.Forms;
 using Greenshot.Help;
 using Greenshot.Helpers;
@@ -84,11 +78,7 @@ namespace Greenshot
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
-            MainForm.instance = new MainForm(new CopyDataTransport());
-            // Init Log4NET
-            MainForm.InitializeLog4NET();
             InitializeComponent();
-
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageEditorForm));
             Image backgroundForTransparency = (Image)resources.GetObject("checkerboard.Image");
             surface.TransparencyBackgroundBrush = new TextureBrush(backgroundForTransparency, WrapMode.Tile);
@@ -212,6 +202,7 @@ namespace Greenshot
             this.btnDelete.Text = lang.GetString(LangKey.editor_deleteelement);
             this.removeObjectToolStripMenuItem.Text = lang.GetString(LangKey.editor_deleteelement);
             this.btnSettings.Text = lang.GetString(LangKey.contextmenu_settings);
+            this.preferencesToolStripMenuItem.Text = lang.GetString(LangKey.contextmenu_settings);
 
             this.objectToolStripMenuItem.Text = lang.GetString(LangKey.editor_object);
             this.btnCut.Text = lang.GetString(LangKey.editor_cuttoclipboard);
@@ -271,6 +262,7 @@ namespace Greenshot
 
             this.saveElementsToolStripMenuItem.Text = lang.GetString(LangKey.editor_save_objects);
             this.loadElementsToolStripMenuItem.Text = lang.GetString(LangKey.editor_load_objects);
+            this.autoCropToolStripMenuItem.Text = lang.GetString(LangKey.editor_autocrop);
         }
 
         public ISurface Surface
@@ -286,7 +278,7 @@ namespace Greenshot
                 return;
             }
             updateStatusLabel(lang.GetFormattedString(LangKey.editor_imagesaved, fullpath), fileSavedStatusContextMenu);
-            this.Text = Path.GetFileName(fullpath) + " - " + lang.GetString(LangKey.editor_title);
+            this.Text = lang.GetString(LangKey.editor_title) + " - " + Path.GetFileName(fullpath);
         }
 
         private void surface_DrawingModeChanged(object source, DrawingModes drawingMode)
@@ -331,7 +323,7 @@ namespace Greenshot
 
         public Image GetImageForExport()
         {
-            return surface.Modified ? surface.GetImageForExport() : surface.Image;
+            return surface.GetImageForExport();
         }
 
         public ICaptureDetails CaptureDetails
@@ -374,7 +366,7 @@ namespace Greenshot
                 using (Image img = surface.GetImageForExport())
                 {
                     ImageOutput.Save(img, lastSaveFullPath);
-                    // surface.Modified = false;
+                    surface.Modified = false;
                 }
                 updateStatusLabel(lang.GetFormattedString(LangKey.editor_imagesaved, lastSaveFullPath), fileSavedStatusContextMenu);
             }
@@ -717,7 +709,8 @@ namespace Greenshot
                 // Make sure the editor is visible
                 WindowDetails.ToForeground(this.Handle);
 
-                DialogResult result = System.Windows.Forms.DialogResult.Yes;
+                DialogResult result = System.Windows.Forms.DialogResult.OK;
+
                 if (result.Equals(DialogResult.Yes))
                 {
                     if (lastSaveFullPath != null)
@@ -727,6 +720,12 @@ namespace Greenshot
                     else
                     {
                         SaveAsToolStripMenuItemClick(sender, e);
+                    }
+                    // Check if the save was made, if not it was cancelled so we cancel the closing
+                    if (surface.Modified)
+                    {
+                        e.Cancel = true;
+                        return;
                     }
                 }
             }
@@ -864,7 +863,7 @@ namespace Greenshot
 
         private void CopyPathMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(lastSaveFullPath);
+            ClipboardHelper.SetClipboardData(lastSaveFullPath);
         }
 
         private void OpenDirectoryMenuItemClick(object sender, EventArgs e)
@@ -956,6 +955,7 @@ namespace Greenshot
                     ToolStripItemEndisabler.Enable(closeToolStripMenuItem);
                     ToolStripItemEndisabler.Enable(helpToolStripMenuItem);
                     ToolStripItemEndisabler.Enable(aboutToolStripMenuItem);
+                    ToolStripItemEndisabler.Enable(preferencesToolStripMenuItem);
                     controlsDisabledDueToConfirmable = true;
                 }
             }
@@ -1114,6 +1114,7 @@ namespace Greenshot
         protected void FilterPresetDropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             refreshFieldControls();
+            this.Invalidate(true);
         }
 
         private void SelectAllToolStripMenuItemClick(object sender, EventArgs e)
@@ -1172,6 +1173,14 @@ namespace Greenshot
             catch (Exception exception)
             {
                 LOG.Error(exception);
+            }
+        }
+
+        private void AutoCropToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (surface.AutoCrop())
+            {
+                refreshFieldControls();
             }
         }
     }

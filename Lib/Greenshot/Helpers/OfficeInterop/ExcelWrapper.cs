@@ -21,7 +21,6 @@
 using System;
 using System.Reflection;
 using Greenshot.Interop;
-using Greenshot.Plugin;
 
 namespace Greenshot.Helpers.OfficeInterop {
 	// See http://msdn.microsoft.com/en-us/library/microsoft.office.interop.excel.application.aspx

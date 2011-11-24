@@ -116,9 +116,10 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult UserUpload(Stream stream, string fileName)
         {
-            if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
+            if (AuthInfo == null || string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
             {
-                throw new Exception("UserToken or UserSecret is empty. Login is required.");
+                Errors.Add("Login is required.");
+                return null;
             }
 
             string query = OAuthManager.GenerateQuery(URLUserUpload, null, HttpMethod.Post, AuthInfo);

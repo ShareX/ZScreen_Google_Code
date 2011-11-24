@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-namespace HelpersLib
+namespace ZScreenLib
 {
     public class XmlFileNameEditor : FileNameEditor
     {

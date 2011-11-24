@@ -82,6 +82,11 @@ namespace HelpersLib
             return rect;
         }
 
+        public static Rectangle GetActiveScreenBounds()
+        {
+            return Screen.FromPoint(GetMousePosition()).Bounds;
+        }
+
         /// <summary>For multi monitor</summary>
         public static Point FixScreenCoordinates(Point point)
         {
@@ -90,13 +95,17 @@ namespace HelpersLib
             return new Point(point.X - screenX, point.Y - screenY);
         }
 
-        /// <summary>For multi monitor</summary>
-        public static Point GetZeroBasedMousePosition()
+        public static Point GetMousePosition()
         {
             POINT pt = new POINT();
             NativeMethods.GetCursorPos(out pt);
-            Point point = new Point(pt.X, pt.Y);
-            return FixScreenCoordinates(point);
+            return (Point)pt;
+        }
+
+        /// <summary>For multi monitor</summary>
+        public static Point GetZeroBasedMousePosition()
+        {
+            return FixScreenCoordinates(GetMousePosition());
         }
 
         public static Rectangle CreateRectangle(int x, int y, int x2, int y2)

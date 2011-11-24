@@ -21,13 +21,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
 
 using Greenshot.Configuration;
-using Greenshot.Drawing.Filters;
-using Greenshot.Helpers;
-using GreenshotPlugin.Core;
 using IniFile;
 
 namespace Greenshot.Drawing.Fields {

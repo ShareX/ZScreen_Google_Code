@@ -38,7 +38,7 @@ namespace ZScreenLib
 
         private void btnCopyImageClose_Click(object sender, EventArgs e)
         {
-            Adapter.CopyImageToClipboard(this.Task.TempImage);
+            Adapter.CopyImageToClipboard(this.Task.TempImage, Config.ClipboardForceBmp);
             btnCancel_Click(sender, e);
         }
 

@@ -266,6 +266,19 @@ namespace Greenshot.Drawing {
 				return Color.Empty;
 			}
 		}
+		
+		/**
+		 * Retrieve the color at location x,y
+		 * Before the first time this is called the Lock() should be called once!
+		 */
+		public Color GetColorAtWithoutAlpha(int x, int y) {
+			if(x>=0 && y>=0 && x<rect.Width && y<rect.Height) {
+				int offset = x*bytesPerPixel+y*stride;
+				return Color.FromArgb(255, pointer[rIndex+offset], pointer[gIndex+offset], pointer[bIndex+offset]);
+			} else {
+				return Color.Empty;
+			}
+		}
 
 		/**
 		 * Set the color at location x,y

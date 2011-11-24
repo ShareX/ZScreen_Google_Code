@@ -130,11 +130,20 @@ namespace HelpersLib
 
         public static Icon GetApplicationIcon(IntPtr handle)
         {
-            Icon icon = GetSmallApplicationIcon(handle);
+            Icon icon = null;
 
-            if (icon == null)
+            try
             {
-                icon = GetBigApplicationIcon(handle);
+                icon = GetSmallApplicationIcon(handle);
+
+                if (icon == null)
+                {
+                    icon = GetBigApplicationIcon(handle);
+                }
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
             }
 
             return icon;
@@ -293,7 +302,7 @@ namespace HelpersLib
         {
             RECT rect;
             int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
-            rectangle = rect.ToRectangle();
+            rectangle = (Rectangle)rect;
             return result == 0;
         }
 
@@ -314,7 +323,7 @@ namespace HelpersLib
         {
             RECT rect;
             GetWindowRect(handle, out rect);
-            return rect.ToRectangle();
+            return (Rectangle)rect;
         }
 
         public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)
@@ -349,7 +358,7 @@ namespace HelpersLib
         {
             APPBARDATA abd = new APPBARDATA();
             SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, out abd);
-            return abd.rc.ToRectangle();
+            return (Rectangle)abd.rc;
         }
 
         /// <summary>
