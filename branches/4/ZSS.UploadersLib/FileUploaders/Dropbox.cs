@@ -148,9 +148,9 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
+            if (AuthInfo == null || string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
             {
-                Errors.Add("UserToken or UserSecret is empty. Login is required.");
+                Errors.Add("Login is required.");
                 return null;
             }
 
