@@ -108,7 +108,7 @@ namespace ZUploader
             {
                 if (autoHideForm)
                 {
-                    Show();
+                    ShowActivate();
                 }
 
                 if (img != null)

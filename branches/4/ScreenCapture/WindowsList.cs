@@ -70,7 +70,7 @@ namespace ScreenCapture
                     {
                         Rectangle rect = window.Rectangle;
 
-                        if (rect.Width > 0 && rect.Height > 0 && CaptureHelpers.GetScreenBounds().Contains(rect))
+                        if (rect.Width > 0 && rect.Height > 0 && (window.IsMinimized || CaptureHelpers.GetScreenBounds().Contains(rect)))
                         {
                             visibleWindows.Add(window);
                         }

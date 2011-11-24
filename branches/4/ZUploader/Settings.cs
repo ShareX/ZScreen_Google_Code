@@ -33,7 +33,7 @@ namespace ZUploader
 {
     public class Settings : XMLSettingsBase<Settings>
     {
-        // Main Form
+        #region Main Form
 
         public int SelectedImageUploaderDestination = 0;
         public int SelectedTextUploaderDestination = 0;
@@ -41,6 +41,8 @@ namespace ZUploader
         public int SelectedURLShortenerDestination = 0;
         public ScreenshotDestination CaptureOutput = ScreenshotDestination.Upload;
         public bool ShowClipboardContentViewer = true;
+
+        #endregion Main Form
 
         #region Settings Form
 

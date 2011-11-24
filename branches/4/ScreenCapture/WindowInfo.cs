@@ -69,7 +69,15 @@ namespace ScreenCapture
         {
             get
             {
-                return NativeMethods.IsWindowMaximized(Handle);
+                return NativeMethods.IsZoomed(Handle);
+            }
+        }
+
+        public bool IsMinimized
+        {
+            get
+            {
+                return NativeMethods.IsIconic(Handle);
             }
         }
 

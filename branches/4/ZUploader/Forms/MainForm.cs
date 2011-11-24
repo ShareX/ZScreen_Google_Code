@@ -466,6 +466,85 @@ namespace ZUploader
             UploadManager.UploadImage(Resources.ZUploaderLogo);
         }
 
+        private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsmiImageUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiImageUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedImageUploaderDestination = i;
+                    UploadManager.ImageUploader = (ImageDestination)i;
+                }
+            }
+
+            UpdateUploaderMenuNames();
+        }
+
+        private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsmiFileUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiFileUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedFileUploaderDestination = i;
+                    UploadManager.FileUploader = (FileDestination)i;
+                }
+            }
+
+            UpdateUploaderMenuNames();
+        }
+
+        private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsmiTextUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiTextUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedTextUploaderDestination = i;
+                    UploadManager.TextUploader = (TextDestination)i;
+                }
+            }
+
+            UpdateUploaderMenuNames();
+        }
+
+        private void tsddbURLShorteners_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsmiURLShorteners.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiURLShorteners.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedURLShortenerDestination = i;
+                    UploadManager.URLShortener = (UrlShortenerType)i;
+                }
+            }
+
+            UpdateUploaderMenuNames();
+        }
+
+        private void tsmiCaptureOutputUpload_Click(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureOutput = ScreenshotDestination.Upload;
+            UpdateCaptureMenu();
+        }
+
+        private void tsmiCaptureOutputClipboard_Click(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureOutput = ScreenshotDestination.Clipboard;
+            UpdateCaptureMenu();
+        }
+
+        private void tsddbUploadersConfig_Click(object sender, EventArgs e)
+        {
+            UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            uploadersConfigForm.ShowDialog();
+            uploadersConfigForm.Config.SaveAsync(Program.UploadersConfigFilePath);
+        }
+
         private void tsbCopy_Click(object sender, EventArgs e)
         {
             CopyURL();
@@ -478,21 +557,18 @@ namespace ZUploader
 
         private void tsbHistory_Click(object sender, EventArgs e)
         {
-            new HistoryForm(Program.HistoryFilePath, Program.Settings.HistoryMaxItemCount, "ZUploader - History").Show();
+            new HistoryForm(Program.HistoryFilePath, Program.Settings.HistoryMaxItemCount, "ZUploader - History").ShowDialog();
         }
 
         private void tsbSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm form = new SettingsForm();
-            form.Icon = this.Icon;
-            form.Show();
+            new SettingsForm() { Icon = this.Icon }.ShowDialog();
+            Program.Settings.SaveAsync();
         }
 
         private void tsbAbout_Click(object sender, EventArgs e)
         {
-            AboutForm form = new AboutForm();
-            form.Icon = this.Icon;
-            form.Show();
+            new AboutForm() { Icon = this.Icon }.ShowDialog();
         }
 
         private void tsbDonate_Click(object sender, EventArgs e)
@@ -573,85 +649,6 @@ namespace ZUploader
         private void lvUploads_DoubleClick(object sender, EventArgs e)
         {
             OpenURL();
-        }
-
-        private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsmiImageUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiImageUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedImageUploaderDestination = i;
-                    UploadManager.ImageUploader = (ImageDestination)i;
-                }
-            }
-
-            UpdateUploaderMenuNames();
-        }
-
-        private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsmiFileUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiFileUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedFileUploaderDestination = i;
-                    UploadManager.FileUploader = (FileDestination)i;
-                }
-            }
-
-            UpdateUploaderMenuNames();
-        }
-
-        private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsmiTextUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiTextUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedTextUploaderDestination = i;
-                    UploadManager.TextUploader = (TextDestination)i;
-                }
-            }
-
-            UpdateUploaderMenuNames();
-        }
-
-        private void tsddbURLShorteners_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsmiURLShorteners.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiURLShorteners.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedURLShortenerDestination = i;
-                    UploadManager.URLShortener = (UrlShortenerType)i;
-                }
-            }
-
-            UpdateUploaderMenuNames();
-        }
-
-        private void tsmiCaptureOutputUpload_Click(object sender, EventArgs e)
-        {
-            Program.Settings.CaptureOutput = ScreenshotDestination.Upload;
-            UpdateCaptureMenu();
-        }
-
-        private void tsmiCaptureOutputClipboard_Click(object sender, EventArgs e)
-        {
-            Program.Settings.CaptureOutput = ScreenshotDestination.Clipboard;
-            UpdateCaptureMenu();
-        }
-
-        private void tsddbUploadersConfig_Click(object sender, EventArgs e)
-        {
-            UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
-            uploadersConfigForm.ShowDialog();
-            uploadersConfigForm.Config.Save(Program.UploadersConfigFilePath);
         }
 
         #region Tray events
