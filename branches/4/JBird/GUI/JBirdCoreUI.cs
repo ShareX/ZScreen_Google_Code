@@ -59,7 +59,7 @@ namespace JBirdGUI
 
         protected void bwConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            Program.ConfigUploaders = UploadersConfig.Read(Program.ConfigUploadersFilePath);
+            Program.ConfigUploaders = UploadersConfig.Load(Program.ConfigUploadersFilePath);
             Engine.ConfigUploaders = Program.ConfigUploaders;
             Program.ConfigWorkflow = WorkflowConfig.Read();
         }

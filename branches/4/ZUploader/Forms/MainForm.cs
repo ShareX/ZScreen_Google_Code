@@ -649,7 +649,9 @@ namespace ZUploader
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
         {
-            new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
+            UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            uploadersConfigForm.ShowDialog();
+            uploadersConfigForm.Config.Save(Program.UploadersConfigFilePath);
         }
 
         #region Tray events

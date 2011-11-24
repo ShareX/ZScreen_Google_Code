@@ -31,7 +31,7 @@ using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {
-    public class Settings
+    public class Settings : XMLSettingsBase<Settings>
     {
         // Main Form
 
@@ -96,19 +96,5 @@ namespace ZUploader
         public ProxyInfo ProxySettings = new ProxyInfo();
 
         #endregion Settings Form
-
-        #region I/O Methods
-
-        public bool Save()
-        {
-            return SettingsHelper.Save(this, Program.SettingsFilePath, SerializationType.Xml);
-        }
-
-        public static Settings Load()
-        {
-            return SettingsHelper.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
-        }
-
-        #endregion I/O Methods
     }
 }

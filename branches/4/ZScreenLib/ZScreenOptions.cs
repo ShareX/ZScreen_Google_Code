@@ -22,7 +22,7 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<ZScreenOptions>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         #endregion 1 I/O Methods

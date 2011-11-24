@@ -105,7 +105,7 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         #endregion 1 I/O Methods

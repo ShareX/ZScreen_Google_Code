@@ -47,7 +47,7 @@ namespace UploadersLib
 
         public void Save(string filePath)
         {
-            SettingsHelper.Save<FTPAccountManager>(this, filePath, SerializationType.Xml);
+            SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public static FTPAccountManager Read(string filePath)

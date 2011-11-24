@@ -339,7 +339,7 @@ namespace ZScreenLib
             string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.UploadersConfigFileName));
             if (!File.Exists(fpoutputsconfig))
             {
-                Engine.ConfigUploaders.Write(fpoutputsconfig);
+                Engine.ConfigUploaders.Save(fpoutputsconfig);
             }
 
             if (Engine.ConfigUI != null)

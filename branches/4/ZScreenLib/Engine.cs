@@ -488,7 +488,7 @@ namespace ZScreenLib
             {
                 if (Engine.ConfigUploaders != null)
                 {
-                    Engine.ConfigUploaders.Write(UploadersConfigPath);
+                    Engine.ConfigUploaders.Save(UploadersConfigPath);
                 }
             });
 
@@ -542,7 +542,7 @@ namespace ZScreenLib
 
             Thread threadUploadersConfig = new Thread(() =>
             {
-                Engine.ConfigUploaders = UploadersConfig.Read(UploadersConfigPath);
+                Engine.ConfigUploaders = UploadersConfig.Load(UploadersConfigPath);
             });
 
             Thread threadGt = new Thread(() =>

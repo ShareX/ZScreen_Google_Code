@@ -207,7 +207,6 @@ namespace ZUploader
             Application.Run(mainForm);
 
             Settings.Save();
-            UploadersConfig.Write(UploadersConfigFilePath);
 
             MyLogger.WriteLine("ZUploader closing");
             MyLogger.SaveLog(LogFilePath);
@@ -215,12 +214,12 @@ namespace ZUploader
 
         public static void LoadSettings()
         {
-            Settings = Settings.Load();
+            Settings = Settings.Load(SettingsFilePath);
         }
 
         public static void LoadUploadersConfig()
         {
-            UploadersConfig = UploadersConfig.Read(UploadersConfigFilePath);
+            UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

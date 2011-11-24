@@ -38,7 +38,7 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save<T>(T obj, string filePath, SerializationType type)
+        public static bool Save(object obj, string filePath, SerializationType type)
         {
             StaticHelper.WriteLine("Settings save started: " + filePath);
 
@@ -58,7 +58,8 @@ namespace HelpersLib
                                     new BinaryFormatter().Serialize(ms, obj);
                                     break;
                                 case SerializationType.Xml:
-                                    new XmlSerializer(typeof(T)).Serialize(ms, obj);
+                                    Type t = obj.GetType();
+                                    new XmlSerializer(t).Serialize(ms, obj);
                                     break;
                             }
 

@@ -34,8 +34,7 @@ using UploadersLib.TextUploaders;
 
 namespace UploadersLib
 {
-    [Serializable]
-    public class UploadersConfig
+    public class UploadersConfig : XMLSettingsBase<UploadersConfig>
     {
         public UploadersConfig()
         {
@@ -43,9 +42,6 @@ namespace UploadersLib
         }
 
         #region General
-
-        [Category(ComponentModelStrings.AppPathsUploaders), ReadOnly(true), Description("File Path of the Uploaders Configuration")]
-        public string FilePath { get; set; }
 
         [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
         public bool PasswordsSecureUsingEncryption { get; set; }
@@ -315,32 +311,17 @@ namespace UploadersLib
 
         #region I/O Methods
 
-        public bool Write(string filePath)
+        public override bool Save(string filePath)
         {
-            bool succ = true;
+            bool result;
 
-            // encrypt before interim save
-            if (PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(true);
-            }
+            if (PasswordsSecureUsingEncryption) CryptPasswords(true);
 
-            succ = SettingsHelper.Save(this, filePath, SerializationType.Xml);
+            result = base.Save(filePath);
 
-            // decrypt after interim save
-            if (PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(false);
-            }
+            if (PasswordsSecureUsingEncryption) CryptPasswords(false);
 
-            return succ;
-        }
-
-        public static UploadersConfig Read(string filePath)
-        {
-            UploadersConfig uc = SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
-            uc.FilePath = filePath;
-            return uc;
+            return result;
         }
 
         #endregion I/O Methods

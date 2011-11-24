@@ -35,7 +35,7 @@ namespace UploadersLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<GoogleTranslatorConfig>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public static GoogleTranslatorConfig Read(string filePath)

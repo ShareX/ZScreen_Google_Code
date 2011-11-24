@@ -971,7 +971,7 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.UploadersConfigCustomPath))
                 {
-                    Engine.ConfigUploaders = UploadersConfig.Read(Engine.ConfigApp.UploadersConfigCustomPath);
+                    Engine.ConfigUploaders = UploadersConfig.Load(Engine.ConfigApp.UploadersConfigCustomPath);
                 }
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.WorkflowConfigCustomPath))
