@@ -99,7 +99,7 @@ namespace ZScreenGUI
 
             if (string.IsNullOrEmpty(Engine.ConfigGT.APIKey))
             {
-                StaticHelper.LoadBrowser("http://code.google.com/apis/language/translate/overview.html");
+                ZAppHelper.LoadBrowserAsync("http://code.google.com/apis/language/translate/overview.html");
             }
 
             if (Engine.ConfigGT.GoogleLanguages == null || Engine.ConfigGT.GoogleLanguages.Count < 1)
@@ -124,7 +124,7 @@ namespace ZScreenGUI
                 {
                     if (sType == UploadResult.SourceType.TEXT || sType == UploadResult.SourceType.HTML)
                     {
-                        StaticHelper.LoadBrowser(path);
+                        ZAppHelper.LoadBrowserAsync(path);
                         return true;
                     }
 

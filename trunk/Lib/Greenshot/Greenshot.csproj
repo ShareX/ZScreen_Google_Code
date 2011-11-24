@@ -69,7 +69,6 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -236,6 +235,7 @@
     <Compile Include="Helpers\IEInterop\IHTMLWindow3.cs" />
     <Compile Include="Helpers\IEInterop\IWebBrowser2.cs" />
     <None Include="Helpers\OfficeInterop\ExcelWrapper.cs" />
+    <None Include="Helpers\OfficeInterop\OutlookUtils.cs" />
     <Compile Include="Helpers\OfficeInterop\OfficeWrappers.cs" />
     <Compile Include="Helpers\OfficeInterop\OutlookWrapper.cs" />
     <None Include="Helpers\OfficeInterop\PowerpointWrapper.cs" />
@@ -309,17 +309,27 @@
     <Compile Include="UnmanagedHelpers\WinMM.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft.Net.Framework.3.5.SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GreenshotPlugin\GreenshotPlugin.csproj">
       <Project>{5B924697-4DCD-4F98-85F1-105CB84B7341}</Project>
       <Name>GreenshotPlugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -335,7 +345,6 @@ copy "$(ProjectDir)log4net-debug.xml" "$(SolutionDir)bin\$(Configuration)\log4ne
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent />
   </PropertyGroup>
 </Project>

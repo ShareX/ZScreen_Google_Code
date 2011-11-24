@@ -3,7 +3,8 @@
 
 #define MyAppName "ZScreen"     
 #define ExePath "ZScreen\bin\x86\Release\ZScreen.exe"
-#define MyAppVersion GetStringFileInfo(ExePath, "Assembly Version")
+#define DllPath "ZScreen\bin\x86\Release\ZScreenLib.dll"
+#define MyAppVersion GetStringFileInfo(DllPath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
 

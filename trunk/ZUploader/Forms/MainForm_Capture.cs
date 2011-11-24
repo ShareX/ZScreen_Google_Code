@@ -49,6 +49,7 @@ namespace ZUploader
             HotkeyManager.AddHotkey(ZUploaderHotkey.FileUpload, Program.Settings.HotkeyFileUpload, UploadManager.UploadFile);
             HotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
             HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
+            HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveMonitor, Program.Settings.HotkeyActiveMonitor, () => CaptureActiveMonitor(false));
             HotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
                 () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
             HotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
@@ -141,6 +142,11 @@ namespace ZUploader
             {
                 Capture(Screenshot.CaptureActiveWindow, autoHideForm);
             }
+        }
+
+        private void CaptureActiveMonitor(bool autoHideForm = true)
+        {
+            Capture(Screenshot.CaptureActiveMonitor, autoHideForm);
         }
 
         private void CaptureWindow(IntPtr handle, bool autoHideForm = true)

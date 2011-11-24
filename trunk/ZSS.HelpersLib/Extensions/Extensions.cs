@@ -172,5 +172,13 @@ namespace HelpersLib
 
             return false;
         }
+
+        public static double ToDouble(this Version value)
+        {
+            return Math.Max(value.Major, 0) * Math.Pow(10, 12) +
+                   Math.Max(value.Minor, 0) * Math.Pow(10, 9) +
+                   Math.Max(value.Build, 0) * Math.Pow(10, 6) +
+                   Math.Max(value.Revision, 0);
+        }
     }
 }

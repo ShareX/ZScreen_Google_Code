@@ -70,27 +70,27 @@ namespace ZUploader
 
         private void lblZScreen_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_WEBSITE);
         }
 
         private void lblBugs_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_ISSUES);
         }
 
         private void pbBerkURL_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_BERK);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_BERK);
         }
 
         private void pbMikeURL_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_MIKE);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_MIKE);
         }
 
         private void pbBrandonURL_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_BRANDON);
+            ZAppHelper.LoadBrowserAsync(ZLinks.URL_BRANDON);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

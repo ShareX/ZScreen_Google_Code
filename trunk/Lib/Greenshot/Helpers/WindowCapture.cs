@@ -20,16 +20,11 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-using Greenshot;
-using Greenshot.Configuration;
 using Greenshot.Plugin;
 using Greenshot.UnmanagedHelpers;
 
@@ -142,7 +137,12 @@ namespace Greenshot.Helpers {
 		/// Get/Set the Screenbounds
 		/// </summary>
 		public Rectangle ScreenBounds {
-			get {return screenBounds;}
+			get {
+				if (screenBounds == null) {
+					screenBounds = WindowCapture.GetScreenBounds();
+				}
+				return screenBounds;
+			}
 			set {screenBounds = value;}
 		}
 

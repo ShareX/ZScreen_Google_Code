@@ -247,7 +247,7 @@ namespace Greenshot {
 				link.LinkVisited = true;
    				System.Diagnostics.Process.Start(link.Text);
 			} catch (Exception) {
-				MessageBox.Show(lang.GetString(LangKey.error_openlink),lang.GetString(LangKey.error));
+				MessageBox.Show(lang.GetFormattedString(LangKey.error_openlink, link.Text),lang.GetString(LangKey.error));
 			}
 		}
 	}

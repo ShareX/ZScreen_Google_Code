@@ -156,7 +156,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
-            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.txtRapidShareFolderID = new System.Windows.Forms.TextBox();
+            this.lblRapidShareFolderID = new System.Windows.Forms.Label();
+            this.btnRapidShareRefreshFolders = new System.Windows.Forms.Button();
+            this.tvRapidShareFolders = new System.Windows.Forms.TreeView();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
             this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
@@ -220,7 +223,6 @@
             this.tbOutputs = new System.Windows.Forms.TabPage();
             this.tcOutputs = new System.Windows.Forms.TabControl();
             this.tpEmail = new System.Windows.Forms.TabPage();
-            this.btnGmailAuth = new System.Windows.Forms.Button();
             this.chkEmailConfirm = new System.Windows.Forms.CheckBox();
             this.cbEmailRememberLastTo = new System.Windows.Forms.CheckBox();
             this.txtEmailDefaultBody = new System.Windows.Forms.TextBox();
@@ -1350,18 +1352,18 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 56);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Password";
+            this.label7.Text = "Password:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(8, 24);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.Size = new System.Drawing.Size(58, 13);
             this.label9.TabIndex = 0;
-            this.label9.Text = "Username";
+            this.label9.Text = "Username:";
             // 
             // txtMinusPassword
             // 
@@ -1658,7 +1660,10 @@
             // 
             // tpRapidShare
             // 
-            this.tpRapidShare.Controls.Add(this.atcRapidShareAccountType);
+            this.tpRapidShare.Controls.Add(this.txtRapidShareFolderID);
+            this.tpRapidShare.Controls.Add(this.lblRapidShareFolderID);
+            this.tpRapidShare.Controls.Add(this.btnRapidShareRefreshFolders);
+            this.tpRapidShare.Controls.Add(this.tvRapidShareFolders);
             this.tpRapidShare.Controls.Add(this.lblRapidSharePassword);
             this.tpRapidShare.Controls.Add(this.lblRapidSharePremiumUsername);
             this.tpRapidShare.Controls.Add(this.txtRapidSharePassword);
@@ -1671,36 +1676,62 @@
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
             // 
-            // atcRapidShareAccountType
+            // txtRapidShareFolderID
             // 
-            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
-            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcRapidShareAccountType.TabIndex = 0;
-            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
+            this.txtRapidShareFolderID.Location = new System.Drawing.Point(128, 80);
+            this.txtRapidShareFolderID.Name = "txtRapidShareFolderID";
+            this.txtRapidShareFolderID.Size = new System.Drawing.Size(88, 20);
+            this.txtRapidShareFolderID.TabIndex = 8;
+            this.txtRapidShareFolderID.TextChanged += new System.EventHandler(this.txtRapidShareFolderID_TextChanged);
+            // 
+            // lblRapidShareFolderID
+            // 
+            this.lblRapidShareFolderID.AutoSize = true;
+            this.lblRapidShareFolderID.Location = new System.Drawing.Point(16, 88);
+            this.lblRapidShareFolderID.Name = "lblRapidShareFolderID";
+            this.lblRapidShareFolderID.Size = new System.Drawing.Size(103, 13);
+            this.lblRapidShareFolderID.TabIndex = 7;
+            this.lblRapidShareFolderID.Text = "Folder ID for upload:";
+            // 
+            // btnRapidShareRefreshFolders
+            // 
+            this.btnRapidShareRefreshFolders.Location = new System.Drawing.Point(16, 112);
+            this.btnRapidShareRefreshFolders.Name = "btnRapidShareRefreshFolders";
+            this.btnRapidShareRefreshFolders.Size = new System.Drawing.Size(128, 23);
+            this.btnRapidShareRefreshFolders.TabIndex = 6;
+            this.btnRapidShareRefreshFolders.Text = "Refresh folders list";
+            this.btnRapidShareRefreshFolders.UseVisualStyleBackColor = true;
+            this.btnRapidShareRefreshFolders.Click += new System.EventHandler(this.btnRapidShareRefreshFolders_Click);
+            // 
+            // tvRapidShareFolders
+            // 
+            this.tvRapidShareFolders.Location = new System.Drawing.Point(16, 144);
+            this.tvRapidShareFolders.Name = "tvRapidShareFolders";
+            this.tvRapidShareFolders.Size = new System.Drawing.Size(440, 312);
+            this.tvRapidShareFolders.TabIndex = 5;
+            this.tvRapidShareFolders.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRapidShareFolders_AfterSelect);
             // 
             // lblRapidSharePassword
             // 
             this.lblRapidSharePassword.AutoSize = true;
-            this.lblRapidSharePassword.Location = new System.Drawing.Point(16, 88);
+            this.lblRapidSharePassword.Location = new System.Drawing.Point(16, 56);
             this.lblRapidSharePassword.Name = "lblRapidSharePassword";
-            this.lblRapidSharePassword.Size = new System.Drawing.Size(53, 13);
+            this.lblRapidSharePassword.Size = new System.Drawing.Size(56, 13);
             this.lblRapidSharePassword.TabIndex = 3;
-            this.lblRapidSharePassword.Text = "Password";
+            this.lblRapidSharePassword.Text = "Password:";
             // 
             // lblRapidSharePremiumUsername
             // 
             this.lblRapidSharePremiumUsername.AutoSize = true;
-            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 56);
+            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 24);
             this.lblRapidSharePremiumUsername.Name = "lblRapidSharePremiumUsername";
-            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(55, 13);
+            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(58, 13);
             this.lblRapidSharePremiumUsername.TabIndex = 1;
-            this.lblRapidSharePremiumUsername.Text = "Username";
+            this.lblRapidSharePremiumUsername.Text = "Username:";
             // 
             // txtRapidSharePassword
             // 
-            this.txtRapidSharePassword.Location = new System.Drawing.Point(80, 84);
+            this.txtRapidSharePassword.Location = new System.Drawing.Point(80, 52);
             this.txtRapidSharePassword.Name = "txtRapidSharePassword";
             this.txtRapidSharePassword.PasswordChar = '*';
             this.txtRapidSharePassword.Size = new System.Drawing.Size(136, 20);
@@ -1709,7 +1740,7 @@
             // 
             // txtRapidShareUsername
             // 
-            this.txtRapidShareUsername.Location = new System.Drawing.Point(80, 52);
+            this.txtRapidShareUsername.Location = new System.Drawing.Point(80, 20);
             this.txtRapidShareUsername.Name = "txtRapidShareUsername";
             this.txtRapidShareUsername.Size = new System.Drawing.Size(136, 20);
             this.txtRapidShareUsername.TabIndex = 2;
@@ -2300,7 +2331,6 @@
             // 
             // tpEmail
             // 
-            this.tpEmail.Controls.Add(this.btnGmailAuth);
             this.tpEmail.Controls.Add(this.chkEmailConfirm);
             this.tpEmail.Controls.Add(this.cbEmailRememberLastTo);
             this.tpEmail.Controls.Add(this.txtEmailDefaultBody);
@@ -2322,17 +2352,6 @@
             this.tpEmail.TabIndex = 0;
             this.tpEmail.Text = "Email";
             this.tpEmail.UseVisualStyleBackColor = true;
-            // 
-            // btnGmailAuth
-            // 
-            this.btnGmailAuth.Location = new System.Drawing.Point(440, 16);
-            this.btnGmailAuth.Name = "btnGmailAuth";
-            this.btnGmailAuth.Size = new System.Drawing.Size(75, 23);
-            this.btnGmailAuth.TabIndex = 2;
-            this.btnGmailAuth.Text = "&Authorize";
-            this.btnGmailAuth.UseVisualStyleBackColor = true;
-            this.btnGmailAuth.Visible = false;
-            this.btnGmailAuth.Click += new System.EventHandler(this.btnGmailAuth_Click);
             // 
             // chkEmailConfirm
             // 
@@ -2837,7 +2856,6 @@
         private GUI.AccountTypeControl atcImgurAccountType;
         private GUI.AccountTypeControl atcSendSpaceAccountType;
         private System.Windows.Forms.TextBox txtRapidSharePremiumUserName;
-        private GUI.AccountTypeControl atcRapidShareAccountType;
         private GUI.AccountTypeControl actRapidShareAccountType;
         private System.Windows.Forms.TabPage tpEmail;
         private System.Windows.Forms.TextBox txtEmailPassword;
@@ -2901,7 +2919,6 @@
         private System.Windows.Forms.Button btnAuthRefresh;
         private System.Windows.Forms.GroupBox gbMinusUserPass;
         private System.Windows.Forms.CheckBox chkEmailConfirm;
-        private System.Windows.Forms.Button btnGmailAuth;
         private System.Windows.Forms.TableLayoutPanel tlpSharedFolders;
         private System.Windows.Forms.GroupBox gbSharedFolder;
         private System.Windows.Forms.Label label10;
@@ -2910,5 +2927,9 @@
         private System.Windows.Forms.ComboBox cboSharedFolderFiles;
         private System.Windows.Forms.ComboBox cboSharedFolderText;
         private System.Windows.Forms.ComboBox cboSharedFolderImages;
+        private System.Windows.Forms.Button btnRapidShareRefreshFolders;
+        private System.Windows.Forms.TreeView tvRapidShareFolders;
+        private System.Windows.Forms.TextBox txtRapidShareFolderID;
+        private System.Windows.Forms.Label lblRapidShareFolderID;
     }
 }

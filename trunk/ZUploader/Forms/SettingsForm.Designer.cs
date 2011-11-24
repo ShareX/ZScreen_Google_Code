@@ -33,6 +33,8 @@
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.lblGeneralSeparator = new System.Windows.Forms.Label();
+            this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
             this.cbShowTray = new System.Windows.Forms.CheckBox();
             this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +53,7 @@
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
@@ -95,9 +98,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
-            this.lblGeneralSeparator = new System.Windows.Forms.Label();
-            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -164,7 +164,7 @@
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
-            this.tcSettings.Size = new System.Drawing.Size(531, 339);
+            this.tcSettings.Size = new System.Drawing.Size(531, 355);
             this.tcSettings.TabIndex = 0;
             // 
             // tpGeneral
@@ -182,10 +182,30 @@
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(523, 313);
+            this.tpGeneral.Size = new System.Drawing.Size(523, 329);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
+            // 
+            // lblGeneralSeparator
+            // 
+            this.lblGeneralSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblGeneralSeparator.Location = new System.Drawing.Point(16, 96);
+            this.lblGeneralSeparator.Name = "lblGeneralSeparator";
+            this.lblGeneralSeparator.Size = new System.Drawing.Size(475, 2);
+            this.lblGeneralSeparator.TabIndex = 9;
+            this.lblGeneralSeparator.Text = "label2";
+            // 
+            // cbStartWithWindows
+            // 
+            this.cbStartWithWindows.AutoSize = true;
+            this.cbStartWithWindows.Location = new System.Drawing.Point(16, 40);
+            this.cbStartWithWindows.Name = "cbStartWithWindows";
+            this.cbStartWithWindows.Size = new System.Drawing.Size(170, 17);
+            this.cbStartWithWindows.TabIndex = 8;
+            this.cbStartWithWindows.Text = "Start ZUploader with Windows";
+            this.cbStartWithWindows.UseVisualStyleBackColor = true;
+            this.cbStartWithWindows.CheckedChanged += new System.EventHandler(this.cbStartWithWindows_CheckedChanged);
             // 
             // cbShowTray
             // 
@@ -234,7 +254,7 @@
             this.lblGeneralInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblGeneralInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
-            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 281);
+            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 297);
             this.lblGeneralInfo.Name = "lblGeneralInfo";
             this.lblGeneralInfo.Size = new System.Drawing.Size(517, 29);
             this.lblGeneralInfo.TabIndex = 7;
@@ -384,6 +404,14 @@
             this.tpHotkeys.TabIndex = 2;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
+            // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 313);
+            this.hmHotkeys.TabIndex = 0;
             // 
             // tpImage
             // 
@@ -939,39 +967,11 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbStartWithWindows
-            // 
-            this.cbStartWithWindows.AutoSize = true;
-            this.cbStartWithWindows.Location = new System.Drawing.Point(16, 40);
-            this.cbStartWithWindows.Name = "cbStartWithWindows";
-            this.cbStartWithWindows.Size = new System.Drawing.Size(170, 17);
-            this.cbStartWithWindows.TabIndex = 8;
-            this.cbStartWithWindows.Text = "Start ZUploader with Windows";
-            this.cbStartWithWindows.UseVisualStyleBackColor = true;
-            this.cbStartWithWindows.CheckedChanged += new System.EventHandler(this.cbStartWithWindows_CheckedChanged);
-            // 
-            // lblGeneralSeparator
-            // 
-            this.lblGeneralSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblGeneralSeparator.Location = new System.Drawing.Point(16, 96);
-            this.lblGeneralSeparator.Name = "lblGeneralSeparator";
-            this.lblGeneralSeparator.Size = new System.Drawing.Size(475, 2);
-            this.lblGeneralSeparator.TabIndex = 9;
-            this.lblGeneralSeparator.Text = "label2";
-            // 
-            // hmHotkeys
-            // 
-            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
-            this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(523, 313);
-            this.hmHotkeys.TabIndex = 0;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(537, 345);
+            this.ClientSize = new System.Drawing.Size(537, 361);
             this.Controls.Add(this.tcSettings);
             this.MaximizeBox = false;
             this.Name = "SettingsForm";

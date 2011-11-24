@@ -180,27 +180,27 @@ namespace ZScreenLib
 
         private void labelProductName_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/p/zscreen");
         }
 
         private void lblBerk_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/u/flexy123");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/u/flexy123");
         }
 
         private void lblBrandon_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/u/rgrthat");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/u/rgrthat");
         }
 
         private void lblMike_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/u/mcored");
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/u/mcored");
         }
 
         private void lblRev_Click_1(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
+            ZAppHelper.LoadBrowserAsync("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
         }
 
         private void pbLogo_Click(object sender, EventArgs e)
@@ -210,7 +210,7 @@ namespace ZScreenLib
 
         private void textBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(e.LinkText);
+            ZAppHelper.LoadBrowserAsync(e.LinkText);
         }
 
         private void timer_Tick(object sender, EventArgs e)

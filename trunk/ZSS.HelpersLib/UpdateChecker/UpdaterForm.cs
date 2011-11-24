@@ -71,7 +71,7 @@ namespace ZSS.UpdateCheckerLib
 
         private void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
         {
-            StaticHelper.LoadBrowser(e.LinkText);
+            ZAppHelper.LoadBrowserAsync(e.LinkText);
         }
 
         private void NewVersionWindow_Paint(object sender, PaintEventArgs e)

@@ -37,14 +37,10 @@ namespace UploadersLib
     [Serializable]
     public class UploadersConfig
     {
-        #region Constructor
-
         public UploadersConfig()
         {
-            ApplyDefaultValues(this);
+            PasswordsEncryptionStrength2 = EncryptionStrength.High;
         }
-
-        #endregion Constructor
 
         #region General
 
@@ -78,7 +74,7 @@ namespace UploadersLib
 
         // Imgur
 
-        public AccountType ImgurAccountType = AccountType.User;
+        public AccountType ImgurAccountType = AccountType.Anonymous;
         public ImgurThumbnailType ImgurThumbnailType = ImgurThumbnailType.Large_Thumbnail;
         public OAuthInfo ImgurOAuthInfo = null;
 
@@ -147,9 +143,9 @@ namespace UploadersLib
 
         // RapidShare
 
-        public AccountType RapidShareUserAccountType = AccountType.Anonymous;
         public string RapidShareUsername = string.Empty;
         public string RapidSharePassword = string.Empty;
+        public string RapidShareFolderID = string.Empty;
 
         // SendSpace
 
@@ -203,33 +199,24 @@ namespace UploadersLib
 
         #region Helper Methods
 
-        public static void ApplyDefaultValues(object self)
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
-        }
-
         public bool IsActive(FileUploaderType ut)
         {
             switch (ut)
             {
-                case FileUploaderType.CustomUploader:
-                    return CustomUploadersList.Count > 0;
                 case FileUploaderType.Dropbox:
-                    return DropboxAccountInfo != null;
-                case FileUploaderType.FTP:
-                    return FTPAccountList2.Count > 0;
+                    return DropboxOAuthInfo != null && !string.IsNullOrEmpty(DropboxOAuthInfo.UserToken) && !string.IsNullOrEmpty(DropboxOAuthInfo.UserSecret);
+                case FileUploaderType.RapidShare:
+                    return !string.IsNullOrEmpty(RapidShareUsername) && !string.IsNullOrEmpty(RapidSharePassword);
+                case FileUploaderType.SendSpace:
+                    return SendSpaceAccountType == AccountType.Anonymous || (!string.IsNullOrEmpty(SendSpaceUsername) && !string.IsNullOrEmpty(SendSpacePassword));
                 case FileUploaderType.Minus:
                     return MinusConfig != null && MinusConfig.MinusUser != null;
-                case FileUploaderType.RapidShare:
-                    return true;
-                case FileUploaderType.SendSpace:
-                    return true;
+                case FileUploaderType.CustomUploader:
+                    return CustomUploadersList != null && CustomUploadersList.Count > 0;
+                case FileUploaderType.FTP:
+                    return FTPAccountList2 != null && FTPAccountList2.Count > 0;
             }
+
             return false;
         }
 
@@ -239,16 +226,11 @@ namespace UploadersLib
 
             CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength2 };
 
-            this.TinyPicPassword =
-                bEncrypt ? crypt.Encrypt(this.TinyPicPassword) :
-            crypt.Decrypt(this.TinyPicPassword);
+            this.TinyPicPassword = bEncrypt ? crypt.Encrypt(this.TinyPicPassword) : crypt.Decrypt(this.TinyPicPassword);
 
-            this.RapidSharePassword =
-                bEncrypt ? crypt.Encrypt(this.RapidSharePassword) :
-            crypt.Decrypt(this.RapidSharePassword);
+            this.RapidSharePassword = bEncrypt ? crypt.Encrypt(this.RapidSharePassword) : crypt.Decrypt(this.RapidSharePassword);
 
-            this.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.SendSpacePassword) :
-            crypt.Decrypt(this.SendSpacePassword);
+            this.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.SendSpacePassword) : crypt.Decrypt(this.SendSpacePassword);
 
             foreach (FTPAccount acc in this.FTPAccountList2)
             {
@@ -261,11 +243,9 @@ namespace UploadersLib
                 acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
             }
 
-            this.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.TwitPicPassword) :
-                crypt.Decrypt(this.TwitPicPassword);
+            this.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.TwitPicPassword) : crypt.Decrypt(this.TwitPicPassword);
 
-            this.EmailPassword = bEncrypt ? crypt.Encrypt(this.EmailPassword) :
-            crypt.Decrypt(this.EmailPassword);
+            this.EmailPassword = bEncrypt ? crypt.Encrypt(this.EmailPassword) : crypt.Decrypt(this.EmailPassword);
         }
 
         public bool IsActive(TextUploaderType ut)
@@ -287,26 +267,18 @@ namespace UploadersLib
         {
             switch (ut)
             {
-                case ImageUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
                 case ImageUploaderType.FLICKR:
                     return !string.IsNullOrEmpty(FlickrAuthInfo.Token);
                 case ImageUploaderType.IMAGESHACK:
-                    return ImageShackAccountType == AccountType.Anonymous ||
-                        ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(ImageShackRegistrationCode);
+                    return ImageShackAccountType == AccountType.Anonymous || !string.IsNullOrEmpty(ImageShackRegistrationCode);
+                case ImageUploaderType.TINYPIC:
+                    return TinyPicAccountType == AccountType.Anonymous || !string.IsNullOrEmpty(TinyPicRegistrationCode);
                 case ImageUploaderType.IMGUR:
-                    return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.ConsumerKey);
+                    return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.UserToken) && !string.IsNullOrEmpty(ImgurOAuthInfo.UserSecret);
                 case ImageUploaderType.MEDIAWIKI:
                     return MediaWikiAccountList.Count > 0;
                 case ImageUploaderType.Photobucket:
                     return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null;
-                case ImageUploaderType.TINYPIC:
-                    return TinyPicAccountType == AccountType.Anonymous ||
-                            TinyPicAccountType == AccountType.User && !string.IsNullOrEmpty(TinyPicRegistrationCode);
                 case ImageUploaderType.TWITPIC:
                     return !string.IsNullOrEmpty(TwitPicPassword);
                 case ImageUploaderType.TWITSNAPS:
@@ -315,6 +287,12 @@ namespace UploadersLib
                     return true;
                 case ImageUploaderType.YFROG:
                     return !string.IsNullOrEmpty(YFrogPassword);
+                case ImageUploaderType.FileUploader:
+                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
+                    {
+                        if (IsActive(fu)) return true;
+                    }
+                    return false;
             }
 
             return false;
@@ -342,17 +320,17 @@ namespace UploadersLib
             bool succ = true;
 
             // encrypt before interim save
-            if (this.PasswordsSecureUsingEncryption)
+            if (PasswordsSecureUsingEncryption)
             {
-                this.CryptPasswords(bEncrypt: true);
+                CryptPasswords(true);
             }
 
             succ = SettingsHelper.Save(this, filePath, SerializationType.Xml);
 
             // decrypt after interim save
-            if (this.PasswordsSecureUsingEncryption)
+            if (PasswordsSecureUsingEncryption)
             {
-                this.CryptPasswords(bEncrypt: false);
+                CryptPasswords(false);
             }
 
             return succ;

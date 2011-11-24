@@ -75,15 +75,40 @@ namespace ZScreenLib
             Clipboard.SetDataObject(data, true);
         }
 
-        public static void CopyImageToClipboard(Image img)
+        public static void CopyImageToClipboard(Image img, bool bCompatible)
         {
             if (img != null)
             {
-                CopyMultiFormatBitmapToClipboard(img);
+                if (bCompatible)
+                {
+                    CopyMultiFormatBitmapToClipboard(img);
+                }
+                else
+                {
+                    CopyMultiFormatBitmapToClipboardPng(img);
+                }
             }
         }
 
-        private static void CopyMultiFormatBitmapToClipboard(this Image image)
+        private static void CopyMultiFormatBitmapToClipboard(Image img)
+        {
+            if (img != null)
+            {
+                MemoryStream ms = new MemoryStream();
+                MemoryStream ms2 = new MemoryStream();
+                Bitmap bmp = new Bitmap(img);
+                bmp.Save(ms, ImageFormat.Bmp);
+                byte[] b = ms.GetBuffer();
+                ms2.Write(b, 14, (int)ms.Length - 14);
+                ms.Position = 0;
+                DataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.Bitmap, bmp);
+                dataObject.SetData(DataFormats.Dib, ms2);
+                Clipboard.SetDataObject(dataObject, true, 3, 1000);
+            }
+        }
+
+        private static void CopyMultiFormatBitmapToClipboardPng(this Image image)
         {
             using (var opaque = image.CreateOpaqueBitmap(Color.White))
             using (var stream = new MemoryStream())
@@ -116,7 +141,7 @@ namespace ZScreenLib
             {
                 using (Image img = Image.FromFile(filePath))
                 {
-                    CopyImageToClipboard(img);
+                    CopyImageToClipboard(img, false);
                 }
 
                 StaticHelper.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));

@@ -23,8 +23,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
-using GreenshotPlugin.Core;
-
 namespace GreenshotPlugin.Controls {
 	/// <summary>
 	/// Description of PleaseWaitForm.

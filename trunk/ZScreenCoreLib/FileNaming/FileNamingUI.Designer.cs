@@ -156,7 +156,7 @@
             this.gbCodeTitle.Size = new System.Drawing.Size(224, 264);
             this.gbCodeTitle.TabIndex = 0;
             this.gbCodeTitle.TabStop = false;
-            this.gbCodeTitle.Text = "Environment Varables";
+            this.gbCodeTitle.Text = "Environment Variables";
             // 
             // btnCodesI
             // 

@@ -18,5 +18,16 @@ Clipboard Upload Wizard
 		Index Folders
 
 Greenshot Editor Mods
-- remove General and Quality tabs in SettingsForm
-- 
+- remove General and Output tabs in SettingsForm
+- remove MainForm.RegisterHotkeys();
+- remove UnregisterHotkeys
+- remove GreenshotPlugin\Controls\HotkeyControl.cs
+- remove Application.EnableVisualStyles();
+- remove Application.SetCompatibleTextRenderingDefault(false);
+- remove Application.Run(mainForm);
+- remove CheckAndAskForUpdate
+- remove notifyIcon
+- remove SoundHelper
+- remove code until compilable
+- modify ImageEditorFormFormClosing to have DialogResult result = System.Windows.Forms.DialogResult.OK;
+- delete InitializeQuickSettingsMenu

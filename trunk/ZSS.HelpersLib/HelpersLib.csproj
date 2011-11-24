@@ -76,13 +76,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaptureHelpers.cs" />
-    <Compile Include="AppSettings.cs" />
     <Compile Include="CLI\CLICommand.cs" />
     <Compile Include="CLI\CLICommandAction.cs" />
     <Compile Include="CLI\CLIHelper.cs" />
     <Compile Include="CLI\CLIManager.cs" />
     <Compile Include="CLI\CLIManagerRegex.cs" />
     <Compile Include="CLI\CLIParser.cs" />
+    <Compile Include="ComponentModelStrings.cs" />
     <Compile Include="Cryptography\AESEncryption.cs" />
     <Compile Include="Cryptography\CryptInfo.cs" />
     <Compile Include="Cryptography\CryptKeys.cs" />
@@ -100,7 +100,6 @@
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="CloneManager.cs" />
-    <Compile Include="ComponentModelStrings.cs" />
     <Compile Include="Wizards\ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,7 +201,6 @@
     <Compile Include="Wizards\OptionsCoreUI.Designer.cs">
       <DependentUpon>OptionsCoreUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="XmlFileNameEditor.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="XMLSettingsBase.cs" />
     <EmbeddedResource Include="Wizards\ClipboardContentViewer.resx">

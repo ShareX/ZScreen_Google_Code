@@ -164,7 +164,7 @@ namespace ZSS.UpdateCheckerLib
                 {
                     if (ver.ShowDialog() == DialogResult.Yes)
                     {
-                        StaticHelper.LoadBrowser(UpdateInfo.URL);
+                        ZAppHelper.LoadBrowserAsync(UpdateInfo.URL);
                         return true;
                     }
                 }

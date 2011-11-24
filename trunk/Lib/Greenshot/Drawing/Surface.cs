@@ -24,13 +24,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
-using Greenshot.Configuration;
 using Greenshot.Drawing.Fields;
-using Greenshot.Drawing.Filters;
 using Greenshot.Helpers;
 using Greenshot.Plugin;
 using Greenshot.Plugin.Drawing;
@@ -320,7 +317,7 @@ namespace Greenshot.Drawing {
 				foreach(string filename in dropFileNames) {
 					LOG.Debug("Found filename: " + filename);
 					string ext=Path.GetExtension(filename).ToLower();
-					if ((ext==".jpg") || (ext==".gif") || (ext==".png") || (ext==".bmp") || (ext==".wmf")) {
+					if ((ext==".jpg") || (ext==".jpeg") ||(ext==".tiff") || (ext==".gif") || (ext==".png") || (ext==".bmp") || (ext==".ico") ||(ext==".wmf")) {
 						filenames.Add(filename);
 					}
 				}
@@ -382,7 +379,28 @@ namespace Greenshot.Drawing {
 //		}
 		#endregion
 
-		bool ApplyCrop(Rectangle cropRectangle) {
+		/// <summary>
+		/// Auto crop the image
+		/// </summary>
+		/// <returns>true if cropped</returns>
+		public bool AutoCrop() {
+			Rectangle cropRectangle = ImageHelper.FindAutoCropRectangle(Image);
+			if (isCropPossible(ref cropRectangle)) {
+				DrawingMode = DrawingModes.Crop;
+				cropContainer = new CropContainer(this);
+				cropContainer.Left = cropRectangle.X;
+				cropContainer.Top = cropRectangle.Y;
+				cropContainer.Width = cropRectangle.Width;
+				cropContainer.Height = cropRectangle.Height;
+				DeselectAllElements();
+				AddElement(cropContainer);
+				SelectElement(cropContainer);
+				return true;
+			}
+			return false;
+		}
+		
+		private bool isCropPossible(ref Rectangle cropRectangle) {
 			cropRectangle = Helpers.GuiRectangle.GetGuiRectangle(cropRectangle.Left, cropRectangle.Top, cropRectangle.Width, cropRectangle.Height);
 			if (cropRectangle.Left < 0) cropRectangle = new Rectangle(0, cropRectangle.Top, cropRectangle.Width + cropRectangle.Left, cropRectangle.Height);
 			if (cropRectangle.Top < 0) cropRectangle = new Rectangle(cropRectangle.Left, 0, cropRectangle.Width, cropRectangle.Height + cropRectangle.Top);
@@ -390,6 +408,13 @@ namespace Greenshot.Drawing {
 			if (cropRectangle.Top + cropRectangle.Height > Height) cropRectangle = new Rectangle(cropRectangle.Left, cropRectangle.Top, cropRectangle.Width, Height - cropRectangle.Top);
 
 			if (cropRectangle.Height > 0 && cropRectangle.Width > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		bool ApplyCrop(Rectangle cropRectangle) {
+			if (isCropPossible(ref cropRectangle)) {
 				// we should not forget to Dispose the images!!
 				Bitmap tmpImage = ((Bitmap)Image).Clone(cropRectangle, Image.PixelFormat);
 				tmpImage.SetResolution(Image.HorizontalResolution, Image.VerticalResolution);
@@ -544,11 +569,10 @@ namespace Greenshot.Drawing {
 		}
 		
 		private Image GetImage(RenderMode renderMode) {
-			Image clone = new Bitmap(Image);
-			// This actually generates a copy of the original image with a dpi equal to the default...
+			// Generate a copy of the original image with a dpi equal to the default...
+			Bitmap clone = ImageHelper.CloneImageToBitmap(Image);
 			// otherwise we would have a problem drawing the image to the surface... :(
 			using (Graphics graphics = Graphics.FromImage(clone)) {
-				graphics.DrawImage(Image, Point.Empty);
 				elements.Draw(graphics, (Bitmap)clone, renderMode, new Rectangle(Point.Empty, clone.Size));
 			}
 			return clone;
@@ -712,16 +736,16 @@ namespace Greenshot.Drawing {
 					DeselectAllElements();
 					SelectElements(dcs);
 				}
-			} else if (Clipboard.ContainsImage()) {
-				using (Image image = Clipboard.GetImage()) {
+			} else if (ClipboardHelper.ContainsImage()) {
+				using (Image image = ClipboardHelper.GetImage()) {
 					if (image != null) {
 						DeselectAllElements();
 						IBitmapContainer bitmapContainer = AddBitmapContainer(image as Bitmap, 0, 0);
 						SelectElement(bitmapContainer);
 					}
 				}
-			} else if (Clipboard.ContainsText()) {
-				string text = Clipboard.GetText();
+			} else if (ClipboardHelper.ContainsText()) {
+				string text = ClipboardHelper.GetText();
 				if (text != null) {
 					DeselectAllElements();
 					ITextContainer textContainer = AddTextContainer(text, HorizontalAlignment.Center, VerticalAlignment.CENTER,

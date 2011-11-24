@@ -20,13 +20,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Reflection;
 using System.Runtime.Serialization;
 
 using Greenshot.Configuration;
-using Greenshot.Helpers;
 using IniFile;
 
 namespace Greenshot.Drawing.Fields {

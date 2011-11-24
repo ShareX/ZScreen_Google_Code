@@ -19,14 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using System.Xml;
-
 using GreenshotPlugin.Core;
 using IniFile;
 
@@ -37,13 +29,13 @@ namespace Greenshot.Configuration {
 	public class Language : LanguageContainer, ILanguage  {
 		private static ILanguage uniqueInstance;
 		private const string LANGUAGE_FILENAME_PATTERN = @"language-*.xml";
-		private static CoreConfiguration conf = IniConfig.GetIniSection<CoreConfiguration>();
 		
 		public static ILanguage GetInstance() {
 			if(uniqueInstance == null) {
 				uniqueInstance = new LanguageContainer();
 				uniqueInstance.LanguageFilePattern = LANGUAGE_FILENAME_PATTERN;
 				uniqueInstance.Load();
+				CoreConfiguration conf = IniConfig.GetIniSection<CoreConfiguration>();
 				if (string.IsNullOrEmpty(conf.Language)) {
 					uniqueInstance.SynchronizeLanguageToCulture();
 				} else {

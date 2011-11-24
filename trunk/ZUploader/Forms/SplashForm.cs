@@ -64,13 +64,16 @@ namespace ZUploader
 
         public static void CloseSplash()
         {
-            if (splashForm.InvokeRequired)
+            if (splashThread != null)
             {
-                splashForm.Invoke(new MethodInvoker(CloseSplash));
-            }
-            else
-            {
-                Application.ExitThread();
+                if (splashForm.InvokeRequired)
+                {
+                    splashForm.Invoke(new MethodInvoker(CloseSplash));
+                }
+                else
+                {
+                    Application.ExitThread();
+                }
             }
         }
 

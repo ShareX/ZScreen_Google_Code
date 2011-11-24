@@ -19,18 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
 
 using Greenshot.Configuration;
 using Greenshot.Drawing.Filters;
-using Greenshot.Helpers;
 using Greenshot.Helpers.IEInterop;
 using Greenshot.Plugin;
 using Greenshot.UnmanagedHelpers;

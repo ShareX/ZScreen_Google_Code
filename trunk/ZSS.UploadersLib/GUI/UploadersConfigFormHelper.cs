@@ -58,7 +58,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.ImgurOAuthInfo = oauth;
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                 }
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace UploadersLib
                 string url = flickr.GetAuthLink(FlickrPermission.Write);
                 if (!string.IsNullOrEmpty(url))
                 {
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                     btnFlickrCompleteAuth.Enabled = true;
                 }
             }
@@ -173,7 +173,7 @@ namespace UploadersLib
                     string url = flickr.GetPhotosLink(userID);
                     if (!string.IsNullOrEmpty(url))
                     {
-                        StaticHelper.LoadBrowser(url);
+                        ZAppHelper.LoadBrowserAsync(url);
                     }
                 }
             }
@@ -194,7 +194,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.PhotobucketOAuthInfo = oauth;
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                 }
             }
             catch (Exception ex)
@@ -345,7 +345,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.DropboxOAuthInfo = oauth;
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                     btnDropboxCompleteAuth.Enabled = true;
                 }
             }
@@ -782,7 +782,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.GoogleURLShortenerOAuthInfo = oauth;
-                    StaticHelper.LoadBrowser(url);
+                    ZAppHelper.LoadBrowserAsync(url);
                     btnGoogleURLShortenerAuthComplete.Enabled = true;
                 }
             }
