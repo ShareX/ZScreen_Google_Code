@@ -71,6 +71,8 @@ namespace ZScreenLib
         {
             [Description("Capture Entire Screen")]
             CaptureEntireScreen,
+            [Description("Capture Active Monitor")]
+            CaptureActiveMonitor,
             [Description("Capture Active Window")]
             CaptureActiveWindow,
             [Description("Capture Window")]
@@ -285,6 +287,9 @@ namespace ZScreenLib
                     break;
                 case JobLevel2.CaptureEntireScreen:
                     success = CaptureScreen();
+                    break;
+                case JobLevel2.CaptureActiveMonitor:
+                    success = CaptureActiveMonitor();
                     break;
                 case JobLevel2.CaptureSelectedWindow:
                 case JobLevel2.CaptureRectRegion:
@@ -587,6 +592,12 @@ namespace ZScreenLib
                 SetImage(Screenshot.CaptureFullscreen());
             }
 
+            return TempImage != null;
+        }
+
+        public bool CaptureActiveMonitor()
+        {
+            SetImage(Screenshot.CaptureActiveMonitor());
             return TempImage != null;
         }
 

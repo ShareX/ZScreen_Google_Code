@@ -1,3 +1,5 @@
+4.8.0 Added hotkey support to capture Active Monitor {Jaex/McoreD}
+
 Version 4.7.5 - 2011-10-22
 
 4.7.5 Shared Folders can now be individually selected for image/text/file upload types {McoreD}

@@ -286,6 +286,7 @@ namespace ZScreenLib
         public HotkeySetting HotkeyClipboardUpload2 = new HotkeySetting(Keys.Control | Keys.PageUp);
         public HotkeySetting HotkeyDropWindow2 = new HotkeySetting();
         public HotkeySetting HotkeyEntireScreen2 = new HotkeySetting(Keys.PrintScreen);
+        public HotkeySetting HotkeyActiveMonitor2 = new HotkeySetting();
         public HotkeySetting HotkeyFreeHandRegion2 = new HotkeySetting(Keys.Control | Keys.Shift | Keys.PrintScreen);
         public HotkeySetting HotkeyRectangleRegion2 = new HotkeySetting(Keys.Control | Keys.PrintScreen);
 

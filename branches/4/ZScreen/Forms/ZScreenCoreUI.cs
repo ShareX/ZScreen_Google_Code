@@ -99,6 +99,8 @@ namespace ZScreenGUI
 
         public virtual void CaptureEntireScreen() { }
 
+        public virtual void CaptureActiveMonitor() { }
+
         public virtual void CaptureActiveWindow() { }
 
         public virtual void CaptureSelectedWindow() { }

@@ -19,6 +19,7 @@ namespace ZScreenGUI
             HotkeyManager = new HotkeyManager(this, ZAppType.ZScreen);
 
             HotkeyManager.AddHotkey(ZScreenHotkey.EntireScreen, Engine.ConfigUI.HotkeyEntireScreen2, CaptureEntireScreen);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ActiveMonitor, Engine.ConfigUI.HotkeyActiveMonitor2, CaptureActiveMonitor);
             HotkeyManager.AddHotkey(ZScreenHotkey.ActiveWindow, Engine.ConfigUI.HotkeyActiveWindow2, CaptureActiveWindow);
             HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegion, Engine.ConfigUI.HotkeyRectangleRegion2, CaptureRectRegion);
 

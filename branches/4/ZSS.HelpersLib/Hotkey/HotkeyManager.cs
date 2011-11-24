@@ -63,6 +63,8 @@ namespace HelpersLib.Hotkey
     {
         [Description("Capture Entire Screen")]
         EntireScreen,
+        [Description("Capture Active Monitor")]
+        ActiveMonitor,
         [Description("Capture Active Window")]
         ActiveWindow,
         [Description("Capture Rectangular Region")]
