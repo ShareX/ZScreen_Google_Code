@@ -540,9 +540,12 @@ namespace ZUploader
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
-            uploadersConfigForm.ShowDialog();
-            uploadersConfigForm.Config.SaveAsync(Program.UploadersConfigFilePath);
+            if (Program.UploadersConfig != null)
+            {
+                UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+                uploadersConfigForm.ShowDialog();
+                uploadersConfigForm.Config.SaveAsync(Program.UploadersConfigFilePath);
+            }
         }
 
         private void tsbCopy_Click(object sender, EventArgs e)

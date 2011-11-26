@@ -151,6 +151,8 @@ namespace ZUploader
 
         public static MainForm mainForm;
 
+        private static ManualResetEvent settingsResetEvent;
+
         [STAThread]
         private static void Main(string[] args)
         {
@@ -184,23 +186,19 @@ namespace ZUploader
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
-            MyLogger.WriteLine("CommandLine: " + string.Join(" ", args));
+            MyLogger.WriteLine("CommandLine: " + Environment.CommandLine);
             MyLogger.WriteLine("IsMultiInstance: " + IsMultiInstance);
             MyLogger.WriteLine("IsSilentRun: " + IsSilentRun);
             MyLogger.WriteLine("IsPortable: " + IsPortable);
 
-            Thread settingThread = new Thread(() =>
-            {
-                LoadSettings();
-                LoadUploadersConfig();
-            });
-            settingThread.Start();
+            settingsResetEvent = new ManualResetEvent(false);
+            ThreadPool.QueueUserWorkItem(state => LoadSettings());
 
             MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
 
-            settingThread.Join();
+            settingsResetEvent.WaitOne();
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -215,6 +213,8 @@ namespace ZUploader
         public static void LoadSettings()
         {
             Settings = Settings.Load(SettingsFilePath);
+            settingsResetEvent.Set();
+            LoadUploadersConfig();
         }
 
         public static void LoadUploadersConfig()

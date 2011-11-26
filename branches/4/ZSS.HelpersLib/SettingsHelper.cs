@@ -93,6 +93,8 @@ namespace HelpersLib
 
         public static T Load<T>(string path, SerializationType type, bool onErrorShowWarning = true) where T : new()
         {
+            T settings;
+
             StaticHelper.WriteLine("Settings load started: " + path);
 
             try
@@ -106,17 +108,24 @@ namespace HelpersLib
                             switch (type)
                             {
                                 case SerializationType.Binary:
-                                    return (T)new BinaryFormatter().Deserialize(fs);
+                                    settings = (T)new BinaryFormatter().Deserialize(fs);
+                                    break;
+                                default:
                                 case SerializationType.Xml:
-                                    return (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                                    settings = (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                                    break;
                             }
+
+                            StaticHelper.WriteLine("Settings load finished: " + path);
+
+                            return settings;
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                StaticHelper.WriteException(e, "Settings load failed");
 
                 if (onErrorShowWarning)
                 {
@@ -125,10 +134,8 @@ namespace HelpersLib
                     MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            finally
-            {
-                StaticHelper.WriteLine("Settings load finished: " + path);
-            }
+
+            StaticHelper.WriteLine("Settings not found. Loading new instance.");
 
             return new T();
         }

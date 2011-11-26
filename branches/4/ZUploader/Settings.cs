@@ -47,10 +47,10 @@ namespace ZUploader
         #region Settings Form
 
         // General
+        public bool ShowTray = true;
         public bool ClipboardAutoCopy = true;
-        public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
-        public bool ShowTray = false;
+        public bool AutoPlaySound = true;
 
         // Hotkeys
         public HotkeySetting HotkeyClipboardUpload = new HotkeySetting(Keys.Control | Keys.PageUp);
