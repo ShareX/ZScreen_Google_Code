@@ -93,8 +93,6 @@ namespace HelpersLib
 
         public static T Load<T>(string path, SerializationType type, bool onErrorShowWarning = true) where T : new()
         {
-            T settings;
-
             StaticHelper.WriteLine("Settings load started: " + path);
 
             try
@@ -105,6 +103,8 @@ namespace HelpersLib
                     {
                         if (fs.Length > 0)
                         {
+                            T settings;
+
                             switch (type)
                             {
                                 case SerializationType.Binary:
