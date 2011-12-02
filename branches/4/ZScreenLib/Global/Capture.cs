@@ -152,11 +152,12 @@ namespace ZScreenLib
 
             using (Form form = new Form())
             {
+                form.StartPosition = FormStartPosition.Manual;
                 form.FormBorderStyle = FormBorderStyle.None;
                 form.ShowInTaskbar = false;
                 form.BackColor = backColor;
                 form.TopMost = true;
-                form.Bounds = windowRect;
+                form.Bounds = CaptureHelpers.GetWindowRectangle(handle, false);
 
                 IntPtr thumb;
                 NativeMethods.DwmRegisterThumbnail(form.Handle, handle, out thumb);
@@ -168,13 +169,11 @@ namespace ZScreenLib
                 StaticHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
                 StaticHelper.WriteLine("Window    Size: " + size.ToString());
 #endif
+
                 if (size.Width <= 0 || size.Height <= 0)
                 {
                     return null;
                 }
-
-                form.Location = new Point(windowRect.X, windowRect.Y);
-                form.Size = (Size)size;
 
                 DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
                 props.dwFlags = NativeMethods.DWM_TNP_VISIBLE | NativeMethods.DWM_TNP_RECTDESTINATION | NativeMethods.DWM_TNP_OPACITY;

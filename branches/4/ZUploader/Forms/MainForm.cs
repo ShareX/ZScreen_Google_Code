@@ -65,11 +65,6 @@ namespace ZUploader
 
         private void AfterShownJobs()
         {
-            if (!Program.IsSilentRun)
-            {
-                SplashForm.CloseSplash();
-            }
-
             ShowActivate();
         }
 

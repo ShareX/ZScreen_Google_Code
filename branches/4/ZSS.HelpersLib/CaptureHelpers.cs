@@ -146,7 +146,7 @@ namespace HelpersLib
             return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        public static Rectangle GetWindowRectangle(IntPtr handle)
+        public static Rectangle GetWindowRectangle(IntPtr handle, bool maximizeFix = true)
         {
             Rectangle rect = Rectangle.Empty;
 
@@ -165,7 +165,7 @@ namespace HelpersLib
                 rect = NativeMethods.GetWindowRect(handle);
             }
 
-            if (NativeMethods.IsZoomed(handle))
+            if (maximizeFix && NativeMethods.IsZoomed(handle))
             {
                 rect = NativeMethods.MaximizedWindowFix(handle, rect);
             }

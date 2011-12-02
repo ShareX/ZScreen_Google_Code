@@ -177,11 +177,6 @@ namespace ZUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (!IsSilentRun)
-            {
-                SplashForm.ShowSplash();
-            }
-
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
