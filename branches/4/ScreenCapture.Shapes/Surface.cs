@@ -334,13 +334,13 @@ namespace ScreenCapture
 
             if (objects.All(x => !x.IsDragging))
             {
-                for (int i = 0; i < objects.Count(); i++)
+                for (int i = 0; i < objects.Length; i++)
                 {
                     DrawableObject obj = objects[i];
 
                     if (obj.IsMouseHover = obj.Rectangle.Contains(mousePosition))
                     {
-                        for (int y = i + 1; y < objects.Count(); y++)
+                        for (int y = i + 1; y < objects.Length; y++)
                         {
                             objects[y].IsMouseHover = false;
                         }

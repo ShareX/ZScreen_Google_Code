@@ -25,8 +25,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using HelpersLib;
@@ -120,7 +122,7 @@ namespace UploadersLib.FileUploaders
 
         public BoxFolder GetAccountTree(string folderID = "0", bool onelevel = false, bool nofiles = false, bool nozip = true, bool simple = false)
         {
-            Dictionary<string, string> args = new Dictionary<string, string>();
+            NameValueCollection args = new NameValueCollection();
             args.Add("action", "get_account_tree");
             args.Add("api_key", APIKey);
             args.Add("auth_token", AuthToken);
@@ -146,7 +148,9 @@ namespace UploadersLib.FileUploaders
                 args.Add("params", "simple");
             }
 
-            string response = SendGetRequest(APIURL, args);
+            string url = CreateQuery(APIURL, args);
+
+            string response = SendGetRequest(url);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -249,6 +253,6 @@ namespace UploadersLib.FileUploaders
 
         //public List<BoxTag> Tags;
         //public List<BoxFile> Files;
-        public List<BoxFolder> Folders;
+        public List<BoxFolder> Folders = new List<BoxFolder>();
     }
 }

@@ -469,7 +469,7 @@ namespace UploadersLib
             return null;
         }
 
-        private string CreateQuery(Dictionary<string, string> args)
+        protected string CreateQuery(Dictionary<string, string> args)
         {
             if (args != null && args.Count > 0)
             {
@@ -479,7 +479,42 @@ namespace UploadersLib
             return string.Empty;
         }
 
-        private string CreateQuery(string url, Dictionary<string, string> args)
+        protected string CreateQuery(string url, Dictionary<string, string> args)
+        {
+            string query = CreateQuery(args);
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                return url + "?" + query;
+            }
+
+            return url;
+        }
+
+        protected string CreateQuery(NameValueCollection args)
+        {
+            if (args != null && args.Count > 0)
+            {
+                List<string> commands = new List<string>();
+
+                foreach (string key in args.AllKeys)
+                {
+                    string[] values = args.GetValues(key);
+                    string isArray = values.Length > 1 ? "[]" : string.Empty;
+
+                    foreach (string value in values)
+                    {
+                        commands.Add(key + isArray + "=" + HttpUtility.UrlEncode(value));
+                    }
+                }
+
+                return string.Join("&", commands.ToArray());
+            }
+
+            return string.Empty;
+        }
+
+        protected string CreateQuery(string url, NameValueCollection args)
         {
             string query = CreateQuery(args);
 

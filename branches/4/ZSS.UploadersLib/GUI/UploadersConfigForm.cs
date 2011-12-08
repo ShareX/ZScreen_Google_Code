@@ -356,6 +356,25 @@ namespace UploadersLib
             BoxAuthComplete();
         }
 
+        private void txtBoxFolderID_TextChanged(object sender, EventArgs e)
+        {
+            Config.BoxFolderID = txtBoxFolderID.Text;
+        }
+
+        private void btnBoxRefreshFolders_Click(object sender, EventArgs e)
+        {
+            BoxListFolders();
+        }
+
+        private void tvBoxFolders_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node != null && e.Node.Tag is BoxFolder)
+            {
+                BoxFolder folderInfo = (BoxFolder)e.Node.Tag;
+                txtBoxFolderID.Text = folderInfo.ID;
+            }
+        }
+
         #endregion Box
 
         #region Minus

@@ -54,6 +54,7 @@ namespace UploadersLib
             ImageList fileUploadersImageList = new ImageList();
             fileUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
             fileUploadersImageList.Images.Add("Dropbox", Resources.Dropbox);
+            fileUploadersImageList.Images.Add("Box", Resources.Box);
             fileUploadersImageList.Images.Add("Minus", Resources.Minus);
             fileUploadersImageList.Images.Add("FTP", Resources.folder_network);
             fileUploadersImageList.Images.Add("RapidShare", Resources.RapidShare);
@@ -92,6 +93,7 @@ namespace UploadersLib
             tpYFrog.ImageKey = "YFrog";
             tpMediaWiki.ImageKey = "MediaWiki";
             tpDropbox.ImageKey = "Dropbox";
+            tpBox.ImageKey = "Box";
             tpMinus.ImageKey = "Minus";
             tpFTP.ImageKey = "FTP";
             tpRapidShare.ImageKey = "RapidShare";
@@ -225,6 +227,10 @@ namespace UploadersLib
             // Minus
 
             MinusUpdateControls();
+
+            // Box
+
+            txtBoxFolderID.Text = Config.BoxFolderID;
 
             // FTP
 

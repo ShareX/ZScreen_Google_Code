@@ -473,6 +473,44 @@ namespace UploadersLib
             }
         }
 
+        public void BoxListFolders()
+        {
+            if (string.IsNullOrEmpty(Config.BoxAuthToken))
+            {
+                MessageBox.Show("Authentication required.", "Box refresh folders list failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                tvBoxFolders.Nodes.Clear();
+                Box box = new Box(APIKeys.BoxKey) { AuthToken = Config.BoxAuthToken };
+                BoxFolder root = box.GetFolderList();
+                BoxRecursiveAddChilds(tvBoxFolders.Nodes, root);
+                tvBoxFolders.ExpandAll();
+            }
+        }
+
+        private void BoxRecursiveAddChilds(TreeNodeCollection treeNodes, BoxFolder folderInfo)
+        {
+            string folderName;
+
+            if (folderInfo.ID == "0")
+            {
+                folderName = "root";
+            }
+            else
+            {
+                folderName = folderInfo.Name;
+            }
+
+            TreeNode treeNode = treeNodes.Add(folderName);
+            treeNode.Tag = folderInfo;
+
+            foreach (BoxFolder folderInfo2 in folderInfo.Folders)
+            {
+                BoxRecursiveAddChilds(treeNode.Nodes, folderInfo2);
+            }
+        }
+
         #endregion Box
 
         #region Minus
