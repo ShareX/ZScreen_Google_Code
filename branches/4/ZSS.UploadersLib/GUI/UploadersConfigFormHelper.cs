@@ -387,7 +387,7 @@ namespace UploadersLib
             }
             else
             {
-                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must give access from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Config.DropboxOAuthInfo = null;
@@ -424,6 +424,56 @@ namespace UploadersLib
         }
 
         #endregion Dropbox
+
+        #region Box
+
+        public void BoxAuthOpen()
+        {
+            try
+            {
+                Box box = new Box(APIKeys.BoxKey);
+
+                string url = box.GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.BoxTicket = box.Ticket;
+                    ZAppHelper.LoadBrowserAsync(url);
+                    btnBoxCompleteAuth.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void BoxAuthComplete()
+        {
+            if (!string.IsNullOrEmpty(Config.BoxTicket))
+            {
+                try
+                {
+                    Box box = new Box(APIKeys.BoxKey) { Ticket = Config.BoxTicket };
+                    Config.BoxAuthToken = box.GetAuthToken();
+
+                    if (!string.IsNullOrEmpty(Config.BoxAuthToken))
+                    {
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        #endregion Box
 
         #region Minus
 

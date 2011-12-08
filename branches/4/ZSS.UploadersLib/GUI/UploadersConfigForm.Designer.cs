@@ -123,6 +123,9 @@
             this.lblDropboxPath = new System.Windows.Forms.Label();
             this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
             this.txtDropboxPath = new System.Windows.Forms.TextBox();
+            this.tpBox = new System.Windows.Forms.TabPage();
+            this.btnBoxCompleteAuth = new System.Windows.Forms.Button();
+            this.btnBoxOpenAuthorize = new System.Windows.Forms.Button();
             this.tpMinus = new System.Windows.Forms.TabPage();
             this.gbMinusUserPass = new System.Windows.Forms.GroupBox();
             this.btnAuthRefresh = new System.Windows.Forms.Button();
@@ -272,6 +275,7 @@
             this.tcFileUploaders.SuspendLayout();
             this.tpDropbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).BeginInit();
+            this.tpBox.SuspendLayout();
             this.tpMinus.SuspendLayout();
             this.gbMinusUserPass.SuspendLayout();
             this.gbMinusUpload.SuspendLayout();
@@ -1189,6 +1193,7 @@
             // tcFileUploaders
             // 
             this.tcFileUploaders.Controls.Add(this.tpDropbox);
+            this.tcFileUploaders.Controls.Add(this.tpBox);
             this.tcFileUploaders.Controls.Add(this.tpMinus);
             this.tcFileUploaders.Controls.Add(this.tpFTP);
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
@@ -1308,6 +1313,39 @@
             this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
             this.txtDropboxPath.TabIndex = 2;
             this.txtDropboxPath.TextChanged += new System.EventHandler(this.txtDropboxPath_TextChanged);
+            // 
+            // tpBox
+            // 
+            this.tpBox.Controls.Add(this.btnBoxCompleteAuth);
+            this.tpBox.Controls.Add(this.btnBoxOpenAuthorize);
+            this.tpBox.Location = new System.Drawing.Point(4, 22);
+            this.tpBox.Name = "tpBox";
+            this.tpBox.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBox.Size = new System.Drawing.Size(804, 474);
+            this.tpBox.TabIndex = 6;
+            this.tpBox.Text = "Box";
+            this.tpBox.UseVisualStyleBackColor = true;
+            // 
+            // btnBoxCompleteAuth
+            // 
+            this.btnBoxCompleteAuth.Enabled = false;
+            this.btnBoxCompleteAuth.Location = new System.Drawing.Point(192, 16);
+            this.btnBoxCompleteAuth.Name = "btnBoxCompleteAuth";
+            this.btnBoxCompleteAuth.Size = new System.Drawing.Size(168, 23);
+            this.btnBoxCompleteAuth.TabIndex = 1;
+            this.btnBoxCompleteAuth.Text = "2. Complete authorization";
+            this.btnBoxCompleteAuth.UseVisualStyleBackColor = true;
+            this.btnBoxCompleteAuth.Click += new System.EventHandler(this.btnBoxCompleteAuth_Click);
+            // 
+            // btnBoxOpenAuthorize
+            // 
+            this.btnBoxOpenAuthorize.Location = new System.Drawing.Point(16, 16);
+            this.btnBoxOpenAuthorize.Name = "btnBoxOpenAuthorize";
+            this.btnBoxOpenAuthorize.Size = new System.Drawing.Size(168, 23);
+            this.btnBoxOpenAuthorize.TabIndex = 0;
+            this.btnBoxOpenAuthorize.Text = "1. Open authorize page...";
+            this.btnBoxOpenAuthorize.UseVisualStyleBackColor = true;
+            this.btnBoxOpenAuthorize.Click += new System.EventHandler(this.btnBoxOpenAuthorize_Click);
             // 
             // tpMinus
             // 
@@ -2665,6 +2703,7 @@
             this.tpDropbox.ResumeLayout(false);
             this.tpDropbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).EndInit();
+            this.tpBox.ResumeLayout(false);
             this.tpMinus.ResumeLayout(false);
             this.gbMinusUserPass.ResumeLayout(false);
             this.gbMinusUserPass.PerformLayout();
@@ -2931,5 +2970,8 @@
         private System.Windows.Forms.TreeView tvRapidShareFolders;
         private System.Windows.Forms.TextBox txtRapidShareFolderID;
         private System.Windows.Forms.Label lblRapidShareFolderID;
+        private System.Windows.Forms.TabPage tpBox;
+        private System.Windows.Forms.Button btnBoxCompleteAuth;
+        private System.Windows.Forms.Button btnBoxOpenAuthorize;
     }
 }

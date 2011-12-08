@@ -151,6 +151,7 @@ namespace UploadersLib
 
         // Box
 
+        public string BoxTicket = string.Empty;
         public string BoxAuthToken = string.Empty;
         public string BoxFolderID = "0";
         public bool BoxShare = true;

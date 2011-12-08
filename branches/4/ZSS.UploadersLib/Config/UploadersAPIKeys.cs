@@ -42,6 +42,7 @@ namespace UploadersLib
         public string DropboxConsumerSecret { get; set; }
         public string MinusConsumerKey { get; set; }
         public string MinusConsumerSecret { get; set; }
+        public string BoxKey { get; set; }
         public string SendSpaceKey { get; set; }
 
         // Text Uploaders

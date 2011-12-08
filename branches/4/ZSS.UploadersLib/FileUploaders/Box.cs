@@ -118,6 +118,90 @@ namespace UploadersLib.FileUploaders
             return GetAuthToken(Ticket);
         }
 
+        public BoxFolder GetAccountTree(string folderID = "0", bool onelevel = false, bool nofiles = false, bool nozip = true, bool simple = false)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("action", "get_account_tree");
+            args.Add("api_key", APIKey);
+            args.Add("auth_token", AuthToken);
+            args.Add("folder_id", folderID);
+
+            if (onelevel) // Make a tree of one level depth, so you will get only the files and folders stored in the folder of the folder_id you have provided.
+            {
+                args.Add("params", "onelevel");
+            }
+
+            if (nofiles) // Only include the folders in the user account tree, and ignore the files.
+            {
+                args.Add("params", "nofiles");
+            }
+
+            if (nozip) // Do not zip the tree xml.
+            {
+                args.Add("params", "nozip");
+            }
+
+            if (simple) // Display the full tree with a limited list of attributes to make for smaller, more efficient output (folders only contain the 'name' and 'id' attributes, and files will contain the 'name', 'id', 'created', and 'size' attributes)
+            {
+                args.Add("params", "simple");
+            }
+
+            string response = SendGetRequest(APIURL, args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe = xd.GetElement("response");
+
+                if (xe != null && xe.GetElementValue("status") == "listing_ok")
+                {
+                    XElement xeTree = xe.Element("tree");
+
+                    if (xeTree != null)
+                    {
+                        // TODO: Parse files too
+                        return ParseFolder(xeTree.Element("folder"));
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private BoxFolder ParseFolder(XElement xe)
+        {
+            if (xe != null && xe.Name == "folder")
+            {
+                BoxFolder folder = new BoxFolder();
+                folder.ID = xe.GetAttributeValue("id");
+                folder.Name = xe.GetAttributeValue("name");
+
+                XElement xeFolders = xe.Element("folders");
+
+                if (xeFolders != null)
+                {
+                    foreach (XElement xeFolder in xeFolders.Elements())
+                    {
+                        BoxFolder childFolder = ParseFolder(xeFolder);
+
+                        if (childFolder != null)
+                        {
+                            folder.Folders.Add(childFolder);
+                        }
+                    }
+                }
+
+                return folder;
+            }
+
+            return null;
+        }
+
+        public BoxFolder GetFolderList()
+        {
+            return GetAccountTree("0", false, true, true, true);
+        }
+
         public override UploadResult Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -151,5 +235,20 @@ namespace UploadersLib.FileUploaders
 
             return ur;
         }
+    }
+
+    public class BoxFolder
+    {
+        public string ID;
+        public string Name;
+        public string User_id;
+        public string Description;
+        public string Shared;
+        public string Shared_link;
+        public string Permissions;
+
+        //public List<BoxTag> Tags;
+        //public List<BoxFile> Files;
+        public List<BoxFolder> Folders;
     }
 }

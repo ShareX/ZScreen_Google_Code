@@ -90,6 +90,7 @@ namespace UploadersAPILib
                 DropboxConsumerSecret = DropboxConsumerSecret,
                 MinusConsumerKey = MinusConsumerKey,
                 MinusConsumerSecret = MinusConsumerSecret,
+                BoxKey = BoxKey,
                 SendSpaceKey = SendSpaceKey,
                 PastebinKey = PastebinKey,
                 TwitterConsumerKey = TwitterConsumerKey,

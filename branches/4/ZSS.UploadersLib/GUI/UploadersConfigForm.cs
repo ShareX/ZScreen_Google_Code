@@ -344,6 +344,20 @@ namespace UploadersLib
 
         #endregion Dropbox
 
+        #region Box
+
+        private void btnBoxOpenAuthorize_Click(object sender, EventArgs e)
+        {
+            BoxAuthOpen();
+        }
+
+        private void btnBoxCompleteAuth_Click(object sender, EventArgs e)
+        {
+            BoxAuthComplete();
+        }
+
+        #endregion Box
+
         #region Minus
 
         private bool HasFolder(string name)
