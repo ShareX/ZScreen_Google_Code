@@ -1,0 +1,155 @@
+﻿#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
+using HelpersLib;
+using UploadersLib.HelperClasses;
+
+namespace UploadersLib.FileUploaders
+{
+    public sealed class Box : FileUploader
+    {
+        private string APIKey;
+        private const string APIURL = "https://www.box.net/api/1.0/rest";
+        private const string AuthURL = "https://www.box.net/api/1.0/auth/{0}";
+        private const string UploadURL = "https://upload.box.net/api/1.0/upload/{0}/{1}";
+        private const string ShareURL = "http://www.box.com/s/{0}";
+
+        public string Ticket { get; set; }
+        public string AuthToken { get; set; }
+        public string FolderID { get; set; }
+        public bool Share { get; set; }
+
+        public Box(string apiKey)
+        {
+            APIKey = apiKey;
+            FolderID = "0";
+            Share = true;
+        }
+
+        public string GetTicket()
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("action", "get_ticket");
+            args.Add("api_key", APIKey);
+
+            string response = SendGetRequest(APIURL, args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe = xd.GetElement("response");
+
+                if (xe != null && xe.GetElementValue("status") == "get_ticket_ok")
+                {
+                    Ticket = xe.GetElementValue("ticket");
+                    return Ticket;
+                }
+            }
+
+            return null;
+        }
+
+        public string GetAuthorizationURL()
+        {
+            string ticket = GetTicket();
+
+            if (!string.IsNullOrEmpty(ticket))
+            {
+                return string.Format(AuthURL, ticket);
+            }
+
+            return null;
+        }
+
+        public string GetAuthToken(string ticket)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("action", "get_auth_token");
+            args.Add("api_key", APIKey);
+            args.Add("ticket", ticket);
+
+            string response = SendGetRequest(APIURL, args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe = xd.GetElement("response");
+
+                if (xe != null && xe.GetElementValue("status") == "get_auth_token_ok")
+                {
+                    AuthToken = xe.GetElementValue("auth_token");
+                    return AuthToken;
+                }
+            }
+
+            return null;
+        }
+
+        public string GetAuthToken()
+        {
+            return GetAuthToken(Ticket);
+        }
+
+        public override UploadResult Upload(Stream stream, string fileName)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            if (Share) args.Add("share", "1");
+
+            string url = string.Format(UploadURL, AuthToken, FolderID);
+            string response = UploadData(stream, url, fileName, "file", args);
+
+            UploadResult ur = new UploadResult(response);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe = xd.GetElement("response");
+
+                if (xe != null && xe.GetElementValue("status") == "upload_ok")
+                {
+                    XElement xeFile = xe.GetElement("files", "file");
+
+                    if (xeFile != null)
+                    {
+                        string publicName = xeFile.GetAttributeValue("public_name");
+
+                        if (!string.IsNullOrEmpty(publicName))
+                        {
+                            ur.URL = string.Format(ShareURL, publicName);
+                        }
+                    }
+                }
+            }
+
+            return ur;
+        }
+    }
+}

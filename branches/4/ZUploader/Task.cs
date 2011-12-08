@@ -289,18 +289,14 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
-                case FileDestination.FTP:
-                    int index = Program.UploadersConfig.GetFtpIndex(Info.DataType);
-
-                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(index))
-                    {
-                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[index]);
-                    }
-                    break;
                 case FileDestination.Dropbox:
                     NameParser parser = new NameParser { IsFolderPath = true };
                     string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.UploadersConfig.DropboxUploadPath));
                     fileUploader = new Dropbox(Program.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.UploadersConfig.DropboxAccountInfo);
+                    break;
+                case FileDestination.RapidShare:
+                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUsername, Program.UploadersConfig.RapidSharePassword,
+                        Program.UploadersConfig.RapidShareFolderID);
                     break;
                 case FileDestination.SendSpace:
                     fileUploader = new SendSpace(ZKeys.SendSpaceKey);
@@ -314,17 +310,29 @@ namespace ZUploader
                             break;
                     }
                     break;
-                case FileDestination.RapidShare:
-                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUsername, Program.UploadersConfig.RapidSharePassword,
-                        Program.UploadersConfig.RapidShareFolderID);
-                    break;
                 case FileDestination.Minus:
                     fileUploader = new Minus(Program.UploadersConfig.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
+                    break;
+                case FileDestination.Box:
+                    fileUploader = new Box(ZKeys.BoxKey)
+                    {
+                        AuthToken = Program.UploadersConfig.BoxAuthToken,
+                        FolderID = Program.UploadersConfig.BoxFolderID,
+                        Share = Program.UploadersConfig.BoxShare
+                    };
                     break;
                 case FileDestination.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.HasValidIndex(Program.UploadersConfig.CustomUploaderSelected))
                     {
                         fileUploader = new CustomUploader(Program.UploadersConfig.CustomUploadersList[Program.UploadersConfig.CustomUploaderSelected]);
+                    }
+                    break;
+                case FileDestination.FTP:
+                    int index = Program.UploadersConfig.GetFtpIndex(Info.DataType);
+
+                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(index))
+                    {
+                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[index]);
                     }
                     break;
             }

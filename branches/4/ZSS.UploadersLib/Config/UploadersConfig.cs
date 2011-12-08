@@ -133,10 +133,6 @@ namespace UploadersLib
         public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
         public DropboxAccountInfo DropboxAccountInfo = null;
 
-        // Minus
-
-        public MinusOptions MinusConfig = new MinusOptions();
-
         // RapidShare
 
         public string RapidShareUsername = string.Empty;
@@ -148,6 +144,16 @@ namespace UploadersLib
         public AccountType SendSpaceAccountType = AccountType.Anonymous;
         public string SendSpaceUsername = string.Empty;
         public string SendSpacePassword = string.Empty;
+
+        // Minus
+
+        public MinusOptions MinusConfig = new MinusOptions();
+
+        // Box
+
+        public string BoxAuthToken = string.Empty;
+        public string BoxFolderID = "0";
+        public bool BoxShare = true;
 
         // Custom Uploaders
 
