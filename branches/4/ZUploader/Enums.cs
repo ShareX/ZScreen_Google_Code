@@ -86,9 +86,4 @@ namespace ZUploader
     {
         DataUpload, FileUpload, ImageUpload, TextUpload
     }
-
-    public enum ScreenshotDestination
-    {
-        Upload, Clipboard
-    }
 }

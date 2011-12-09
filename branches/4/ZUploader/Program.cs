@@ -112,6 +112,15 @@ namespace ZUploader
             }
         }
 
+        public static string ScreenshotsPath
+        {
+            get
+            {
+                // TODO: Custom path
+                return Path.Combine(PersonalPath, "Screenshots");
+            }
+        }
+
         #endregion Paths
 
         public static Settings Settings { get; private set; }

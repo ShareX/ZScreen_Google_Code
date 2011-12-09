@@ -71,9 +71,10 @@ namespace ZUploader
             Info.UploadDestination = dataType;
         }
 
-        public static Task CreateDataUploaderTask(EDataType dataType, Stream stream, string fileName)
+        public static Task CreateDataUploaderTask(EDataType dataType, Stream stream, string fileName, EDataType destination = EDataType.Default)
         {
             Task task = new Task(dataType, TaskJob.DataUpload);
+            if (destination != EDataType.Default) task.Info.UploadDestination = destination;
             task.Info.FileName = fileName;
             task.data = stream;
             return task;
@@ -198,9 +199,9 @@ namespace ZUploader
             {
                 using (tempImage)
                 {
-                    EImageFormat imageFormat;
-                    data = TaskHelper.PrepareImage(tempImage, out imageFormat);
-                    Info.FileName = TaskHelper.PrepareFilename(imageFormat, tempImage);
+                    ImageData imageData = TaskHelper.PrepareImageAndFilename(tempImage);
+                    data = imageData.ImageStream;
+                    Info.FileName = imageData.Filename;
                 }
             }
             else if (Info.Job == TaskJob.TextUpload && !string.IsNullOrEmpty(tempText))

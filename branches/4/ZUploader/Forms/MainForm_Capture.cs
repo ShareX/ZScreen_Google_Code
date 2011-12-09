@@ -33,13 +33,12 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using ScreenCapture;
+using ZUploader.HelperClasses;
 
 namespace ZUploader
 {
     public partial class MainForm
     {
-        public ScreenshotDestination CaptureDestination { get; set; }
-
         private delegate Image ScreenCaptureDelegate();
 
         private void InitHotkeys()
@@ -111,18 +110,36 @@ namespace ZUploader
                     ShowActivate();
                 }
 
-                if (img != null)
+                AfterCapture(img);
+            }
+        }
+
+        private void AfterCapture(Image img)
+        {
+            if (img != null)
+            {
+                if (Program.Settings.CaptureCopyImage)
                 {
-                    switch (CaptureDestination)
+                    Clipboard.SetImage(img);
+                }
+
+                if (Program.Settings.CaptureSaveImage)
+                {
+                    ImageData imageData = TaskHelper.PrepareImageAndFilename(img);
+                    imageData.WriteToFile(Program.ScreenshotsPath);
+
+                    if (Program.Settings.CaptureUploadImage)
                     {
-                        default:
-                        case ScreenshotDestination.Upload:
-                            UploadManager.UploadImage(img);
-                            break;
-                        case ScreenshotDestination.Clipboard:
-                            Clipboard.SetImage(img);
-                            break;
+                        UploadManager.UploadImageStream(imageData.ImageStream, imageData.Filename);
                     }
+                    else
+                    {
+                        imageData.Dispose();
+                    }
+                }
+                else if (Program.Settings.CaptureUploadImage)
+                {
+                    UploadManager.UploadImage(img);
                 }
             }
         }

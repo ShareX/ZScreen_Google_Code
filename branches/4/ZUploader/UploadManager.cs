@@ -198,6 +198,16 @@ namespace ZUploader
             }
         }
 
+        public static void UploadImageStream(Stream stream, string filename)
+        {
+            if (stream != null && stream.Length > 0 && !string.IsNullOrEmpty(filename))
+            {
+                EDataType destination = ImageUploader == ImageDestination.FileUploader ? EDataType.File : EDataType.Image;
+                Task task = Task.CreateDataUploaderTask(EDataType.Image, stream, filename, destination);
+                StartUpload(task);
+            }
+        }
+
         private static void StartUpload(Task task)
         {
             Tasks.Add(task);

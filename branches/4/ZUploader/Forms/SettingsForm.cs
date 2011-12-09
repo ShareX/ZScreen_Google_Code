@@ -87,6 +87,10 @@ namespace ZUploader
             // Capture
             cbShowCursor.Checked = Program.Settings.ShowCursor;
             cbCaptureTransparent.Checked = Program.Settings.CaptureTransparent;
+            cbCaptureCopyImage.Checked = Program.Settings.CaptureCopyImage;
+            cbCaptureSaveImage.Checked = Program.Settings.CaptureSaveImage;
+            cbCaptureUploadImage.Checked = Program.Settings.CaptureUploadImage;
+
             if (Program.Settings.SurfaceOptions == null) Program.Settings.SurfaceOptions = new SurfaceOptions();
             cbDrawBorder.Checked = Program.Settings.SurfaceOptions.DrawBorder;
             cbDrawCheckerboard.Checked = Program.Settings.SurfaceOptions.DrawChecker;
@@ -331,6 +335,8 @@ namespace ZUploader
 
         #region Capture
 
+        #region Capture / General
+
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.ShowCursor = cbShowCursor.Checked;
@@ -340,6 +346,25 @@ namespace ZUploader
         {
             Program.Settings.CaptureTransparent = cbCaptureTransparent.Checked;
         }
+
+        private void cbCaptureCopyImage_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureCopyImage = cbCaptureCopyImage.Checked;
+        }
+
+        private void cbCaptureSaveImage_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureSaveImage = cbCaptureSaveImage.Checked;
+        }
+
+        private void cbCaptureUploadImage_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureUploadImage = cbCaptureUploadImage.Checked;
+        }
+
+        #endregion Capture / General
+
+        #region Capture / Shape capture
 
         private void cbDrawBorder_CheckedChanged(object sender, EventArgs e)
         {
@@ -370,6 +395,8 @@ namespace ZUploader
         {
             Program.Settings.SurfaceOptions.FixedSize = new Size(Program.Settings.SurfaceOptions.FixedSize.Width, (int)nudFixedShapeSizeHeight.Value);
         }
+
+        #endregion Capture / Shape capture
 
         #endregion Capture
 

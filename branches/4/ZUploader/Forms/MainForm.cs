@@ -154,7 +154,6 @@ namespace ZUploader
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
 
             UpdateUploaderMenuNames();
-            UpdateCaptureMenu();
         }
 
         private void UpdateControls()
@@ -228,15 +227,6 @@ namespace ZUploader
             tsmiFileUploaders.Text = "File uploader: " + UploadManager.FileUploader.GetDescription();
             tsmiTextUploaders.Text = "Text uploader: " + UploadManager.TextUploader.GetDescription();
             tsmiURLShorteners.Text = "URL shortener: " + UploadManager.URLShortener.GetDescription();
-        }
-
-        private void UpdateCaptureMenu()
-        {
-            CaptureDestination = Program.Settings.CaptureOutput;
-            bool isCaptureUpload = CaptureDestination == ScreenshotDestination.Upload;
-            tsmiCaptureOutputUpload.Checked = isCaptureUpload;
-            tsmiCaptureOutputClipboard.Checked = !isCaptureUpload;
-            tsmiCaptureOutput.Text = "Capture output: " + CaptureDestination.ToString();
         }
 
         public void UseCommandLineArgs(string[] args)
@@ -519,18 +509,6 @@ namespace ZUploader
             }
 
             UpdateUploaderMenuNames();
-        }
-
-        private void tsmiCaptureOutputUpload_Click(object sender, EventArgs e)
-        {
-            Program.Settings.CaptureOutput = ScreenshotDestination.Upload;
-            UpdateCaptureMenu();
-        }
-
-        private void tsmiCaptureOutputClipboard_Click(object sender, EventArgs e)
-        {
-            Program.Settings.CaptureOutput = ScreenshotDestination.Clipboard;
-            UpdateCaptureMenu();
         }
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)

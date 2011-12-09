@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Drawing;
 using System.IO;
 using HelpersLib;
@@ -31,7 +32,16 @@ namespace ZUploader.HelperClasses
 {
     public static class TaskHelper
     {
-        public static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
+        public static ImageData PrepareImageAndFilename(Image img)
+        {
+            ImageData imageData = new ImageData();
+            EImageFormat imageFormat;
+            imageData.ImageStream = TaskHelper.PrepareImage(img, out imageFormat);
+            imageData.Filename = TaskHelper.PrepareFilename(imageFormat, img);
+            return imageData;
+        }
+
+        private static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
         {
             MemoryStream stream = img.SaveImage(Program.Settings.ImageFormat);
 
@@ -51,7 +61,7 @@ namespace ZUploader.HelperClasses
             return stream;
         }
 
-        public static string PrepareFilename(EImageFormat imageFormat, Image img)
+        private static string PrepareFilename(EImageFormat imageFormat, Image img)
         {
             string ext = "png";
 

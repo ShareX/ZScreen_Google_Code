@@ -208,6 +208,12 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            if (string.IsNullOrEmpty(AuthToken))
+            {
+                Errors.Add("Login is required.");
+                return null;
+            }
+
             Dictionary<string, string> args = new Dictionary<string, string>();
             if (Share) args.Add("share", "1");
 

@@ -39,7 +39,6 @@ namespace ZUploader
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
         public int SelectedURLShortenerDestination = 0;
-        public ScreenshotDestination CaptureOutput = ScreenshotDestination.Upload;
         public bool ShowClipboardContentViewer = true;
 
         #endregion Main Form
@@ -86,6 +85,9 @@ namespace ZUploader
         // Capture
         public bool ShowCursor = false;
         public bool CaptureTransparent = false;
+        public bool CaptureCopyImage = false;
+        public bool CaptureSaveImage = false;
+        public bool CaptureUploadImage = true;
         public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
         // History
