@@ -405,6 +405,13 @@ namespace ZScreenGUI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tab_edit {
+            get {
+                object obj = ResourceManager.GetObject("tab_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tag_blue_edit {
             get {
                 object obj = ResourceManager.GetObject("tag_blue_edit", resourceCulture);

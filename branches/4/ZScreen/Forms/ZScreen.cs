@@ -40,7 +40,6 @@ using GradientTester;
 using HelpersLib;
 using HelpersLib.CLI;
 using ScreenCapture;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenCoreLib;
@@ -1321,6 +1320,11 @@ namespace ZScreenGUI
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }
+        }
+
+        private void tsmiApiKeys_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowApiKeysUI();
         }
     }
 }

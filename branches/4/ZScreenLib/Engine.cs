@@ -36,7 +36,6 @@ using HelpersLib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 

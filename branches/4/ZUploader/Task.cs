@@ -29,7 +29,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using HelpersLib;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;

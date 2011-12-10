@@ -20,7 +20,6 @@ using ImageQueue;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ScreenCapture;
 using SharpApng;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.GUI;
@@ -1494,7 +1493,7 @@ namespace ZScreenLib
                             {
                                 case JobLevel2.Translate:
                                     SetTranslationInfo(
-                                        new GoogleTranslate(ZKeys.GoogleApiKey).TranslateText(TranslationInfo));
+                                        new GoogleTranslate(Engine.ConfigUI.ApiKeys.GoogleApiKey).TranslateText(TranslationInfo));
                                     SetText(TranslationInfo.Result);
                                     break;
                                 default:
@@ -1618,11 +1617,11 @@ namespace ZScreenLib
 
                 if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.BITLY))
                 {
-                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                    us = new BitlyURLShortener(Engine.ConfigUI.ApiKeys.BitlyLogin, Engine.ConfigUI.ApiKeys.BitlyKey);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
                 {
-                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey, Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
+                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, Engine.ConfigUI.ApiKeys.GoogleApiKey, Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
@@ -1630,7 +1629,7 @@ namespace ZScreenLib
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Jmp))
                 {
-                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                    us = new JmpURLShortener(Engine.ConfigUI.ApiKeys.BitlyLogin, Engine.ConfigUI.ApiKeys.BitlyKey);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TINYURL))
                 {
@@ -1668,7 +1667,7 @@ namespace ZScreenLib
                 case FileUploaderType.FTP:
                     if (Engine.ConfigUI.ShowFTPSettingsBeforeUploading)
                     {
-                        var ucf = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys());
+                        var ucf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys);
                         ucf.Icon = Resources.zss_main;
                         ucf.tcUploaders.SelectedTab = ucf.tpFileUploaders;
                         ucf.tcFileUploaders.SelectedTab = ucf.tpFTP;
@@ -1689,21 +1688,21 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.Minus:
-                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
+                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(Engine.ConfigUI.ApiKeys.MinusConsumerKey, Engine.ConfigUI.ApiKeys.MinusConsumerSecret));
                     break;
                 case FileUploaderType.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
                     fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo);
                     break;
                 case FileUploaderType.SendSpace:
-                    fileUploader = new SendSpace(ZKeys.SendSpaceKey);
+                    fileUploader = new SendSpace(Engine.ConfigUI.ApiKeys.SendSpaceKey);
                     switch (Engine.ConfigUploaders.SendSpaceAccountType)
                     {
                         case AccountType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
+                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeys.SendSpaceKey);
                             break;
                         case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.ConfigUploaders.SendSpaceUsername, Engine.ConfigUploaders.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeys.SendSpaceKey, Engine.ConfigUploaders.SendSpaceUsername, Engine.ConfigUploaders.SendSpacePassword);
                             break;
                     }
                     break;
@@ -1788,7 +1787,7 @@ namespace ZScreenLib
             switch (imageUploaderType)
             {
                 case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey,
+                    imageUploader = new ImageShackUploader(Engine.ConfigUI.ApiKeys.ImageShackKey,
                                                            Engine.ConfigUploaders.ImageShackAccountType,
                                                            Engine.ConfigUploaders.ImageShackRegistrationCode)
                                         {
@@ -1796,19 +1795,19 @@ namespace ZScreenLib
                                         };
                     break;
                 case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey,
+                    imageUploader = new TinyPicUploader(Engine.ConfigUI.ApiKeys.TinyPicID, Engine.ConfigUI.ApiKeys.TinyPicKey,
                                                         Engine.ConfigUploaders.TinyPicAccountType,
                                                         Engine.ConfigUploaders.TinyPicRegistrationCode);
                     break;
                 case ImageUploaderType.IMGUR:
-                    imageUploader = new Imgur(Engine.ConfigUploaders.ImgurAccountType, ZKeys.ImgurAnonymousKey,
+                    imageUploader = new Imgur(Engine.ConfigUploaders.ImgurAccountType, Engine.ConfigUI.ApiKeys.ImgurAnonymousKey,
                                               Engine.ConfigUploaders.ImgurOAuthInfo)
                                         {
                                             ThumbnailType = Engine.ConfigUploaders.ImgurThumbnailType
                                         };
                     break;
                 case ImageUploaderType.FLICKR:
-                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
+                    imageUploader = new FlickrUploader(Engine.ConfigUI.ApiKeys.FlickrKey, Engine.ConfigUI.ApiKeys.FlickrSecret,
                                                        Engine.ConfigUploaders.FlickrAuthInfo,
                                                        Engine.ConfigUploaders.FlickrSettings);
                     break;
@@ -1817,7 +1816,7 @@ namespace ZScreenLib
                                                     Engine.ConfigUploaders.PhotobucketAccountInfo);
                     break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
-                    imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
+                    imageUploader = new UploadScreenshot(Engine.ConfigUI.ApiKeys.UploadScreenshotKey);
                     break;
                 case ImageUploaderType.MEDIAWIKI:
                     UploadToMediaWiki();
@@ -1832,7 +1831,7 @@ namespace ZScreenLib
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.YFROG:
-                    var yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
+                    var yfrogOp = new YfrogOptions(Engine.ConfigUI.ApiKeys.ImageShackKey);
                     yfrogOp.Username = Engine.ConfigUploaders.YFrogUsername;
                     yfrogOp.Password = Engine.ConfigUploaders.YFrogPassword;
                     yfrogOp.Source = Application.ProductName;
@@ -1840,7 +1839,7 @@ namespace ZScreenLib
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
                 case ImageUploaderType.TWITSNAPS:
-                    imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
+                    imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
                     break;
                 case ImageUploaderType.FileUploader:
                     foreach (FileUploaderType ft in WorkflowConfig.DestConfig.FileUploaders)
@@ -1924,10 +1923,10 @@ namespace ZScreenLib
             switch (textUploaderType)
             {
                 case TextUploaderType.PASTEBIN:
-                    textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.ConfigUploaders.PastebinSettings);
+                    textUploader = new PastebinUploader(Engine.ConfigUI.ApiKeys.PastebinKey, Engine.ConfigUploaders.PastebinSettings);
                     break;
                 case TextUploaderType.PASTEBIN_CA:
-                    textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
+                    textUploader = new PastebinCaUploader(Engine.ConfigUI.ApiKeys.PastebinCaKey);
                     break;
                 case TextUploaderType.PASTE2:
                     textUploader = new Paste2Uploader();

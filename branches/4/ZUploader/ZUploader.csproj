@@ -184,10 +184,6 @@
       <Project>{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}</Project>
       <Name>ScreenCapture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZAPILib\UploadersAPILib.csproj">
-      <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>UploadersAPILib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>HelpersLib</Name>

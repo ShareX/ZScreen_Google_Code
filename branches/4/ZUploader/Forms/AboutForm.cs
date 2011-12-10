@@ -27,7 +27,6 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using HelpersLib;
-using UploadersAPILib;
 using UploadersLib;
 using ZSS.UpdateCheckerLib;
 

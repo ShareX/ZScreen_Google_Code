@@ -31,7 +31,6 @@ using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using SingleInstanceApplication;
-using UploadersAPILib;
 using UploadersLib;
 
 namespace ZUploader

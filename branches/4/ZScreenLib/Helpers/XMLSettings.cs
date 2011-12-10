@@ -169,7 +169,6 @@ namespace ZScreenLib
         // General - Check Updates
 
         public bool CheckUpdates = true;
-        public bool CheckUpdatesBeta = false;
 
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
         public bool ClipboardAppendMultipleLinks { get; set; }
@@ -289,6 +288,7 @@ namespace ZScreenLib
         public HotkeySetting HotkeyActiveMonitor2 = new HotkeySetting();
         public HotkeySetting HotkeyFreeHandRegion2 = new HotkeySetting(Keys.Control | Keys.Shift | Keys.PrintScreen);
         public HotkeySetting HotkeyRectangleRegion2 = new HotkeySetting(Keys.Control | Keys.PrintScreen);
+        public HotkeySetting HotkeyRectangleRegionLast2 = new HotkeySetting();
 
         public HotkeySetting HotkeyScreenColorPicker2 = new HotkeySetting();
         public HotkeySetting HotkeySelectedWindow2 = new HotkeySetting(Keys.Shift | Keys.PrintScreen);
@@ -340,8 +340,6 @@ namespace ZScreenLib
 
         public PrintSettings PrintSettings = new PrintSettings();
         public bool PromptForOutputs = false;
-
-        public HotkeySetting RectangleRegionLast2 = new HotkeySetting();
 
         [Category(ComponentModelStrings.ScreenshotsRegion), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
@@ -396,6 +394,8 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General - Program
+        public UploadersAPIKeys ApiKeys = new UploadersAPIKeys();
+
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }
 

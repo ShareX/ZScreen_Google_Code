@@ -242,6 +242,7 @@ namespace ZScreenGUI
             this.tsmiConfigureActions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOutputs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiApiKeys = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiProxy = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -344,7 +345,7 @@ namespace ZScreenGUI
             this.toolStripSeparator3,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(201, 446);
+            this.cmTray.Size = new System.Drawing.Size(201, 424);
             // 
             // tsmEntireScreen
             // 
@@ -2480,11 +2481,20 @@ namespace ZScreenGUI
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiApiKeys,
             this.tsmiProxy,
             this.tsmiOptions});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // tsmiApiKeys
+            // 
+            this.tsmiApiKeys.Image = global::ZScreenGUI.Properties.Resources.tab_edit;
+            this.tsmiApiKeys.Name = "tsmiApiKeys";
+            this.tsmiApiKeys.Size = new System.Drawing.Size(167, 22);
+            this.tsmiApiKeys.Text = "API Keys...";
+            this.tsmiApiKeys.Click += new System.EventHandler(this.tsmiApiKeys_Click);
             // 
             // tsmiProxy
             // 
@@ -2857,5 +2867,6 @@ namespace ZScreenGUI
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem tsmiOptions;
         private ToolStripMenuItem tsmiProxy;
+        private ToolStripMenuItem tsmiApiKeys;
     }
 }

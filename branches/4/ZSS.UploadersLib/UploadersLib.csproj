@@ -148,7 +148,6 @@
     <Compile Include="GUI\UploadersConfigFormHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\UploadersAPIKeys.cs" />
     <Compile Include="GUI\UploadersConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>

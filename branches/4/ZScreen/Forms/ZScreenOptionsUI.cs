@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;

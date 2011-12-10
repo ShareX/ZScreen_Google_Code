@@ -38,7 +38,6 @@ using GraphicsMgrLib;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -418,7 +417,7 @@ namespace ZScreenLib
                 return Engine.ConfigUploaders.TwitterOAuthInfoList[Engine.ConfigUploaders.TwitterSelectedAccount];
             }
 
-            return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
+            return new OAuthInfo(Engine.ConfigUI.ApiKeys.TwitterConsumerKey, Engine.ConfigUI.ApiKeys.TwitterConsumerSecret);
         }
 
         public static void TwitterMsg(WorkerTask task)
@@ -585,7 +584,7 @@ namespace ZScreenLib
                         !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicUsername) &&
                         !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicPassword))
                     {
-                        var tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
+                        var tpu = new TinyPicUploader(Engine.ConfigUI.ApiKeys.TinyPicID, Engine.ConfigUI.ApiKeys.TinyPicKey, AccountType.User);
                         var regCode = tpu.UserAuth(Engine.ConfigUploaders.TinyPicUsername,
                             Engine.ConfigUploaders.TinyPicPassword);
                         if (Engine.ConfigUploaders.TinyPicRegistrationCode != regCode)

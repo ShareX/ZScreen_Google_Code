@@ -295,10 +295,6 @@
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZAPILib\UploadersAPILib.csproj">
-      <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>UploadersAPILib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZScreenCoreLib\ZScreenCoreLib.csproj">
       <Project>{13D3BA40-1212-4ABC-A7C7-D1C96B43BE29}</Project>
       <Name>ZScreenCoreLib</Name>
@@ -385,6 +381,7 @@
     <None Include="Resources\world_go.png" />
     <None Include="Resources\bug.png" />
     <None Include="Resources\application_side_boxes.png" />
+    <None Include="Resources\tab_edit.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

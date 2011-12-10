@@ -30,7 +30,6 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using HistoryLib;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.Properties;
@@ -515,7 +514,7 @@ namespace ZUploader
         {
             if (Program.UploadersConfig != null)
             {
-                UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+                UploadersConfigForm uploadersConfigForm = new UploadersConfigForm(Program.UploadersConfig, new UploadersAPIKeys()) { Icon = this.Icon };
                 uploadersConfigForm.ShowDialog();
                 uploadersConfigForm.Config.SaveAsync(Program.UploadersConfigFilePath);
             }

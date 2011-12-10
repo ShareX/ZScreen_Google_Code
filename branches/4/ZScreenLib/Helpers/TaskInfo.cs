@@ -16,7 +16,6 @@ using HistoryLib;
 using ImageQueue;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ScreenCapture;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.GUI;

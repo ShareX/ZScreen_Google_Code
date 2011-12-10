@@ -23,9 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using UploadersLib;
-
-namespace UploadersAPILib
+namespace HelpersLib
 {
     public static class ZKeys
     {
@@ -73,32 +71,5 @@ namespace UploadersAPILib
         public const string TwitterConsumerSecret = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
         public const string GoogleApiKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
         public const string PicnikKey = "3aacd2de4563b8817de708b29b5bdd0e";
-
-        public static UploadersAPIKeys GetAPIKeys()
-        {
-            return new UploadersAPIKeys
-            {
-                TinyPicID = TinyPicID,
-                TinyPicKey = TinyPicKey,
-                ImgurConsumerKey = ImgurConsumerKey,
-                ImgurConsumerSecret = ImgurConsumerSecret,
-                FlickrKey = FlickrKey,
-                FlickrSecret = FlickrSecret,
-                PhotobucketConsumerKey = PhotobucketConsumerKey,
-                PhotobucketConsumerSecret = PhotobucketConsumerSecret,
-                DropboxConsumerKey = DropboxConsumerKey,
-                DropboxConsumerSecret = DropboxConsumerSecret,
-                MinusConsumerKey = MinusConsumerKey,
-                MinusConsumerSecret = MinusConsumerSecret,
-                BoxKey = BoxKey,
-                SendSpaceKey = SendSpaceKey,
-                PastebinKey = PastebinKey,
-                TwitterConsumerKey = TwitterConsumerKey,
-                TwitterConsumerSecret = TwitterConsumerSecret,
-                GoogleTranslateKey = GoogleApiKey,
-                GoogleConsumerKey = GoogleConsumerKey,
-                GoogleConsumerSecret = GoogleConsumerSecret
-            };
-        }
     }
 }
