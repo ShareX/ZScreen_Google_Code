@@ -180,5 +180,10 @@ namespace HelpersLib
                    Math.Max(value.Build, 0) * Math.Pow(10, 6) +
                    Math.Max(value.Revision, 0);
         }
+
+        public static bool IsValid(this Rectangle rect)
+        {
+            return rect.Width > 0 && rect.Height > 0;
+        }
     }
 }

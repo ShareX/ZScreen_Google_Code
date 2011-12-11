@@ -34,6 +34,7 @@ namespace ScreenCapture
     {
         public List<IntPtr> IgnoreWindows { get; set; }
 
+        private string[] ignoreList = new string[] { "Progman", "Button" };
         private List<WindowInfo> windows;
 
         public WindowsList()
@@ -62,23 +63,36 @@ namespace ScreenCapture
 
             foreach (WindowInfo window in windows)
             {
-                if (window.IsVisible && !string.IsNullOrEmpty(window.Text))
+                if (IsValidWindow(window))
                 {
-                    string className = window.ClassName;
-
-                    if (!string.IsNullOrEmpty(className) && !className.Equals("Progman", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        Rectangle rect = window.Rectangle;
-
-                        if (rect.Width > 0 && rect.Height > 0 && (window.IsMinimized || CaptureHelpers.GetScreenBounds().Contains(rect)))
-                        {
-                            visibleWindows.Add(window);
-                        }
-                    }
+                    visibleWindows.Add(window);
                 }
             }
 
             return visibleWindows;
+        }
+
+        private bool IsValidWindow(WindowInfo window)
+        {
+            return window.IsVisible && !string.IsNullOrEmpty(window.Text) && IsClassNameAllowed(window) && window.Rectangle.IsValid();
+        }
+
+        private bool IsClassNameAllowed(WindowInfo window)
+        {
+            string className = window.ClassName;
+
+            if (!string.IsNullOrEmpty(className))
+            {
+                foreach (string ignore in ignoreList)
+                {
+                    if (className.Equals(ignore, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private bool EvalWindows(IntPtr hWnd, IntPtr lParam)
