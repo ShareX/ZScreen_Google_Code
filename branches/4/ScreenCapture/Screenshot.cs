@@ -109,6 +109,9 @@ namespace ScreenCapture
 
         public static Image CaptureRectangleNative(IntPtr handle, Rectangle rect)
         {
+            // avoid System.ArgumentException: Parameter is not valid
+            if (rect.Width == 0 || rect.Height == 0) return null;
+
             // Format24bppRgb because some images can show up with white dots
             Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 

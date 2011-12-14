@@ -257,7 +257,7 @@ namespace ZScreenLib
                 if (fn.Length > workflow.ConfigFileNaming.MaxNameLength - ext.Length)
                 {
                     string nfn = fn.Substring(0, workflow.ConfigFileNaming.MaxNameLength - ext.Length);
-                    fileName = Regex.Replace(fileName, fn, nfn);
+                    fileName = nfn + ext;
                 }
 
                 string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
