@@ -467,6 +467,14 @@ namespace ZScreenLib
         {
             StaticHelper.WriteLine("WriteSettings is async: " + isAsync);
 
+            Thread settingsOptions = new Thread(() =>
+            {
+                if (Engine.ConfigOptions != null)
+                {
+                    Engine.ConfigOptions.Write(OptionsFilePath);
+                }
+            });
+
             Thread settingsThread = new Thread(() =>
             {
                 if (Engine.ConfigUI != null)
@@ -499,6 +507,7 @@ namespace ZScreenLib
                 }
             });
 
+            settingsOptions.Start();
             settingsThread.Start();
             googleTranslateThread.Start();
             workflowConfigThread.Start();
@@ -506,6 +515,7 @@ namespace ZScreenLib
 
             if (!isAsync)
             {
+                settingsOptions.Join();
                 settingsThread.Join();
                 googleTranslateThread.Join();
                 workflowConfigThread.Join();
