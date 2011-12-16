@@ -41,13 +41,6 @@ namespace ScreenCapture
         public SurfaceOptions Config { get; set; }
         public int FPS { get; private set; }
 
-        public bool IsLeftMouseDown { get; private set; }
-        public bool IsRightMouseDown { get; private set; }
-        public bool IsBeforeLeftMouseDown { get; private set; }
-        public bool IsBeforeRightMouseDown { get; private set; }
-        public Point CurrentMousePosition { get; private set; }
-        public Point BeforeMousePosition { get; private set; }
-
         protected List<DrawableObject> DrawableObjects { get; set; }
 
         private TextureBrush backgroundBrush;
@@ -86,8 +79,7 @@ namespace ScreenCapture
             textFont = new Font("Arial", 12, FontStyle.Bold);
 
             Shown += new EventHandler(Surface_Shown);
-            MouseDown += new MouseEventHandler(Surface_MouseDown);
-            MouseUp += new MouseEventHandler(Surface_MouseUp);
+            KeyUp += new KeyEventHandler(Surface_KeyUp);
         }
 
         private void InitializeComponent()
@@ -104,32 +96,20 @@ namespace ScreenCapture
             this.ResumeLayout(false);
         }
 
-        private void Surface_Shown(object sender, System.EventArgs e)
+        private void Surface_Shown(object sender, EventArgs e)
         {
             Activate();
         }
 
-        private void Surface_MouseDown(object sender, MouseEventArgs e)
+        private void Surface_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.KeyCode == Keys.Escape)
             {
-                IsLeftMouseDown = true;
+                Close(false);
             }
-            else if (e.Button == MouseButtons.Right)
+            else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
             {
-                IsRightMouseDown = true;
-            }
-        }
-
-        private void Surface_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                IsLeftMouseDown = false;
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                IsRightMouseDown = false;
+                Close(true);
             }
         }
 
@@ -146,7 +126,6 @@ namespace ScreenCapture
 #endif
 
             Update();
-            AfterUpdate();
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
@@ -206,8 +185,6 @@ namespace ScreenCapture
                 }
             }
 
-            Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
-
             return img;
         }
 
@@ -225,7 +202,7 @@ namespace ScreenCapture
 
         protected virtual new void Update()
         {
-            CurrentMousePosition = CaptureHelpers.GetZeroBasedMousePosition();
+            InputManager.Update();
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
@@ -235,7 +212,7 @@ namespace ScreenCapture
                 {
                     DrawableObject obj = objects[i];
 
-                    if (obj.IsMouseHover = obj.Rectangle.Contains(CurrentMousePosition))
+                    if (obj.IsMouseHover = obj.Rectangle.Contains(InputManager.MousePosition))
                     {
                         for (int y = i + 1; y < objects.Count(); y++)
                         {
@@ -248,7 +225,7 @@ namespace ScreenCapture
 
                 foreach (DrawableObject obj in objects)
                 {
-                    if (obj.IsMouseHover && !IsBeforeLeftMouseDown && IsLeftMouseDown)
+                    if (obj.IsMouseHover && InputManager.IsMousePressed(MouseButtons.Left))
                     {
                         obj.IsDragging = true;
                         break;
@@ -257,7 +234,7 @@ namespace ScreenCapture
             }
             else
             {
-                if (IsBeforeLeftMouseDown && !IsLeftMouseDown)
+                if (InputManager.IsMouseReleased(MouseButtons.Left))
                 {
                     foreach (DrawableObject obj in objects)
                     {
@@ -265,13 +242,6 @@ namespace ScreenCapture
                     }
                 }
             }
-        }
-
-        protected virtual void AfterUpdate()
-        {
-            BeforeMousePosition = CurrentMousePosition;
-            IsBeforeLeftMouseDown = IsLeftMouseDown;
-            IsBeforeRightMouseDown = IsRightMouseDown;
         }
 
         protected virtual void Draw(Graphics g)
@@ -321,7 +291,7 @@ namespace ScreenCapture
             Point position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
             Rectangle rect = new Rectangle(position, new Size((int)textSize.Width, (int)textSize.Height));
 
-            if (rect.Contains(CurrentMousePosition))
+            if (rect.Contains(InputManager.MousePosition))
             {
                 position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));

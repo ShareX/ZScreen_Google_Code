@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AreaManager.cs" />
+    <Compile Include="InputManager.cs" />
+    <Compile Include="MouseState.cs" />
     <Compile Include="ResizeManager.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>

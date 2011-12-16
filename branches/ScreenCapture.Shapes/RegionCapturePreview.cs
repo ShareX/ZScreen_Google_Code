@@ -86,8 +86,12 @@ namespace ScreenCapture
             if (surface.ShowDialog() == DialogResult.OK)
             {
                 Result = surface.GetRegionImage();
-                pbResult.Image = Result;
-                Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
+
+                if (Result != null)
+                {
+                    pbResult.Image = Result;
+                    Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
+                }
             }
         }
 

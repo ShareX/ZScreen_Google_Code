@@ -54,18 +54,11 @@ namespace ScreenCapture
 
                 foreach (Rectangle area in AreaManager.Areas)
                 {
-                    g.Clip = new Region(area);
-
-                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", area.X, area.Y, area.Width, area.Height),
-                        new PointF(area.X + 5, area.Y + 5), textFont, Color.White, Color.Black);
-
                     if (area.Width > 0 && area.Height > 0)
                     {
                         AddShapePath(regionPath, area);
                     }
                 }
-
-                g.ResetClip();
 
                 using (Region region = new Region(regionPath))
                 {
@@ -95,6 +88,19 @@ namespace ScreenCapture
                     g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
                     DrawObjects(g);
                 }
+
+                foreach (Rectangle area in AreaManager.Areas)
+                {
+                    if (area.Width > 0 && area.Height > 0)
+                    {
+                        g.Clip = new Region(area);
+
+                        CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", area.X, area.Y, area.Width, area.Height),
+                            new PointF(area.X + 5, area.Y + 5), textFont, Color.White, Color.Black);
+                    }
+                }
+
+                g.ResetClip();
 
                 if (AreaManager.Areas.Count > 1)
                 {

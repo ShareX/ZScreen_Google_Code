@@ -77,7 +77,6 @@ namespace ScreenCapture
             surface.MouseDown += new MouseEventHandler(surface_MouseDown);
             surface.MouseUp += new MouseEventHandler(surface_MouseUp);
             surface.MouseDoubleClick += new MouseEventHandler(surface_MouseDoubleClick);
-            surface.KeyUp += new KeyEventHandler(surface_KeyUp);
         }
 
         public void Update()
@@ -85,8 +84,8 @@ namespace ScreenCapture
             if (IsMoving)
             {
                 Rectangle rect = CurrentArea;
-                rect.X += surface.CurrentMousePosition.X - surface.BeforeMousePosition.X;
-                rect.Y += surface.CurrentMousePosition.Y - surface.BeforeMousePosition.Y;
+                rect.X += InputManager.MouseVelocity.X;
+                rect.Y += InputManager.MouseVelocity.Y;
                 CurrentArea = rect;
             }
 
@@ -101,11 +100,11 @@ namespace ScreenCapture
 
         private void surface_MouseDown(object sender, MouseEventArgs e)
         {
-            int areaIndex = AreaIntersect(surface.CurrentMousePosition);
+            int areaIndex = AreaIntersect(InputManager.MousePosition);
 
             if (e.Button == MouseButtons.Left && !ResizeManager.IsCursorOnNode())
             {
-                positionOnClick = surface.CurrentMousePosition;
+                positionOnClick = InputManager.MousePosition;
 
                 if (areaIndex > -1) // Select area
                 {
@@ -173,18 +172,6 @@ namespace ScreenCapture
             }
         }
 
-        private void surface_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                surface.Close(false);
-            }
-            else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
-            {
-                surface.Close(true);
-            }
-        }
-
         private void SelectArea()
         {
             if (!CurrentArea.IsEmpty && !surface.Config.IsFixedSize)
@@ -214,7 +201,7 @@ namespace ScreenCapture
 
         public int AreaIntersect()
         {
-            return AreaIntersect(surface.CurrentMousePosition);
+            return AreaIntersect(InputManager.MousePosition);
         }
 
         public Rectangle GetAreaIntersect()

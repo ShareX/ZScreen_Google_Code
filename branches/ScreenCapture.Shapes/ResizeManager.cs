@@ -86,7 +86,7 @@ namespace ScreenCapture
         {
             if (Visible && nodes != null)
             {
-                if (surface.IsLeftMouseDown)
+                if (InputManager.IsMouseDown(MouseButtons.Left))
                 {
                     for (int i = 0; i < 8; i++)
                     {
@@ -94,14 +94,14 @@ namespace ScreenCapture
                         {
                             IsResizing = true;
 
-                            if (!surface.IsBeforeLeftMouseDown)
+                            if (!InputManager.IsBeforeMouseDown(MouseButtons.Left))
                             {
                                 tempRect = areaManager.CurrentArea;
                             }
 
                             NodePosition nodePosition = (NodePosition)i;
 
-                            int x = surface.CurrentMousePosition.X - surface.BeforeMousePosition.X;
+                            int x = InputManager.MouseVelocity.X;
 
                             switch (nodePosition)
                             {
@@ -118,7 +118,7 @@ namespace ScreenCapture
                                     break;
                             }
 
-                            int y = surface.CurrentMousePosition.Y - surface.BeforeMousePosition.Y;
+                            int y = InputManager.MouseVelocity.Y;
 
                             switch (nodePosition)
                             {
