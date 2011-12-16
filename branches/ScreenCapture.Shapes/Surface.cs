@@ -80,6 +80,7 @@ namespace ScreenCapture
 
             Shown += new EventHandler(Surface_Shown);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
+            MouseDoubleClick += new MouseEventHandler(Surface_MouseDoubleClick);
         }
 
         private void InitializeComponent()
@@ -108,6 +109,14 @@ namespace ScreenCapture
                 Close(false);
             }
             else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
+            {
+                Close(true);
+            }
+        }
+
+        private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
             {
                 Close(true);
             }

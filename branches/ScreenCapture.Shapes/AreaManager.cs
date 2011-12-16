@@ -76,7 +76,6 @@ namespace ScreenCapture
 
             surface.MouseDown += new MouseEventHandler(surface_MouseDown);
             surface.MouseUp += new MouseEventHandler(surface_MouseUp);
-            surface.MouseDoubleClick += new MouseEventHandler(surface_MouseDoubleClick);
         }
 
         public void Update()
@@ -161,14 +160,6 @@ namespace ScreenCapture
                 {
                     IsMoving = false;
                 }
-            }
-        }
-
-        private void surface_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                surface.Close(true);
             }
         }
 

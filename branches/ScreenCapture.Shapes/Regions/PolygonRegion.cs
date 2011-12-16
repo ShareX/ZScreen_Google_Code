@@ -34,6 +34,7 @@ namespace ScreenCapture
     public class PolygonRegion : Surface
     {
         private List<NodeObject> nodes;
+        private bool isAreaCreated;
 
         public PolygonRegion(Image backgroundImage = null)
             : base(backgroundImage)
@@ -59,34 +60,32 @@ namespace ScreenCapture
 
                 CreateNode();
 
-                //IsAreaCreated = true;
+                isAreaCreated = true;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (isAreaCreated)
+                {
+                    foreach (NodeObject node in nodes)
+                    {
+                        if (node.IsMouseHover)
+                        {
+                            nodes.Remove(node);
+                            DrawableObjects.Remove(node);
+                            return;
+                        }
+                    }
+
+                    isAreaCreated = false;
+                    nodes.Clear();
+                    DrawableObjects.Clear();
+                }
+                else
+                {
+                    Close(false);
+                }
             }
         }
-
-        /*protected override void OnRightClickCancel()
-        {
-            if (IsAreaCreated)
-            {
-                foreach (NodeObject node in nodes)
-                {
-                    if (node.IsMouseHover)
-                    {
-                        nodes.Remove(node);
-                        DrawableObjects.Remove(node);
-                        return;
-                    }
-                }
-
-                IsAreaCreated = false;
-                CurrentArea = Rectangle.Empty;
-                nodes.Clear();
-                DrawableObjects.Clear();
-            }
-            else
-            {
-                Close(true);
-            }
-        }*/
 
         protected override void Update()
         {
