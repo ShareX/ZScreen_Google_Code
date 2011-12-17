@@ -161,6 +161,8 @@ namespace ScreenCapture
                 Image img;
 
                 Rectangle regionArea = Rectangle.Round(regionPath.GetBounds());
+                regionArea.Width++;
+                regionArea.Height++;
                 Rectangle newRegionArea = Rectangle.Intersect(regionArea, screenArea);
 
                 using (GraphicsPath gp = (GraphicsPath)regionPath.Clone())

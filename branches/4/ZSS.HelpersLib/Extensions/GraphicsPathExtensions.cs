@@ -31,6 +31,16 @@ namespace HelpersLib
 {
     public static class GraphicsPathExtensions
     {
+        public static void AddRectangleProper(this GraphicsPath graphicsPath, RectangleF rect)
+        {
+            rect = new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+
+            if (rect.Width > 1 && rect.Height > 1)
+            {
+                graphicsPath.AddRectangle(rect);
+            }
+        }
+
         public static void AddRoundedRectangle(this GraphicsPath graphicsPath, RectangleF rect, float radius)
         {
             if (radius <= 0.0f)

@@ -151,7 +151,6 @@
             // pbResult
             // 
             this.pbResult.BackColor = System.Drawing.Color.Gray;
-            this.pbResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbResult.Location = new System.Drawing.Point(0, 0);
             this.pbResult.Name = "pbResult";
             this.pbResult.Size = new System.Drawing.Size(936, 608);
