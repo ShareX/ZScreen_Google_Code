@@ -44,7 +44,7 @@ namespace ScreenCapture
         protected List<DrawableObject> DrawableObjects { get; set; }
 
         private TextureBrush backgroundBrush;
-        private Rectangle drawArea;
+        private Rectangle screenArea;
         private Stopwatch timer;
         private int frameCount;
 
@@ -55,9 +55,9 @@ namespace ScreenCapture
 
         public Surface(Image backgroundImage = null)
         {
-            InitializeComponent();
+            screenArea = CaptureHelpers.GetScreenBounds();
 
-            drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
+            InitializeComponent();
 
             DrawableObjects = new List<DrawableObject>();
 
@@ -86,7 +86,7 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = CaptureHelpers.GetScreenBounds();
+            this.Bounds = screenArea;
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
@@ -138,10 +138,10 @@ namespace ScreenCapture
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.FillRectangle(backgroundBrush, drawArea);
+            g.FillRectangle(backgroundBrush, screenArea);
 
 #if DEBUG
-            g.DrawRectangleProper(Pens.Yellow, drawArea);
+            g.DrawRectangleProper(Pens.Yellow, screenArea);
 #endif
 
             Draw(g);
@@ -156,22 +156,21 @@ namespace ScreenCapture
 
         public virtual Image GetRegionImage()
         {
-            Image img = SurfaceImage;
-
-            Rectangle regionArea = Rectangle.Round(regionPath.GetBounds());
-            Rectangle newArea = Rectangle.Intersect(regionArea, drawArea);
-
             if (regionPath != null)
             {
+                Image img;
+
+                Rectangle regionArea = Rectangle.Round(regionPath.GetBounds());
+                Rectangle newRegionArea = Rectangle.Intersect(regionArea, screenArea);
+
                 using (GraphicsPath gp = (GraphicsPath)regionPath.Clone())
                 using (Matrix matrix = new Matrix())
                 {
                     gp.CloseFigure();
-                    RectangleF bounds = gp.GetBounds();
-                    matrix.Translate(-bounds.X, -bounds.Y);
+                    matrix.Translate(-Math.Max(0, regionArea.X), -Math.Max(0, regionArea.Y));
                     gp.Transform(matrix);
 
-                    img = CaptureHelpers.CropImage(img, newArea, gp);
+                    img = CaptureHelpers.CropImage(SurfaceImage, newRegionArea, gp);
 
                     if (Config.DrawBorder)
                     {
@@ -183,18 +182,11 @@ namespace ScreenCapture
                 {
                     img = CaptureHelpers.DrawCheckers(img);
                 }
-            }
-            else
-            {
-                img = CaptureHelpers.CropImage(img, newArea);
 
-                if (Config.DrawBorder)
-                {
-                    img = CaptureHelpers.DrawBorder(img);
-                }
+                return img;
             }
 
-            return img;
+            return null;
         }
 
         public void Close(bool isOK)
