@@ -35,6 +35,7 @@ namespace ScreenCapture
     {
         private List<NodeObject> nodes;
         private bool isAreaCreated;
+        private Rectangle currentArea;
 
         public PolygonRegion(Image backgroundImage = null)
             : base(backgroundImage)
@@ -103,7 +104,7 @@ namespace ScreenCapture
             if (nodes.Count > 2)
             {
                 RectangleF rect = regionPath.GetBounds();
-                //CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+                currentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -127,7 +128,7 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                //g.DrawRectangleProper(borderPen, CurrentArea);
+                g.DrawRectangleProper(borderPen, currentArea);
             }
             else
             {
@@ -153,7 +154,7 @@ namespace ScreenCapture
 
         private void ActivateNode(NodeObject node)
         {
-            node.Position = CaptureHelpers.GetZeroBasedMousePosition();
+            node.Position = InputManager.MousePosition;
             node.Visible = true;
             node.IsDragging = true;
         }

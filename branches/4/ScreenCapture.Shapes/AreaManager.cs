@@ -90,7 +90,7 @@ namespace ScreenCapture
 
             if (IsCreating && !CurrentArea.IsEmpty)
             {
-                currentPosition = CaptureHelpers.GetZeroBasedMousePosition();
+                currentPosition = InputManager.MousePosition;
                 CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
             }
 

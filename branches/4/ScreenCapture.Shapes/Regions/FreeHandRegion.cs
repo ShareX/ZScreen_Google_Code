@@ -63,7 +63,7 @@ namespace ScreenCapture
                 }
                 else
                 {
-                    Close(true);
+                    Close(false);
                 }
             }
 
