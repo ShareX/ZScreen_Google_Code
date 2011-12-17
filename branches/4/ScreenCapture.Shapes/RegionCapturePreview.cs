@@ -32,15 +32,19 @@ namespace ScreenCapture
     public partial class RegionCapturePreview : Form
     {
         public Image Result { get; private set; }
+        public SurfaceOptions SurfaceConfig { get; set; }
 
         private Image screenshot;
         private Surface surface;
-        public SurfaceOptions SurfaceConfig { get; set; }
+
+        public RegionCapturePreview()
+            : this(new SurfaceOptions())
+        {
+        }
 
         public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
-            Screenshot.DrawCursor = surfaceConfig.DrawChecker;
 
             screenshot = Screenshot.CaptureFullscreen();
             SurfaceConfig = surfaceConfig;
@@ -82,8 +86,12 @@ namespace ScreenCapture
             if (surface.ShowDialog() == DialogResult.OK)
             {
                 Result = surface.GetRegionImage();
-                pbResult.Image = Result;
-                Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
+
+                if (Result != null)
+                {
+                    pbResult.Image = Result;
+                    Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
+                }
             }
         }
 
@@ -137,7 +145,7 @@ namespace ScreenCapture
 
         private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (pbResult.Image != null)
+            if (Result != null)
             {
                 DialogResult = DialogResult.OK;
             }
@@ -175,6 +183,14 @@ namespace ScreenCapture
         private void cbQuickCrop_CheckedChanged(object sender, EventArgs e)
         {
             SurfaceConfig.QuickCrop = cbQuickCrop.Checked;
+        }
+
+        private void btnClipboardCopy_Click(object sender, EventArgs e)
+        {
+            if (Result != null)
+            {
+                Clipboard.SetImage(Result);
+            }
         }
     }
 }

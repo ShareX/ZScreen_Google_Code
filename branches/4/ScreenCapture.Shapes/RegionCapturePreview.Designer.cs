@@ -46,6 +46,7 @@
             this.nudFixedWidth = new System.Windows.Forms.NumericUpDown();
             this.nudFixedHeight = new System.Windows.Forms.NumericUpDown();
             this.cbQuickCrop = new System.Windows.Forms.CheckBox();
+            this.btnClipboardCopy = new System.Windows.Forms.Button();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.pImage.SuspendLayout();
@@ -177,7 +178,7 @@
             this.cbDrawBorder.Location = new System.Drawing.Point(176, 8);
             this.cbDrawBorder.Name = "cbDrawBorder";
             this.cbDrawBorder.Size = new System.Drawing.Size(84, 17);
-            this.cbDrawBorder.TabIndex = 1;
+            this.cbDrawBorder.TabIndex = 3;
             this.cbDrawBorder.Text = "Draw border";
             this.cbDrawBorder.UseVisualStyleBackColor = true;
             this.cbDrawBorder.CheckedChanged += new System.EventHandler(this.cbDrawBorder_CheckedChanged);
@@ -192,7 +193,7 @@
             this.pImage.Location = new System.Drawing.Point(176, 32);
             this.pImage.Name = "pImage";
             this.pImage.Size = new System.Drawing.Size(936, 608);
-            this.pImage.TabIndex = 7;
+            this.pImage.TabIndex = 4;
             // 
             // cbIsFixedSize
             // 
@@ -201,7 +202,7 @@
             this.cbIsFixedSize.Location = new System.Drawing.Point(432, 8);
             this.cbIsFixedSize.Name = "cbIsFixedSize";
             this.cbIsFixedSize.Size = new System.Drawing.Size(86, 17);
-            this.cbIsFixedSize.TabIndex = 3;
+            this.cbIsFixedSize.TabIndex = 5;
             this.cbIsFixedSize.Text = "Is fixed size?";
             this.cbIsFixedSize.UseVisualStyleBackColor = true;
             this.cbIsFixedSize.CheckedChanged += new System.EventHandler(this.cbIsFixedSize_CheckedChanged);
@@ -221,7 +222,7 @@
             0});
             this.nudFixedWidth.Name = "nudFixedWidth";
             this.nudFixedWidth.Size = new System.Drawing.Size(56, 20);
-            this.nudFixedWidth.TabIndex = 4;
+            this.nudFixedWidth.TabIndex = 6;
             this.nudFixedWidth.Value = new decimal(new int[] {
             250,
             0,
@@ -239,7 +240,7 @@
             0});
             this.nudFixedHeight.Name = "nudFixedHeight";
             this.nudFixedHeight.Size = new System.Drawing.Size(56, 20);
-            this.nudFixedHeight.TabIndex = 5;
+            this.nudFixedHeight.TabIndex = 7;
             this.nudFixedHeight.Value = new decimal(new int[] {
             250,
             0,
@@ -254,10 +255,20 @@
             this.cbQuickCrop.Location = new System.Drawing.Point(648, 8);
             this.cbQuickCrop.Name = "cbQuickCrop";
             this.cbQuickCrop.Size = new System.Drawing.Size(78, 17);
-            this.cbQuickCrop.TabIndex = 6;
+            this.cbQuickCrop.TabIndex = 2;
             this.cbQuickCrop.Text = "Quick crop";
             this.cbQuickCrop.UseVisualStyleBackColor = true;
             this.cbQuickCrop.CheckedChanged += new System.EventHandler(this.cbQuickCrop_CheckedChanged);
+            // 
+            // btnClipboardCopy
+            // 
+            this.btnClipboardCopy.Location = new System.Drawing.Point(728, 5);
+            this.btnClipboardCopy.Name = "btnClipboardCopy";
+            this.btnClipboardCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnClipboardCopy.TabIndex = 2;
+            this.btnClipboardCopy.Text = "Copy";
+            this.btnClipboardCopy.UseVisualStyleBackColor = true;
+            this.btnClipboardCopy.Click += new System.EventHandler(this.btnClipboardCopy_Click);
             // 
             // RegionCapturePreview
             // 
@@ -265,6 +276,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
+            this.Controls.Add(this.btnClipboardCopy);
             this.Controls.Add(this.cbQuickCrop);
             this.Controls.Add(this.nudFixedHeight);
             this.Controls.Add(this.nudFixedWidth);
@@ -307,5 +319,6 @@
         private System.Windows.Forms.NumericUpDown nudFixedWidth;
         private System.Windows.Forms.NumericUpDown nudFixedHeight;
         private System.Windows.Forms.CheckBox cbQuickCrop;
+        private System.Windows.Forms.Button btnClipboardCopy;
     }
 }

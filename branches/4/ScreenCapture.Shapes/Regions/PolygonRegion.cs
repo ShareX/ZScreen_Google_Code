@@ -27,12 +27,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
     public class PolygonRegion : Surface
     {
         private List<NodeObject> nodes;
+        private bool isAreaCreated;
 
         public PolygonRegion(Image backgroundImage = null)
             : base(backgroundImage)
@@ -58,32 +60,30 @@ namespace ScreenCapture
 
                 CreateNode();
 
-                IsAreaCreated = true;
+                isAreaCreated = true;
             }
-        }
-
-        protected override void OnRightClickCancel()
-        {
-            if (IsAreaCreated)
+            else if (e.Button == MouseButtons.Right)
             {
-                foreach (NodeObject node in nodes)
+                if (isAreaCreated)
                 {
-                    if (node.IsMouseHover)
+                    foreach (NodeObject node in nodes)
                     {
-                        nodes.Remove(node);
-                        DrawableObjects.Remove(node);
-                        return;
+                        if (node.IsMouseHover)
+                        {
+                            nodes.Remove(node);
+                            DrawableObjects.Remove(node);
+                            return;
+                        }
                     }
-                }
 
-                IsAreaCreated = false;
-                CurrentArea = Rectangle.Empty;
-                nodes.Clear();
-                DrawableObjects.Clear();
-            }
-            else
-            {
-                Close(true);
+                    isAreaCreated = false;
+                    nodes.Clear();
+                    DrawableObjects.Clear();
+                }
+                else
+                {
+                    Close(false);
+                }
             }
         }
 
@@ -103,7 +103,7 @@ namespace ScreenCapture
             if (nodes.Count > 2)
             {
                 RectangleF rect = regionPath.GetBounds();
-                CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+                //CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -127,7 +127,7 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                //g.DrawRectangleProper(borderPen, CurrentArea);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace ScreenCapture
 
         private void ActivateNode(NodeObject node)
         {
-            node.Position = ClientMousePosition;
+            node.Position = CaptureHelpers.GetZeroBasedMousePosition();
             node.Visible = true;
             node.IsDragging = true;
         }

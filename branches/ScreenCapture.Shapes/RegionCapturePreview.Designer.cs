@@ -46,6 +46,7 @@
             this.nudFixedWidth = new System.Windows.Forms.NumericUpDown();
             this.nudFixedHeight = new System.Windows.Forms.NumericUpDown();
             this.cbQuickCrop = new System.Windows.Forms.CheckBox();
+            this.btnClipboardCopy = new System.Windows.Forms.Button();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.pImage.SuspendLayout();
@@ -259,12 +260,23 @@
             this.cbQuickCrop.UseVisualStyleBackColor = true;
             this.cbQuickCrop.CheckedChanged += new System.EventHandler(this.cbQuickCrop_CheckedChanged);
             // 
+            // btnClipboardCopy
+            // 
+            this.btnClipboardCopy.Location = new System.Drawing.Point(728, 5);
+            this.btnClipboardCopy.Name = "btnClipboardCopy";
+            this.btnClipboardCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnClipboardCopy.TabIndex = 2;
+            this.btnClipboardCopy.Text = "Copy";
+            this.btnClipboardCopy.UseVisualStyleBackColor = true;
+            this.btnClipboardCopy.Click += new System.EventHandler(this.btnClipboardCopy_Click);
+            // 
             // RegionCapturePreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
+            this.Controls.Add(this.btnClipboardCopy);
             this.Controls.Add(this.cbQuickCrop);
             this.Controls.Add(this.nudFixedHeight);
             this.Controls.Add(this.nudFixedWidth);
@@ -307,5 +319,6 @@
         private System.Windows.Forms.NumericUpDown nudFixedWidth;
         private System.Windows.Forms.NumericUpDown nudFixedHeight;
         private System.Windows.Forms.CheckBox cbQuickCrop;
+        private System.Windows.Forms.Button btnClipboardCopy;
     }
 }

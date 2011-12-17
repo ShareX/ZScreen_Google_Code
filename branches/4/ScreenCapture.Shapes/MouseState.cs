@@ -23,32 +23,27 @@
 
 #endregion License Information (GPL v2)
 
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
-    public class DragableRegion : Surface
+    public struct MouseState
     {
-        protected DrawableObject areaObject;
+        public MouseButtons Buttons { get; private set; }
+        public Point Position { get; private set; }
+        public Point ZeroBasedPosition { get; private set; }
 
-        public DragableRegion(Image backgroundImage = null)
-            : base(backgroundImage)
+        public void Update()
         {
-            areaObject = new DrawableObject { Order = -10 };
-            DrawableObjects.Add(areaObject);
-        }
-
-        protected override void Update()
-        {
-            areaObject.Rectangle = CurrentArea;
-
-            base.Update();
-
-            if (areaObject.IsDragging && DrawableObjects.OfType<NodeObject>().All(x => !x.IsDragging && !x.IsMouseHover))
-            {
-                MoveArea(mousePosition.X - oldMousePosition.X, mousePosition.Y - oldMousePosition.Y);
-            }
+            Buttons = Control.MouseButtons;
+            Position = Control.MousePosition;
+            ZeroBasedPosition = CaptureHelpers.FixScreenCoordinates(Position);
         }
     }
 }
