@@ -1123,7 +1123,7 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
-                    Data = PrepareData(savePath);
+                    Data = PrepareDataFromFile(savePath);
                 }
                 else
                 {
@@ -1385,7 +1385,7 @@ namespace ZScreenLib
             MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_tray);
         }
 
-        private Stream PrepareData(string fp)
+        private Stream PrepareDataFromFile(string fp)
         {
             Stream data = null;
             using (var fs = new FileStream(fp, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -1393,6 +1393,15 @@ namespace ZScreenLib
                 data = new MemoryStream();
                 fs.CopyStreamTo(data);
             }
+            return data;
+        }
+
+        private Stream PrepareDataFromImage(Image img)
+        {
+            Stream data = null;
+            StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
+            EImageFormat imageFormat;
+            data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, img, out imageFormat, bTargetFileSize: true);
             return data;
         }
 
@@ -1408,13 +1417,11 @@ namespace ZScreenLib
             if (File.Exists(Info.LocalFilePath)) // priority 1: filepath before image
             {
                 StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from " + Info.LocalFilePath);
-                data = PrepareData(Info.LocalFilePath);
+                data = PrepareDataFromFile(Info.LocalFilePath);
             }
             else if (TempImage != null)
             {
-                StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
-                EImageFormat imageFormat;
-                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, TempImage, out imageFormat, bTargetFileSize: true);
+                data = PrepareDataFromImage(TempImage);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -2107,7 +2114,7 @@ namespace ZScreenLib
                 !States.Contains(TaskState.ImageWritten))
             {
                 // PrepareData instead of using Data
-                FileInfo fi = FileSystem.WriteImage(Info.LocalFilePath, PrepareData());
+                FileInfo fi = FileSystem.WriteImage(Info.LocalFilePath, PrepareDataFromImage(img));
                 SetFileSize(fi.Length);
                 States.Add(TaskState.ImageWritten);
 

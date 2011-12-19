@@ -92,7 +92,21 @@ namespace ZScreenLib
             {
                 Directory.CreateDirectory(destDir);
             }
-            if (!File.Exists(fp))
+
+            DialogResult result = DialogResult.Cancel;
+
+            if (Engine.ConfigWorkflow.ConfigFileNaming.OverwriteFiles)
+                result = DialogResult.OK;
+            else if (File.Exists(fp))
+            {
+                if (MessageBox.Show(string.Format("{0} already exists. \nDo you want to overwrite the existing file?", fp),
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    result = DialogResult.OK;
+                }
+            }
+
+            if (result == DialogResult.OK)
             {
                 using (stream)
                 {
