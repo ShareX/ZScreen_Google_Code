@@ -93,7 +93,7 @@ namespace ZScreenLib
                 Directory.CreateDirectory(destDir);
             }
 
-            DialogResult result = DialogResult.Cancel;
+            DialogResult result = DialogResult.OK;
 
             if (Engine.ConfigWorkflow.ConfigFileNaming.OverwriteFiles)
                 result = DialogResult.OK;
@@ -103,6 +103,10 @@ namespace ZScreenLib
                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
                     result = DialogResult.OK;
+                }
+                else
+                {
+                    result = DialogResult.Cancel;
                 }
             }
 
