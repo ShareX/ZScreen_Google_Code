@@ -278,7 +278,7 @@ namespace HelpersLib
             return bmp;
         }
 
-        public static Image DrawBorder(Image img, GraphicsPath gp)
+        public static Image DrawOutline(Image img, GraphicsPath gp)
         {
             if (img != null && gp != null)
             {
@@ -287,6 +287,7 @@ namespace HelpersLib
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
+                    gp.WindingModeOutline();
                     g.DrawPath(Pens.Black, gp);
                 }
 

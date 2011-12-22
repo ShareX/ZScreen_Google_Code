@@ -86,7 +86,9 @@ namespace ScreenCapture
                 if (!AreaManager.CurrentArea.IsEmpty)
                 {
                     g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
+                    g.ExcludeClip(AreaManager.CurrentArea);
                     DrawObjects(g);
+                    g.ResetClip();
                 }
 
                 foreach (Rectangle area in AreaManager.Areas)

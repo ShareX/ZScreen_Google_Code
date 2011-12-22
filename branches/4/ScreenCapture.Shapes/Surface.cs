@@ -176,7 +176,7 @@ namespace ScreenCapture
 
                     if (Config.DrawBorder)
                     {
-                        img = CaptureHelpers.DrawBorder(img, gp);
+                        img = CaptureHelpers.DrawOutline(img, gp);
                     }
                 }
 
