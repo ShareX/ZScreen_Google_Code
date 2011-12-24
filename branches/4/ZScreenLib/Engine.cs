@@ -94,13 +94,13 @@ namespace ZScreenLib
 
         public static AppSettings ConfigApp = AppSettings.Read();
 
-        public static XMLSettings ConfigUI { get; set; }
+        public static XMLSettings ConfigUI = new XMLSettings(); // create object for Config Wizard
 
         public static ZScreenOptions ConfigOptions = new ZScreenOptions();
 
         public static Workflow ConfigWorkflow { get; set; }
 
-        public static UploadersConfig ConfigUploaders = new UploadersConfig();
+        public static UploadersConfig ConfigUploaders = new UploadersConfig(); // create object for Config Wizard
 
         public static GoogleTranslatorConfig ConfigGT { get; set; }
 
@@ -219,7 +219,7 @@ namespace ZScreenLib
                 {
                     string imagesDir = RootImagesDir;
                     string saveFolderPath = string.Empty;
-                    if (Engine.ConfigUI != null)
+                    if (Engine.ConfigWorkflow != null)
                     {
                         saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
                         if (!IsPortable && Engine.ConfigApp.PreferSystemFolders)
