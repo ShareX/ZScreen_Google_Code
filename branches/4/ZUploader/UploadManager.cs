@@ -324,9 +324,17 @@ namespace ZUploader
                 lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
                     info.Progress.Position / 1024, info.Progress.Length / 1024);
                 lvi.SubItems[3].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
-                lvi.SubItems[4].Text = string.Format("{0:00}:{1:00}", info.Progress.Elapsed.Minutes, info.Progress.Elapsed.Seconds);
-                lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.Remaining.Minutes, info.Progress.Remaining.Seconds);
+                lvi.SubItems[4].Text = ProperTimeSpan(info.Progress.Elapsed);
+                lvi.SubItems[5].Text = ProperTimeSpan(info.Progress.Remaining);
             }
+        }
+
+        private static string ProperTimeSpan(TimeSpan ts)
+        {
+            string time = string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+            int hours = (int)ts.TotalHours;
+            if (hours > 0) time = hours + ":" + time;
+            return time;
         }
 
         private static void task_UploadCompleted(UploadInfo info)
