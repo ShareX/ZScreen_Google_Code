@@ -1222,8 +1222,13 @@ namespace ZScreenLib
             Job1 = EDataType.Text;
             TempText = text;
 
+            string ext = ".log";
+            if (WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
+            {
+                ext = ".html";
+            }
             string fptxt = FileSystem.GetUniqueFilePath(Engine.ConfigWorkflow, Engine.TextDir,
-                                                        new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                                                        new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ext);
             UpdateLocalFilePath(fptxt);
 
             if (Directory.Exists(text))
@@ -1233,12 +1238,7 @@ namespace ZScreenLib
                 var settings = new IndexerAdapter();
                 settings.LoadConfig(Engine.ConfigOptions.IndexerConfig);
                 Engine.ConfigOptions.IndexerConfig.FolderList.Clear();
-                string ext = ".log";
-                if (WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
-                {
-                    ext = ".html";
-                }
-                Info.FileName = Path.GetFileName(TempText) + ext;
+
                 settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, Info.FileName));
                 settings.GetConfig().FolderList.Add(TempText);
 
@@ -1281,7 +1281,6 @@ namespace ZScreenLib
                 {
                     Info.LocalFilePath = Path.ChangeExtension(Info.LocalFilePath, Path.GetExtension(fp));
                 }
-                Info.FileName = Path.GetFileName(Info.LocalFilePath);
 
                 if (ZAppHelper.IsTextFile(fp))
                 {

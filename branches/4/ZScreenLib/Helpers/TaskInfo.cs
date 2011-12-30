@@ -40,7 +40,13 @@ namespace ZScreenLib
 
         public NotifyIcon TrayIcon { get; set; }
 
-        public string FileName { get; set; }
+        public string FileName
+        {
+            get
+            {
+                return Path.GetFileName(mFilePath);
+            }
+        }
 
         public string FileSize { get; set; }
 
