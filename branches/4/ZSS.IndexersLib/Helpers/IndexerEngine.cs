@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ZSS.IndexersLib
@@ -59,7 +60,7 @@ namespace ZSS.IndexersLib
             protected set { mCurrentDirMsg = value; }
         }
 
-        public virtual void IndexNow(IndexingMode mIndexMode)
+        public virtual string IndexNow(IndexingMode mIndexMode, bool bWriteToFile = true)
         {
             // Does not seem to reach here
 
@@ -80,7 +81,7 @@ namespace ZSS.IndexersLib
 
             if (dneFolderList.Count > 0)
             {
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                StringBuilder sb = new System.Text.StringBuilder();
                 foreach (string dp in dneFolderList)
                 {
                     sb.AppendLine(dp);
@@ -91,6 +92,7 @@ namespace ZSS.IndexersLib
             // Overrides by Sub Classes
 
             mSettings.GetConfig().FolderList = fixedFolderList;
+            return new StringBuilder().ToString();
         }
     }
 }

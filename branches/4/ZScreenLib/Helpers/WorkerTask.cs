@@ -410,7 +410,7 @@ namespace ZScreenLib
                 result = wfw.ShowDialog();
             }
 
-            if (result == DialogResult.OK)
+            if (Job1 == EDataType.Image && result == DialogResult.OK)
             {
                 if (!States.Contains(TaskState.ImageProcessed))
                 {
@@ -1233,8 +1233,6 @@ namespace ZScreenLib
 
             if (Directory.Exists(text))
             {
-                Job3 = JobLevel3.IndexFolder;
-
                 var settings = new IndexerAdapter();
                 settings.LoadConfig(Engine.ConfigOptions.IndexerConfig);
                 Engine.ConfigOptions.IndexerConfig.FolderList.Clear();
@@ -1255,17 +1253,18 @@ namespace ZScreenLib
 
                 if (indexer != null)
                 {
-                    indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                    Job3 = JobLevel3.IndexFolder;
+                    TempText = indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED, false);
                     UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
                 }
-            }
-            else if (FileSystem.IsValidLink(text))
-            {
-                Job3 = JobLevel3.ShortenURL;
-            }
-            else
-            {
-                Job3 = JobLevel3.UploadText;
+                else if (FileSystem.IsValidLink(text))
+                {
+                    Job3 = JobLevel3.ShortenURL;
+                }
+                else
+                {
+                    Job3 = JobLevel3.UploadText;
+                }
             }
         }
 

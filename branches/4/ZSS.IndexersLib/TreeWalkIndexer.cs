@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace ZSS.IndexersLib
 {
@@ -121,7 +122,7 @@ namespace ZSS.IndexersLib
             return null;
         }
 
-        public override void IndexNow(IndexingMode mIndexMode)
+        public override string IndexNow(IndexingMode mIndexMode, bool bWriteToFile = true)
         {
             TreeWalkIndexer tree = new TreeWalkIndexer(mSettings);
             bool isMergeFile = mSettings.GetConfig().MergeFiles;
@@ -129,11 +130,11 @@ namespace ZSS.IndexersLib
 
             for (int i = 0; i <= mSettings.GetConfig().FolderList.Count - 1; i++)
             {
-                string TEMP_FILE = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\temp" + i.ToString() + ".bat";
+                string batFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\temp" + i.ToString() + ".bat";
                 string CURRENT_DIR = mSettings.GetConfig().FolderList[i];
                 string TREE_COMMAND = "%windir%\\system32\\tree.com " + tree.getSourceSwitch(CURRENT_DIR) + tree.getAsciiSwitch() + tree.getAddFilesSwitch() + tree.getOutputSwitch(CURRENT_DIR, mIndexMode);
-                Debug.WriteLine(TREE_COMMAND);
-                using (StreamWriter sw = new StreamWriter(TEMP_FILE))
+
+                using (StreamWriter sw = new StreamWriter(batFilePath))
                 {
                     sw.WriteLine(TREE_COMMAND);
                     //1.5.3.4 Didn't tag index files created in the same folder witout appending
@@ -142,10 +143,11 @@ namespace ZSS.IndexersLib
                         sw.WriteLine(mSettings.getBlankLine(tree.getCurrentIndexFilePath()));
                         sw.WriteLine(mSettings.GetFooterText(tree.getCurrentIndexFilePath(), IndexingEngine.TreeLib, false));
                     }
-                    sw.WriteLine("DEL " + (char)34 + TEMP_FILE + (char)34);
+                    sw.WriteLine("DEL " + (char)34 + batFilePath + (char)34);
                 }
+
                 Process proc = new Process();
-                proc = mSettings.StartHiddenProcess(TEMP_FILE, true);
+                proc = mSettings.StartHiddenProcess(batFilePath, true);
 
                 if (isRemoveBranches)
                 {
@@ -179,6 +181,8 @@ namespace ZSS.IndexersLib
                     this.CurrentDirMessage = "Indexed " + mSettings.GetConfig().FolderList[i];
                 }
             }
+
+            return File.ReadAllText(tree.getCurrentIndexFilePath());
         }
 
         private void removeTreeBranches(string filePath)
