@@ -1699,6 +1699,14 @@ namespace ZScreenLib
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
                     fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo);
                     break;
+                case FileUploaderType.Box:
+                    fileUploader = new Box(ZKeys.BoxKey)
+                     {
+                         AuthToken = Engine.ConfigUploaders.BoxAuthToken,
+                         FolderID = Engine.ConfigUploaders.BoxFolderID,
+                         Share = Engine.ConfigUploaders.BoxShare
+                     };
+                    break;
                 case FileUploaderType.SendSpace:
                     fileUploader = new SendSpace(Engine.ConfigUI.ApiKeys.SendSpaceKey);
                     switch (Engine.ConfigUploaders.SendSpaceAccountType)

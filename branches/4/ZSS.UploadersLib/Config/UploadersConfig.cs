@@ -214,6 +214,8 @@ namespace UploadersLib
                     return SendSpaceAccountType == AccountType.Anonymous || (!string.IsNullOrEmpty(SendSpaceUsername) && !string.IsNullOrEmpty(SendSpacePassword));
                 case FileUploaderType.Minus:
                     return MinusConfig != null && MinusConfig.MinusUser != null;
+                case FileUploaderType.Box:
+                    return !string.IsNullOrEmpty(BoxAuthToken);
                 case FileUploaderType.CustomUploader:
                     return CustomUploadersList != null && CustomUploadersList.Count > 0;
                 case FileUploaderType.FTP:
