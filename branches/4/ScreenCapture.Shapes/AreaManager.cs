@@ -152,7 +152,15 @@ namespace ScreenCapture
                 if (!CurrentArea.IsEmpty)
                 {
                     IsCreating = false;
-                    SelectArea();
+
+                    if (surface.Config.QuickCrop)
+                    {
+                        surface.Close(true);
+                    }
+                    else
+                    {
+                        SelectArea();
+                    }
                 }
 
                 if (IsMoving)

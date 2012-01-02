@@ -67,6 +67,11 @@ namespace ScreenCapture
                 }
             }
 
+            if (Config.QuickCrop && isAreaCreated && InputManager.IsMouseReleased(MouseButtons.Left))
+            {
+                Close(true);
+            }
+
             if (!isAreaCreated && InputManager.IsMouseDown(MouseButtons.Left))
             {
                 lastNode.Visible = true;
