@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
@@ -126,11 +127,7 @@ namespace UploadersLib
             {
                 if (lbUsers.SelectedIndex != -1)
                 {
-                    List<string> temp = new List<string>();
-                    foreach (string hi in lbUsers.SelectedItems)
-                    {
-                        temp.Add(hi);
-                    }
+                    List<string> temp = lbUsers.SelectedItems.Cast<string>().ToList();
 
                     foreach (string hi in temp)
                     {

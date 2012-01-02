@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
@@ -381,14 +382,7 @@ namespace UploadersLib
 
         private bool HasFolder(string name)
         {
-            foreach (MinusFolder mf in cboMinusFolders.Items)
-            {
-                if (mf.name == name)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return cboMinusFolders.Items.Cast<MinusFolder>().Any(mf => mf.name == name);
         }
 
         private void btnMinusAuth_Click(object sender, EventArgs e)

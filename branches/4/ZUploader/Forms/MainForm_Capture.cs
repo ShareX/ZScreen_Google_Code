@@ -179,10 +179,8 @@ namespace ZUploader
                 {
                     return Screenshot.CaptureWindowTransparent(handle);
                 }
-                else
-                {
-                    return Screenshot.CaptureWindow(handle);
-                }
+
+                return Screenshot.CaptureWindow(handle);
             }, autoHideForm);
         }
 

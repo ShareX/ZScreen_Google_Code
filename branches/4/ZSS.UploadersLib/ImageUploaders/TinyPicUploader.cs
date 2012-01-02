@@ -144,10 +144,8 @@ namespace UploadersLib.ImageUploaders
 
                 return upk;
             }
-            else
-            {
-                Errors.Add("Unable to get upload key.");
-            }
+
+            Errors.Add("Unable to get upload key.");
 
             return null;
         }

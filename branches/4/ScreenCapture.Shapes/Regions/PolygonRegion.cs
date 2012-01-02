@@ -26,6 +26,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -49,9 +50,9 @@ namespace ScreenCapture
         {
             if (e.Button == MouseButtons.Left)
             {
-                foreach (NodeObject node in DrawableObjects)
+                if (DrawableObjects.Cast<NodeObject>().Any(node => node.IsMouseHover || node.IsDragging))
                 {
-                    if (node.IsMouseHover || node.IsDragging) return;
+                    return;
                 }
 
                 if (nodes.Count == 0)

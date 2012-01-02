@@ -56,7 +56,8 @@ namespace UploadersLib.URLShorteners
                     {
                         return "http://turl.ca/" + response.Substring(8);
                     }
-                    else if (response.StartsWith("ERROR:"))
+
+                    if (response.StartsWith("ERROR:"))
                     {
                         this.Errors.Add(response.Substring(6));
                     }

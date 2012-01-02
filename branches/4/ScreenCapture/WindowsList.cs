@@ -25,7 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using HelpersLib;
 
 namespace ScreenCapture
@@ -59,17 +59,8 @@ namespace ScreenCapture
         public List<WindowInfo> GetVisibleWindowsList()
         {
             List<WindowInfo> windows = GetWindowsList();
-            List<WindowInfo> visibleWindows = new List<WindowInfo>();
 
-            foreach (WindowInfo window in windows)
-            {
-                if (IsValidWindow(window))
-                {
-                    visibleWindows.Add(window);
-                }
-            }
-
-            return visibleWindows;
+            return windows.Where(window => IsValidWindow(window)).ToList();
         }
 
         private bool IsValidWindow(WindowInfo window)
@@ -83,13 +74,7 @@ namespace ScreenCapture
 
             if (!string.IsNullOrEmpty(className))
             {
-                foreach (string ignore in ignoreList)
-                {
-                    if (className.Equals(ignore, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        return false;
-                    }
-                }
+                return ignoreList.All(ignore => !className.Equals(ignore, StringComparison.InvariantCultureIgnoreCase));
             }
 
             return true;
@@ -97,9 +82,9 @@ namespace ScreenCapture
 
         private bool EvalWindows(IntPtr hWnd, IntPtr lParam)
         {
-            foreach (IntPtr window in IgnoreWindows)
+            if (IgnoreWindows.Any(window => hWnd == window))
             {
-                if (hWnd == window) return true;
+                return true;
             }
 
             windows.Add(new WindowInfo(hWnd));

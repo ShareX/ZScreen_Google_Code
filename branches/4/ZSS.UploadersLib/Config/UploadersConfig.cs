@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -258,11 +259,7 @@ namespace UploadersLib
             switch (ut)
             {
                 case TextUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
+                    return Enum.GetValues(typeof(FileUploaderType)).Cast<FileUploaderType>().Any(fu => IsActive(fu));
                 default:
                     return true;
             }
@@ -293,11 +290,7 @@ namespace UploadersLib
                 case ImageUploaderType.YFROG:
                     return !string.IsNullOrEmpty(YFrogPassword);
                 case ImageUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
+                    return Enum.GetValues(typeof(FileUploaderType)).Cast<FileUploaderType>().Any(fu => IsActive(fu));
             }
 
             return false;

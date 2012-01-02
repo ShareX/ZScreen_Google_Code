@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -185,15 +186,7 @@ namespace ScreenCapture
 
         public bool IsCursorOnNode()
         {
-            foreach (NodeObject node in nodes)
-            {
-                if (node.IsMouseHover)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return nodes.Any(node => node.IsMouseHover);
         }
 
         public void Show()

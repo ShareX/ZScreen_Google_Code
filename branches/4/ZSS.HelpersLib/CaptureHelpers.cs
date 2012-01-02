@@ -26,8 +26,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
-using HelpersLib;
 
 namespace HelpersLib
 {
@@ -72,14 +72,7 @@ namespace HelpersLib
 
         public static Rectangle GetScreenBounds4()
         {
-            Rectangle rect = Rectangle.Empty;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                rect = Rectangle.Union(rect, screen.Bounds);
-            }
-
-            return rect;
+            return Screen.AllScreens.Aggregate(Rectangle.Empty, (current, screen) => Rectangle.Union(current, screen.Bounds));
         }
 
         public static Rectangle GetActiveScreenBounds()

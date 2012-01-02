@@ -502,10 +502,7 @@ namespace UploadersLib
                     string[] values = args.GetValues(key);
                     string isArray = values.Length > 1 ? "[]" : string.Empty;
 
-                    foreach (string value in values)
-                    {
-                        commands.Add(key + isArray + "=" + HttpUtility.UrlEncode(value));
-                    }
+                    commands.AddRange(values.Select(value => key + isArray + "=" + HttpUtility.UrlEncode(value)));
                 }
 
                 return string.Join("&", commands.ToArray());

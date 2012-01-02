@@ -215,7 +215,9 @@ namespace ScreenCapture
                 {
                     DrawableObject obj = objects[i];
 
-                    if (obj.IsMouseHover = obj.Rectangle.Contains(InputManager.MousePosition))
+                    obj.IsMouseHover = obj.Rectangle.Contains(InputManager.MousePosition);
+
+                    if (obj.IsMouseHover)
                     {
                         for (int y = i + 1; y < objects.Count(); y++)
                         {

@@ -128,15 +128,7 @@ namespace HelpersLib
 
         public static ImageCodecInfo GetCodecInfo(this ImageFormat format)
         {
-            foreach (ImageCodecInfo info in ImageCodecInfo.GetImageEncoders())
-            {
-                if (info.FormatID.Equals(format.Guid))
-                {
-                    return info;
-                }
-            }
-
-            return null;
+            return ImageCodecInfo.GetImageEncoders().FirstOrDefault(info => info.FormatID.Equals(format.Guid));
         }
 
         public static string GetMimeType(this ImageFormat format)

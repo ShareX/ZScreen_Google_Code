@@ -95,7 +95,9 @@ namespace ScreenCapture
             if (surface is RectangleRegion)
             {
                 RectangleRegion rectangle = (RectangleRegion)surface;
-                if (rectangle.Config.IsFixedSize = cbIsFixedSize.Checked)
+                rectangle.Config.IsFixedSize = cbIsFixedSize.Checked;
+
+                if (rectangle.Config.IsFixedSize)
                 {
                     rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
                 }

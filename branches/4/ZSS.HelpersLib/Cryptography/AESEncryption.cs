@@ -11,6 +11,7 @@ namespace HelpersLib
     public static class AESEncryption
     {
         #region Static Functions
+
         /// <summary>
         /// Encrypts a string
         /// </summary>
@@ -86,7 +87,6 @@ namespace HelpersLib
                     {
                         using (CryptoStream CryptoStream = new CryptoStream(MemStream, Decryptor, CryptoStreamMode.Read))
                         {
-
                             ByteCount = CryptoStream.Read(PlainTextBytes, 0, PlainTextBytes.Length);
                             MemStream.Close();
                             CryptoStream.Close();
@@ -101,6 +101,7 @@ namespace HelpersLib
                 return CipherText;
             }
         }
-        #endregion
+
+        #endregion Static Functions
     }
 }

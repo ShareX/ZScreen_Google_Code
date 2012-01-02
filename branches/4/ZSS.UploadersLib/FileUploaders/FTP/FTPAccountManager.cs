@@ -23,10 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
 using HelpersLib;
 
 namespace UploadersLib

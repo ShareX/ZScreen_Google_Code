@@ -375,10 +375,8 @@ namespace UploadersLib
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
-                    else
-                    {
-                        MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+
+                    MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -697,6 +695,7 @@ namespace UploadersLib
                         {
                             msg += "\n\nPing results:\n" + ping;
                         }
+
                         if (silent)
                         {
                             // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
@@ -894,11 +893,9 @@ namespace UploadersLib
                     lblGooglAccountStatus.Text = "Login successful: " + Config.GoogleURLShortenerOAuthInfo.UserToken;
                     return;
                 }
-                else
-                {
-                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    atcGoogleURLShortenerAccountType.SelectedAccountType = AccountType.Anonymous;
-                }
+
+                MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                atcGoogleURLShortenerAccountType.SelectedAccountType = AccountType.Anonymous;
             }
             else
             {

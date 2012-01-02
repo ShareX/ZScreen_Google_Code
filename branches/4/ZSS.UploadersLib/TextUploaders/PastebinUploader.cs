@@ -67,10 +67,8 @@ namespace UploadersLib.TextUploaders
                     Settings.UserKey = loginResponse;
                     return true;
                 }
-                else
-                {
-                    Errors.Add("Pastebin login failed.");
-                }
+
+                Errors.Add("Pastebin login failed.");
             }
 
             return false;
@@ -103,10 +101,8 @@ namespace UploadersLib.TextUploaders
                 {
                     return response;
                 }
-                else
-                {
-                    Errors.Add(response);
-                }
+
+                Errors.Add(response);
             }
 
             return null;

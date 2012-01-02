@@ -57,10 +57,8 @@ namespace ZUploader
                 {
                     return PortablePersonalPath;
                 }
-                else
-                {
-                    return DefaultPersonalPath;
-                }
+
+                return DefaultPersonalPath;
             }
         }
 
@@ -80,10 +78,8 @@ namespace ZUploader
                 {
                     return Settings.CustomHistoryPath;
                 }
-                else
-                {
-                    return Path.Combine(PersonalPath, HistoryFileName);
-                }
+
+                return Path.Combine(PersonalPath, HistoryFileName);
             }
         }
 
@@ -95,10 +91,8 @@ namespace ZUploader
                 {
                     return Settings.CustomUploadersConfigPath;
                 }
-                else
-                {
-                    return Path.Combine(PersonalPath, UploadersConfigFileName);
-                }
+
+                return Path.Combine(PersonalPath, UploadersConfigFileName);
             }
         }
 
