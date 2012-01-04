@@ -49,6 +49,7 @@ namespace ZUploader
             HotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
             HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
             HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveMonitor, Program.Settings.HotkeyActiveMonitor, () => CaptureActiveMonitor(false));
+            HotkeyManager.AddHotkey(ZUploaderHotkey.WindowRectangle, Program.Settings.HotkeyWindowRectangle, () => WindowRectangleCapture(false), tsmiWindowRectangle);
             HotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
                 () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
             HotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
@@ -245,11 +246,16 @@ namespace ZUploader
             }
         }
 
-        private void tsmiWindows_Click(object sender, EventArgs e)
+        private void WindowRectangleCapture(bool autoHideForm = true)
         {
             RectangleRegion rectangleRegion = new RectangleRegion();
             rectangleRegion.AreaManager.WindowCaptureMode = true;
-            CaptureRegion(rectangleRegion);
+            CaptureRegion(rectangleRegion, autoHideForm);
+        }
+
+        private void tsmiWindowRectangle_Click(object sender, EventArgs e)
+        {
+            WindowRectangleCapture();
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)

@@ -45,13 +45,13 @@ namespace ScreenCapture
 
         private TextureBrush backgroundBrush;
         private Rectangle screenArea;
-        protected Stopwatch timer;
         private int frameCount;
 
         protected GraphicsPath regionPath;
         protected Pen borderPen, borderDotPen, borderDotPen2;
         protected Brush shadowBrush, lightBrush, nodeBackgroundBrush;
         protected Font textFont;
+        protected Stopwatch timer;
 
         public Surface(Image backgroundImage = null)
         {

@@ -72,7 +72,7 @@ namespace ZUploader
             this.tsddbCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiWindows = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWindowRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRoundedRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEllipse = new System.Windows.Forms.ToolStripMenuItem();
@@ -267,7 +267,7 @@ namespace ZUploader
             this.tsddbCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFullscreen,
             this.tsmiWindow,
-            this.tsmiWindows,
+            this.tsmiWindowRectangle,
             this.tsmiRectangle,
             this.tsmiRoundedRectangle,
             this.tsmiEllipse,
@@ -297,13 +297,13 @@ namespace ZUploader
             this.tsmiWindow.Size = new System.Drawing.Size(186, 22);
             this.tsmiWindow.Text = "Window";
             // 
-            // tsmiWindows
+            // tsmiWindowRectangle
             // 
-            this.tsmiWindows.Image = global::ZUploader.Properties.Resources.Window;
-            this.tsmiWindows.Name = "tsmiWindows";
-            this.tsmiWindows.Size = new System.Drawing.Size(186, 22);
-            this.tsmiWindows.Text = "Window && Rectangle";
-            this.tsmiWindows.Click += new System.EventHandler(this.tsmiWindows_Click);
+            this.tsmiWindowRectangle.Image = global::ZUploader.Properties.Resources.Window;
+            this.tsmiWindowRectangle.Name = "tsmiWindowRectangle";
+            this.tsmiWindowRectangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiWindowRectangle.Text = "Window && Rectangle";
+            this.tsmiWindowRectangle.Click += new System.EventHandler(this.tsmiWindowRectangle_Click);
             // 
             // tsmiRectangle
             // 
@@ -712,6 +712,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiPolygon;
         private System.Windows.Forms.ToolStripMenuItem tsmiFreeHand;
         private System.Windows.Forms.ToolStripMenuItem tsmiWindow;
-        private System.Windows.Forms.ToolStripMenuItem tsmiWindows;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWindowRectangle;
     }
 }

@@ -85,6 +85,14 @@ namespace ScreenCapture
 
                 g.DrawPath(borderPen, regionPath);
 
+                if (areas.Count > 1)
+                {
+                    Rectangle totalArea = AreaManager.CombineAreas();
+                    g.DrawCrossRectangle(borderPen, totalArea, 15);
+                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", totalArea.X, totalArea.Y,
+                        totalArea.Width, totalArea.Height), new PointF(totalArea.X + 5, totalArea.Y - 20), textFont, Color.White, Color.Black);
+                }
+
                 if (!AreaManager.CurrentHoverArea.IsEmpty)
                 {
                     GraphicsPath regionPathHover = new GraphicsPath();
@@ -115,16 +123,6 @@ namespace ScreenCapture
                         CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", area.X, area.Y, area.Width, area.Height),
                             new PointF(area.X + 5, area.Y + 5), textFont, Color.White, Color.Black);
                     }
-                }
-
-                g.ResetClip();
-
-                if (areas.Count > 1)
-                {
-                    Rectangle totalArea = AreaManager.CombineAreas();
-                    g.DrawCrossRectangle(borderPen, totalArea, 15);
-                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", totalArea.X, totalArea.Y,
-                        totalArea.Width, totalArea.Height), new PointF(totalArea.X + 5, totalArea.Y - 20), textFont, Color.White, Color.Black);
                 }
             }
             else
