@@ -54,7 +54,7 @@ namespace ScreenCapture
         private bool IsValidWindow(WindowInfo window)
         {
             return IgnoreWindows.All(x => window.Handle != x) && windows.All(x => window.Handle != x.Handle) &&
-                window.IsVisible && !string.IsNullOrEmpty(window.Text) && window.Rectangle.IsValid();
+                window.IsVisible && window.Rectangle.IsValid();
         }
 
         private bool EvalWindow(IntPtr hWnd, IntPtr lParam)

@@ -64,8 +64,10 @@ namespace ScreenCapture
         public bool IsMoving { get; private set; }
         public bool IsResizing { get { return ResizeManager.IsResizing; } }
 
-        public bool WindowCaptureMode { get; private set; }
-        public bool IncludeControls { get; private set; }
+        public bool WindowCaptureMode { get; set; }
+        public bool IncludeControls { get; set; }
+
+        public int MinimumSize { get; set; }
 
         private Surface surface;
         private Point currentPosition;
@@ -77,6 +79,8 @@ namespace ScreenCapture
             this.surface = surface;
             ResizeManager = new ResizeManager(surface, this);
 
+            MinimumSize = 2;
+
             Areas = new List<Rectangle>();
             SelectedAreaIndex = -1;
 
@@ -84,11 +88,8 @@ namespace ScreenCapture
             surface.MouseUp += new MouseEventHandler(surface_MouseUp);
         }
 
-        public void InitWindowCaptureMode(bool includeControls)
+        public void SetWindowsList()
         {
-            WindowCaptureMode = true;
-            IncludeControls = includeControls;
-
             WindowsListAdvanced wla = new WindowsListAdvanced();
             wla.IgnoreWindows.Add(surface.Handle);
             wla.IncludeControls = IncludeControls;
@@ -97,6 +98,11 @@ namespace ScreenCapture
 
         public void Update()
         {
+            if (WindowCaptureMode && windows == null)
+            {
+                SetWindowsList();
+            }
+
             if (IsMoving)
             {
                 Rectangle rect = CurrentArea;
@@ -194,7 +200,11 @@ namespace ScreenCapture
                 {
                     IsCreating = false;
 
-                    if (surface.Config.QuickCrop)
+                    if (CurrentArea.Width < MinimumSize || CurrentArea.Height < MinimumSize)
+                    {
+                        RemoveCurrentArea();
+                    }
+                    else if (surface.Config.QuickCrop)
                     {
                         surface.Close(true);
                     }
@@ -223,6 +233,15 @@ namespace ScreenCapture
         {
             SelectedAreaIndex = -1;
             ResizeManager.Hide();
+        }
+
+        private void RemoveCurrentArea()
+        {
+            if (SelectedAreaIndex > -1)
+            {
+                Areas.RemoveAt(SelectedAreaIndex);
+                DeselectArea();
+            }
         }
 
         public int AreaIntersect(Point mousePosition)

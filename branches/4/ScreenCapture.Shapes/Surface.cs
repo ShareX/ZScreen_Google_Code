@@ -71,11 +71,11 @@ namespace ScreenCapture
             timer = new Stopwatch();
 
             borderPen = new Pen(Color.DarkBlue);
-            borderDotPen = new Pen(Color.Black);
-            borderDotPen.DashStyle = DashStyle.Dot;
-            borderDotPen2 = new Pen(Color.White);
-            borderDotPen2.DashStyle = DashStyle.Dot;
-            borderDotPen2.DashOffset = 1;
+            borderDotPen = new Pen(Color.Black, 1);
+            borderDotPen.DashPattern = new float[] { 5, 5 };
+            borderDotPen2 = new Pen(Color.White, 1);
+            borderDotPen2.DashPattern = new float[] { 5, 5 };
+            borderDotPen2.DashOffset = 5;
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
             lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);

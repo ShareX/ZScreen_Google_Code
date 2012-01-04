@@ -37,7 +37,8 @@ namespace ScreenCapture
             : base(backgroundImage)
         {
             AreaManager = new AreaManager(this);
-            AreaManager.InitWindowCaptureMode(true);
+            AreaManager.WindowCaptureMode = true;
+            AreaManager.IncludeControls = true;
         }
 
         protected override void Update()
@@ -82,12 +83,13 @@ namespace ScreenCapture
 
                     g.FillPath(lightBrush, regionPathHover);
                     //g.DrawRectangleProper(borderDotPen, AreaManager.CurrentHoverArea);
+                    g.DrawPath(borderDotPen, regionPathHover);
                     g.DrawPath(borderDotPen2, regionPathHover);
                 }
 
                 if (!AreaManager.CurrentArea.IsEmpty)
                 {
-                    g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
+                    g.DrawRectangleProper(borderPen, AreaManager.CurrentArea);
                     g.ExcludeClip(AreaManager.CurrentArea);
                     DrawObjects(g);
                     g.ResetClip();
