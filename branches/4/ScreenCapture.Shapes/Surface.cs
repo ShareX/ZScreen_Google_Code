@@ -49,7 +49,7 @@ namespace ScreenCapture
         private int frameCount;
 
         protected GraphicsPath regionPath;
-        protected Pen borderPen, borderDotPen;
+        protected Pen borderPen, borderDotPen, borderDotPen2;
         protected Brush shadowBrush, lightBrush, nodeBackgroundBrush;
         protected Font textFont;
 
@@ -71,8 +71,11 @@ namespace ScreenCapture
             timer = new Stopwatch();
 
             borderPen = new Pen(Color.DarkBlue);
-            borderDotPen = new Pen(Color.DarkBlue);
+            borderDotPen = new Pen(Color.Black);
             borderDotPen.DashStyle = DashStyle.Dot;
+            borderDotPen2 = new Pen(Color.White);
+            borderDotPen2.DashStyle = DashStyle.Dot;
+            borderDotPen2.DashOffset = 1;
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
             lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);

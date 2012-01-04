@@ -88,6 +88,14 @@ namespace HelpersLib
             return new Point(point.X - screenX, point.Y - screenY);
         }
 
+        /// <summary>For multi monitor</summary>
+        public static Rectangle FixScreenCoordinates(Rectangle rect)
+        {
+            int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            return new Rectangle(rect.X - screenX, rect.Y - screenY, rect.Width, rect.Height);
+        }
+
         public static Point GetMousePosition()
         {
             POINT pt = new POINT();

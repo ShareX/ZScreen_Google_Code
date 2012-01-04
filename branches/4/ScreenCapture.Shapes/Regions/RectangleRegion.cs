@@ -37,6 +37,7 @@ namespace ScreenCapture
             : base(backgroundImage)
         {
             AreaManager = new AreaManager(this);
+            AreaManager.InitWindowCaptureMode(true);
         }
 
         protected override void Update()
@@ -47,7 +48,7 @@ namespace ScreenCapture
 
         protected override void Draw(Graphics g)
         {
-            if (AreaManager.Areas.Count > 0)
+            if (AreaManager.Areas.Count > 0 || !AreaManager.CurrentHoverArea.IsEmpty)
             {
                 regionPath = new GraphicsPath();
                 regionPath.FillMode = FillMode.Winding;
@@ -60,6 +61,11 @@ namespace ScreenCapture
                     }
                 }
 
+                if (!AreaManager.CurrentHoverArea.IsEmpty && !AreaManager.Areas.Contains(AreaManager.CurrentHoverArea))
+                {
+                    AddShapePath(regionPath, AreaManager.CurrentHoverArea);
+                }
+
                 using (Region region = new Region(regionPath))
                 {
                     g.ExcludeClip(region);
@@ -67,21 +73,17 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                if (!AreaManager.ResizeManager.IsCursorOnNode() && !AreaManager.IsCreating && !AreaManager.IsMoving && !AreaManager.IsResizing)
-                {
-                    Rectangle areaHover = AreaManager.GetAreaIntersect();
-
-                    if (!areaHover.IsEmpty)
-                    {
-                        GraphicsPath regionPathHover = new GraphicsPath();
-                        AddShapePath(regionPathHover, areaHover);
-
-                        g.FillPath(lightBrush, regionPathHover);
-                        g.DrawRectangleProper(borderDotPen, areaHover);
-                    }
-                }
-
                 g.DrawPath(borderPen, regionPath);
+
+                if (!AreaManager.CurrentHoverArea.IsEmpty)
+                {
+                    GraphicsPath regionPathHover = new GraphicsPath();
+                    AddShapePath(regionPathHover, AreaManager.CurrentHoverArea);
+
+                    g.FillPath(lightBrush, regionPathHover);
+                    //g.DrawRectangleProper(borderDotPen, AreaManager.CurrentHoverArea);
+                    g.DrawPath(borderDotPen2, regionPathHover);
+                }
 
                 if (!AreaManager.CurrentArea.IsEmpty)
                 {

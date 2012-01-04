@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -55,15 +56,21 @@ namespace ScreenCapture
             }
         }
 
+        public Rectangle CurrentHoverArea { get; private set; }
+
         public ResizeManager ResizeManager { get; private set; }
 
         public bool IsCreating { get; private set; }
         public bool IsMoving { get; private set; }
         public bool IsResizing { get { return ResizeManager.IsResizing; } }
 
+        public bool WindowCaptureMode { get; private set; }
+        public bool IncludeControls { get; private set; }
+
         private Surface surface;
         private Point currentPosition;
         private Point positionOnClick;
+        private List<WindowInfo> windows;
 
         public AreaManager(Surface surface)
         {
@@ -75,6 +82,17 @@ namespace ScreenCapture
 
             surface.MouseDown += new MouseEventHandler(surface_MouseDown);
             surface.MouseUp += new MouseEventHandler(surface_MouseUp);
+        }
+
+        public void InitWindowCaptureMode(bool includeControls)
+        {
+            WindowCaptureMode = true;
+            IncludeControls = includeControls;
+
+            WindowsListAdvanced wla = new WindowsListAdvanced();
+            wla.IgnoreWindows.Add(surface.Handle);
+            wla.IncludeControls = IncludeControls;
+            windows = wla.GetWindowsList();
         }
 
         public void Update()
@@ -91,6 +109,29 @@ namespace ScreenCapture
             {
                 currentPosition = InputManager.MousePosition;
                 CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
+            }
+
+            // Hover checks
+
+            CurrentHoverArea = Rectangle.Empty;
+
+            if (!ResizeManager.IsCursorOnNode() && !IsCreating && !IsMoving && !IsResizing)
+            {
+                Rectangle hoverArea = GetAreaIntersectWithMouse();
+
+                if (!hoverArea.IsEmpty)
+                {
+                    CurrentHoverArea = hoverArea;
+                }
+                else if (WindowCaptureMode && windows != null)
+                {
+                    WindowInfo wi = windows.FirstOrDefault(x => x.Rectangle0Based.Contains(InputManager.MousePosition));
+
+                    if (wi != null)
+                    {
+                        CurrentHoverArea = wi.Rectangle0Based;
+                    }
+                }
             }
 
             ResizeManager.Update();
@@ -202,7 +243,7 @@ namespace ScreenCapture
             return AreaIntersect(InputManager.MousePosition);
         }
 
-        public Rectangle GetAreaIntersect()
+        public Rectangle GetAreaIntersectWithMouse()
         {
             int areaIndex = AreaIntersect();
 

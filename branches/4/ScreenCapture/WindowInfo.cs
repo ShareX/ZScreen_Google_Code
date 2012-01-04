@@ -57,6 +57,14 @@ namespace ScreenCapture
             }
         }
 
+        public Rectangle Rectangle0Based
+        {
+            get
+            {
+                return CaptureHelpers.FixScreenCoordinates(Rectangle);
+            }
+        }
+
         public WindowStyles Styles
         {
             get
@@ -100,6 +108,11 @@ namespace ScreenCapture
         public WindowInfo(IntPtr handle)
         {
             Handle = handle;
+        }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }
