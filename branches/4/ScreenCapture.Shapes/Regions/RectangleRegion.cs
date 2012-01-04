@@ -60,18 +60,7 @@ namespace ScreenCapture
 
             if (areas.Count > 0 || !AreaManager.CurrentHoverArea.IsEmpty)
             {
-                regionPath = new GraphicsPath();
-                regionPath.FillMode = FillMode.Winding;
-
-                foreach (Rectangle area in areas)
-                {
-                    AddShapePath(regionPath, area);
-                }
-
-                /*if (!AreaManager.CurrentHoverArea.IsEmpty && !AreaManager.Areas.Contains(AreaManager.CurrentHoverArea))
-                {
-                    AddShapePath(regionPath, AreaManager.CurrentHoverArea);
-                }*/
+                UpdateRegionPath();
 
                 using (Region region = new Region(regionPath))
                 {
@@ -128,6 +117,17 @@ namespace ScreenCapture
             else
             {
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+            }
+        }
+
+        public void UpdateRegionPath()
+        {
+            regionPath = new GraphicsPath();
+            regionPath.FillMode = FillMode.Winding;
+
+            foreach (Rectangle area in AreaManager.GetValidAreas)
+            {
+                AddShapePath(regionPath, area);
             }
         }
 

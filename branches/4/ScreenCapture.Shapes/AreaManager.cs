@@ -87,12 +87,12 @@ namespace ScreenCapture
 
         public int MinimumSize { get; set; }
 
-        private Surface surface;
+        private RectangleRegion surface;
         private Point currentPosition;
         private Point positionOnClick;
         private List<WindowInfo> windows;
 
-        public AreaManager(Surface surface)
+        public AreaManager(RectangleRegion surface)
         {
             this.surface = surface;
             ResizeManager = new ResizeManager(surface, this);
@@ -199,28 +199,17 @@ namespace ScreenCapture
                     SelectedAreaIndex = Areas.Count - 1;
                 }
             }
-            else if (e.Button == MouseButtons.Right)
-            {
-                if (areaIndex > -1)
-                {
-                    Areas.RemoveAt(areaIndex);
-                    DeselectArea();
-                }
-                else
-                {
-                    surface.Close(false);
-                }
-            }
         }
 
         private void surface_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
+                IsCreating = false;
+                IsMoving = false;
+
                 if (!CurrentArea.IsEmpty)
                 {
-                    IsCreating = false;
-
                     if (!IsCurrentAreaValid)
                     {
                         RemoveCurrentArea();
@@ -228,6 +217,7 @@ namespace ScreenCapture
                     }
                     else if (surface.Config.QuickCrop)
                     {
+                        surface.UpdateRegionPath();
                         surface.Close(true);
                     }
                     else
@@ -236,16 +226,34 @@ namespace ScreenCapture
                     }
                 }
 
-                if (IsMoving)
-                {
-                    IsMoving = false;
-                }
-
                 if (!CurrentHoverArea.IsEmpty)
                 {
                     Areas.Add(CurrentHoverArea);
                     SelectedAreaIndex = Areas.Count - 1;
-                    SelectArea();
+
+                    if (surface.Config.QuickCrop)
+                    {
+                        surface.UpdateRegionPath();
+                        surface.Close(true);
+                    }
+                    else
+                    {
+                        SelectArea();
+                    }
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                int areaIndex = AreaIntersect();
+
+                if (areaIndex > -1)
+                {
+                    Areas.RemoveAt(areaIndex);
+                    DeselectArea();
+                }
+                else
+                {
+                    surface.Close(false);
                 }
             }
         }

@@ -133,9 +133,7 @@ namespace ScreenCapture
 
         protected override void OnPaint(PaintEventArgs e)
         {
-#if DEBUG
             if (!timer.IsRunning) timer.Start();
-#endif
 
             Update();
 
