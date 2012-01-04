@@ -45,7 +45,7 @@ namespace ScreenCapture
 
         private TextureBrush backgroundBrush;
         private Rectangle screenArea;
-        private Stopwatch timer;
+        protected Stopwatch timer;
         private int frameCount;
 
         protected GraphicsPath regionPath;

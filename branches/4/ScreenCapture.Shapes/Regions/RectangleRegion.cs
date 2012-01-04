@@ -80,6 +80,9 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
+                borderDotPen.DashOffset = (float)timer.Elapsed.TotalSeconds * 10;
+                borderDotPen2.DashOffset = 5 + (float)timer.Elapsed.TotalSeconds * 10;
+
                 g.DrawPath(borderPen, regionPath);
 
                 if (!AreaManager.CurrentHoverArea.IsEmpty)
@@ -89,13 +92,15 @@ namespace ScreenCapture
 
                     g.FillPath(lightBrush, regionPathHover);
                     //g.DrawRectangleProper(borderDotPen, AreaManager.CurrentHoverArea);
+
                     g.DrawPath(borderDotPen, regionPathHover);
                     g.DrawPath(borderDotPen2, regionPathHover);
                 }
 
                 if (AreaManager.IsCurrentAreaValid)
                 {
-                    g.DrawRectangleProper(borderPen, AreaManager.CurrentArea);
+                    g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
+                    g.DrawRectangleProper(borderDotPen2, AreaManager.CurrentArea);
                     g.ExcludeClip(AreaManager.CurrentArea);
                     DrawObjects(g);
                     g.ResetClip();
