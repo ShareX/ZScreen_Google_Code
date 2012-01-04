@@ -199,6 +199,8 @@ namespace ZUploader
                     img = surface.GetRegionImage();
                 }
 
+                surface.Dispose();
+
                 return img;
             }, autoHideForm);
         }
@@ -241,6 +243,13 @@ namespace ZUploader
             {
                 CaptureWindow(wi.Handle);
             }
+        }
+
+        private void tsmiWindows_Click(object sender, EventArgs e)
+        {
+            RectangleRegion rectangleRegion = new RectangleRegion();
+            rectangleRegion.AreaManager.WindowCaptureMode = true;
+            CaptureRegion(rectangleRegion);
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)

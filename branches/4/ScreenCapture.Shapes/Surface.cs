@@ -362,6 +362,7 @@ namespace ScreenCapture
             if (regionPath != null) regionPath.Dispose();
             if (borderPen != null) borderPen.Dispose();
             if (borderDotPen != null) borderDotPen.Dispose();
+            if (borderDotPen2 != null) borderDotPen2.Dispose();
             if (shadowBrush != null) shadowBrush.Dispose();
             if (nodeBackgroundBrush != null) nodeBackgroundBrush.Dispose();
             if (textFont != null) textFont.Dispose();

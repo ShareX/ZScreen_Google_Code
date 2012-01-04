@@ -72,6 +72,7 @@ namespace ZUploader
             this.tsddbCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRoundedRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEllipse = new System.Windows.Forms.ToolStripMenuItem();
@@ -266,6 +267,7 @@ namespace ZUploader
             this.tsddbCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFullscreen,
             this.tsmiWindow,
+            this.tsmiWindows,
             this.tsmiRectangle,
             this.tsmiRoundedRectangle,
             this.tsmiEllipse,
@@ -284,7 +286,7 @@ namespace ZUploader
             // 
             this.tsmiFullscreen.Image = global::ZUploader.Properties.Resources.Fullscreen;
             this.tsmiFullscreen.Name = "tsmiFullscreen";
-            this.tsmiFullscreen.Size = new System.Drawing.Size(177, 22);
+            this.tsmiFullscreen.Size = new System.Drawing.Size(186, 22);
             this.tsmiFullscreen.Text = "Fullscreen";
             this.tsmiFullscreen.Click += new System.EventHandler(this.tsmiFullscreen_Click);
             // 
@@ -292,14 +294,22 @@ namespace ZUploader
             // 
             this.tsmiWindow.Image = global::ZUploader.Properties.Resources.Window;
             this.tsmiWindow.Name = "tsmiWindow";
-            this.tsmiWindow.Size = new System.Drawing.Size(177, 22);
+            this.tsmiWindow.Size = new System.Drawing.Size(186, 22);
             this.tsmiWindow.Text = "Window";
+            // 
+            // tsmiWindows
+            // 
+            this.tsmiWindows.Image = global::ZUploader.Properties.Resources.Window;
+            this.tsmiWindows.Name = "tsmiWindows";
+            this.tsmiWindows.Size = new System.Drawing.Size(186, 22);
+            this.tsmiWindows.Text = "Window && Rectangle";
+            this.tsmiWindows.Click += new System.EventHandler(this.tsmiWindows_Click);
             // 
             // tsmiRectangle
             // 
             this.tsmiRectangle.Image = global::ZUploader.Properties.Resources.Rectangle;
             this.tsmiRectangle.Name = "tsmiRectangle";
-            this.tsmiRectangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiRectangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiRectangle.Text = "Rectangle";
             this.tsmiRectangle.Click += new System.EventHandler(this.tsmiRectangle_Click);
             // 
@@ -307,7 +317,7 @@ namespace ZUploader
             // 
             this.tsmiRoundedRectangle.Image = global::ZUploader.Properties.Resources.RoundedRectangle;
             this.tsmiRoundedRectangle.Name = "tsmiRoundedRectangle";
-            this.tsmiRoundedRectangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiRoundedRectangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiRoundedRectangle.Text = "Rounded Rectangle";
             this.tsmiRoundedRectangle.Click += new System.EventHandler(this.tsmiRoundedRectangle_Click);
             // 
@@ -315,7 +325,7 @@ namespace ZUploader
             // 
             this.tsmiEllipse.Image = global::ZUploader.Properties.Resources.Ellipse;
             this.tsmiEllipse.Name = "tsmiEllipse";
-            this.tsmiEllipse.Size = new System.Drawing.Size(177, 22);
+            this.tsmiEllipse.Size = new System.Drawing.Size(186, 22);
             this.tsmiEllipse.Text = "Ellipse";
             this.tsmiEllipse.Click += new System.EventHandler(this.tsmiEllipse_Click);
             // 
@@ -323,7 +333,7 @@ namespace ZUploader
             // 
             this.tsmiTriangle.Image = global::ZUploader.Properties.Resources.Triangle;
             this.tsmiTriangle.Name = "tsmiTriangle";
-            this.tsmiTriangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiTriangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiTriangle.Text = "Triangle";
             this.tsmiTriangle.Click += new System.EventHandler(this.tsmiTriangle_Click);
             // 
@@ -331,7 +341,7 @@ namespace ZUploader
             // 
             this.tsmiDiamond.Image = global::ZUploader.Properties.Resources.Diamond;
             this.tsmiDiamond.Name = "tsmiDiamond";
-            this.tsmiDiamond.Size = new System.Drawing.Size(177, 22);
+            this.tsmiDiamond.Size = new System.Drawing.Size(186, 22);
             this.tsmiDiamond.Text = "Diamond";
             this.tsmiDiamond.Click += new System.EventHandler(this.tsmiDiamond_Click);
             // 
@@ -339,7 +349,7 @@ namespace ZUploader
             // 
             this.tsmiPolygon.Image = global::ZUploader.Properties.Resources.Polygon;
             this.tsmiPolygon.Name = "tsmiPolygon";
-            this.tsmiPolygon.Size = new System.Drawing.Size(177, 22);
+            this.tsmiPolygon.Size = new System.Drawing.Size(186, 22);
             this.tsmiPolygon.Text = "Polygon";
             this.tsmiPolygon.Click += new System.EventHandler(this.tsmiPolygon_Click);
             // 
@@ -347,7 +357,7 @@ namespace ZUploader
             // 
             this.tsmiFreeHand.Image = global::ZUploader.Properties.Resources.FreeHand;
             this.tsmiFreeHand.Name = "tsmiFreeHand";
-            this.tsmiFreeHand.Size = new System.Drawing.Size(177, 22);
+            this.tsmiFreeHand.Size = new System.Drawing.Size(186, 22);
             this.tsmiFreeHand.Text = "Free Hand";
             this.tsmiFreeHand.Click += new System.EventHandler(this.tsmiFreeHand_Click);
             // 
@@ -702,5 +712,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiPolygon;
         private System.Windows.Forms.ToolStripMenuItem tsmiFreeHand;
         private System.Windows.Forms.ToolStripMenuItem tsmiWindow;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWindows;
     }
 }

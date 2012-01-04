@@ -104,6 +104,8 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.cbShapeIncludeControls = new System.Windows.Forms.CheckBox();
+            this.cbShapeForceWindowCapture = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -771,6 +773,8 @@
             // 
             // tpCaptureShape
             // 
+            this.tpCaptureShape.Controls.Add(this.cbShapeForceWindowCapture);
+            this.tpCaptureShape.Controls.Add(this.cbShapeIncludeControls);
             this.tpCaptureShape.Controls.Add(this.lblFixedShapeSizeHeight);
             this.tpCaptureShape.Controls.Add(this.cbDrawBorder);
             this.tpCaptureShape.Controls.Add(this.lblFixedShapeSizeWidth);
@@ -1044,6 +1048,28 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // cbShapeIncludeControls
+            // 
+            this.cbShapeIncludeControls.AutoSize = true;
+            this.cbShapeIncludeControls.Location = new System.Drawing.Point(16, 152);
+            this.cbShapeIncludeControls.Name = "cbShapeIncludeControls";
+            this.cbShapeIncludeControls.Size = new System.Drawing.Size(329, 17);
+            this.cbShapeIncludeControls.TabIndex = 8;
+            this.cbShapeIncludeControls.Text = "Allow capturing controls in window capture (buttons, panels etc.)";
+            this.cbShapeIncludeControls.UseVisualStyleBackColor = true;
+            this.cbShapeIncludeControls.CheckedChanged += new System.EventHandler(this.cbShapeIncludeControls_CheckedChanged);
+            // 
+            // cbShapeForceWindowCapture
+            // 
+            this.cbShapeForceWindowCapture.AutoSize = true;
+            this.cbShapeForceWindowCapture.Location = new System.Drawing.Point(16, 176);
+            this.cbShapeForceWindowCapture.Name = "cbShapeForceWindowCapture";
+            this.cbShapeForceWindowCapture.Size = new System.Drawing.Size(287, 17);
+            this.cbShapeForceWindowCapture.TabIndex = 9;
+            this.cbShapeForceWindowCapture.Text = "Use window capture mode for all rectangle type shapes";
+            this.cbShapeForceWindowCapture.UseVisualStyleBackColor = true;
+            this.cbShapeForceWindowCapture.CheckedChanged += new System.EventHandler(this.cbShapeForceWindowCapture_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1169,5 +1195,7 @@
         private System.Windows.Forms.CheckBox cbCaptureUploadImage;
         private System.Windows.Forms.CheckBox cbCaptureSaveImage;
         private System.Windows.Forms.CheckBox cbCaptureCopyImage;
+        private System.Windows.Forms.CheckBox cbShapeIncludeControls;
+        private System.Windows.Forms.CheckBox cbShapeForceWindowCapture;
     }
 }

@@ -98,6 +98,8 @@ namespace ZUploader
             cbFixedShapeSize.Checked = Program.Settings.SurfaceOptions.IsFixedSize;
             nudFixedShapeSizeWidth.Value = Program.Settings.SurfaceOptions.FixedSize.Width;
             nudFixedShapeSizeHeight.Value = Program.Settings.SurfaceOptions.FixedSize.Height;
+            cbShapeIncludeControls.Checked = Program.Settings.SurfaceOptions.IncludeControls;
+            cbShapeForceWindowCapture.Checked = Program.Settings.SurfaceOptions.ForceWindowCapture;
 
             // History
             cbHistorySave.Checked = Program.Settings.SaveHistory;
@@ -394,6 +396,16 @@ namespace ZUploader
         private void nudFixedShapeSizeHeight_ValueChanged(object sender, EventArgs e)
         {
             Program.Settings.SurfaceOptions.FixedSize = new Size(Program.Settings.SurfaceOptions.FixedSize.Width, (int)nudFixedShapeSizeHeight.Value);
+        }
+
+        private void cbShapeIncludeControls_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.IncludeControls = cbShapeIncludeControls.Checked;
+        }
+
+        private void cbShapeForceWindowCapture_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.ForceWindowCapture = cbShapeForceWindowCapture.Checked;
         }
 
         #endregion Capture / Shape capture

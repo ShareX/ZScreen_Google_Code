@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -38,8 +39,13 @@ namespace ScreenCapture
             : base(backgroundImage)
         {
             AreaManager = new AreaManager(this);
-            AreaManager.WindowCaptureMode = true;
-            AreaManager.IncludeControls = true;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            AreaManager.WindowCaptureMode |= Config.ForceWindowCapture;
+            AreaManager.IncludeControls = Config.IncludeControls;
         }
 
         protected override void Update()
