@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using HelpersLib;
@@ -49,23 +50,22 @@ namespace ScreenCapture
 
         protected override void Draw(Graphics g)
         {
-            if (AreaManager.Areas.Count > 0 || !AreaManager.CurrentHoverArea.IsEmpty)
+            List<Rectangle> areas = AreaManager.GetValidAreas;
+
+            if (areas.Count > 0 || !AreaManager.CurrentHoverArea.IsEmpty)
             {
                 regionPath = new GraphicsPath();
                 regionPath.FillMode = FillMode.Winding;
 
-                foreach (Rectangle area in AreaManager.Areas)
+                foreach (Rectangle area in areas)
                 {
-                    if (area.Width > 0 && area.Height > 0)
-                    {
-                        AddShapePath(regionPath, area);
-                    }
+                    AddShapePath(regionPath, area);
                 }
 
-                if (!AreaManager.CurrentHoverArea.IsEmpty && !AreaManager.Areas.Contains(AreaManager.CurrentHoverArea))
+                /*if (!AreaManager.CurrentHoverArea.IsEmpty && !AreaManager.Areas.Contains(AreaManager.CurrentHoverArea))
                 {
                     AddShapePath(regionPath, AreaManager.CurrentHoverArea);
-                }
+                }*/
 
                 using (Region region = new Region(regionPath))
                 {
@@ -87,7 +87,7 @@ namespace ScreenCapture
                     g.DrawPath(borderDotPen2, regionPathHover);
                 }
 
-                if (!AreaManager.CurrentArea.IsEmpty)
+                if (AreaManager.IsCurrentAreaValid)
                 {
                     g.DrawRectangleProper(borderPen, AreaManager.CurrentArea);
                     g.ExcludeClip(AreaManager.CurrentArea);
@@ -95,7 +95,7 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                foreach (Rectangle area in AreaManager.Areas)
+                foreach (Rectangle area in areas)
                 {
                     if (area.Width > 0 && area.Height > 0)
                     {
@@ -108,7 +108,7 @@ namespace ScreenCapture
 
                 g.ResetClip();
 
-                if (AreaManager.Areas.Count > 1)
+                if (areas.Count > 1)
                 {
                     Rectangle totalArea = AreaManager.CombineAreas();
                     g.DrawCrossRectangle(borderPen, totalArea, 15);

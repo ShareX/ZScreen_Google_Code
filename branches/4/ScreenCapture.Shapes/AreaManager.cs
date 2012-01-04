@@ -36,6 +36,16 @@ namespace ScreenCapture
         public List<Rectangle> Areas { get; private set; }
         public int SelectedAreaIndex { get; private set; }
 
+        public List<Rectangle> GetValidAreas
+        {
+            get
+            {
+                List<Rectangle> areas = new List<Rectangle>();
+                areas.AddRange(Areas.Where(x => IsAreaValid(x)));
+                return areas;
+            }
+        }
+
         public Rectangle CurrentArea
         {
             get
@@ -53,6 +63,14 @@ namespace ScreenCapture
                 {
                     Areas[SelectedAreaIndex] = value;
                 }
+            }
+        }
+
+        public bool IsCurrentAreaValid
+        {
+            get
+            {
+                return IsAreaValid(CurrentArea);
             }
         }
 
@@ -79,7 +97,7 @@ namespace ScreenCapture
             this.surface = surface;
             ResizeManager = new ResizeManager(surface, this);
 
-            MinimumSize = 2;
+            MinimumSize = 10;
 
             Areas = new List<Rectangle>();
             SelectedAreaIndex = -1;
@@ -117,8 +135,13 @@ namespace ScreenCapture
                 CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
             }
 
-            // Hover checks
+            CheckHover();
 
+            ResizeManager.Update();
+        }
+
+        private void CheckHover()
+        {
             CurrentHoverArea = Rectangle.Empty;
 
             if (!ResizeManager.IsCursorOnNode() && !IsCreating && !IsMoving && !IsResizing)
@@ -139,8 +162,6 @@ namespace ScreenCapture
                     }
                 }
             }
-
-            ResizeManager.Update();
         }
 
         private void surface_MouseDown(object sender, MouseEventArgs e)
@@ -200,9 +221,10 @@ namespace ScreenCapture
                 {
                     IsCreating = false;
 
-                    if (CurrentArea.Width < MinimumSize || CurrentArea.Height < MinimumSize)
+                    if (!IsCurrentAreaValid)
                     {
                         RemoveCurrentArea();
+                        CheckHover();
                     }
                     else if (surface.Config.QuickCrop)
                     {
@@ -217,6 +239,13 @@ namespace ScreenCapture
                 if (IsMoving)
                 {
                     IsMoving = false;
+                }
+
+                if (!CurrentHoverArea.IsEmpty)
+                {
+                    Areas.Add(CurrentHoverArea);
+                    SelectedAreaIndex = Areas.Count - 1;
+                    SelectArea();
                 }
             }
         }
@@ -242,6 +271,11 @@ namespace ScreenCapture
                 Areas.RemoveAt(SelectedAreaIndex);
                 DeselectArea();
             }
+        }
+
+        private bool IsAreaValid(Rectangle rect)
+        {
+            return !rect.IsEmpty && rect.Width >= MinimumSize && rect.Height >= MinimumSize;
         }
 
         public int AreaIntersect(Point mousePosition)
@@ -281,13 +315,15 @@ namespace ScreenCapture
 
         public Rectangle CombineAreas()
         {
-            if (Areas.Count > 0)
-            {
-                Rectangle rect = Areas[0];
+            List<Rectangle> areas = GetValidAreas;
 
-                for (int i = 1; i < Areas.Count; i++)
+            if (areas.Count > 0)
+            {
+                Rectangle rect = areas[0];
+
+                for (int i = 1; i < areas.Count; i++)
                 {
-                    rect = Rectangle.Union(rect, Areas[i]);
+                    rect = Rectangle.Union(rect, areas[i]);
                 }
 
                 return rect;
