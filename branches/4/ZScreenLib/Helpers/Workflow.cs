@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 using FreeImageNetLib;
-using GradientTester;
-using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using UploadersLib;

@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using HelpersLib;
 
@@ -32,7 +33,7 @@ namespace ScreenCapture
 {
     public class WindowsListAdvanced
     {
-        public bool IncludeControls { get; set; }
+        public bool IncludeChildWindows { get; set; }
 
         public List<IntPtr> IgnoreWindows { get; set; }
 
@@ -51,10 +52,14 @@ namespace ScreenCapture
             return windows;
         }
 
+        public List<Rectangle> GetWindowsRectangleList()
+        {
+            return GetWindowsList().Select(x => x.Rectangle).ToList();
+        }
+
         private bool IsValidWindow(WindowInfo window)
         {
-            return IgnoreWindows.All(x => window.Handle != x) && windows.All(x => window.Handle != x.Handle) &&
-                window.IsVisible && window.Rectangle.IsValid();
+            return IgnoreWindows.All(x => window.Handle != x) && window.Rectangle.IsValid() && window.IsVisible;
         }
 
         private bool EvalWindow(IntPtr hWnd, IntPtr lParam)
@@ -66,7 +71,7 @@ namespace ScreenCapture
                 return true;
             }
 
-            if (IncludeControls)
+            if (IncludeChildWindows)
             {
                 NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
                 NativeMethods.EnumChildWindows(hWnd, ewp, IntPtr.Zero);

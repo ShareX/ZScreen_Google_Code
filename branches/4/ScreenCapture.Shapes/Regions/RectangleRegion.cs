@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -41,11 +40,19 @@ namespace ScreenCapture
             AreaManager = new AreaManager(this);
         }
 
-        protected override void OnLoad(EventArgs e)
+        public override void Prepare()
         {
-            base.OnLoad(e);
+            base.Prepare();
+
             AreaManager.WindowCaptureMode |= Config.ForceWindowCapture;
-            AreaManager.IncludeControls = Config.IncludeControls;
+
+            if (AreaManager.WindowCaptureMode)
+            {
+                WindowsListAdvanced wla = new WindowsListAdvanced();
+                wla.IgnoreWindows.Add(Handle);
+                wla.IncludeChildWindows = Config.IncludeControls;
+                AreaManager.Windows = wla.GetWindowsRectangleList();
+            }
         }
 
         protected override void Update()
@@ -68,6 +75,11 @@ namespace ScreenCapture
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                     g.ResetClip();
                 }
+
+                /*foreach (WindowInfo wi in AreaManager.Windows)
+                {
+                    g.DrawRectangleProper(Pens.Yellow, Rectangle.Intersect(ScreenRectangle0Based, wi.Rectangle0Based));
+                }*/
 
                 borderDotPen.DashOffset = (float)timer.Elapsed.TotalSeconds * 10;
                 borderDotPen2.DashOffset = 5 + (float)timer.Elapsed.TotalSeconds * 10;

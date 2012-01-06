@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-using Plugins;
 using GraphicsMgrLib;
-using HelpersLib;
+using Plugins;
 
 namespace ImageManipulation
 {

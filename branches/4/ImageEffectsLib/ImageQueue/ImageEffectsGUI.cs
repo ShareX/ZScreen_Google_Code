@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Plugins;
-using System.IO;
-using GraphicsMgrLib;
 using System.Diagnostics;
-using HelpersLib;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using GraphicsMgrLib;
+using Plugins;
 
 namespace ImageQueue
 {

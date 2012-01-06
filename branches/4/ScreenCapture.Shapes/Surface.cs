@@ -37,14 +37,15 @@ namespace ScreenCapture
 {
     public class Surface : Form
     {
-        public Image SurfaceImage { get; protected set; }
+        public Image SurfaceImage { get; set; }
         public SurfaceOptions Config { get; set; }
         public int FPS { get; private set; }
+        public Rectangle ScreenRectangle { get; private set; }
+        public Rectangle ScreenRectangle0Based { get; private set; }
 
         protected List<DrawableObject> DrawableObjects { get; set; }
 
         private TextureBrush backgroundBrush;
-        private Rectangle screenArea;
         private int frameCount;
 
         protected GraphicsPath regionPath;
@@ -55,19 +56,14 @@ namespace ScreenCapture
 
         public Surface(Image backgroundImage = null)
         {
-            screenArea = CaptureHelpers.GetScreenBounds();
+            ScreenRectangle = CaptureHelpers.GetScreenBounds();
+            ScreenRectangle0Based = CaptureHelpers.FixScreenCoordinates(ScreenRectangle);
 
             InitializeComponent();
 
+            SurfaceImage = backgroundImage;
             DrawableObjects = new List<DrawableObject>();
-
-            if (backgroundImage != null)
-            {
-                LoadBackground(backgroundImage);
-            }
-
             Config = new SurfaceOptions();
-
             timer = new Stopwatch();
 
             borderPen = new Pen(Color.DarkBlue);
@@ -89,7 +85,7 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = screenArea;
+            this.Bounds = ScreenRectangle;
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
@@ -98,6 +94,15 @@ namespace ScreenCapture
             this.TopMost = true;
 #endif
             this.ResumeLayout(false);
+        }
+
+        /// <summary>Must be called before show form</summary>
+        public virtual void Prepare()
+        {
+            if (SurfaceImage != null)
+            {
+                backgroundBrush = new TextureBrush(SurfaceImage);
+            }
         }
 
         private void Surface_Shown(object sender, EventArgs e)
@@ -125,12 +130,6 @@ namespace ScreenCapture
             }
         }
 
-        public void LoadBackground(Image backgroundImage)
-        {
-            SurfaceImage = backgroundImage;
-            backgroundBrush = new TextureBrush(backgroundImage);
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             if (!timer.IsRunning) timer.Start();
@@ -139,10 +138,10 @@ namespace ScreenCapture
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.FillRectangle(backgroundBrush, screenArea);
+            g.FillRectangle(backgroundBrush, ScreenRectangle);
 
 #if DEBUG
-            g.DrawRectangleProper(Pens.Yellow, screenArea);
+            g.DrawRectangleProper(Pens.Yellow, ScreenRectangle);
 #endif
 
             Draw(g);
@@ -164,7 +163,7 @@ namespace ScreenCapture
                 Rectangle regionArea = Rectangle.Round(regionPath.GetBounds());
                 regionArea.Width++;
                 regionArea.Height++;
-                Rectangle newRegionArea = Rectangle.Intersect(regionArea, screenArea);
+                Rectangle newRegionArea = Rectangle.Intersect(regionArea, ScreenRectangle);
 
                 using (GraphicsPath gp = (GraphicsPath)regionPath.Clone())
                 using (Matrix matrix = new Matrix())
@@ -216,7 +215,7 @@ namespace ScreenCapture
                 {
                     DrawableObject obj = objects[i];
 
-                    obj.IsMouseHover = obj.Rectangle.Contains(InputManager.MousePosition);
+                    obj.IsMouseHover = obj.Rectangle.Contains(InputManager.MousePosition0Based);
 
                     if (obj.IsMouseHover)
                     {
@@ -297,7 +296,7 @@ namespace ScreenCapture
             Point position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
             Rectangle rect = new Rectangle(position, new Size((int)textSize.Width, (int)textSize.Height));
 
-            if (rect.Contains(InputManager.MousePosition))
+            if (rect.Contains(InputManager.MousePosition0Based))
             {
                 position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));

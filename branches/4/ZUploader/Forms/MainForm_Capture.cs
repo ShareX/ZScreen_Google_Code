@@ -193,7 +193,8 @@ namespace ZUploader
                 Image screenshot = Screenshot.CaptureFullscreen();
 
                 surface.Config = Program.Settings.SurfaceOptions;
-                surface.LoadBackground(screenshot);
+                surface.SurfaceImage = screenshot;
+                surface.Prepare();
 
                 if (surface.ShowDialog() == DialogResult.OK)
                 {

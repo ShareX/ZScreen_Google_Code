@@ -28,9 +28,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
-using ZScreenGUI.Properties;
 using ZScreenLib;
-using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {

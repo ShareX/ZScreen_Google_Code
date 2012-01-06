@@ -155,7 +155,7 @@ namespace ScreenCapture
 
         private void ActivateNode(NodeObject node)
         {
-            node.Position = InputManager.MousePosition;
+            node.Position = InputManager.MousePosition0Based;
             node.Visible = true;
             node.IsDragging = true;
         }

@@ -2,22 +2,16 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
-using GradientTester;
-using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using ScreenCapture;
 using UploadersLib;
-using UploadersLib.HelperClasses;
 using ZScreenCoreLib;
-using ZScreenLib.Helpers;
-using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
 
 #region License Information (GPL v2)

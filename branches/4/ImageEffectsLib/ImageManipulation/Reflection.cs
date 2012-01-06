@@ -1,9 +1,8 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-using Plugins;
+﻿using System.ComponentModel;
+using System.Drawing;
 using GraphicsMgrLib;
-using System.ComponentModel;
 using HelpersLib;
+using Plugins;
 
 namespace ImageManipulation
 {

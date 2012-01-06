@@ -1,32 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using Crop;
-using Gif.Components;
-using GraphicsMgrLib;
-using HelpersLib;
-using HistoryLib;
-using ImageQueue;
-using Microsoft.WindowsAPICodePack.Taskbar;
-using ScreenCapture;
 using UploadersLib;
-using UploadersLib.FileUploaders;
-using UploadersLib.GUI;
-using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
-using UploadersLib.OtherServices;
-using UploadersLib.TextUploaders;
-using UploadersLib.URLShorteners;
-using ZScreenLib.Properties;
-using ZSS.IndexersLib;
-using ZUploader.HelperClasses;
 
 namespace ZScreenLib
 {

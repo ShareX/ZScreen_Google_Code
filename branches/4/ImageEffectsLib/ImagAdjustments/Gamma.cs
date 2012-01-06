@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using Plugins;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Drawing;
 using GraphicsMgrLib;
+using Plugins;
 
 namespace ImageAdjustment
 {
@@ -22,7 +22,6 @@ namespace ImageAdjustment
             }
             set
             {
-
                 gammaValue = value;
                 OnPreviewTextChanged(gammaValue + "%");
             }

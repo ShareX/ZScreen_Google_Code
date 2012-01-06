@@ -81,15 +81,15 @@ namespace ScreenCapture
 
             if (lastNode.Visible && lastNode.IsDragging)
             {
-                lastNode.Position = InputManager.MousePosition;
+                lastNode.Position = InputManager.MousePosition0Based;
 
                 if (InputManager.IsMouseMoved)
                 {
-                    points.Add(InputManager.MousePosition);
+                    points.Add(InputManager.MousePosition0Based);
 
                     if (points.Count > 1)
                     {
-                        regionPath.AddLine(InputManager.PreviousMousePosition, InputManager.MousePosition);
+                        regionPath.AddLine(InputManager.PreviousMousePosition0Based, InputManager.MousePosition0Based);
                     }
                 }
             }
