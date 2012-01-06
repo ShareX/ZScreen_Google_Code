@@ -69,7 +69,7 @@ namespace ScreenCapture
             {
                 UpdateRegionPath();
 
-                using (Region region = new Region(regionPath))
+                using (Region region = new Region(regionFillPath))
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
@@ -84,7 +84,7 @@ namespace ScreenCapture
                 borderDotPen.DashOffset = (float)timer.Elapsed.TotalSeconds * 10;
                 borderDotPen2.DashOffset = 5 + (float)timer.Elapsed.TotalSeconds * 10;
 
-                g.DrawPath(borderPen, regionPath);
+                g.DrawPath(borderPen, regionDrawPath);
 
                 if (areas.Count > 1)
                 {
@@ -94,16 +94,18 @@ namespace ScreenCapture
                         totalArea.Width, totalArea.Height), new PointF(totalArea.X + 5, totalArea.Y - 20), textFont, Color.White, Color.Black);
                 }
 
-                if (!AreaManager.CurrentHoverArea.IsEmpty)
+                if (AreaManager.IsCurrentHoverAreaValid)
                 {
-                    GraphicsPath regionPathHover = new GraphicsPath();
-                    AddShapePath(regionPathHover, AreaManager.CurrentHoverArea);
+                    GraphicsPath hoverFillPath = new GraphicsPath() { FillMode = FillMode.Winding };
+                    AddShapePath(hoverFillPath, AreaManager.CurrentHoverArea);
 
-                    g.FillPath(lightBrush, regionPathHover);
-                    //g.DrawRectangleProper(borderDotPen, AreaManager.CurrentHoverArea);
+                    g.FillPath(lightBrush, hoverFillPath);
 
-                    g.DrawPath(borderDotPen, regionPathHover);
-                    g.DrawPath(borderDotPen2, regionPathHover);
+                    GraphicsPath hoverDrawPath = new GraphicsPath() { FillMode = FillMode.Winding };
+                    AddShapePath(hoverDrawPath, AreaManager.CurrentHoverArea.SizeOffset(-1));
+
+                    g.DrawPath(borderDotPen, hoverDrawPath);
+                    g.DrawPath(borderDotPen2, hoverDrawPath);
                 }
 
                 if (AreaManager.IsCurrentAreaValid)
@@ -117,7 +119,7 @@ namespace ScreenCapture
 
                 foreach (Rectangle area in areas)
                 {
-                    if (area.Width > 0 && area.Height > 0)
+                    if (area.Width > 100 && area.Height > 20)
                     {
                         g.Clip = new Region(area);
 
@@ -134,18 +136,19 @@ namespace ScreenCapture
 
         public void UpdateRegionPath()
         {
-            regionPath = new GraphicsPath();
-            regionPath.FillMode = FillMode.Winding;
+            regionFillPath = new GraphicsPath() { FillMode = FillMode.Winding };
+            regionDrawPath = new GraphicsPath() { FillMode = FillMode.Winding };
 
             foreach (Rectangle area in AreaManager.GetValidAreas)
             {
-                AddShapePath(regionPath, area);
+                AddShapePath(regionFillPath, area);
+                AddShapePath(regionDrawPath, area.SizeOffset(-1));
             }
         }
 
         protected virtual void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            graphicsPath.AddRectangle(new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1));
+            graphicsPath.AddRectangle(rect);
         }
     }
 }

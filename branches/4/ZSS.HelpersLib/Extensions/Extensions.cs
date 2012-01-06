@@ -177,5 +177,15 @@ namespace HelpersLib
         {
             return rect.Width > 0 && rect.Height > 0;
         }
+
+        public static Rectangle SizeOffset(this Rectangle rect, int offset)
+        {
+            return rect.SizeOffset(offset, offset);
+        }
+
+        public static Rectangle SizeOffset(this Rectangle rect, int width, int height)
+        {
+            return new Rectangle(rect.X, rect.Y, rect.Width + width, rect.Height + height);
+        }
     }
 }

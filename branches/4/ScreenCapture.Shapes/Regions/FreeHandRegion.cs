@@ -42,7 +42,7 @@ namespace ScreenCapture
             : base(backgroundImage)
         {
             points = new List<Point>(128);
-            regionPath = new GraphicsPath();
+            regionFillPath = new GraphicsPath();
 
             lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
             DrawableObjects.Add(lastNode);
@@ -57,7 +57,7 @@ namespace ScreenCapture
                 if (isAreaCreated)
                 {
                     isAreaCreated = false;
-                    regionPath.Reset();
+                    regionFillPath.Reset();
                     HideNodes();
                     points.Clear();
                 }
@@ -89,14 +89,14 @@ namespace ScreenCapture
 
                     if (points.Count > 1)
                     {
-                        regionPath.AddLine(InputManager.PreviousMousePosition0Based, InputManager.MousePosition0Based);
+                        regionFillPath.AddLine(InputManager.PreviousMousePosition0Based, InputManager.MousePosition0Based);
                     }
                 }
             }
 
             if (points.Count > 2)
             {
-                RectangleF rect = regionPath.GetBounds();
+                RectangleF rect = regionFillPath.GetBounds();
                 currentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
@@ -105,14 +105,14 @@ namespace ScreenCapture
         {
             if (points.Count > 2)
             {
-                using (Region region = new Region(regionPath))
+                using (Region region = new Region(regionFillPath))
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                     g.ResetClip();
                 }
 
-                g.DrawPath(borderPen, regionPath);
+                g.DrawPath(borderPen, regionFillPath);
                 g.DrawLine(borderPen, points[0], points[points.Count - 1]);
                 g.DrawRectangleProper(borderPen, currentArea);
             }

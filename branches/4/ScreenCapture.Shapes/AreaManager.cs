@@ -76,6 +76,14 @@ namespace ScreenCapture
 
         public Rectangle CurrentHoverArea { get; private set; }
 
+        public bool IsCurrentHoverAreaValid
+        {
+            get
+            {
+                return IsAreaValid(CurrentHoverArea);
+            }
+        }
+
         public ResizeManager ResizeManager { get; private set; }
 
         public bool IsCreating { get; private set; }

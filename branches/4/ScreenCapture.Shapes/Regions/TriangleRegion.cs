@@ -70,7 +70,7 @@ namespace ScreenCapture
 
         protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            graphicsPath.AddTriangle(new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1), Angle);
+            graphicsPath.AddTriangle(rect, Angle);
         }
     }
 }

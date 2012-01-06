@@ -104,25 +104,25 @@ namespace ScreenCapture
 
             if (nodes.Count > 2)
             {
-                RectangleF rect = regionPath.GetBounds();
+                RectangleF rect = regionFillPath.GetBounds();
                 currentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
         protected override void Draw(Graphics g)
         {
-            regionPath = new GraphicsPath();
+            regionFillPath = new GraphicsPath();
 
             for (int i = 0; i < nodes.Count - 1; i++)
             {
-                regionPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
+                regionFillPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
             }
 
             if (nodes.Count > 2)
             {
-                regionPath.CloseFigure();
+                regionFillPath.CloseFigure();
 
-                using (Region region = new Region(regionPath))
+                using (Region region = new Region(regionFillPath))
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
@@ -138,7 +138,7 @@ namespace ScreenCapture
 
             if (nodes.Count > 1)
             {
-                g.DrawPath(borderPen, regionPath);
+                g.DrawPath(borderPen, regionFillPath);
             }
 
             base.Draw(g);

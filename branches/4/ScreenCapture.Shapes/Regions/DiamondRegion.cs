@@ -31,14 +31,11 @@ namespace ScreenCapture
 {
     public class DiamondRegion : RectangleRegion
     {
-        public DiamondRegion(Image backgroundImage = null)
-            : base(backgroundImage)
-        {
-        }
+        public DiamondRegion(Image backgroundImage = null) : base(backgroundImage) { }
 
         protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            graphicsPath.AddDiamond(new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1));
+            graphicsPath.AddDiamond(rect);
         }
     }
 }
