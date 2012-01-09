@@ -84,7 +84,7 @@ namespace HelpersLib
         public static Point FixScreenCoordinates(Point point)
         {
             int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
-            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
             return new Point(point.X - screenX, point.Y - screenY);
         }
 
@@ -92,7 +92,7 @@ namespace HelpersLib
         public static Rectangle FixScreenCoordinates(Rectangle rect)
         {
             int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
-            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
             return new Rectangle(rect.X - screenX, rect.Y - screenY, rect.Width, rect.Height);
         }
 

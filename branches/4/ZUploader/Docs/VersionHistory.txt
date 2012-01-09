@@ -1,4 +1,5 @@
-﻿4.9.0 Added new post-capture option: save screenshots to file
+﻿5.0.0 Added Window & Control capture support to shape captures
+4.9.0 Added new post-capture option: save screenshots to file
 4.8.0 Added Box file uploader support
 
 Version 4.7.2 - 2011-10-31

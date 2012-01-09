@@ -138,10 +138,10 @@ namespace ScreenCapture
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.FillRectangle(backgroundBrush, ScreenRectangle);
+            g.FillRectangle(backgroundBrush, ScreenRectangle0Based);
 
 #if DEBUG
-            g.DrawRectangleProper(Pens.Yellow, ScreenRectangle);
+            g.DrawRectangleProper(Pens.Yellow, ScreenRectangle0Based);
 #endif
 
             Draw(g);
@@ -161,7 +161,7 @@ namespace ScreenCapture
                 Image img;
 
                 Rectangle regionArea = Rectangle.Round(regionFillPath.GetBounds());
-                Rectangle newRegionArea = Rectangle.Intersect(regionArea, ScreenRectangle);
+                Rectangle newRegionArea = Rectangle.Intersect(regionArea, ScreenRectangle0Based);
 
                 using (GraphicsPath gp = (GraphicsPath)regionFillPath.Clone())
                 {
