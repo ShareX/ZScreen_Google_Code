@@ -1,8 +1,10 @@
-4.9.0 Added Box.com File Uploader support {Jaex/McoreD}
-4.8.1 Capturing Shapes feature now supports capturing multiple areas {Jaex}
-4.8.0 Added hotkey support to capture Active Monitor {Jaex/McoreD}
+Version 4.9.0 - 2012-01-10
 
-Version 4.7.5 - 2011-10-22
+4.9.0 Added Box.com File Uploader support {Jaex}
+4.8.1 Capturing Shapes feature now supports capturing multiple areas {Jaex}
+4.8.0 Added hotkey support to capture Active Monitor {Jaex}
+
+Version 4.7.5 Beta - 2011-10-22
 
 4.7.5 Shared Folders can now be individually selected for image/text/file upload types {McoreD}
 4.7.4 Ability to automatically open Image Editor after a screenshot capture by using Caps Lock, Num Lock or Scroll Lock {McoreD}

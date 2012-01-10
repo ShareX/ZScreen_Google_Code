@@ -1223,7 +1223,7 @@ namespace ZScreenLib
             TempText = text;
 
             string ext = ".log";
-            if (WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
+            if (Directory.Exists(text) && WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
             {
                 ext = ".html";
             }
@@ -1257,14 +1257,14 @@ namespace ZScreenLib
                     TempText = indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED, false);
                     UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
                 }
-                else if (FileSystem.IsValidLink(text))
-                {
-                    Job3 = JobLevel3.ShortenURL;
-                }
-                else
-                {
-                    Job3 = JobLevel3.UploadText;
-                }
+            }
+            else if (FileSystem.IsValidLink(text))
+            {
+                Job3 = JobLevel3.ShortenURL;
+            }
+            else
+            {
+                Job3 = JobLevel3.UploadText;
             }
         }
 
