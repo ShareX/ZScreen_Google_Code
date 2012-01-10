@@ -1,4 +1,6 @@
-﻿5.0.0 Added Window & Control capture support to shape captures
+﻿Version 5.0.0 - 2012-01-10
+
+5.0.0 Added Window & Control capture support to shape captures
 4.9.0 Added new post-capture option: save screenshots to file
 4.8.0 Added Box file uploader support
 
