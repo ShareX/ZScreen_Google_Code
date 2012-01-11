@@ -230,7 +230,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(881, 33);
+            this.tsMain.Size = new System.Drawing.Size(841, 33);
             this.tsMain.TabIndex = 0;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -257,10 +257,10 @@ namespace ZUploader
             this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
             this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDebug.Name = "tsbDebug";
-            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
-            this.tsbDebug.Text = "Test upload";
+            this.tsbDebug.Size = new System.Drawing.Size(49, 20);
+            this.tsbDebug.Text = "Test";
             this.tsbDebug.Visible = false;
-            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
+            this.tsbDebug.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tsbDebug_MouseUp);
             // 
             // tsddbCapture
             // 

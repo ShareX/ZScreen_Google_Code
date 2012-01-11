@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using HistoryLib;
+using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.Properties;
@@ -110,7 +111,7 @@ namespace ZUploader
             UploadManager.ListViewControl = lvUploads;
 
 #if DEBUG
-            // Test upload button
+            // Test button: Left click uploads test image. Right click opens capture test window.
             tsbDebug.Visible = true;
 #endif
         }
@@ -444,9 +445,16 @@ namespace ZUploader
             UploadManager.UploadFile();
         }
 
-        private void tsbDebug_Click(object sender, EventArgs e)
+        private void tsbDebug_MouseUp(object sender, MouseEventArgs e)
         {
-            UploadManager.UploadImage(Resources.ZUploaderLogo);
+            if (e.Button == MouseButtons.Left)
+            {
+                UploadManager.UploadImage(Resources.ZUploaderLogo);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                new RegionCapturePreview(Program.Settings.SurfaceOptions).Show();
+            }
         }
 
         private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
