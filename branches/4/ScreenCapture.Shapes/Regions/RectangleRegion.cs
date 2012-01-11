@@ -44,14 +44,17 @@ namespace ScreenCapture
         {
             base.Prepare();
 
-            AreaManager.WindowCaptureMode |= Config.ForceWindowCapture;
-
-            if (AreaManager.WindowCaptureMode)
+            if (Config != null)
             {
-                WindowsListAdvanced wla = new WindowsListAdvanced();
-                wla.IgnoreWindows.Add(Handle);
-                wla.IncludeChildWindows = Config.IncludeControls;
-                AreaManager.Windows = wla.GetWindowsRectangleList();
+                AreaManager.WindowCaptureMode |= Config.ForceWindowCapture;
+
+                if (AreaManager.WindowCaptureMode)
+                {
+                    WindowsListAdvanced wla = new WindowsListAdvanced();
+                    wla.IgnoreWindows.Add(Handle);
+                    wla.IncludeChildWindows = Config.IncludeControls;
+                    AreaManager.Windows = wla.GetWindowsRectangleList();
+                }
             }
         }
 

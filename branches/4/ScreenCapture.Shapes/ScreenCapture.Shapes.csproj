@@ -66,6 +66,11 @@
     <Compile Include="AreaManager.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="MouseState.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResizeManager.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>
@@ -107,6 +112,10 @@
     <Compile Include="SurfaceOptions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="RegionCapturePreview.resx">
       <DependentUpon>RegionCapturePreview.cs</DependentUpon>
     </EmbeddedResource>

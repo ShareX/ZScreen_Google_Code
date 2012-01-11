@@ -47,6 +47,7 @@
             this.nudFixedHeight = new System.Windows.Forms.NumericUpDown();
             this.cbQuickCrop = new System.Windows.Forms.CheckBox();
             this.btnClipboardCopy = new System.Windows.Forms.Button();
+            this.tsbWindowRectangle = new System.Windows.Forms.ToolStripButton();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.pImage.SuspendLayout();
@@ -60,6 +61,7 @@
             this.tsRegionTools.Dock = System.Windows.Forms.DockStyle.Left;
             this.tsRegionTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbFullscreen,
+            this.tsbWindowRectangle,
             this.tsbRectangle,
             this.tsbRoundedRectangle,
             this.tsbEllipse,
@@ -269,6 +271,15 @@
             this.btnClipboardCopy.UseVisualStyleBackColor = true;
             this.btnClipboardCopy.Click += new System.EventHandler(this.btnClipboardCopy_Click);
             // 
+            // tsbWindowRectangle
+            // 
+            this.tsbWindowRectangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbWindowRectangle.Image")));
+            this.tsbWindowRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbWindowRectangle.Name = "tsbWindowRectangle";
+            this.tsbWindowRectangle.Size = new System.Drawing.Size(139, 20);
+            this.tsbWindowRectangle.Text = "Window && Rectangle";
+            this.tsbWindowRectangle.Click += new System.EventHandler(this.tsbWindowRectangle_Click);
+            // 
             // RegionCapturePreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,5 +330,6 @@
         private System.Windows.Forms.NumericUpDown nudFixedHeight;
         private System.Windows.Forms.CheckBox cbQuickCrop;
         private System.Windows.Forms.Button btnClipboardCopy;
+        private System.Windows.Forms.ToolStripButton tsbWindowRectangle;
     }
 }

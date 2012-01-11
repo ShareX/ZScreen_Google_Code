@@ -62,6 +62,8 @@ namespace ScreenCapture
             InitializeComponent();
 
             SurfaceImage = backgroundImage;
+            Prepare();
+
             DrawableObjects = new List<DrawableObject>();
             Config = new SurfaceOptions();
             timer = new Stopwatch();
@@ -376,10 +378,12 @@ namespace ScreenCapture
 
             if (backgroundBrush != null) backgroundBrush.Dispose();
             if (regionFillPath != null) regionFillPath.Dispose();
+            if (regionDrawPath != null) regionDrawPath.Dispose();
             if (borderPen != null) borderPen.Dispose();
             if (borderDotPen != null) borderDotPen.Dispose();
             if (borderDotPen2 != null) borderDotPen2.Dispose();
             if (shadowBrush != null) shadowBrush.Dispose();
+            if (lightBrush != null) lightBrush.Dispose();
             if (nodeBackgroundBrush != null) nodeBackgroundBrush.Dispose();
             if (textFont != null) textFont.Dispose();
 

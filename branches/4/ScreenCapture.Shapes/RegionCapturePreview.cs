@@ -53,7 +53,6 @@ namespace ScreenCapture
 
         private Image screenshot;
         private Image result;
-        private Surface surface;
 
         public RegionCapturePreview()
             : this(new SurfaceOptions())
@@ -69,44 +68,26 @@ namespace ScreenCapture
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;
             cbDrawChecker.Checked = surfaceConfig.DrawChecker;
+            cbIsFixedSize.Checked = surfaceConfig.IsFixedSize;
+            nudFixedWidth.Value = surfaceConfig.FixedSize.Width;
+            nudFixedHeight.Value = surfaceConfig.FixedSize.Height;
             cbQuickCrop.Checked = surfaceConfig.QuickCrop;
         }
 
-        private void CaptureRegion()
+        private void CaptureRegion(Surface surface)
         {
             pbResult.Image = null;
 
-            if (SurfaceConfig != null)
-            {
-                surface.Config = SurfaceConfig;
-            }
-            else
-            {
-                surface.Config = new SurfaceOptions()
-                {
-                    DrawBorder = cbDrawBorder.Checked,
-                    DrawChecker = cbDrawChecker.Checked,
-                    QuickCrop = cbQuickCrop.Checked,
-                    MinMoveSpeed = 1,
-                    MaxMoveSpeed = 5
-                };
-            }
-
-            if (surface is RectangleRegion)
-            {
-                RectangleRegion rectangle = (RectangleRegion)surface;
-                rectangle.Config.IsFixedSize = cbIsFixedSize.Checked;
-
-                if (rectangle.Config.IsFixedSize)
-                {
-                    rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
-                }
-            }
+            surface.Config = SurfaceConfig;
+            surface.SurfaceImage = screenshot;
+            surface.Prepare();
 
             if (surface.ShowDialog() == DialogResult.OK)
             {
                 Result = surface.GetRegionImage();
             }
+
+            surface.Dispose();
         }
 
         private void tsbFullscreen_Click(object sender, EventArgs e)
@@ -114,46 +95,46 @@ namespace ScreenCapture
             Result = screenshot;
         }
 
+        private void tsbWindowRectangle_Click(object sender, EventArgs e)
+        {
+            RectangleRegion rectangleRegion = new RectangleRegion();
+            rectangleRegion.AreaManager.WindowCaptureMode = true;
+            CaptureRegion(rectangleRegion);
+        }
+
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
-            surface = new RectangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new RectangleRegion());
         }
 
         private void tsbRoundedRectangle_Click(object sender, EventArgs e)
         {
-            surface = new RoundedRectangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new RoundedRectangleRegion());
         }
 
         private void tsbEllipse_Click(object sender, EventArgs e)
         {
-            surface = new EllipseRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new EllipseRegion());
         }
 
         private void tsbTriangle_Click(object sender, EventArgs e)
         {
-            surface = new TriangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new TriangleRegion());
         }
 
         private void tsbDiamond_Click(object sender, EventArgs e)
         {
-            surface = new DiamondRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new DiamondRegion());
         }
 
         private void tsbPolygon_Click(object sender, EventArgs e)
         {
-            surface = new PolygonRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new PolygonRegion());
         }
 
         private void tsbFreeHand_Click(object sender, EventArgs e)
         {
-            surface = new FreeHandRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new FreeHandRegion());
         }
 
         private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
