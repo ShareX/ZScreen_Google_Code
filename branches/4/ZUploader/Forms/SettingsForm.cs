@@ -360,6 +360,11 @@ namespace ZUploader
         private void cbImageKeepAspectRatio_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.ImageKeepAspectRatio = cbImageKeepAspectRatio.Checked;
+
+            if (Program.Settings.ImageKeepAspectRatio)
+            {
+                nudImageScalePercentageHeight.Value = nudImageScalePercentageWidth.Value;
+            }
         }
 
         private void cbImageUseSmoothScaling_CheckedChanged(object sender, EventArgs e)
@@ -367,46 +372,69 @@ namespace ZUploader
             Program.Settings.ImageUseSmoothScaling = cbImageUseSmoothScaling.Checked;
         }
 
-        private void rbImageScaleTypePercentage_CheckedChanged(object sender, EventArgs e)
+        private void CheckImageScaleType()
         {
+            bool aspectRatioEnabled = true;
+
             if (rbImageScaleTypePercentage.Checked)
             {
                 Program.Settings.ImageScaleType = ImageScaleType.Percentage;
             }
+            else if (rbImageScaleTypeToWidth.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Width;
+            }
+            else if (rbImageScaleTypeToHeight.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Height;
+            }
+            else if (rbImageScaleTypeSpecific.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Specific;
+                aspectRatioEnabled = false;
+            }
+
+            cbImageKeepAspectRatio.Enabled = aspectRatioEnabled;
+        }
+
+        private void rbImageScaleTypePercentage_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckImageScaleType();
         }
 
         private void rbImageScaleTypeToWidth_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbImageScaleTypeToWidth.Checked)
-            {
-                Program.Settings.ImageScaleType = ImageScaleType.Width;
-            }
+            CheckImageScaleType();
         }
 
         private void rbImageScaleTypeToHeight_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbImageScaleTypeToHeight.Checked)
-            {
-                Program.Settings.ImageScaleType = ImageScaleType.Height;
-            }
+            CheckImageScaleType();
         }
 
         private void rbImageScaleTypeSpecific_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbImageScaleTypeSpecific.Checked)
-            {
-                Program.Settings.ImageScaleType = ImageScaleType.Specific;
-            }
+            CheckImageScaleType();
         }
 
         private void nudImageScalePercentageWidth_ValueChanged(object sender, EventArgs e)
         {
             Program.Settings.ImageScalePercentageWidth = (int)nudImageScalePercentageWidth.Value;
+
+            if (Program.Settings.ImageKeepAspectRatio)
+            {
+                nudImageScalePercentageHeight.Value = Program.Settings.ImageScalePercentageWidth;
+            }
         }
 
         private void nudImageScalePercentageHeight_ValueChanged(object sender, EventArgs e)
         {
             Program.Settings.ImageScalePercentageHeight = (int)nudImageScalePercentageHeight.Value;
+
+            if (Program.Settings.ImageKeepAspectRatio)
+            {
+                nudImageScalePercentageWidth.Value = Program.Settings.ImageScalePercentageHeight;
+            }
         }
 
         private void nudImageScaleToWidth_ValueChanged(object sender, EventArgs e)
