@@ -43,7 +43,7 @@ namespace HelpersLib.Hotkey
         ActiveWindow,
         [Description("Active Monitor")]
         ActiveMonitor,
-        [Description("Window & Rectangle")]
+        [Description("Window && Rectangle")]
         WindowRectangle,
         [Description("Rectangle Region")]
         RectangleRegion,

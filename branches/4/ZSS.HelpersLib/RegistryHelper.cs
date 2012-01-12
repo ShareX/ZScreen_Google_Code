@@ -46,41 +46,73 @@ namespace HelpersLib
 
         public static bool CheckStartWithWindows()
         {
-            return CheckRegistry(WindowsStartupRun, Application.ProductName, StartupPath);
+            try
+            {
+                return CheckRegistry(WindowsStartupRun, Application.ProductName, StartupPath);
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
+            }
+
+            return false;
         }
 
         public static void SetStartWithWindows(bool startWithWindows)
         {
-            using (RegistryKey regkey = Registry.CurrentUser.OpenSubKey(WindowsStartupRun, true))
+            try
             {
-                if (regkey != null)
+                using (RegistryKey regkey = Registry.CurrentUser.OpenSubKey(WindowsStartupRun, true))
                 {
-                    if (startWithWindows)
+                    if (regkey != null)
                     {
-                        regkey.SetValue(Application.ProductName, StartupPath, RegistryValueKind.String);
-                    }
-                    else
-                    {
-                        regkey.DeleteValue(Application.ProductName, false);
+                        if (startWithWindows)
+                        {
+                            regkey.SetValue(Application.ProductName, StartupPath, RegistryValueKind.String);
+                        }
+                        else
+                        {
+                            regkey.DeleteValue(Application.ProductName, false);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
             }
         }
 
         public static bool CheckShellContextMenu()
         {
-            return CheckRegistry(ShellExtMenuFilesCmd) && CheckRegistry(ShellExtMenuFoldersCmd);
+            try
+            {
+                return CheckRegistry(ShellExtMenuFilesCmd) && CheckRegistry(ShellExtMenuFoldersCmd);
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
+            }
+
+            return false;
         }
 
         public static void SetShellContextMenu(bool shellContextMenu)
         {
-            if (shellContextMenu)
+            try
             {
-                RegisterShellContextMenu();
+                if (shellContextMenu)
+                {
+                    RegisterShellContextMenu();
+                }
+                else
+                {
+                    UnregisterShellContextMenu();
+                }
             }
-            else
+            catch (Exception e)
             {
-                UnregisterShellContextMenu();
+                StaticHelper.WriteException(e);
             }
         }
 
