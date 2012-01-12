@@ -73,12 +73,40 @@ namespace ZUploader
 
             cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower.Between(0, MaxBufferSizePower);
 
-            // Image
+            // Image - Quality
             cbImageFormat.SelectedIndex = (int)Program.Settings.ImageFormat;
             nudImageJPEGQuality.Value = Program.Settings.ImageJPEGQuality;
             cbImageGIFQuality.SelectedIndex = (int)Program.Settings.ImageGIFQuality;
             nudUseImageFormat2After.Value = Program.Settings.ImageSizeLimit;
             cbImageFormat2.SelectedIndex = (int)Program.Settings.ImageFormat2;
+
+            // Image - Resize
+            cbImageAutoResize.Checked = Program.Settings.ImageAutoResize;
+            cbImageKeepAspectRatio.Checked = Program.Settings.ImageKeepAspectRatio;
+            cbImageUseSmoothScaling.Checked = Program.Settings.ImageUseSmoothScaling;
+
+            switch (Program.Settings.ImageScaleType)
+            {
+                case ImageScaleType.Percentage:
+                    rbImageScaleTypePercentage.Checked = true;
+                    break;
+                case ImageScaleType.Width:
+                    rbImageScaleTypeToWidth.Checked = true;
+                    break;
+                case ImageScaleType.Height:
+                    rbImageScaleTypeToHeight.Checked = true;
+                    break;
+                case ImageScaleType.Specific:
+                    rbImageScaleTypeSpecific.Checked = true;
+                    break;
+            }
+
+            nudImageScalePercentageWidth.Value = Program.Settings.ImageScalePercentageWidth;
+            nudImageScalePercentageHeight.Value = Program.Settings.ImageScalePercentageHeight;
+            nudImageScaleToWidth.Value = Program.Settings.ImageScaleToWidth;
+            nudImageScaleToHeight.Value = Program.Settings.ImageScaleToHeight;
+            nudImageScaleSpecificWidth.Value = Program.Settings.ImageScaleSpecificWidth;
+            nudImageScaleSpecificHeight.Value = Program.Settings.ImageScaleSpecificHeight;
 
             // Clipboard upload
             txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
@@ -293,6 +321,8 @@ namespace ZUploader
 
         #region Image
 
+        #region Quality
+
         private void cbImageFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.Settings.ImageFormat = (EImageFormat)cbImageFormat.SelectedIndex;
@@ -317,6 +347,89 @@ namespace ZUploader
         {
             Program.Settings.ImageFormat2 = (EImageFormat)cbImageFormat2.SelectedIndex;
         }
+
+        #endregion Quality
+
+        #region Resize
+
+        private void cbImageAutoResize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageAutoResize = cbImageAutoResize.Checked;
+        }
+
+        private void cbImageKeepAspectRatio_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageKeepAspectRatio = cbImageKeepAspectRatio.Checked;
+        }
+
+        private void cbImageUseSmoothScaling_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageUseSmoothScaling = cbImageUseSmoothScaling.Checked;
+        }
+
+        private void rbImageScaleTypePercentage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbImageScaleTypePercentage.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Percentage;
+            }
+        }
+
+        private void rbImageScaleTypeToWidth_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbImageScaleTypeToWidth.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Width;
+            }
+        }
+
+        private void rbImageScaleTypeToHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbImageScaleTypeToHeight.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Height;
+            }
+        }
+
+        private void rbImageScaleTypeSpecific_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbImageScaleTypeSpecific.Checked)
+            {
+                Program.Settings.ImageScaleType = ImageScaleType.Specific;
+            }
+        }
+
+        private void nudImageScalePercentageWidth_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScalePercentageWidth = (int)nudImageScalePercentageWidth.Value;
+        }
+
+        private void nudImageScalePercentageHeight_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScalePercentageHeight = (int)nudImageScalePercentageHeight.Value;
+        }
+
+        private void nudImageScaleToWidth_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScaleToWidth = (int)nudImageScaleToWidth.Value;
+        }
+
+        private void nudImageScaleToHeight_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScaleToHeight = (int)nudImageScaleToHeight.Value;
+        }
+
+        private void nudImageScaleSpecificWidth_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScaleSpecificWidth = (int)nudImageScaleSpecificWidth.Value;
+        }
+
+        private void nudImageScaleSpecificHeight_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ImageScaleSpecificHeight = (int)nudImageScaleSpecificHeight.Value;
+        }
+
+        #endregion Resize
 
         #endregion Image
 

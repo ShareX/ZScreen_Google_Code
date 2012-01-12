@@ -37,7 +37,7 @@
             this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
             this.cbShowTray = new System.Windows.Forms.CheckBox();
             this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblOpenZUploaderPath = new System.Windows.Forms.Label();
             this.btnOpenZUploaderPath = new System.Windows.Forms.Button();
             this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
@@ -53,21 +53,48 @@
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
-            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
-            this.lblImageInfo = new System.Windows.Forms.Label();
-            this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
-            this.lblImageJPEGQualityHint = new System.Windows.Forms.Label();
-            this.cbImageGIFQuality = new System.Windows.Forms.ComboBox();
-            this.cbImageFormat2 = new System.Windows.Forms.ComboBox();
-            this.lblImageFormat2 = new System.Windows.Forms.Label();
-            this.lblUseImageFormat2After = new System.Windows.Forms.Label();
-            this.nudUseImageFormat2After = new System.Windows.Forms.NumericUpDown();
-            this.nudImageJPEGQuality = new System.Windows.Forms.NumericUpDown();
-            this.lblImageGIFQuality = new System.Windows.Forms.Label();
-            this.lblImageJPEGQuality = new System.Windows.Forms.Label();
-            this.cbImageFormat = new System.Windows.Forms.ComboBox();
+            this.tcImage = new System.Windows.Forms.TabControl();
+            this.tpQuality = new System.Windows.Forms.TabPage();
             this.lblImageFormat = new System.Windows.Forms.Label();
+            this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
+            this.cbImageFormat = new System.Windows.Forms.ComboBox();
+            this.lblImageJPEGQualityHint = new System.Windows.Forms.Label();
+            this.lblImageJPEGQuality = new System.Windows.Forms.Label();
+            this.cbImageGIFQuality = new System.Windows.Forms.ComboBox();
+            this.lblImageGIFQuality = new System.Windows.Forms.Label();
+            this.cbImageFormat2 = new System.Windows.Forms.ComboBox();
+            this.nudImageJPEGQuality = new System.Windows.Forms.NumericUpDown();
+            this.lblImageFormat2 = new System.Windows.Forms.Label();
+            this.nudUseImageFormat2After = new System.Windows.Forms.NumericUpDown();
+            this.lblUseImageFormat2After = new System.Windows.Forms.Label();
+            this.tpResize = new System.Windows.Forms.TabPage();
+            this.cbImageUseSmoothScaling = new System.Windows.Forms.CheckBox();
+            this.cbImageKeepAspectRatio = new System.Windows.Forms.CheckBox();
+            this.cbImageAutoResize = new System.Windows.Forms.CheckBox();
+            this.gbImageScaleSettings = new System.Windows.Forms.GroupBox();
+            this.rbImageScaleTypePercentage = new System.Windows.Forms.RadioButton();
+            this.lblImageScaleToHeight2 = new System.Windows.Forms.Label();
+            this.rbImageScaleTypeToWidth = new System.Windows.Forms.RadioButton();
+            this.lblImageScaleSpecificWidth2 = new System.Windows.Forms.Label();
+            this.rbImageScaleTypeToHeight = new System.Windows.Forms.RadioButton();
+            this.lblImageScaleSpecificHeight2 = new System.Windows.Forms.Label();
+            this.rbImageScaleTypeSpecific = new System.Windows.Forms.RadioButton();
+            this.lblImageScaleToWidth2 = new System.Windows.Forms.Label();
+            this.lblImageScalePercentageWidth = new System.Windows.Forms.Label();
+            this.lblImageScalePercentageHeight2 = new System.Windows.Forms.Label();
+            this.nudImageScalePercentageWidth = new System.Windows.Forms.NumericUpDown();
+            this.lblImageScalePercentageWidth2 = new System.Windows.Forms.Label();
+            this.lblImageScalePercentageHeight = new System.Windows.Forms.Label();
+            this.nudImageScaleToHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudImageScalePercentageHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudImageScaleToWidth = new System.Windows.Forms.NumericUpDown();
+            this.lblImageScaleToWidth = new System.Windows.Forms.Label();
+            this.nudImageScaleSpecificHeight = new System.Windows.Forms.NumericUpDown();
+            this.lblImageScaleToHeight = new System.Windows.Forms.Label();
+            this.lblImageScaleSpecificHeight = new System.Windows.Forms.Label();
+            this.lblImageScaleSpecificWidth = new System.Windows.Forms.Label();
+            this.nudImageScaleSpecificWidth = new System.Windows.Forms.NumericUpDown();
             this.tpClipboardUpload = new System.Windows.Forms.TabPage();
             this.lblClipboardUploadInfo = new System.Windows.Forms.Label();
             this.lblNameFormatPatternPreview = new System.Windows.Forms.Label();
@@ -106,14 +133,25 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).BeginInit();
             this.tpHotkeys.SuspendLayout();
             this.tpImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).BeginInit();
+            this.tcImage.SuspendLayout();
+            this.tpQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).BeginInit();
+            this.tpResize.SuspendLayout();
+            this.gbImageScaleSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScalePercentageWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleToHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScalePercentageHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleToWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleSpecificHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleSpecificWidth)).BeginInit();
             this.tpClipboardUpload.SuspendLayout();
             this.tpCapture.SuspendLayout();
             this.tcCapture.SuspendLayout();
@@ -184,7 +222,7 @@
             this.tpGeneral.Controls.Add(this.cbStartWithWindows);
             this.tpGeneral.Controls.Add(this.cbShowTray);
             this.tpGeneral.Controls.Add(this.cbURLShortenAfterUpload);
-            this.tpGeneral.Controls.Add(this.label1);
+            this.tpGeneral.Controls.Add(this.lblOpenZUploaderPath);
             this.tpGeneral.Controls.Add(this.btnOpenZUploaderPath);
             this.tpGeneral.Controls.Add(this.lblGeneralInfo);
             this.tpGeneral.Controls.Add(this.cbShellContextMenu);
@@ -240,14 +278,14 @@
             this.cbURLShortenAfterUpload.UseVisualStyleBackColor = true;
             this.cbURLShortenAfterUpload.CheckedChanged += new System.EventHandler(this.cbURLShortenAfterUpload_CheckedChanged);
             // 
-            // label1
+            // lblOpenZUploaderPath
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 232);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(257, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "This folder has settings, history database and log files";
+            this.lblOpenZUploaderPath.AutoSize = true;
+            this.lblOpenZUploaderPath.Location = new System.Drawing.Point(16, 232);
+            this.lblOpenZUploaderPath.Name = "lblOpenZUploaderPath";
+            this.lblOpenZUploaderPath.Size = new System.Drawing.Size(257, 13);
+            this.lblOpenZUploaderPath.TabIndex = 6;
+            this.lblOpenZUploaderPath.Text = "This folder has settings, history database and log files";
             // 
             // btnOpenZUploaderPath
             // 
@@ -416,51 +454,58 @@
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
             // 
-            // hmHotkeys
-            // 
-            this.hmHotkeys.AutoScroll = true;
-            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
-            this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(523, 329);
-            this.hmHotkeys.TabIndex = 0;
-            // 
             // tpImage
             // 
-            this.tpImage.Controls.Add(this.lblImageInfo);
-            this.tpImage.Controls.Add(this.lblUseImageFormat2AfterHint);
-            this.tpImage.Controls.Add(this.lblImageJPEGQualityHint);
-            this.tpImage.Controls.Add(this.cbImageGIFQuality);
-            this.tpImage.Controls.Add(this.cbImageFormat2);
-            this.tpImage.Controls.Add(this.lblImageFormat2);
-            this.tpImage.Controls.Add(this.lblUseImageFormat2After);
-            this.tpImage.Controls.Add(this.nudUseImageFormat2After);
-            this.tpImage.Controls.Add(this.nudImageJPEGQuality);
-            this.tpImage.Controls.Add(this.lblImageGIFQuality);
-            this.tpImage.Controls.Add(this.lblImageJPEGQuality);
-            this.tpImage.Controls.Add(this.cbImageFormat);
-            this.tpImage.Controls.Add(this.lblImageFormat);
+            this.tpImage.Controls.Add(this.tcImage);
             this.tpImage.Location = new System.Drawing.Point(4, 22);
             this.tpImage.Name = "tpImage";
-            this.tpImage.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImage.Padding = new System.Windows.Forms.Padding(5);
             this.tpImage.Size = new System.Drawing.Size(523, 329);
             this.tpImage.TabIndex = 3;
             this.tpImage.Text = "Image";
             this.tpImage.UseVisualStyleBackColor = true;
             // 
-            // lblImageInfo
+            // tcImage
             // 
-            this.lblImageInfo.BackColor = System.Drawing.Color.DimGray;
-            this.lblImageInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblImageInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblImageInfo.ForeColor = System.Drawing.Color.White;
-            this.lblImageInfo.Location = new System.Drawing.Point(3, 297);
-            this.lblImageInfo.Name = "lblImageInfo";
-            this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
-            this.lblImageInfo.TabIndex = 12;
-            this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
-            this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.tcImage.Controls.Add(this.tpQuality);
+            this.tcImage.Controls.Add(this.tpResize);
+            this.tcImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcImage.Location = new System.Drawing.Point(5, 5);
+            this.tcImage.Name = "tcImage";
+            this.tcImage.SelectedIndex = 0;
+            this.tcImage.Size = new System.Drawing.Size(513, 319);
+            this.tcImage.TabIndex = 13;
+            // 
+            // tpQuality
+            // 
+            this.tpQuality.Controls.Add(this.lblImageFormat);
+            this.tpQuality.Controls.Add(this.lblUseImageFormat2AfterHint);
+            this.tpQuality.Controls.Add(this.cbImageFormat);
+            this.tpQuality.Controls.Add(this.lblImageJPEGQualityHint);
+            this.tpQuality.Controls.Add(this.lblImageJPEGQuality);
+            this.tpQuality.Controls.Add(this.cbImageGIFQuality);
+            this.tpQuality.Controls.Add(this.lblImageGIFQuality);
+            this.tpQuality.Controls.Add(this.cbImageFormat2);
+            this.tpQuality.Controls.Add(this.nudImageJPEGQuality);
+            this.tpQuality.Controls.Add(this.lblImageFormat2);
+            this.tpQuality.Controls.Add(this.nudUseImageFormat2After);
+            this.tpQuality.Controls.Add(this.lblUseImageFormat2After);
+            this.tpQuality.Location = new System.Drawing.Point(4, 22);
+            this.tpQuality.Name = "tpQuality";
+            this.tpQuality.Padding = new System.Windows.Forms.Padding(3);
+            this.tpQuality.Size = new System.Drawing.Size(505, 293);
+            this.tpQuality.TabIndex = 0;
+            this.tpQuality.Text = "Quality";
+            this.tpQuality.UseVisualStyleBackColor = true;
+            // 
+            // lblImageFormat
+            // 
+            this.lblImageFormat.AutoSize = true;
+            this.lblImageFormat.Location = new System.Drawing.Point(16, 16);
+            this.lblImageFormat.Name = "lblImageFormat";
+            this.lblImageFormat.Size = new System.Drawing.Size(71, 13);
+            this.lblImageFormat.TabIndex = 0;
+            this.lblImageFormat.Text = "Image format:";
             // 
             // lblUseImageFormat2AfterHint
             // 
@@ -471,6 +516,22 @@
             this.lblUseImageFormat2AfterHint.TabIndex = 9;
             this.lblUseImageFormat2AfterHint.Text = "KiB  0 - 5000 (0 disables)";
             // 
+            // cbImageFormat
+            // 
+            this.cbImageFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbImageFormat.FormattingEnabled = true;
+            this.cbImageFormat.Items.AddRange(new object[] {
+            "PNG",
+            "JPEG",
+            "GIF",
+            "BMP",
+            "TIFF"});
+            this.cbImageFormat.Location = new System.Drawing.Point(104, 12);
+            this.cbImageFormat.Name = "cbImageFormat";
+            this.cbImageFormat.Size = new System.Drawing.Size(56, 21);
+            this.cbImageFormat.TabIndex = 1;
+            this.cbImageFormat.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat_SelectedIndexChanged);
+            // 
             // lblImageJPEGQualityHint
             // 
             this.lblImageJPEGQualityHint.AutoSize = true;
@@ -479,6 +540,15 @@
             this.lblImageJPEGQualityHint.Size = new System.Drawing.Size(40, 13);
             this.lblImageJPEGQualityHint.TabIndex = 4;
             this.lblImageJPEGQualityHint.Text = "0 - 100";
+            // 
+            // lblImageJPEGQuality
+            // 
+            this.lblImageJPEGQuality.AutoSize = true;
+            this.lblImageJPEGQuality.Location = new System.Drawing.Point(16, 48);
+            this.lblImageJPEGQuality.Name = "lblImageJPEGQuality";
+            this.lblImageJPEGQuality.Size = new System.Drawing.Size(70, 13);
+            this.lblImageJPEGQuality.TabIndex = 2;
+            this.lblImageJPEGQuality.Text = "JPEG quality:";
             // 
             // cbImageGIFQuality
             // 
@@ -494,6 +564,15 @@
             this.cbImageGIFQuality.Size = new System.Drawing.Size(120, 21);
             this.cbImageGIFQuality.TabIndex = 6;
             this.cbImageGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbImageGIFQuality_SelectedIndexChanged);
+            // 
+            // lblImageGIFQuality
+            // 
+            this.lblImageGIFQuality.AutoSize = true;
+            this.lblImageGIFQuality.Location = new System.Drawing.Point(16, 80);
+            this.lblImageGIFQuality.Name = "lblImageGIFQuality";
+            this.lblImageGIFQuality.Size = new System.Drawing.Size(60, 13);
+            this.lblImageGIFQuality.TabIndex = 5;
+            this.lblImageGIFQuality.Text = "GIF quality:";
             // 
             // cbImageFormat2
             // 
@@ -511,6 +590,20 @@
             this.cbImageFormat2.TabIndex = 11;
             this.cbImageFormat2.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat2_SelectedIndexChanged);
             // 
+            // nudImageJPEGQuality
+            // 
+            this.nudImageJPEGQuality.Location = new System.Drawing.Point(104, 44);
+            this.nudImageJPEGQuality.Name = "nudImageJPEGQuality";
+            this.nudImageJPEGQuality.Size = new System.Drawing.Size(56, 20);
+            this.nudImageJPEGQuality.TabIndex = 3;
+            this.nudImageJPEGQuality.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudImageJPEGQuality.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageJPEGQuality.ValueChanged += new System.EventHandler(this.nudImageJPEGQuality_ValueChanged);
+            // 
             // lblImageFormat2
             // 
             this.lblImageFormat2.AutoSize = true;
@@ -519,15 +612,6 @@
             this.lblImageFormat2.Size = new System.Drawing.Size(80, 13);
             this.lblImageFormat2.TabIndex = 10;
             this.lblImageFormat2.Text = "Image format 2:";
-            // 
-            // lblUseImageFormat2After
-            // 
-            this.lblUseImageFormat2After.AutoSize = true;
-            this.lblUseImageFormat2After.Location = new System.Drawing.Point(16, 112);
-            this.lblUseImageFormat2After.Name = "lblUseImageFormat2After";
-            this.lblUseImageFormat2After.Size = new System.Drawing.Size(198, 13);
-            this.lblUseImageFormat2After.TabIndex = 7;
-            this.lblUseImageFormat2After.Text = "Image size limit for use \"Image format 2\":";
             // 
             // nudUseImageFormat2After
             // 
@@ -548,62 +632,376 @@
             0});
             this.nudUseImageFormat2After.ValueChanged += new System.EventHandler(this.nudUseImageFormat2After_ValueChanged);
             // 
-            // nudImageJPEGQuality
+            // lblUseImageFormat2After
             // 
-            this.nudImageJPEGQuality.Location = new System.Drawing.Point(104, 44);
-            this.nudImageJPEGQuality.Name = "nudImageJPEGQuality";
-            this.nudImageJPEGQuality.Size = new System.Drawing.Size(56, 20);
-            this.nudImageJPEGQuality.TabIndex = 3;
-            this.nudImageJPEGQuality.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudImageJPEGQuality.Value = new decimal(new int[] {
+            this.lblUseImageFormat2After.AutoSize = true;
+            this.lblUseImageFormat2After.Location = new System.Drawing.Point(16, 112);
+            this.lblUseImageFormat2After.Name = "lblUseImageFormat2After";
+            this.lblUseImageFormat2After.Size = new System.Drawing.Size(198, 13);
+            this.lblUseImageFormat2After.TabIndex = 7;
+            this.lblUseImageFormat2After.Text = "Image size limit for use \"Image format 2\":";
+            // 
+            // tpResize
+            // 
+            this.tpResize.Controls.Add(this.cbImageUseSmoothScaling);
+            this.tpResize.Controls.Add(this.cbImageKeepAspectRatio);
+            this.tpResize.Controls.Add(this.cbImageAutoResize);
+            this.tpResize.Controls.Add(this.gbImageScaleSettings);
+            this.tpResize.Location = new System.Drawing.Point(4, 22);
+            this.tpResize.Name = "tpResize";
+            this.tpResize.Padding = new System.Windows.Forms.Padding(3);
+            this.tpResize.Size = new System.Drawing.Size(505, 293);
+            this.tpResize.TabIndex = 1;
+            this.tpResize.Text = "Resize";
+            this.tpResize.UseVisualStyleBackColor = true;
+            // 
+            // cbImageUseSmoothScaling
+            // 
+            this.cbImageUseSmoothScaling.AutoSize = true;
+            this.cbImageUseSmoothScaling.Location = new System.Drawing.Point(16, 64);
+            this.cbImageUseSmoothScaling.Name = "cbImageUseSmoothScaling";
+            this.cbImageUseSmoothScaling.Size = new System.Drawing.Size(183, 17);
+            this.cbImageUseSmoothScaling.TabIndex = 27;
+            this.cbImageUseSmoothScaling.Text = "Use smooth scaling (Anti aliasing)";
+            this.cbImageUseSmoothScaling.UseVisualStyleBackColor = true;
+            this.cbImageUseSmoothScaling.CheckedChanged += new System.EventHandler(this.cbImageUseSmoothScaling_CheckedChanged);
+            // 
+            // cbImageKeepAspectRatio
+            // 
+            this.cbImageKeepAspectRatio.AutoSize = true;
+            this.cbImageKeepAspectRatio.Location = new System.Drawing.Point(16, 40);
+            this.cbImageKeepAspectRatio.Name = "cbImageKeepAspectRatio";
+            this.cbImageKeepAspectRatio.Size = new System.Drawing.Size(109, 17);
+            this.cbImageKeepAspectRatio.TabIndex = 26;
+            this.cbImageKeepAspectRatio.Text = "Keep aspect ratio";
+            this.cbImageKeepAspectRatio.UseVisualStyleBackColor = true;
+            this.cbImageKeepAspectRatio.CheckedChanged += new System.EventHandler(this.cbImageKeepAspectRatio_CheckedChanged);
+            // 
+            // cbImageAutoResize
+            // 
+            this.cbImageAutoResize.AutoSize = true;
+            this.cbImageAutoResize.Location = new System.Drawing.Point(16, 16);
+            this.cbImageAutoResize.Name = "cbImageAutoResize";
+            this.cbImageAutoResize.Size = new System.Drawing.Size(149, 17);
+            this.cbImageAutoResize.TabIndex = 25;
+            this.cbImageAutoResize.Text = "Automatically resize image";
+            this.cbImageAutoResize.UseVisualStyleBackColor = true;
+            this.cbImageAutoResize.CheckedChanged += new System.EventHandler(this.cbImageAutoResize_CheckedChanged);
+            // 
+            // gbImageScaleSettings
+            // 
+            this.gbImageScaleSettings.Controls.Add(this.rbImageScaleTypePercentage);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleToHeight2);
+            this.gbImageScaleSettings.Controls.Add(this.rbImageScaleTypeToWidth);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleSpecificWidth2);
+            this.gbImageScaleSettings.Controls.Add(this.rbImageScaleTypeToHeight);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleSpecificHeight2);
+            this.gbImageScaleSettings.Controls.Add(this.rbImageScaleTypeSpecific);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleToWidth2);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScalePercentageWidth);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScalePercentageHeight2);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScalePercentageWidth);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScalePercentageWidth2);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScalePercentageHeight);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScaleToHeight);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScalePercentageHeight);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScaleToWidth);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleToWidth);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScaleSpecificHeight);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleToHeight);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleSpecificHeight);
+            this.gbImageScaleSettings.Controls.Add(this.lblImageScaleSpecificWidth);
+            this.gbImageScaleSettings.Controls.Add(this.nudImageScaleSpecificWidth);
+            this.gbImageScaleSettings.Location = new System.Drawing.Point(288, 8);
+            this.gbImageScaleSettings.Name = "gbImageScaleSettings";
+            this.gbImageScaleSettings.Size = new System.Drawing.Size(200, 272);
+            this.gbImageScaleSettings.TabIndex = 24;
+            this.gbImageScaleSettings.TabStop = false;
+            this.gbImageScaleSettings.Text = "Scale settings";
+            // 
+            // rbImageScaleTypePercentage
+            // 
+            this.rbImageScaleTypePercentage.AutoSize = true;
+            this.rbImageScaleTypePercentage.Location = new System.Drawing.Point(16, 24);
+            this.rbImageScaleTypePercentage.Name = "rbImageScaleTypePercentage";
+            this.rbImageScaleTypePercentage.Size = new System.Drawing.Size(123, 17);
+            this.rbImageScaleTypePercentage.TabIndex = 0;
+            this.rbImageScaleTypePercentage.TabStop = true;
+            this.rbImageScaleTypePercentage.Text = "Scale by percentage";
+            this.rbImageScaleTypePercentage.UseVisualStyleBackColor = true;
+            this.rbImageScaleTypePercentage.CheckedChanged += new System.EventHandler(this.rbImageScaleTypePercentage_CheckedChanged);
+            // 
+            // lblImageScaleToHeight2
+            // 
+            this.lblImageScaleToHeight2.AutoSize = true;
+            this.lblImageScaleToHeight2.Location = new System.Drawing.Point(144, 172);
+            this.lblImageScaleToHeight2.Name = "lblImageScaleToHeight2";
+            this.lblImageScaleToHeight2.Size = new System.Drawing.Size(33, 13);
+            this.lblImageScaleToHeight2.TabIndex = 23;
+            this.lblImageScaleToHeight2.Text = "pixels";
+            // 
+            // rbImageScaleTypeToWidth
+            // 
+            this.rbImageScaleTypeToWidth.AutoSize = true;
+            this.rbImageScaleTypeToWidth.Location = new System.Drawing.Point(16, 96);
+            this.rbImageScaleTypeToWidth.Name = "rbImageScaleTypeToWidth";
+            this.rbImageScaleTypeToWidth.Size = new System.Drawing.Size(92, 17);
+            this.rbImageScaleTypeToWidth.TabIndex = 1;
+            this.rbImageScaleTypeToWidth.TabStop = true;
+            this.rbImageScaleTypeToWidth.Text = "Scale to width";
+            this.rbImageScaleTypeToWidth.UseVisualStyleBackColor = true;
+            this.rbImageScaleTypeToWidth.CheckedChanged += new System.EventHandler(this.rbImageScaleTypeToWidth_CheckedChanged);
+            // 
+            // lblImageScaleSpecificWidth2
+            // 
+            this.lblImageScaleSpecificWidth2.AutoSize = true;
+            this.lblImageScaleSpecificWidth2.Location = new System.Drawing.Point(144, 220);
+            this.lblImageScaleSpecificWidth2.Name = "lblImageScaleSpecificWidth2";
+            this.lblImageScaleSpecificWidth2.Size = new System.Drawing.Size(33, 13);
+            this.lblImageScaleSpecificWidth2.TabIndex = 22;
+            this.lblImageScaleSpecificWidth2.Text = "pixels";
+            // 
+            // rbImageScaleTypeToHeight
+            // 
+            this.rbImageScaleTypeToHeight.AutoSize = true;
+            this.rbImageScaleTypeToHeight.Location = new System.Drawing.Point(16, 144);
+            this.rbImageScaleTypeToHeight.Name = "rbImageScaleTypeToHeight";
+            this.rbImageScaleTypeToHeight.Size = new System.Drawing.Size(96, 17);
+            this.rbImageScaleTypeToHeight.TabIndex = 2;
+            this.rbImageScaleTypeToHeight.TabStop = true;
+            this.rbImageScaleTypeToHeight.Text = "Scale to height";
+            this.rbImageScaleTypeToHeight.UseVisualStyleBackColor = true;
+            this.rbImageScaleTypeToHeight.CheckedChanged += new System.EventHandler(this.rbImageScaleTypeToHeight_CheckedChanged);
+            // 
+            // lblImageScaleSpecificHeight2
+            // 
+            this.lblImageScaleSpecificHeight2.AutoSize = true;
+            this.lblImageScaleSpecificHeight2.Location = new System.Drawing.Point(144, 244);
+            this.lblImageScaleSpecificHeight2.Name = "lblImageScaleSpecificHeight2";
+            this.lblImageScaleSpecificHeight2.Size = new System.Drawing.Size(33, 13);
+            this.lblImageScaleSpecificHeight2.TabIndex = 21;
+            this.lblImageScaleSpecificHeight2.Text = "pixels";
+            // 
+            // rbImageScaleTypeSpecific
+            // 
+            this.rbImageScaleTypeSpecific.AutoSize = true;
+            this.rbImageScaleTypeSpecific.Location = new System.Drawing.Point(16, 192);
+            this.rbImageScaleTypeSpecific.Name = "rbImageScaleTypeSpecific";
+            this.rbImageScaleTypeSpecific.Size = new System.Drawing.Size(84, 17);
+            this.rbImageScaleTypeSpecific.TabIndex = 3;
+            this.rbImageScaleTypeSpecific.TabStop = true;
+            this.rbImageScaleTypeSpecific.Text = "Specific size";
+            this.rbImageScaleTypeSpecific.UseVisualStyleBackColor = true;
+            this.rbImageScaleTypeSpecific.CheckedChanged += new System.EventHandler(this.rbImageScaleTypeSpecific_CheckedChanged);
+            // 
+            // lblImageScaleToWidth2
+            // 
+            this.lblImageScaleToWidth2.AutoSize = true;
+            this.lblImageScaleToWidth2.Location = new System.Drawing.Point(144, 124);
+            this.lblImageScaleToWidth2.Name = "lblImageScaleToWidth2";
+            this.lblImageScaleToWidth2.Size = new System.Drawing.Size(33, 13);
+            this.lblImageScaleToWidth2.TabIndex = 20;
+            this.lblImageScaleToWidth2.Text = "pixels";
+            // 
+            // lblImageScalePercentageWidth
+            // 
+            this.lblImageScalePercentageWidth.AutoSize = true;
+            this.lblImageScalePercentageWidth.Location = new System.Drawing.Point(32, 52);
+            this.lblImageScalePercentageWidth.Name = "lblImageScalePercentageWidth";
+            this.lblImageScalePercentageWidth.Size = new System.Drawing.Size(38, 13);
+            this.lblImageScalePercentageWidth.TabIndex = 4;
+            this.lblImageScalePercentageWidth.Text = "Width:";
+            // 
+            // lblImageScalePercentageHeight2
+            // 
+            this.lblImageScalePercentageHeight2.AutoSize = true;
+            this.lblImageScalePercentageHeight2.Location = new System.Drawing.Point(144, 76);
+            this.lblImageScalePercentageHeight2.Name = "lblImageScalePercentageHeight2";
+            this.lblImageScalePercentageHeight2.Size = new System.Drawing.Size(15, 13);
+            this.lblImageScalePercentageHeight2.TabIndex = 19;
+            this.lblImageScalePercentageHeight2.Text = "%";
+            // 
+            // nudImageScalePercentageWidth
+            // 
+            this.nudImageScalePercentageWidth.Location = new System.Drawing.Point(80, 48);
+            this.nudImageScalePercentageWidth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudImageScalePercentageWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageScalePercentageWidth.Name = "nudImageScalePercentageWidth";
+            this.nudImageScalePercentageWidth.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScalePercentageWidth.TabIndex = 5;
+            this.nudImageScalePercentageWidth.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.nudImageJPEGQuality.ValueChanged += new System.EventHandler(this.nudImageJPEGQuality_ValueChanged);
+            this.nudImageScalePercentageWidth.ValueChanged += new System.EventHandler(this.nudImageScalePercentageWidth_ValueChanged);
             // 
-            // lblImageGIFQuality
+            // lblImageScalePercentageWidth2
             // 
-            this.lblImageGIFQuality.AutoSize = true;
-            this.lblImageGIFQuality.Location = new System.Drawing.Point(16, 80);
-            this.lblImageGIFQuality.Name = "lblImageGIFQuality";
-            this.lblImageGIFQuality.Size = new System.Drawing.Size(60, 13);
-            this.lblImageGIFQuality.TabIndex = 5;
-            this.lblImageGIFQuality.Text = "GIF quality:";
+            this.lblImageScalePercentageWidth2.AutoSize = true;
+            this.lblImageScalePercentageWidth2.Location = new System.Drawing.Point(144, 52);
+            this.lblImageScalePercentageWidth2.Name = "lblImageScalePercentageWidth2";
+            this.lblImageScalePercentageWidth2.Size = new System.Drawing.Size(15, 13);
+            this.lblImageScalePercentageWidth2.TabIndex = 18;
+            this.lblImageScalePercentageWidth2.Text = "%";
             // 
-            // lblImageJPEGQuality
+            // lblImageScalePercentageHeight
             // 
-            this.lblImageJPEGQuality.AutoSize = true;
-            this.lblImageJPEGQuality.Location = new System.Drawing.Point(16, 48);
-            this.lblImageJPEGQuality.Name = "lblImageJPEGQuality";
-            this.lblImageJPEGQuality.Size = new System.Drawing.Size(70, 13);
-            this.lblImageJPEGQuality.TabIndex = 2;
-            this.lblImageJPEGQuality.Text = "JPEG quality:";
+            this.lblImageScalePercentageHeight.AutoSize = true;
+            this.lblImageScalePercentageHeight.Location = new System.Drawing.Point(32, 76);
+            this.lblImageScalePercentageHeight.Name = "lblImageScalePercentageHeight";
+            this.lblImageScalePercentageHeight.Size = new System.Drawing.Size(41, 13);
+            this.lblImageScalePercentageHeight.TabIndex = 6;
+            this.lblImageScalePercentageHeight.Text = "Height:";
             // 
-            // cbImageFormat
+            // nudImageScaleToHeight
             // 
-            this.cbImageFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbImageFormat.FormattingEnabled = true;
-            this.cbImageFormat.Items.AddRange(new object[] {
-            "PNG",
-            "JPEG",
-            "GIF",
-            "BMP",
-            "TIFF"});
-            this.cbImageFormat.Location = new System.Drawing.Point(104, 12);
-            this.cbImageFormat.Name = "cbImageFormat";
-            this.cbImageFormat.Size = new System.Drawing.Size(56, 21);
-            this.cbImageFormat.TabIndex = 1;
-            this.cbImageFormat.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat_SelectedIndexChanged);
+            this.nudImageScaleToHeight.Location = new System.Drawing.Point(80, 168);
+            this.nudImageScaleToHeight.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudImageScaleToHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageScaleToHeight.Name = "nudImageScaleToHeight";
+            this.nudImageScaleToHeight.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScaleToHeight.TabIndex = 17;
+            this.nudImageScaleToHeight.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageScaleToHeight.ValueChanged += new System.EventHandler(this.nudImageScaleToHeight_ValueChanged);
             // 
-            // lblImageFormat
+            // nudImageScalePercentageHeight
             // 
-            this.lblImageFormat.AutoSize = true;
-            this.lblImageFormat.Location = new System.Drawing.Point(16, 16);
-            this.lblImageFormat.Name = "lblImageFormat";
-            this.lblImageFormat.Size = new System.Drawing.Size(71, 13);
-            this.lblImageFormat.TabIndex = 0;
-            this.lblImageFormat.Text = "Image format:";
+            this.nudImageScalePercentageHeight.Location = new System.Drawing.Point(80, 72);
+            this.nudImageScalePercentageHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudImageScalePercentageHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageScalePercentageHeight.Name = "nudImageScalePercentageHeight";
+            this.nudImageScalePercentageHeight.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScalePercentageHeight.TabIndex = 7;
+            this.nudImageScalePercentageHeight.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageScalePercentageHeight.ValueChanged += new System.EventHandler(this.nudImageScalePercentageHeight_ValueChanged);
+            // 
+            // nudImageScaleToWidth
+            // 
+            this.nudImageScaleToWidth.Location = new System.Drawing.Point(80, 120);
+            this.nudImageScaleToWidth.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudImageScaleToWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageScaleToWidth.Name = "nudImageScaleToWidth";
+            this.nudImageScaleToWidth.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScaleToWidth.TabIndex = 16;
+            this.nudImageScaleToWidth.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageScaleToWidth.ValueChanged += new System.EventHandler(this.nudImageScaleToWidth_ValueChanged);
+            // 
+            // lblImageScaleToWidth
+            // 
+            this.lblImageScaleToWidth.AutoSize = true;
+            this.lblImageScaleToWidth.Location = new System.Drawing.Point(32, 124);
+            this.lblImageScaleToWidth.Name = "lblImageScaleToWidth";
+            this.lblImageScaleToWidth.Size = new System.Drawing.Size(38, 13);
+            this.lblImageScaleToWidth.TabIndex = 8;
+            this.lblImageScaleToWidth.Text = "Width:";
+            // 
+            // nudImageScaleSpecificHeight
+            // 
+            this.nudImageScaleSpecificHeight.Location = new System.Drawing.Point(80, 240);
+            this.nudImageScaleSpecificHeight.Name = "nudImageScaleSpecificHeight";
+            this.nudImageScaleSpecificHeight.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScaleSpecificHeight.TabIndex = 15;
+            this.nudImageScaleSpecificHeight.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageScaleSpecificHeight.ValueChanged += new System.EventHandler(this.nudImageScaleSpecificHeight_ValueChanged);
+            // 
+            // lblImageScaleToHeight
+            // 
+            this.lblImageScaleToHeight.AutoSize = true;
+            this.lblImageScaleToHeight.Location = new System.Drawing.Point(32, 172);
+            this.lblImageScaleToHeight.Name = "lblImageScaleToHeight";
+            this.lblImageScaleToHeight.Size = new System.Drawing.Size(41, 13);
+            this.lblImageScaleToHeight.TabIndex = 9;
+            this.lblImageScaleToHeight.Text = "Height:";
+            // 
+            // lblImageScaleSpecificHeight
+            // 
+            this.lblImageScaleSpecificHeight.AutoSize = true;
+            this.lblImageScaleSpecificHeight.Location = new System.Drawing.Point(32, 244);
+            this.lblImageScaleSpecificHeight.Name = "lblImageScaleSpecificHeight";
+            this.lblImageScaleSpecificHeight.Size = new System.Drawing.Size(41, 13);
+            this.lblImageScaleSpecificHeight.TabIndex = 14;
+            this.lblImageScaleSpecificHeight.Text = "Height:";
+            // 
+            // lblImageScaleSpecificWidth
+            // 
+            this.lblImageScaleSpecificWidth.AutoSize = true;
+            this.lblImageScaleSpecificWidth.Location = new System.Drawing.Point(32, 220);
+            this.lblImageScaleSpecificWidth.Name = "lblImageScaleSpecificWidth";
+            this.lblImageScaleSpecificWidth.Size = new System.Drawing.Size(38, 13);
+            this.lblImageScaleSpecificWidth.TabIndex = 12;
+            this.lblImageScaleSpecificWidth.Text = "Width:";
+            // 
+            // nudImageScaleSpecificWidth
+            // 
+            this.nudImageScaleSpecificWidth.Location = new System.Drawing.Point(80, 216);
+            this.nudImageScaleSpecificWidth.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudImageScaleSpecificWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageScaleSpecificWidth.Name = "nudImageScaleSpecificWidth";
+            this.nudImageScaleSpecificWidth.Size = new System.Drawing.Size(56, 20);
+            this.nudImageScaleSpecificWidth.TabIndex = 13;
+            this.nudImageScaleSpecificWidth.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageScaleSpecificWidth.ValueChanged += new System.EventHandler(this.nudImageScaleSpecificWidth_ValueChanged);
             // 
             // tpClipboardUpload
             // 
@@ -1071,6 +1469,15 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.AutoScroll = true;
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 329);
+            this.hmHotkeys.TabIndex = 0;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1092,9 +1499,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).EndInit();
             this.tpHotkeys.ResumeLayout(false);
             this.tpImage.ResumeLayout(false);
-            this.tpImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).EndInit();
+            this.tcImage.ResumeLayout(false);
+            this.tpQuality.ResumeLayout(false);
+            this.tpQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).EndInit();
+            this.tpResize.ResumeLayout(false);
+            this.tpResize.PerformLayout();
+            this.gbImageScaleSettings.ResumeLayout(false);
+            this.gbImageScaleSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScalePercentageWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleToHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScalePercentageHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleToWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleSpecificHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageScaleSpecificWidth)).EndInit();
             this.tpClipboardUpload.ResumeLayout(false);
             this.tpClipboardUpload.PerformLayout();
             this.tpCapture.ResumeLayout(false);
@@ -1147,7 +1566,6 @@
         private System.Windows.Forms.Label lblImageJPEGQualityHint;
         private System.Windows.Forms.Label lblHistoryMaxItemCount;
         private System.Windows.Forms.NumericUpDown nudHistoryMaxItemCount;
-        private System.Windows.Forms.Label lblImageInfo;
         private System.Windows.Forms.Label lblHistoryInfo;
         private System.Windows.Forms.Label lblGeneralInfo;
         private System.Windows.Forms.TabPage tpDebug;
@@ -1163,7 +1581,7 @@
         private System.Windows.Forms.Label lblBufferSize;
         private System.Windows.Forms.Label lblBufferSizeInfo;
         private System.Windows.Forms.Button btnOpenZUploaderPath;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblOpenZUploaderPath;
         private System.Windows.Forms.Label lblUploadLimitHint;
         private System.Windows.Forms.NumericUpDown nudUploadLimit;
         private System.Windows.Forms.Label lblUploadLimit;
@@ -1198,5 +1616,34 @@
         private System.Windows.Forms.CheckBox cbCaptureCopyImage;
         private System.Windows.Forms.CheckBox cbShapeIncludeControls;
         private System.Windows.Forms.CheckBox cbShapeForceWindowCapture;
+        private System.Windows.Forms.TabControl tcImage;
+        private System.Windows.Forms.TabPage tpQuality;
+        private System.Windows.Forms.TabPage tpResize;
+        private System.Windows.Forms.CheckBox cbImageUseSmoothScaling;
+        private System.Windows.Forms.CheckBox cbImageKeepAspectRatio;
+        private System.Windows.Forms.CheckBox cbImageAutoResize;
+        private System.Windows.Forms.GroupBox gbImageScaleSettings;
+        private System.Windows.Forms.RadioButton rbImageScaleTypePercentage;
+        private System.Windows.Forms.Label lblImageScaleToHeight2;
+        private System.Windows.Forms.RadioButton rbImageScaleTypeToWidth;
+        private System.Windows.Forms.Label lblImageScaleSpecificWidth2;
+        private System.Windows.Forms.RadioButton rbImageScaleTypeToHeight;
+        private System.Windows.Forms.Label lblImageScaleSpecificHeight2;
+        private System.Windows.Forms.RadioButton rbImageScaleTypeSpecific;
+        private System.Windows.Forms.Label lblImageScaleToWidth2;
+        private System.Windows.Forms.Label lblImageScalePercentageWidth;
+        private System.Windows.Forms.Label lblImageScalePercentageHeight2;
+        private System.Windows.Forms.NumericUpDown nudImageScalePercentageWidth;
+        private System.Windows.Forms.Label lblImageScalePercentageWidth2;
+        private System.Windows.Forms.Label lblImageScalePercentageHeight;
+        private System.Windows.Forms.NumericUpDown nudImageScaleToHeight;
+        private System.Windows.Forms.NumericUpDown nudImageScalePercentageHeight;
+        private System.Windows.Forms.NumericUpDown nudImageScaleToWidth;
+        private System.Windows.Forms.Label lblImageScaleToWidth;
+        private System.Windows.Forms.NumericUpDown nudImageScaleSpecificHeight;
+        private System.Windows.Forms.Label lblImageScaleToHeight;
+        private System.Windows.Forms.Label lblImageScaleSpecificHeight;
+        private System.Windows.Forms.Label lblImageScaleSpecificWidth;
+        private System.Windows.Forms.NumericUpDown nudImageScaleSpecificWidth;
     }
 }

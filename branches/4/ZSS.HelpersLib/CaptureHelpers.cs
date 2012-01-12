@@ -221,7 +221,25 @@ namespace HelpersLib
             return null;
         }
 
-        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge = false, bool centerImage = true)
+        public static Bitmap ResizeImage(Image img, int width, int height, bool smoothScaling = true)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                if (smoothScaling)
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                }
+
+                g.DrawImage(img, 0, 0, width, height);
+            }
+
+            return bmp;
+        }
+
+        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge, bool centerImage)
         {
             double ratio;
             int newWidth, newHeight, newX, newY;
@@ -262,7 +280,7 @@ namespace HelpersLib
             return bmp;
         }
 
-        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge = false, bool centerImage = true)
+        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge, bool centerImage)
         {
             return ResizeImage(img, new Rectangle(0, 0, width, height), allowEnlarge, centerImage);
         }

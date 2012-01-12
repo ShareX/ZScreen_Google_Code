@@ -72,12 +72,24 @@ namespace ZUploader
         public int UploadLimit = 5;
         public int BufferSizePower = 3;
 
-        // Image
+        // Image - Quality
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public int ImageJPEGQuality = 90;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
+
+        // Image - Resize
+        public bool ImageAutoResize = false;
+        public bool ImageKeepAspectRatio = false;
+        public bool ImageUseSmoothScaling = true;
+        public ImageScaleType ImageScaleType = ImageScaleType.Percentage;
+        public int ImageScalePercentageWidth = 100;
+        public int ImageScalePercentageHeight = 100;
+        public int ImageScaleToWidth = 100;
+        public int ImageScaleToHeight = 100;
+        public int ImageScaleSpecificWidth = 100;
+        public int ImageScaleSpecificHeight = 100;
 
         // Clipboard upload
         // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver

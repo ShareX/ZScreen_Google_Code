@@ -86,4 +86,9 @@ namespace ZUploader
     {
         DataUpload, FileUpload, ImageUpload, TextUpload
     }
+
+    public enum ImageScaleType
+    {
+        Percentage, Width, Height, Specific
+    }
 }
