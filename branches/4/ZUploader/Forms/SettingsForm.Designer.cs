@@ -53,6 +53,7 @@
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.tcImage = new System.Windows.Forms.TabControl();
             this.tpQuality = new System.Windows.Forms.TabPage();
@@ -105,6 +106,9 @@
             this.tcCapture = new System.Windows.Forms.TabControl();
             this.tpCaptureGeneral = new System.Windows.Forms.TabPage();
             this.gbCaptureAfter = new System.Windows.Forms.GroupBox();
+            this.lblSaveImageSubFolderPatternPreview = new System.Windows.Forms.Label();
+            this.txtSaveImageSubFolderPattern = new System.Windows.Forms.TextBox();
+            this.lblSaveImageSubFolderPattern = new System.Windows.Forms.Label();
             this.cbCaptureUploadImage = new System.Windows.Forms.CheckBox();
             this.cbCaptureSaveImage = new System.Windows.Forms.CheckBox();
             this.cbCaptureCopyImage = new System.Windows.Forms.CheckBox();
@@ -133,7 +137,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -453,6 +456,15 @@
             this.tpHotkeys.TabIndex = 2;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
+            // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.AutoScroll = true;
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 329);
+            this.hmHotkeys.TabIndex = 0;
             // 
             // tpImage
             // 
@@ -1105,20 +1117,49 @@
             // 
             // gbCaptureAfter
             // 
+            this.gbCaptureAfter.Controls.Add(this.lblSaveImageSubFolderPatternPreview);
+            this.gbCaptureAfter.Controls.Add(this.txtSaveImageSubFolderPattern);
+            this.gbCaptureAfter.Controls.Add(this.lblSaveImageSubFolderPattern);
             this.gbCaptureAfter.Controls.Add(this.cbCaptureUploadImage);
             this.gbCaptureAfter.Controls.Add(this.cbCaptureSaveImage);
             this.gbCaptureAfter.Controls.Add(this.cbCaptureCopyImage);
             this.gbCaptureAfter.Location = new System.Drawing.Point(16, 72);
             this.gbCaptureAfter.Name = "gbCaptureAfter";
-            this.gbCaptureAfter.Size = new System.Drawing.Size(184, 104);
+            this.gbCaptureAfter.Size = new System.Drawing.Size(472, 152);
             this.gbCaptureAfter.TabIndex = 5;
             this.gbCaptureAfter.TabStop = false;
             this.gbCaptureAfter.Text = "After capture";
             // 
+            // lblSaveImageSubFolderPatternPreview
+            // 
+            this.lblSaveImageSubFolderPatternPreview.AutoSize = true;
+            this.lblSaveImageSubFolderPatternPreview.Location = new System.Drawing.Point(32, 96);
+            this.lblSaveImageSubFolderPatternPreview.Name = "lblSaveImageSubFolderPatternPreview";
+            this.lblSaveImageSubFolderPatternPreview.Size = new System.Drawing.Size(16, 13);
+            this.lblSaveImageSubFolderPatternPreview.TabIndex = 8;
+            this.lblSaveImageSubFolderPatternPreview.Text = "...";
+            // 
+            // txtSaveImageSubFolderPattern
+            // 
+            this.txtSaveImageSubFolderPattern.Location = new System.Drawing.Point(136, 68);
+            this.txtSaveImageSubFolderPattern.Name = "txtSaveImageSubFolderPattern";
+            this.txtSaveImageSubFolderPattern.Size = new System.Drawing.Size(144, 20);
+            this.txtSaveImageSubFolderPattern.TabIndex = 7;
+            this.txtSaveImageSubFolderPattern.TextChanged += new System.EventHandler(this.txtSaveImageSubFolderPattern_TextChanged);
+            // 
+            // lblSaveImageSubFolderPattern
+            // 
+            this.lblSaveImageSubFolderPattern.AutoSize = true;
+            this.lblSaveImageSubFolderPattern.Location = new System.Drawing.Point(32, 72);
+            this.lblSaveImageSubFolderPattern.Name = "lblSaveImageSubFolderPattern";
+            this.lblSaveImageSubFolderPattern.Size = new System.Drawing.Size(94, 13);
+            this.lblSaveImageSubFolderPattern.TabIndex = 6;
+            this.lblSaveImageSubFolderPattern.Text = "Sub folder pattern:";
+            // 
             // cbCaptureUploadImage
             // 
             this.cbCaptureUploadImage.AutoSize = true;
-            this.cbCaptureUploadImage.Location = new System.Drawing.Point(16, 72);
+            this.cbCaptureUploadImage.Location = new System.Drawing.Point(16, 120);
             this.cbCaptureUploadImage.Name = "cbCaptureUploadImage";
             this.cbCaptureUploadImage.Size = new System.Drawing.Size(126, 17);
             this.cbCaptureUploadImage.TabIndex = 2;
@@ -1469,15 +1510,6 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // hmHotkeys
-            // 
-            this.hmHotkeys.AutoScroll = true;
-            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
-            this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(523, 329);
-            this.hmHotkeys.TabIndex = 0;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1645,5 +1677,8 @@
         private System.Windows.Forms.Label lblImageScaleSpecificHeight;
         private System.Windows.Forms.Label lblImageScaleSpecificWidth;
         private System.Windows.Forms.NumericUpDown nudImageScaleSpecificWidth;
+        private System.Windows.Forms.Label lblSaveImageSubFolderPatternPreview;
+        private System.Windows.Forms.TextBox txtSaveImageSubFolderPattern;
+        private System.Windows.Forms.Label lblSaveImageSubFolderPattern;
     }
 }

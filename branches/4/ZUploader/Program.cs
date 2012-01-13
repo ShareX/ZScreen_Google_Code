@@ -74,7 +74,7 @@ namespace ZUploader
         {
             get
             {
-                if (Settings != null && Settings.UseCustomHistoryPath && !string.IsNullOrEmpty(Program.Settings.CustomHistoryPath))
+                if (Settings != null && Settings.UseCustomHistoryPath && !string.IsNullOrEmpty(Settings.CustomHistoryPath))
                 {
                     return Settings.CustomHistoryPath;
                 }
@@ -87,7 +87,7 @@ namespace ZUploader
         {
             get
             {
-                if (Settings != null && Settings.UseCustomUploadersConfigPath && !string.IsNullOrEmpty(Program.Settings.CustomUploadersConfigPath))
+                if (Settings != null && Settings.UseCustomUploadersConfigPath && !string.IsNullOrEmpty(Settings.CustomUploadersConfigPath))
                 {
                     return Settings.CustomUploadersConfigPath;
                 }
@@ -109,8 +109,9 @@ namespace ZUploader
         {
             get
             {
-                // TODO: Custom path
-                return Path.Combine(PersonalPath, "Screenshots");
+                string parentFolderPath = Path.Combine(PersonalPath, "Screenshots");
+                string subFolderName = new NameParser(NameParserType.SaveFolder).Convert(Settings.SaveImageSubFolderPattern);
+                return Path.Combine(parentFolderPath, subFolderName);
             }
         }
 

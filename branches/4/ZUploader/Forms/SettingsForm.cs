@@ -117,6 +117,7 @@ namespace ZUploader
             cbCaptureTransparent.Checked = Program.Settings.CaptureTransparent;
             cbCaptureCopyImage.Checked = Program.Settings.CaptureCopyImage;
             cbCaptureSaveImage.Checked = Program.Settings.CaptureSaveImage;
+            txtSaveImageSubFolderPattern.Text = Program.Settings.SaveImageSubFolderPattern;
             cbCaptureUploadImage.Checked = Program.Settings.CaptureUploadImage;
 
             if (Program.Settings.SurfaceOptions == null) Program.Settings.SurfaceOptions = new SurfaceOptions();
@@ -498,6 +499,12 @@ namespace ZUploader
         private void cbCaptureSaveImage_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.CaptureSaveImage = cbCaptureSaveImage.Checked;
+        }
+
+        private void txtSaveImageSubFolderPattern_TextChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SaveImageSubFolderPattern = txtSaveImageSubFolderPattern.Text;
+            lblSaveImageSubFolderPatternPreview.Text = Program.ScreenshotsPath;
         }
 
         private void cbCaptureUploadImage_CheckedChanged(object sender, EventArgs e)

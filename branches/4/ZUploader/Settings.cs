@@ -100,6 +100,7 @@ namespace ZUploader
         public bool CaptureTransparent = false;
         public bool CaptureCopyImage = false;
         public bool CaptureSaveImage = false;
+        public string SaveImageSubFolderPattern = "%y-%mo";
         public bool CaptureUploadImage = true;
         public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
