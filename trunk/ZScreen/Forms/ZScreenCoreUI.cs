@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
-using HelpersLib.Properties;
-using UploadersAPILib;
-using UploadersLib.OtherServices;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -98,6 +90,8 @@ namespace ZScreenGUI
         #region ToolStrip methods
 
         public virtual void CaptureEntireScreen() { }
+
+        public virtual void CaptureActiveMonitor() { }
 
         public virtual void CaptureActiveWindow() { }
 

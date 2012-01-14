@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
@@ -57,7 +56,7 @@ namespace ScreenCapture
                         form.FormBorderStyle = FormBorderStyle.None;
                         form.ShowInTaskbar = false;
 
-                        if (!NativeMethods.IsWindowMaximized(handle) && NativeMethods.IsDWMEnabled())
+                        if (!NativeMethods.IsZoomed(handle) && NativeMethods.IsDWMEnabled())
                         {
                             const int offset = 20;
 
@@ -66,7 +65,14 @@ namespace ScreenCapture
                         }
 
                         NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
-                        NativeMethods.SetWindowPos(form.Handle, handle, rect.X, rect.Y, rect.Width, rect.Height, NativeMethods.SWP_NOACTIVATE);
+
+                        if (!NativeMethods.SetWindowPos(form.Handle, handle, rect.X, rect.Y, rect.Width, rect.Height, NativeMethods.SWP_NOACTIVATE))
+                        {
+                            form.Close();
+                            StaticHelper.WriteLine("Transparent capture failed. Reason: SetWindowPos fail.");
+                            return CaptureWindow(handle);
+                        }
+
                         Thread.Sleep(10);
                         Application.DoEvents();
 
@@ -94,7 +100,7 @@ namespace ScreenCapture
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Transparent capture failed.");
+                        StaticHelper.WriteLine("Transparent capture failed. Reason: Images not equal.");
                         transparentImage = whiteBackground2;
                     }
 
@@ -113,9 +119,9 @@ namespace ScreenCapture
                 }
                 finally
                 {
-                    if (isTransparent && whiteBackground != null) whiteBackground.Dispose();
+                    if (whiteBackground != null) whiteBackground.Dispose();
                     if (blackBackground != null) blackBackground.Dispose();
-                    if (whiteBackground2 != null) whiteBackground2.Dispose();
+                    if (isTransparent && whiteBackground2 != null) whiteBackground2.Dispose();
                     if (cursor != null) cursor.Dispose();
                 }
             }

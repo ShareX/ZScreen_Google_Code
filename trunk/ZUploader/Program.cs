@@ -31,7 +31,6 @@ using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using SingleInstanceApplication;
-using UploadersAPILib;
 using UploadersLib;
 
 namespace ZUploader
@@ -58,10 +57,8 @@ namespace ZUploader
                 {
                     return PortablePersonalPath;
                 }
-                else
-                {
-                    return DefaultPersonalPath;
-                }
+
+                return DefaultPersonalPath;
             }
         }
 
@@ -77,14 +74,12 @@ namespace ZUploader
         {
             get
             {
-                if (Settings != null && Settings.UseCustomHistoryPath && !string.IsNullOrEmpty(Program.Settings.CustomHistoryPath))
+                if (Settings != null && Settings.UseCustomHistoryPath && !string.IsNullOrEmpty(Settings.CustomHistoryPath))
                 {
                     return Settings.CustomHistoryPath;
                 }
-                else
-                {
-                    return Path.Combine(PersonalPath, HistoryFileName);
-                }
+
+                return Path.Combine(PersonalPath, HistoryFileName);
             }
         }
 
@@ -92,14 +87,12 @@ namespace ZUploader
         {
             get
             {
-                if (Settings != null && Settings.UseCustomUploadersConfigPath && !string.IsNullOrEmpty(Program.Settings.CustomUploadersConfigPath))
+                if (Settings != null && Settings.UseCustomUploadersConfigPath && !string.IsNullOrEmpty(Settings.CustomUploadersConfigPath))
                 {
                     return Settings.CustomUploadersConfigPath;
                 }
-                else
-                {
-                    return Path.Combine(PersonalPath, UploadersConfigFileName);
-                }
+
+                return Path.Combine(PersonalPath, UploadersConfigFileName);
             }
         }
 
@@ -109,6 +102,16 @@ namespace ZUploader
             {
                 DateTime now = FastDateTime.Now;
                 return Path.Combine(PersonalPath, string.Format(LogFileName, now.Year, now.Month));
+            }
+        }
+
+        public static string ScreenshotsPath
+        {
+            get
+            {
+                string parentFolderPath = Path.Combine(PersonalPath, "Screenshots");
+                string subFolderName = new NameParser(NameParserType.SaveFolder).Convert(Settings.SaveImageSubFolderPattern);
+                return Path.Combine(parentFolderPath, subFolderName);
             }
         }
 
@@ -151,6 +154,8 @@ namespace ZUploader
 
         public static MainForm mainForm;
 
+        private static ManualResetEvent settingsResetEvent;
+
         [STAThread]
         private static void Main(string[] args)
         {
@@ -175,39 +180,29 @@ namespace ZUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (!IsSilentRun)
-            {
-                SplashForm.ShowSplash();
-            }
-
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
-            MyLogger.WriteLine("CommandLine: " + string.Join(" ", args));
+            MyLogger.WriteLine("CommandLine: " + Environment.CommandLine);
             MyLogger.WriteLine("IsMultiInstance: " + IsMultiInstance);
             MyLogger.WriteLine("IsSilentRun: " + IsSilentRun);
             MyLogger.WriteLine("IsPortable: " + IsPortable);
 
-            Thread settingThread = new Thread(() =>
-            {
-                LoadSettings();
-                LoadUploadersConfig();
-            });
-            settingThread.Start();
+            settingsResetEvent = new ManualResetEvent(false);
+            ThreadPool.QueueUserWorkItem(state => LoadSettings());
 
             MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
 
-            settingThread.Join();
+            settingsResetEvent.WaitOne();
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(mainForm);
 
             Settings.Save();
-            UploadersConfig.Write(UploadersConfigFilePath);
 
             MyLogger.WriteLine("ZUploader closing");
             MyLogger.SaveLog(LogFilePath);
@@ -215,12 +210,14 @@ namespace ZUploader
 
         public static void LoadSettings()
         {
-            Settings = Settings.Load();
+            Settings = Settings.Load(SettingsFilePath);
+            settingsResetEvent.Set();
+            LoadUploadersConfig();
         }
 
         public static void LoadUploadersConfig()
         {
-            UploadersConfig = UploadersConfig.Read(UploadersConfigFilePath);
+            UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

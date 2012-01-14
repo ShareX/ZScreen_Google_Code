@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;
@@ -143,7 +142,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.ConfigUploaders.Write(dlg.FileName);
+                Engine.ConfigUploaders.Save(dlg.FileName);
             }
         }
 
@@ -152,7 +151,7 @@ namespace ZScreenGUI
             OpenFileDialog dlg = new OpenFileDialog { Filter = FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                UploadersConfig temp = UploadersConfig.Read(dlg.FileName);
+                UploadersConfig temp = UploadersConfig.Load(dlg.FileName);
                 if (temp != null)
                 {
                     Engine.ConfigUploaders = temp;

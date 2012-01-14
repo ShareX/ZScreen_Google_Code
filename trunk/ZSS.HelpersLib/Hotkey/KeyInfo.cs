@@ -114,6 +114,10 @@ namespace HelpersLib
             {
                 text += "Page Down";
             }
+            else if (KeyCode == Keys.Back)
+            {
+                text += "Backspace";
+            }
             else if (KeyCode >= Keys.D0 && KeyCode <= Keys.D9)
             {
                 text += (KeyCode - Keys.D0).ToString();

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;
@@ -37,6 +38,7 @@ namespace ZScreenGUI
         private static TextViewer _LicenseWindow = null;
 
         private static ZScreenOptionsUI _OptionsUI = null;
+        private static ApiKeysUI _ApiKeysUI = null;
 
         private static ProxyConfigUI _ProxyConfig = null;
         private static TextViewer _VersionHistoryWindow = null;
@@ -70,6 +72,22 @@ namespace ZScreenGUI
             private set
             {
                 _OptionsUI = value;
+            }
+        }
+
+        public static ApiKeysUI ApiKeysUI
+        {
+            get
+            {
+                if (_ApiKeysUI == null || _ApiKeysUI.IsDisposed)
+                {
+                    _ApiKeysUI = new ApiKeysUI(Engine.ConfigUI.ApiKeys) { Icon = Resources.zss_tray };
+                }
+                return _ApiKeysUI;
+            }
+            private set
+            {
+                _ApiKeysUI = value;
             }
         }
 
@@ -118,6 +136,12 @@ namespace ZScreenGUI
         {
             OptionsUI.Activate();
             OptionsUI.Show();
+        }
+
+        public static void ShowApiKeysUI()
+        {
+            ApiKeysUI.Activate();
+            ApiKeysUI.Show();
         }
 
         public static DialogResult ShowDialogProxyConfig()

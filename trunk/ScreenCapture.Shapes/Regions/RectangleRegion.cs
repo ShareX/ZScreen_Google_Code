@@ -23,111 +23,113 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using HelpersLib;
 
 namespace ScreenCapture
 {
-    public class RectangleRegion : DragableRegion
+    public class RectangleRegion : Surface
     {
-        protected NodeObject[] nodes;
-
-        private Rectangle tempRect;
+        public AreaManager AreaManager { get; private set; }
 
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            nodes = new NodeObject[8];
+            AreaManager = new AreaManager(this);
+        }
 
-            for (int i = 0; i < 8; i++)
+        public override void Prepare()
+        {
+            base.Prepare();
+
+            if (Config != null)
             {
-                nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
-                DrawableObjects.Add(nodes[i]);
-            }
+                AreaManager.WindowCaptureMode |= Config.ForceWindowCapture;
 
-            nodes[(int)NodePosition.BottomRight].Order = 10;
+                if (AreaManager.WindowCaptureMode)
+                {
+                    WindowsListAdvanced wla = new WindowsListAdvanced();
+                    wla.IgnoreWindows.Add(Handle);
+                    wla.IncludeChildWindows = Config.IncludeControls;
+                    AreaManager.Windows = wla.GetWindowsRectangleList();
+                }
+            }
         }
 
         protected override void Update()
         {
             base.Update();
-
-            if (isMouseDown && !IsAreaCreated)
-            {
-                if (Config.IsFixedSize)
-                {
-                    CurrentArea = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
-                    areaObject.IsDragging = true;
-                }
-                else
-                {
-                    CurrentArea = new Rectangle(mousePosition, new Size(1, 1));
-                    ShowNodes();
-                    nodes[(int)NodePosition.BottomRight].IsDragging = true;
-                }
-
-                IsAreaCreated = true;
-            }
-
-            if (IsAreaCreated && nodes != null)
-            {
-                if (isMouseDown)
-                {
-                    for (int i = 0; i < 8; i++)
-                    {
-                        if (nodes[i].IsDragging)
-                        {
-                            if (!oldIsMouseDown)
-                            {
-                                tempRect = CurrentArea;
-                            }
-
-                            if (i <= 2) // Top row
-                            {
-                                tempRect.Y += mousePosition.Y - oldMousePosition.Y;
-                                tempRect.Height -= mousePosition.Y - oldMousePosition.Y;
-                            }
-                            else if (i >= 4 && i <= 6) // Bottom row
-                            {
-                                tempRect.Height += mousePosition.Y - oldMousePosition.Y;
-                            }
-
-                            if (i >= 2 && i <= 4) // Right row
-                            {
-                                tempRect.Width += mousePosition.X - oldMousePosition.X;
-                            }
-                            else if (i >= 6 || i == 0) // Left row
-                            {
-                                tempRect.X += mousePosition.X - oldMousePosition.X;
-                                tempRect.Width -= mousePosition.X - oldMousePosition.X;
-                            }
-
-                            CurrentArea = CaptureHelpers.FixRectangle(tempRect);
-
-                            break;
-                        }
-                    }
-                }
-
-                UpdateNodePositions();
-            }
+            AreaManager.Update();
         }
 
         protected override void Draw(Graphics g)
         {
-            if (CurrentArea.Width > 0 && CurrentArea.Height > 0)
-            {
-                g.ExcludeClip(CurrentArea);
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                DrawObjects(g);
-                g.ResetClip();
+            List<Rectangle> areas = AreaManager.GetValidAreas;
 
-                if (areaObject.IsDragging || areaObject.IsMouseHover)
+            if (areas.Count > 0 || !AreaManager.CurrentHoverArea.IsEmpty)
+            {
+                UpdateRegionPath();
+
+                using (Region region = new Region(regionFillPath))
                 {
-                    g.FillRectangle(lightBrush, CurrentArea);
+                    g.ExcludeClip(region);
+                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    g.ResetClip();
                 }
 
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                /*foreach (WindowInfo wi in AreaManager.Windows)
+                {
+                    g.DrawRectangleProper(Pens.Yellow, Rectangle.Intersect(ScreenRectangle0Based, wi.Rectangle0Based));
+                }*/
+
+                borderDotPen.DashOffset = (float)timer.Elapsed.TotalSeconds * 10;
+                borderDotPen2.DashOffset = 5 + (float)timer.Elapsed.TotalSeconds * 10;
+
+                g.DrawPath(borderPen, regionDrawPath);
+
+                if (areas.Count > 1)
+                {
+                    Rectangle totalArea = AreaManager.CombineAreas();
+                    g.DrawCrossRectangle(borderPen, totalArea, 15);
+                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", totalArea.X, totalArea.Y,
+                        totalArea.Width, totalArea.Height), new PointF(totalArea.X + 5, totalArea.Y - 20), textFont, Color.White, Color.Black);
+                }
+
+                if (AreaManager.IsCurrentHoverAreaValid)
+                {
+                    GraphicsPath hoverFillPath = new GraphicsPath() { FillMode = FillMode.Winding };
+                    AddShapePath(hoverFillPath, AreaManager.CurrentHoverArea);
+
+                    g.FillPath(lightBrush, hoverFillPath);
+
+                    GraphicsPath hoverDrawPath = new GraphicsPath() { FillMode = FillMode.Winding };
+                    AddShapePath(hoverDrawPath, AreaManager.CurrentHoverArea.SizeOffset(-1));
+
+                    g.DrawPath(borderDotPen, hoverDrawPath);
+                    g.DrawPath(borderDotPen2, hoverDrawPath);
+                }
+
+                if (AreaManager.IsCurrentAreaValid)
+                {
+                    g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
+                    g.DrawRectangleProper(borderDotPen2, AreaManager.CurrentArea);
+                    g.ExcludeClip(AreaManager.CurrentArea);
+                    DrawObjects(g);
+                    g.ResetClip();
+                }
+
+                foreach (Rectangle area in areas)
+                {
+                    if (area.Width > 100 && area.Height > 20)
+                    {
+                        g.Clip = new Region(area);
+
+                        CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", area.X, area.Y, area.Width, area.Height),
+                            new PointF(area.X + 5, area.Y + 5), textFont, Color.White, Color.Black);
+                    }
+                }
             }
             else
             {
@@ -135,24 +137,21 @@ namespace ScreenCapture
             }
         }
 
-        private void UpdateNodePositions()
+        public void UpdateRegionPath()
         {
-            float xStart = CurrentArea.X;
-            float xMid = CurrentArea.X + CurrentArea.Width / 2;
-            float xEnd = CurrentArea.X + CurrentArea.Width - 1;
+            regionFillPath = new GraphicsPath() { FillMode = FillMode.Winding };
+            regionDrawPath = new GraphicsPath() { FillMode = FillMode.Winding };
 
-            float yStart = CurrentArea.Y;
-            float yMid = CurrentArea.Y + CurrentArea.Height / 2;
-            float yEnd = CurrentArea.Y + CurrentArea.Height - 1;
+            foreach (Rectangle area in AreaManager.GetValidAreas)
+            {
+                AddShapePath(regionFillPath, area);
+                AddShapePath(regionDrawPath, area.SizeOffset(-1));
+            }
+        }
 
-            nodes[(int)NodePosition.TopLeft].Position = new PointF(xStart, yStart);
-            nodes[(int)NodePosition.Top].Position = new PointF(xMid, yStart);
-            nodes[(int)NodePosition.TopRight].Position = new PointF(xEnd, yStart);
-            nodes[(int)NodePosition.Right].Position = new PointF(xEnd, yMid);
-            nodes[(int)NodePosition.BottomRight].Position = new PointF(xEnd, yEnd);
-            nodes[(int)NodePosition.Bottom].Position = new PointF(xMid, yEnd);
-            nodes[(int)NodePosition.BottomLeft].Position = new PointF(xStart, yEnd);
-            nodes[(int)NodePosition.Left].Position = new PointF(xStart, yMid);
+        protected virtual void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
+        {
+            graphicsPath.AddRectangle(rect);
         }
     }
 }

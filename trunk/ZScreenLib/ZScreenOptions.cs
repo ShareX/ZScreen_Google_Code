@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using HelpersLib;
 using ZScreenCoreLib;
 using ZSS.IndexersLib;
@@ -22,7 +17,7 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<ZScreenOptions>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         #endregion 1 I/O Methods

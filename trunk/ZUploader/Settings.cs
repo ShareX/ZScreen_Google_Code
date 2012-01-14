@@ -31,24 +31,25 @@ using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {
-    public class Settings
+    public class Settings : XMLSettingsBase<Settings>
     {
-        // Main Form
+        #region Main Form
 
         public int SelectedImageUploaderDestination = 0;
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
         public int SelectedURLShortenerDestination = 0;
-        public ScreenshotDestination CaptureOutput = ScreenshotDestination.Upload;
         public bool ShowClipboardContentViewer = true;
+
+        #endregion Main Form
 
         #region Settings Form
 
         // General
+        public bool ShowTray = true;
         public bool ClipboardAutoCopy = true;
-        public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
-        public bool ShowTray = false;
+        public bool AutoPlaySound = true;
 
         // Hotkeys
         public HotkeySetting HotkeyClipboardUpload = new HotkeySetting(Keys.Control | Keys.PageUp);
@@ -56,13 +57,14 @@ namespace ZUploader
         public HotkeySetting HotkeyPrintScreen = new HotkeySetting(Keys.PrintScreen);
         public HotkeySetting HotkeyActiveWindow = new HotkeySetting(Keys.Alt | Keys.PrintScreen);
         public HotkeySetting HotkeyActiveMonitor = new HotkeySetting(Keys.Control | Keys.Alt | Keys.PrintScreen);
+        public HotkeySetting HotkeyWindowRectangle = new HotkeySetting(Keys.Shift | Keys.PrintScreen);
         public HotkeySetting HotkeyRectangleRegion = new HotkeySetting(Keys.Control | Keys.PrintScreen);
         public HotkeySetting HotkeyRoundedRectangleRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.R);
         public HotkeySetting HotkeyEllipseRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.E);
         public HotkeySetting HotkeyTriangleRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.T);
         public HotkeySetting HotkeyDiamondRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.D);
         public HotkeySetting HotkeyPolygonRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.P);
-        public HotkeySetting HotkeyFreeHandRegion = new HotkeySetting(Keys.Shift | Keys.PrintScreen);
+        public HotkeySetting HotkeyFreeHandRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.F);
 
         // Upload
         public bool UseCustomUploadersConfigPath = false;
@@ -70,12 +72,24 @@ namespace ZUploader
         public int UploadLimit = 5;
         public int BufferSizePower = 3;
 
-        // Image
+        // Image - Quality
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public int ImageJPEGQuality = 90;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
+
+        // Image - Resize
+        public bool ImageAutoResize = false;
+        public bool ImageKeepAspectRatio = false;
+        public bool ImageUseSmoothScaling = true;
+        public ImageScaleType ImageScaleType = ImageScaleType.Percentage;
+        public int ImageScalePercentageWidth = 100;
+        public int ImageScalePercentageHeight = 100;
+        public int ImageScaleToWidth = 100;
+        public int ImageScaleToHeight = 100;
+        public int ImageScaleSpecificWidth = 100;
+        public int ImageScaleSpecificHeight = 100;
 
         // Clipboard upload
         // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver
@@ -84,6 +98,10 @@ namespace ZUploader
         // Capture
         public bool ShowCursor = false;
         public bool CaptureTransparent = false;
+        public bool CaptureCopyImage = false;
+        public bool CaptureSaveImage = false;
+        public string SaveImageSubFolderPattern = "%y-%mo";
+        public bool CaptureUploadImage = true;
         public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
         // History
@@ -96,19 +114,5 @@ namespace ZUploader
         public ProxyInfo ProxySettings = new ProxyInfo();
 
         #endregion Settings Form
-
-        #region I/O Methods
-
-        public bool Save()
-        {
-            return SettingsHelper.Save(this, Program.SettingsFilePath, SerializationType.Xml);
-        }
-
-        public static Settings Load()
-        {
-            return SettingsHelper.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
-        }
-
-        #endregion I/O Methods
     }
 }

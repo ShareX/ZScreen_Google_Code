@@ -26,8 +26,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
-using HelpersLib;
 
 namespace HelpersLib
 {
@@ -72,14 +72,7 @@ namespace HelpersLib
 
         public static Rectangle GetScreenBounds4()
         {
-            Rectangle rect = Rectangle.Empty;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                rect = Rectangle.Union(rect, screen.Bounds);
-            }
-
-            return rect;
+            return Screen.AllScreens.Aggregate(Rectangle.Empty, (current, screen) => Rectangle.Union(current, screen.Bounds));
         }
 
         public static Rectangle GetActiveScreenBounds()
@@ -91,8 +84,16 @@ namespace HelpersLib
         public static Point FixScreenCoordinates(Point point)
         {
             int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
-            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
             return new Point(point.X - screenX, point.Y - screenY);
+        }
+
+        /// <summary>For multi monitor</summary>
+        public static Rectangle FixScreenCoordinates(Rectangle rect)
+        {
+            int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
+            int screenY = NativeMethods.GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
+            return new Rectangle(rect.X - screenX, rect.Y - screenY, rect.Width, rect.Height);
         }
 
         public static Point GetMousePosition()
@@ -146,7 +147,7 @@ namespace HelpersLib
             return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        public static Rectangle GetWindowRectangle(IntPtr handle)
+        public static Rectangle GetWindowRectangle(IntPtr handle, bool maximizeFix = true)
         {
             Rectangle rect = Rectangle.Empty;
 
@@ -165,7 +166,7 @@ namespace HelpersLib
                 rect = NativeMethods.GetWindowRect(handle);
             }
 
-            if (NativeMethods.IsZoomed(handle))
+            if (maximizeFix && NativeMethods.IsZoomed(handle))
             {
                 rect = NativeMethods.MaximizedWindowFix(handle, rect);
             }
@@ -220,7 +221,25 @@ namespace HelpersLib
             return null;
         }
 
-        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge = false, bool centerImage = true)
+        public static Bitmap ResizeImage(Image img, int width, int height, bool smoothScaling = true)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                if (smoothScaling)
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                }
+
+                g.DrawImage(img, 0, 0, width, height);
+            }
+
+            return bmp;
+        }
+
+        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge, bool centerImage)
         {
             double ratio;
             int newWidth, newHeight, newX, newY;
@@ -261,7 +280,7 @@ namespace HelpersLib
             return bmp;
         }
 
-        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge = false, bool centerImage = true)
+        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge, bool centerImage)
         {
             return ResizeImage(img, new Rectangle(0, 0, width, height), allowEnlarge, centerImage);
         }
@@ -278,7 +297,7 @@ namespace HelpersLib
             return bmp;
         }
 
-        public static Image DrawBorder(Image img, GraphicsPath gp)
+        public static Image DrawOutline(Image img, GraphicsPath gp)
         {
             if (img != null && gp != null)
             {
@@ -287,6 +306,7 @@ namespace HelpersLib
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
+                    gp.WindingModeOutline();
                     g.DrawPath(Pens.Black, gp);
                 }
 

@@ -41,7 +41,8 @@ namespace UploadersLib
                 {
                     return url1;
                 }
-                else if (!string.IsNullOrEmpty(url2))
+
+                if (!string.IsNullOrEmpty(url2))
                 {
                     return url2;
                 }

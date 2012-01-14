@@ -64,6 +64,7 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"; Tasks:
 
 [InstallDelete] 
 Type: files; Name: "{group}\ZUploader.lnk";
-
+Type: files; Name: "{app}\*.pdb"
+              
 [Run]
 Filename: {app}\{#MyAppName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent

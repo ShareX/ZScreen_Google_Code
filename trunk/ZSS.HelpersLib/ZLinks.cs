@@ -23,7 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-namespace UploadersAPILib
+namespace HelpersLib
 {
     public static class ZLinks
     {

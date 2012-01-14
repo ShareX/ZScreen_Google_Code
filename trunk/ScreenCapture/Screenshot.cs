@@ -25,9 +25,7 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 using HelpersLib;
 
 namespace ScreenCapture
@@ -109,6 +107,9 @@ namespace ScreenCapture
 
         public static Image CaptureRectangleNative(IntPtr handle, Rectangle rect)
         {
+            // avoid System.ArgumentException: Parameter is not valid
+            if (rect.Width == 0 || rect.Height == 0) return null;
+
             // Format24bppRgb because some images can show up with white dots
             Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 

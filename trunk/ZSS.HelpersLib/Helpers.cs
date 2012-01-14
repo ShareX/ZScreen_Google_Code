@@ -144,7 +144,8 @@ namespace HelpersLib
             {
                 return (12).ToString();
             }
-            else if (hour > 12)
+
+            if (hour > 12)
             {
                 return AddZeroes(hour - 12);
             }
@@ -210,15 +211,7 @@ namespace HelpersLib
         {
             string chars = Alphanumeric + "()-._!";
 
-            foreach (char c2 in chars)
-            {
-                if (c == c2)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return chars.Any(c2 => c == c2);
         }
 
         public static string NormalizeString(string text, bool convertSpace = true, bool isFolderPath = false)
@@ -278,7 +271,8 @@ namespace HelpersLib
                 {
                     return url1;
                 }
-                else if (!string.IsNullOrEmpty(url2))
+
+                if (!string.IsNullOrEmpty(url2))
                 {
                     return url2;
                 }

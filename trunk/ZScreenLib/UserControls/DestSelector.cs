@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using UploadersAPILib;
 using UploadersLib;
 using ZScreenLib.Properties;
 
@@ -313,7 +312,7 @@ namespace ZScreenLib
 
         public void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
-            UploadersConfigForm form = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys());
+            UploadersConfigForm form = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys);
             form.Icon = Resources.zss_main;
             if (form.ShowDialog() == DialogResult.OK)
             {

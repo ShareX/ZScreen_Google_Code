@@ -30,39 +30,11 @@ namespace ScreenCapture
 {
     public class EllipseRegion : RectangleRegion
     {
-        public EllipseRegion(Image backgroundImage = null)
-            : base(backgroundImage)
+        public EllipseRegion(Image backgroundImage = null) : base(backgroundImage) { }
+
+        protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-        }
-
-        protected override void Draw(Graphics g)
-        {
-            if (CurrentArea.Width > 0 && CurrentArea.Height > 0)
-            {
-                regionPath = new GraphicsPath();
-
-                regionPath.AddEllipse(CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
-
-                using (Region region = new Region(regionPath))
-                {
-                    g.ExcludeClip(region);
-                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                    DrawObjects(g);
-                    g.ResetClip();
-                }
-
-                if (areaObject.IsDragging || areaObject.IsMouseHover)
-                {
-                    g.FillPath(lightBrush, regionPath);
-                }
-
-                g.DrawPath(borderPen, regionPath);
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
-            }
-            else
-            {
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-            }
+            graphicsPath.AddEllipse(rect);
         }
     }
 }

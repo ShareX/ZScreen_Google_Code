@@ -26,6 +26,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -33,12 +35,14 @@ namespace ScreenCapture
     {
         private NodeObject lastNode;
         private List<Point> points;
+        private bool isAreaCreated;
+        private Rectangle currentArea;
 
         public FreeHandRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             points = new List<Point>(128);
-            regionPath = new GraphicsPath();
+            regionFillPath = new GraphicsPath();
 
             lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
             DrawableObjects.Add(lastNode);
@@ -48,48 +52,52 @@ namespace ScreenCapture
         {
             base.Update();
 
-            if (!IsAreaCreated && isMouseDown)
+            if (InputManager.IsMousePressed(MouseButtons.Right))
+            {
+                if (isAreaCreated)
+                {
+                    isAreaCreated = false;
+                    regionFillPath.Reset();
+                    HideNodes();
+                    points.Clear();
+                }
+                else
+                {
+                    Close(false);
+                }
+            }
+
+            if (Config.QuickCrop && isAreaCreated && InputManager.IsMouseReleased(MouseButtons.Left))
+            {
+                Close(true);
+            }
+
+            if (!isAreaCreated && InputManager.IsMouseDown(MouseButtons.Left))
             {
                 lastNode.Visible = true;
                 lastNode.IsDragging = true;
-                IsAreaCreated = true;
+                isAreaCreated = true;
             }
 
             if (lastNode.Visible && lastNode.IsDragging)
             {
-                lastNode.Position = mousePosition;
+                lastNode.Position = InputManager.MousePosition0Based;
 
-                if (mousePosition != oldMousePosition)
+                if (InputManager.IsMouseMoved)
                 {
-                    points.Add(mousePosition);
+                    points.Add(InputManager.MousePosition0Based);
 
                     if (points.Count > 1)
                     {
-                        regionPath.AddLine(oldMousePosition, mousePosition);
+                        regionFillPath.AddLine(InputManager.PreviousMousePosition0Based, InputManager.MousePosition0Based);
                     }
                 }
             }
 
             if (points.Count > 2)
             {
-                RectangleF rect = regionPath.GetBounds();
-                CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
-            }
-        }
-
-        protected override void OnRightClickCancel()
-        {
-            if (IsAreaCreated)
-            {
-                IsAreaCreated = false;
-                CurrentArea = Rectangle.Empty;
-                regionPath.Reset();
-                HideNodes();
-                points.Clear();
-            }
-            else
-            {
-                Close(true);
+                RectangleF rect = regionFillPath.GetBounds();
+                currentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -97,16 +105,16 @@ namespace ScreenCapture
         {
             if (points.Count > 2)
             {
-                using (Region region = new Region(regionPath))
+                using (Region region = new Region(regionFillPath))
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                     g.ResetClip();
                 }
 
-                g.DrawPath(borderPen, regionPath);
+                g.DrawPath(borderPen, regionFillPath);
                 g.DrawLine(borderPen, points[0], points[points.Count - 1]);
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                g.DrawRectangleProper(borderPen, currentArea);
             }
             else
             {

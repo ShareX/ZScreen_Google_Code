@@ -92,7 +92,25 @@ namespace ZScreenLib
             {
                 Directory.CreateDirectory(destDir);
             }
-            if (!File.Exists(fp))
+
+            DialogResult result = DialogResult.OK;
+
+            if (Engine.ConfigWorkflow.ConfigFileNaming.OverwriteFiles)
+                result = DialogResult.OK;
+            else if (File.Exists(fp))
+            {
+                if (MessageBox.Show(string.Format("{0} already exists. \nDo you want to overwrite the existing file?", fp),
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    result = DialogResult.OK;
+                }
+                else
+                {
+                    result = DialogResult.Cancel;
+                }
+            }
+
+            if (result == DialogResult.OK)
             {
                 using (stream)
                 {
@@ -257,7 +275,7 @@ namespace ZScreenLib
                 if (fn.Length > workflow.ConfigFileNaming.MaxNameLength - ext.Length)
                 {
                     string nfn = fn.Substring(0, workflow.ConfigFileNaming.MaxNameLength - ext.Length);
-                    fileName = Regex.Replace(fileName, fn, nfn);
+                    fileName = nfn + ext;
                 }
 
                 string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
@@ -339,7 +357,7 @@ namespace ZScreenLib
             string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.UploadersConfigFileName));
             if (!File.Exists(fpoutputsconfig))
             {
-                Engine.ConfigUploaders.Write(fpoutputsconfig);
+                Engine.ConfigUploaders.Save(fpoutputsconfig);
             }
 
             if (Engine.ConfigUI != null)

@@ -57,10 +57,7 @@ namespace HistoryLib
 
                     if (rootNode.Name == "HistoryItems" && rootNode.ChildNodes != null && rootNode.ChildNodes.Count > 0)
                     {
-                        foreach (HistoryItem hi in ParseHistoryItem(rootNode))
-                        {
-                            historyItemList.Add(hi);
-                        }
+                        historyItemList.AddRange(ParseHistoryItem(rootNode));
                     }
                 }
             }

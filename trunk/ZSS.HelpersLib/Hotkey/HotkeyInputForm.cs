@@ -77,6 +77,7 @@ namespace HelpersLib
             keys.Add(new KeyInfo(Keys.PageUp));
             keys.Add(new KeyInfo(Keys.PageDown));
             keys.Add(new KeyInfo(Keys.Space));
+            keys.Add(new KeyInfo(Keys.Back));
 
             for (Keys key = Keys.A; key <= Keys.Z; key++)
             {

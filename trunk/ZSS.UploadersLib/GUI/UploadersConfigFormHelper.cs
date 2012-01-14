@@ -375,10 +375,8 @@ namespace UploadersLib
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
-                    else
-                    {
-                        MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+
+                    MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -387,7 +385,7 @@ namespace UploadersLib
             }
             else
             {
-                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must give access from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Config.DropboxOAuthInfo = null;
@@ -424,6 +422,94 @@ namespace UploadersLib
         }
 
         #endregion Dropbox
+
+        #region Box
+
+        public void BoxAuthOpen()
+        {
+            try
+            {
+                Box box = new Box(APIKeys.BoxKey);
+
+                string url = box.GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.BoxTicket = box.Ticket;
+                    ZAppHelper.LoadBrowserAsync(url);
+                    btnBoxCompleteAuth.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void BoxAuthComplete()
+        {
+            if (!string.IsNullOrEmpty(Config.BoxTicket))
+            {
+                try
+                {
+                    Box box = new Box(APIKeys.BoxKey) { Ticket = Config.BoxTicket };
+                    Config.BoxAuthToken = box.GetAuthToken();
+
+                    if (!string.IsNullOrEmpty(Config.BoxAuthToken))
+                    {
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public void BoxListFolders()
+        {
+            if (string.IsNullOrEmpty(Config.BoxAuthToken))
+            {
+                MessageBox.Show("Authentication required.", "Box refresh folders list failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                tvBoxFolders.Nodes.Clear();
+                Box box = new Box(APIKeys.BoxKey) { AuthToken = Config.BoxAuthToken };
+                BoxFolder root = box.GetFolderList();
+                BoxRecursiveAddChilds(tvBoxFolders.Nodes, root);
+                tvBoxFolders.ExpandAll();
+            }
+        }
+
+        private void BoxRecursiveAddChilds(TreeNodeCollection treeNodes, BoxFolder folderInfo)
+        {
+            string folderName;
+
+            if (folderInfo.ID == "0")
+            {
+                folderName = "root";
+            }
+            else
+            {
+                folderName = folderInfo.Name;
+            }
+
+            TreeNode treeNode = treeNodes.Add(folderName);
+            treeNode.Tag = folderInfo;
+
+            foreach (BoxFolder folderInfo2 in folderInfo.Folders)
+            {
+                BoxRecursiveAddChilds(treeNode.Nodes, folderInfo2);
+            }
+        }
+
+        #endregion Box
 
         #region Minus
 
@@ -609,6 +695,7 @@ namespace UploadersLib
                         {
                             msg += "\n\nPing results:\n" + ping;
                         }
+
                         if (silent)
                         {
                             // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
@@ -806,11 +893,9 @@ namespace UploadersLib
                     lblGooglAccountStatus.Text = "Login successful: " + Config.GoogleURLShortenerOAuthInfo.UserToken;
                     return;
                 }
-                else
-                {
-                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    atcGoogleURLShortenerAccountType.SelectedAccountType = AccountType.Anonymous;
-                }
+
+                MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                atcGoogleURLShortenerAccountType.SelectedAccountType = AccountType.Anonymous;
             }
             else
             {

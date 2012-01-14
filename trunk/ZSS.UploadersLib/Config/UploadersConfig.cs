@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -34,8 +35,7 @@ using UploadersLib.TextUploaders;
 
 namespace UploadersLib
 {
-    [Serializable]
-    public class UploadersConfig
+    public class UploadersConfig : XMLSettingsBase<UploadersConfig>
     {
         public UploadersConfig()
         {
@@ -43,9 +43,6 @@ namespace UploadersLib
         }
 
         #region General
-
-        [Category(ComponentModelStrings.AppPathsUploaders), ReadOnly(true), Description("File Path of the Uploaders Configuration")]
-        public string FilePath { get; set; }
 
         [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
         public bool PasswordsSecureUsingEncryption { get; set; }
@@ -137,10 +134,6 @@ namespace UploadersLib
         public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
         public DropboxAccountInfo DropboxAccountInfo = null;
 
-        // Minus
-
-        public MinusOptions MinusConfig = new MinusOptions();
-
         // RapidShare
 
         public string RapidShareUsername = string.Empty;
@@ -152,6 +145,17 @@ namespace UploadersLib
         public AccountType SendSpaceAccountType = AccountType.Anonymous;
         public string SendSpaceUsername = string.Empty;
         public string SendSpacePassword = string.Empty;
+
+        // Minus
+
+        public MinusOptions MinusConfig = new MinusOptions();
+
+        // Box
+
+        public string BoxTicket = string.Empty;
+        public string BoxAuthToken = string.Empty;
+        public string BoxFolderID = "0";
+        public bool BoxShare = true;
 
         // Custom Uploaders
 
@@ -211,6 +215,8 @@ namespace UploadersLib
                     return SendSpaceAccountType == AccountType.Anonymous || (!string.IsNullOrEmpty(SendSpaceUsername) && !string.IsNullOrEmpty(SendSpacePassword));
                 case FileUploaderType.Minus:
                     return MinusConfig != null && MinusConfig.MinusUser != null;
+                case FileUploaderType.Box:
+                    return !string.IsNullOrEmpty(BoxAuthToken);
                 case FileUploaderType.CustomUploader:
                     return CustomUploadersList != null && CustomUploadersList.Count > 0;
                 case FileUploaderType.FTP:
@@ -253,11 +259,7 @@ namespace UploadersLib
             switch (ut)
             {
                 case TextUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
+                    return Enum.GetValues(typeof(FileUploaderType)).Cast<FileUploaderType>().Any(fu => IsActive(fu));
                 default:
                     return true;
             }
@@ -288,11 +290,7 @@ namespace UploadersLib
                 case ImageUploaderType.YFROG:
                     return !string.IsNullOrEmpty(YFrogPassword);
                 case ImageUploaderType.FileUploader:
-                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
-                    {
-                        if (IsActive(fu)) return true;
-                    }
-                    return false;
+                    return Enum.GetValues(typeof(FileUploaderType)).Cast<FileUploaderType>().Any(fu => IsActive(fu));
             }
 
             return false;
@@ -315,32 +313,17 @@ namespace UploadersLib
 
         #region I/O Methods
 
-        public bool Write(string filePath)
+        public override bool Save(string filePath)
         {
-            bool succ = true;
+            bool result;
 
-            // encrypt before interim save
-            if (PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(true);
-            }
+            if (PasswordsSecureUsingEncryption) CryptPasswords(true);
 
-            succ = SettingsHelper.Save(this, filePath, SerializationType.Xml);
+            result = base.Save(filePath);
 
-            // decrypt after interim save
-            if (PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(false);
-            }
+            if (PasswordsSecureUsingEncryption) CryptPasswords(false);
 
-            return succ;
-        }
-
-        public static UploadersConfig Read(string filePath)
-        {
-            UploadersConfig uc = SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
-            uc.FilePath = filePath;
-            return uc;
+            return result;
         }
 
         #endregion I/O Methods

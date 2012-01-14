@@ -23,9 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using UploadersLib;
-
-namespace UploadersAPILib
+namespace HelpersLib
 {
     public static class ZKeys
     {
@@ -50,6 +48,7 @@ namespace UploadersAPILib
         public const string DropboxConsumerSecret = "r5d3aptd9a0cwp9";
         public const string MinusConsumerKey = "b57b69843f7a302a276dde89890fc6";
         public const string MinusConsumerSecret = "3fb097f08314d713959b1f41d543b0";
+        public const string BoxKey = "5vd8549xmn9a7zil4iupb0ciroj7cvee";
         public const string SendSpaceKey = "LV6OS1R0Q3";
         public const string DropIOKey = "6c65e2d2bfd858f7d0aa6509784f876483582eea";
 
@@ -72,31 +71,5 @@ namespace UploadersAPILib
         public const string TwitterConsumerSecret = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
         public const string GoogleApiKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
         public const string PicnikKey = "3aacd2de4563b8817de708b29b5bdd0e";
-
-        public static UploadersAPIKeys GetAPIKeys()
-        {
-            return new UploadersAPIKeys
-            {
-                TinyPicID = TinyPicID,
-                TinyPicKey = TinyPicKey,
-                ImgurConsumerKey = ImgurConsumerKey,
-                ImgurConsumerSecret = ImgurConsumerSecret,
-                FlickrKey = FlickrKey,
-                FlickrSecret = FlickrSecret,
-                PhotobucketConsumerKey = PhotobucketConsumerKey,
-                PhotobucketConsumerSecret = PhotobucketConsumerSecret,
-                DropboxConsumerKey = DropboxConsumerKey,
-                DropboxConsumerSecret = DropboxConsumerSecret,
-                MinusConsumerKey = MinusConsumerKey,
-                MinusConsumerSecret = MinusConsumerSecret,
-                SendSpaceKey = SendSpaceKey,
-                PastebinKey = PastebinKey,
-                TwitterConsumerKey = TwitterConsumerKey,
-                TwitterConsumerSecret = TwitterConsumerSecret,
-                GoogleTranslateKey = GoogleApiKey,
-                GoogleConsumerKey = GoogleConsumerKey,
-                GoogleConsumerSecret = GoogleConsumerSecret
-            };
-        }
     }
 }

@@ -26,13 +26,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
     public class PolygonRegion : Surface
     {
         private List<NodeObject> nodes;
+        private bool isAreaCreated;
+        private Rectangle currentArea;
 
         public PolygonRegion(Image backgroundImage = null)
             : base(backgroundImage)
@@ -46,9 +50,9 @@ namespace ScreenCapture
         {
             if (e.Button == MouseButtons.Left)
             {
-                foreach (NodeObject node in DrawableObjects)
+                if (DrawableObjects.Cast<NodeObject>().Any(node => node.IsMouseHover || node.IsDragging))
                 {
-                    if (node.IsMouseHover || node.IsDragging) return;
+                    return;
                 }
 
                 if (nodes.Count == 0)
@@ -58,32 +62,30 @@ namespace ScreenCapture
 
                 CreateNode();
 
-                IsAreaCreated = true;
+                isAreaCreated = true;
             }
-        }
-
-        protected override void OnRightClickCancel()
-        {
-            if (IsAreaCreated)
+            else if (e.Button == MouseButtons.Right)
             {
-                foreach (NodeObject node in nodes)
+                if (isAreaCreated)
                 {
-                    if (node.IsMouseHover)
+                    foreach (NodeObject node in nodes)
                     {
-                        nodes.Remove(node);
-                        DrawableObjects.Remove(node);
-                        return;
+                        if (node.IsMouseHover)
+                        {
+                            nodes.Remove(node);
+                            DrawableObjects.Remove(node);
+                            return;
+                        }
                     }
-                }
 
-                IsAreaCreated = false;
-                CurrentArea = Rectangle.Empty;
-                nodes.Clear();
-                DrawableObjects.Clear();
-            }
-            else
-            {
-                Close(true);
+                    isAreaCreated = false;
+                    nodes.Clear();
+                    DrawableObjects.Clear();
+                }
+                else
+                {
+                    Close(false);
+                }
             }
         }
 
@@ -102,32 +104,32 @@ namespace ScreenCapture
 
             if (nodes.Count > 2)
             {
-                RectangleF rect = regionPath.GetBounds();
-                CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+                RectangleF rect = regionFillPath.GetBounds();
+                currentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
         protected override void Draw(Graphics g)
         {
-            regionPath = new GraphicsPath();
+            regionFillPath = new GraphicsPath();
 
             for (int i = 0; i < nodes.Count - 1; i++)
             {
-                regionPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
+                regionFillPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
             }
 
             if (nodes.Count > 2)
             {
-                regionPath.CloseFigure();
+                regionFillPath.CloseFigure();
 
-                using (Region region = new Region(regionPath))
+                using (Region region = new Region(regionFillPath))
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                     g.ResetClip();
                 }
 
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                g.DrawRectangleProper(borderPen, currentArea);
             }
             else
             {
@@ -136,7 +138,7 @@ namespace ScreenCapture
 
             if (nodes.Count > 1)
             {
-                g.DrawPath(borderPen, regionPath);
+                g.DrawPath(borderPen, regionFillPath);
             }
 
             base.Draw(g);
@@ -153,7 +155,7 @@ namespace ScreenCapture
 
         private void ActivateNode(NodeObject node)
         {
-            node.Position = ClientMousePosition;
+            node.Position = InputManager.MousePosition0Based;
             node.Visible = true;
             node.IsDragging = true;
         }

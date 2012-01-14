@@ -26,7 +26,7 @@ namespace JBirdGUI
 
         public bool Write()
         {
-            return SettingsHelper.Save<Settings>(this, SettingsFilePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, SettingsFilePath, SerializationType.Xml);
         }
 
         public static Settings Read()

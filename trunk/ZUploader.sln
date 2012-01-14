@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "ZSS.Uploade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersAPILib", "ZAPILib\UploadersAPILib.csproj", "{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture.Shapes", "ScreenCapture.Shapes\ScreenCapture.Shapes.csproj", "{87E2211F-3D55-4A15-B497-2586085442CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture.Shapes", "ScreenCapture.Shapes\ScreenCapture.Shapes.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,12 +71,12 @@ Global
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|x86.ActiveCfg = Release|x86
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|x86.Build.0 = Release|x86
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

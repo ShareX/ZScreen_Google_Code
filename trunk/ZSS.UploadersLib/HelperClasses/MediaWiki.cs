@@ -185,10 +185,13 @@ namespace UploadersLib.HelperClasses
         private string GetUrl(string path)
         {
             string url = Options.Account.Url;
+
             if (url.EndsWith("/"))
+            {
                 return url + path;
-            else
-                return url + "/" + path;
+            }
+
+            return url + "/" + path;
         }
 
         private string GetApiUrl()

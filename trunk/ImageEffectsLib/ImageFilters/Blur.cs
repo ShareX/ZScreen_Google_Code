@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Plugins;
+﻿using System.ComponentModel;
 using System.Drawing;
-using GraphicsMgrLib;
 using System.Drawing.Imaging;
-using System.ComponentModel;
+using GraphicsMgrLib;
 using HelpersLib;
+using Plugins;
 
 namespace ImageFilters
 {

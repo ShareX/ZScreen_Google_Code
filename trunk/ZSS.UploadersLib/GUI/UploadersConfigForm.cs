@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
@@ -344,18 +345,44 @@ namespace UploadersLib
 
         #endregion Dropbox
 
+        #region Box
+
+        private void btnBoxOpenAuthorize_Click(object sender, EventArgs e)
+        {
+            BoxAuthOpen();
+        }
+
+        private void btnBoxCompleteAuth_Click(object sender, EventArgs e)
+        {
+            BoxAuthComplete();
+        }
+
+        private void txtBoxFolderID_TextChanged(object sender, EventArgs e)
+        {
+            Config.BoxFolderID = txtBoxFolderID.Text;
+        }
+
+        private void btnBoxRefreshFolders_Click(object sender, EventArgs e)
+        {
+            BoxListFolders();
+        }
+
+        private void tvBoxFolders_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node != null && e.Node.Tag is BoxFolder)
+            {
+                BoxFolder folderInfo = (BoxFolder)e.Node.Tag;
+                txtBoxFolderID.Text = folderInfo.ID;
+            }
+        }
+
+        #endregion Box
+
         #region Minus
 
         private bool HasFolder(string name)
         {
-            foreach (MinusFolder mf in cboMinusFolders.Items)
-            {
-                if (mf.name == name)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return cboMinusFolders.Items.Cast<MinusFolder>().Any(mf => mf.name == name);
         }
 
         private void btnMinusAuth_Click(object sender, EventArgs e)

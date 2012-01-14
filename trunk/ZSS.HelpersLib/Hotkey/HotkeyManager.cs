@@ -43,6 +43,8 @@ namespace HelpersLib.Hotkey
         ActiveWindow,
         [Description("Active Monitor")]
         ActiveMonitor,
+        [Description("Window && Rectangle")]
+        WindowRectangle,
         [Description("Rectangle Region")]
         RectangleRegion,
         [Description("Rounded Rectangle Region")]
@@ -63,6 +65,8 @@ namespace HelpersLib.Hotkey
     {
         [Description("Capture Entire Screen")]
         EntireScreen,
+        [Description("Capture Active Monitor")]
+        ActiveMonitor,
         [Description("Capture Active Window")]
         ActiveWindow,
         [Description("Capture Rectangular Region")]

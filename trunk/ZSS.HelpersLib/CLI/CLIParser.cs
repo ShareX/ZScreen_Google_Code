@@ -63,7 +63,8 @@ namespace HelpersLib.CLI
                 {
                     return input.Substring(start, index - start);
                 }
-                else if (input[index] == '"' && (index + 1) < input.Length)
+
+                if (input[index] == '"' && (index + 1) < input.Length)
                 {
                     return ParseUntilDoubleQuotes();
                 }

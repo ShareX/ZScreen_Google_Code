@@ -128,15 +128,7 @@ namespace HelpersLib
 
         public static ImageCodecInfo GetCodecInfo(this ImageFormat format)
         {
-            foreach (ImageCodecInfo info in ImageCodecInfo.GetImageEncoders())
-            {
-                if (info.FormatID.Equals(format.Guid))
-                {
-                    return info;
-                }
-            }
-
-            return null;
+            return ImageCodecInfo.GetImageEncoders().FirstOrDefault(info => info.FormatID.Equals(format.Guid));
         }
 
         public static string GetMimeType(this ImageFormat format)
@@ -179,6 +171,21 @@ namespace HelpersLib
                    Math.Max(value.Minor, 0) * Math.Pow(10, 9) +
                    Math.Max(value.Build, 0) * Math.Pow(10, 6) +
                    Math.Max(value.Revision, 0);
+        }
+
+        public static bool IsValid(this Rectangle rect)
+        {
+            return rect.Width > 0 && rect.Height > 0;
+        }
+
+        public static Rectangle SizeOffset(this Rectangle rect, int offset)
+        {
+            return rect.SizeOffset(offset, offset);
+        }
+
+        public static Rectangle SizeOffset(this Rectangle rect, int width, int height)
+        {
+            return new Rectangle(rect.X, rect.Y, rect.Width + width, rect.Height + height);
         }
     }
 }
