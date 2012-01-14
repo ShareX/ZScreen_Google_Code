@@ -31,8 +31,54 @@ namespace ZUploader.HelperClasses
 {
     public static class TaskHelper
     {
-        public static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
+        public static Image ResizeImage(Image img, ImageScaleType scaleType)
         {
+            float width = 0, height = 0;
+
+            switch (scaleType)
+            {
+                case ImageScaleType.Percentage:
+                    width = img.Width * (Program.Settings.ImageScalePercentageWidth / 100f);
+                    height = img.Height * (Program.Settings.ImageScalePercentageHeight / 100f);
+                    break;
+                case ImageScaleType.Width:
+                    width = Program.Settings.ImageScaleToWidth;
+                    height = Program.Settings.ImageKeepAspectRatio ? img.Height * (width / img.Width) : img.Height;
+                    break;
+                case ImageScaleType.Height:
+                    height = Program.Settings.ImageScaleToHeight;
+                    width = Program.Settings.ImageKeepAspectRatio ? img.Width * (height / img.Height) : img.Width;
+                    break;
+                case ImageScaleType.Specific:
+                    width = Program.Settings.ImageScaleSpecificWidth;
+                    height = Program.Settings.ImageScaleSpecificHeight;
+                    break;
+            }
+
+            if (width > 0 && height > 0)
+            {
+                return CaptureHelpers.ResizeImage(img, (int)width, (int)height, Program.Settings.ImageUseSmoothScaling);
+            }
+
+            return img;
+        }
+
+        public static ImageData PrepareImageAndFilename(Image img)
+        {
+            ImageData imageData = new ImageData();
+            EImageFormat imageFormat;
+            imageData.ImageStream = TaskHelper.PrepareImage(img, out imageFormat);
+            imageData.Filename = TaskHelper.PrepareFilename(imageFormat, img);
+            return imageData;
+        }
+
+        private static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
+        {
+            if (Program.Settings.ImageAutoResize)
+            {
+                img = ResizeImage(img, Program.Settings.ImageScaleType);
+            }
+
             MemoryStream stream = img.SaveImage(Program.Settings.ImageFormat);
 
             int sizeLimit = Program.Settings.ImageSizeLimit * 1000;
@@ -51,7 +97,7 @@ namespace ZUploader.HelperClasses
             return stream;
         }
 
-        public static string PrepareFilename(EImageFormat imageFormat, Image img)
+        private static string PrepareFilename(EImageFormat imageFormat, Image img)
         {
             string ext = "png";
 

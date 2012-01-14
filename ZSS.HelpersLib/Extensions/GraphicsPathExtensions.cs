@@ -26,11 +26,23 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace HelpersLib
 {
     public static class GraphicsPathExtensions
     {
+        public static void AddRectangleProper(this GraphicsPath graphicsPath, RectangleF rect)
+        {
+            rect = new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+
+            if (rect.Width > 1 && rect.Height > 1)
+            {
+                graphicsPath.AddRectangle(rect);
+            }
+        }
+
         public static void AddRoundedRectangle(this GraphicsPath graphicsPath, RectangleF rect, float radius)
         {
             if (radius <= 0.0f)
@@ -172,6 +184,13 @@ namespace HelpersLib
             }
 
             graphicsPath.AddPolygon(points);
+        }
+
+        public static void WindingModeOutline(this GraphicsPath graphicsPath)
+        {
+            IntPtr handle = (IntPtr)graphicsPath.GetType().GetField("nativePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(graphicsPath);
+            HandleRef path = new HandleRef(graphicsPath, handle);
+            NativeMethods.GdipWindingModeOutline(path, IntPtr.Zero, 0.25F);
         }
     }
 }

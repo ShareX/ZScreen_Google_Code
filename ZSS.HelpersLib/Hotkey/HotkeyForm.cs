@@ -59,7 +59,7 @@ namespace HelpersLib
             if (IsHotkeyExist(hotkey))
             {
                 StaticHelper.WriteLine("Hotkey already exist: " + keyInfo);
-                return HotkeyStatus.Registered;
+                return HotkeyStatus.Failed;
             }
 
             string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8") + (int)hotkey;

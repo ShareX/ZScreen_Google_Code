@@ -26,7 +26,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
@@ -195,10 +194,7 @@ namespace UploadersLib.FileUploaders
             {
                 string[] split = response.Trim('\n').Split('\n');
 
-                foreach (string folderInfo in split)
-                {
-                    list.Add(new RapidShareFolderInfo(folderInfo));
-                }
+                list.AddRange(split.Select(folderInfo => new RapidShareFolderInfo(folderInfo)));
             }
 
             return list;

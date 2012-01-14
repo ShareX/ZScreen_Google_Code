@@ -36,12 +36,12 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<WorkflowConfig>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public bool Write()
         {
-            return SettingsHelper.Save<WorkflowConfig>(this, SettingsFilePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, SettingsFilePath, SerializationType.Xml);
         }
 
         #endregion I/O Methods

@@ -434,6 +434,12 @@ namespace ZScreenGUI
             RunWorkerAsync(hkesTask);
         }
 
+        public override void CaptureActiveMonitor()
+        {
+            WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveMonitor);
+            RunWorkerAsync(hkesTask);
+        }
+
         public override void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);

@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
@@ -312,14 +313,7 @@ namespace UploadersLib.FileUploaders
 
         public MinusAuthToken GetToken(MinusScope scope)
         {
-            foreach (MinusAuthToken mat in Tokens)
-            {
-                if (scope.ToString() == mat.scope)
-                {
-                    return mat;
-                }
-            }
-            return null;
+            return Tokens.FirstOrDefault(mat => scope.ToString() == mat.scope);
         }
 
         public MinusFolder MinusFolderActive

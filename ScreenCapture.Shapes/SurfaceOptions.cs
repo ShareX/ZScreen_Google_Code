@@ -36,6 +36,10 @@ namespace ScreenCapture
         public bool DrawChecker { get; set; }
         [Category("Shape"), DefaultValue(false), Description("Complete capture as soon as the mouse button is released, except when capturing polygon.")]
         public bool QuickCrop { get; set; }
+        [Category("Shape"), DefaultValue(false), Description("You can use window capture mode in all rectangle type shapes.")]
+        public bool ForceWindowCapture { get; set; }
+        [Category("Shape"), DefaultValue(false), Description("If window capture mode enabled this setting will also allow to capture window controls.")]
+        public bool IncludeControls { get; set; }
 
         [Category("Shape"), DefaultValue(1), Description("Number of pixels to move shape at each arrow key stroke.")]
         public int MinMoveSpeed { get; set; }

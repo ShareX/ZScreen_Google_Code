@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using HelpersLib;
-using HelpersLib.Hotkey;
 using UploadersLib;
 using ZScreenLib;
 
@@ -59,7 +58,7 @@ namespace JBirdGUI
 
         protected void bwConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            Program.ConfigUploaders = UploadersConfig.Read(Program.ConfigUploadersFilePath);
+            Program.ConfigUploaders = UploadersConfig.Load(Program.ConfigUploadersFilePath);
             Engine.ConfigUploaders = Program.ConfigUploaders;
             Program.ConfigWorkflow = WorkflowConfig.Read();
         }

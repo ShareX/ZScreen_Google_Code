@@ -79,7 +79,8 @@ namespace ZUploader.HelperClasses
 
                 return true;
             }
-            else if (smoothTimer.ElapsedMilliseconds > smoothTime)
+
+            if (smoothTimer.ElapsedMilliseconds > smoothTime)
             {
                 if (averageSpeed.Count == 10)
                 {

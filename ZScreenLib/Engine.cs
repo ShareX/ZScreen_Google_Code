@@ -36,7 +36,6 @@ using HelpersLib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 
@@ -95,13 +94,13 @@ namespace ZScreenLib
 
         public static AppSettings ConfigApp = AppSettings.Read();
 
-        public static XMLSettings ConfigUI { get; set; }
+        public static XMLSettings ConfigUI = new XMLSettings(); // create object for Config Wizard
 
         public static ZScreenOptions ConfigOptions = new ZScreenOptions();
 
         public static Workflow ConfigWorkflow { get; set; }
 
-        public static UploadersConfig ConfigUploaders = new UploadersConfig();
+        public static UploadersConfig ConfigUploaders = new UploadersConfig(); // create object for Config Wizard
 
         public static GoogleTranslatorConfig ConfigGT { get; set; }
 
@@ -220,7 +219,7 @@ namespace ZScreenLib
                 {
                     string imagesDir = RootImagesDir;
                     string saveFolderPath = string.Empty;
-                    if (Engine.ConfigUI != null)
+                    if (Engine.ConfigWorkflow != null)
                     {
                         saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
                         if (!IsPortable && Engine.ConfigApp.PreferSystemFolders)
@@ -468,6 +467,14 @@ namespace ZScreenLib
         {
             StaticHelper.WriteLine("WriteSettings is async: " + isAsync);
 
+            Thread settingsOptions = new Thread(() =>
+            {
+                if (Engine.ConfigOptions != null)
+                {
+                    Engine.ConfigOptions.Write(OptionsFilePath);
+                }
+            });
+
             Thread settingsThread = new Thread(() =>
             {
                 if (Engine.ConfigUI != null)
@@ -488,7 +495,7 @@ namespace ZScreenLib
             {
                 if (Engine.ConfigUploaders != null)
                 {
-                    Engine.ConfigUploaders.Write(UploadersConfigPath);
+                    Engine.ConfigUploaders.Save(UploadersConfigPath);
                 }
             });
 
@@ -500,6 +507,7 @@ namespace ZScreenLib
                 }
             });
 
+            settingsOptions.Start();
             settingsThread.Start();
             googleTranslateThread.Start();
             workflowConfigThread.Start();
@@ -507,6 +515,7 @@ namespace ZScreenLib
 
             if (!isAsync)
             {
+                settingsOptions.Join();
                 settingsThread.Join();
                 googleTranslateThread.Join();
                 workflowConfigThread.Join();
@@ -542,7 +551,7 @@ namespace ZScreenLib
 
             Thread threadUploadersConfig = new Thread(() =>
             {
-                Engine.ConfigUploaders = UploadersConfig.Read(UploadersConfigPath);
+                Engine.ConfigUploaders = UploadersConfig.Load(UploadersConfigPath);
             });
 
             Thread threadGt = new Thread(() =>

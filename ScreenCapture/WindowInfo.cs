@@ -57,6 +57,14 @@ namespace ScreenCapture
             }
         }
 
+        public Rectangle Rectangle0Based
+        {
+            get
+            {
+                return CaptureHelpers.FixScreenCoordinates(Rectangle);
+            }
+        }
+
         public WindowStyles Styles
         {
             get
@@ -69,7 +77,15 @@ namespace ScreenCapture
         {
             get
             {
-                return NativeMethods.IsWindowMaximized(Handle);
+                return NativeMethods.IsZoomed(Handle);
+            }
+        }
+
+        public bool IsMinimized
+        {
+            get
+            {
+                return NativeMethods.IsIconic(Handle);
             }
         }
 
@@ -92,6 +108,11 @@ namespace ScreenCapture
         public WindowInfo(IntPtr handle)
         {
             Handle = handle;
+        }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }

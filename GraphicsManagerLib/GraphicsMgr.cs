@@ -31,7 +31,6 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
 using HelpersLib;
 

@@ -77,7 +77,8 @@ namespace UploadersLib.TextUploaders
                     {
                         return "http://pastebin.ca/" + response.Substring(8);
                     }
-                    else if (response.StartsWith("FAIL:"))
+
+                    if (response.StartsWith("FAIL:"))
                     {
                         this.Errors.Add(response.Substring(5));
                     }
@@ -102,8 +103,8 @@ namespace UploadersLib.TextUploaders
         [Description("Tags (space separated, optional)")]
         public string Tags { get; set; }
 
-        [Description("Content Type"), DefaultValue("1")]
         /// <summary>type</summary>
+        [Description("Content Type"), DefaultValue("1")]
         public string TextFormat { get; set; }
 
         /// <summary>expiry</summary>

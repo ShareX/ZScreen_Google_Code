@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace UploadersLib.HelperClasses
@@ -75,14 +76,7 @@ namespace UploadersLib.HelperClasses
 
         public Dictionary<string, string> GetArguments()
         {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-
-            foreach (Argument arg in Arguments)
-            {
-                args.Add(arg.Name, arg.Value);
-            }
-
-            return args;
+            return Arguments.ToDictionary(arg => arg.Name, arg => arg.Value);
         }
 
         public string GetURL(URLType type)

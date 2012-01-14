@@ -72,6 +72,7 @@ namespace ZUploader
             this.tsddbCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWindowRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRoundedRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEllipse = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,9 +85,6 @@ namespace ZUploader
             this.tsmiTextUploaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileUploaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiURLShorteners = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCaptureOutput = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCaptureOutputUpload = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCaptureOutputClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.tssDestinations1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiUploadersConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.tssMain1 = new System.Windows.Forms.ToolStripSeparator();
@@ -259,16 +257,17 @@ namespace ZUploader
             this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
             this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDebug.Name = "tsbDebug";
-            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
-            this.tsbDebug.Text = "Test upload";
+            this.tsbDebug.Size = new System.Drawing.Size(49, 20);
+            this.tsbDebug.Text = "Test";
             this.tsbDebug.Visible = false;
-            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
+            this.tsbDebug.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tsbDebug_MouseUp);
             // 
             // tsddbCapture
             // 
             this.tsddbCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFullscreen,
             this.tsmiWindow,
+            this.tsmiWindowRectangle,
             this.tsmiRectangle,
             this.tsmiRoundedRectangle,
             this.tsmiEllipse,
@@ -287,7 +286,7 @@ namespace ZUploader
             // 
             this.tsmiFullscreen.Image = global::ZUploader.Properties.Resources.Fullscreen;
             this.tsmiFullscreen.Name = "tsmiFullscreen";
-            this.tsmiFullscreen.Size = new System.Drawing.Size(177, 22);
+            this.tsmiFullscreen.Size = new System.Drawing.Size(186, 22);
             this.tsmiFullscreen.Text = "Fullscreen";
             this.tsmiFullscreen.Click += new System.EventHandler(this.tsmiFullscreen_Click);
             // 
@@ -295,14 +294,22 @@ namespace ZUploader
             // 
             this.tsmiWindow.Image = global::ZUploader.Properties.Resources.Window;
             this.tsmiWindow.Name = "tsmiWindow";
-            this.tsmiWindow.Size = new System.Drawing.Size(177, 22);
+            this.tsmiWindow.Size = new System.Drawing.Size(186, 22);
             this.tsmiWindow.Text = "Window";
+            // 
+            // tsmiWindowRectangle
+            // 
+            this.tsmiWindowRectangle.Image = global::ZUploader.Properties.Resources.Window;
+            this.tsmiWindowRectangle.Name = "tsmiWindowRectangle";
+            this.tsmiWindowRectangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiWindowRectangle.Text = "Window && Rectangle";
+            this.tsmiWindowRectangle.Click += new System.EventHandler(this.tsmiWindowRectangle_Click);
             // 
             // tsmiRectangle
             // 
             this.tsmiRectangle.Image = global::ZUploader.Properties.Resources.Rectangle;
             this.tsmiRectangle.Name = "tsmiRectangle";
-            this.tsmiRectangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiRectangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiRectangle.Text = "Rectangle";
             this.tsmiRectangle.Click += new System.EventHandler(this.tsmiRectangle_Click);
             // 
@@ -310,7 +317,7 @@ namespace ZUploader
             // 
             this.tsmiRoundedRectangle.Image = global::ZUploader.Properties.Resources.RoundedRectangle;
             this.tsmiRoundedRectangle.Name = "tsmiRoundedRectangle";
-            this.tsmiRoundedRectangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiRoundedRectangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiRoundedRectangle.Text = "Rounded Rectangle";
             this.tsmiRoundedRectangle.Click += new System.EventHandler(this.tsmiRoundedRectangle_Click);
             // 
@@ -318,7 +325,7 @@ namespace ZUploader
             // 
             this.tsmiEllipse.Image = global::ZUploader.Properties.Resources.Ellipse;
             this.tsmiEllipse.Name = "tsmiEllipse";
-            this.tsmiEllipse.Size = new System.Drawing.Size(177, 22);
+            this.tsmiEllipse.Size = new System.Drawing.Size(186, 22);
             this.tsmiEllipse.Text = "Ellipse";
             this.tsmiEllipse.Click += new System.EventHandler(this.tsmiEllipse_Click);
             // 
@@ -326,7 +333,7 @@ namespace ZUploader
             // 
             this.tsmiTriangle.Image = global::ZUploader.Properties.Resources.Triangle;
             this.tsmiTriangle.Name = "tsmiTriangle";
-            this.tsmiTriangle.Size = new System.Drawing.Size(177, 22);
+            this.tsmiTriangle.Size = new System.Drawing.Size(186, 22);
             this.tsmiTriangle.Text = "Triangle";
             this.tsmiTriangle.Click += new System.EventHandler(this.tsmiTriangle_Click);
             // 
@@ -334,7 +341,7 @@ namespace ZUploader
             // 
             this.tsmiDiamond.Image = global::ZUploader.Properties.Resources.Diamond;
             this.tsmiDiamond.Name = "tsmiDiamond";
-            this.tsmiDiamond.Size = new System.Drawing.Size(177, 22);
+            this.tsmiDiamond.Size = new System.Drawing.Size(186, 22);
             this.tsmiDiamond.Text = "Diamond";
             this.tsmiDiamond.Click += new System.EventHandler(this.tsmiDiamond_Click);
             // 
@@ -342,7 +349,7 @@ namespace ZUploader
             // 
             this.tsmiPolygon.Image = global::ZUploader.Properties.Resources.Polygon;
             this.tsmiPolygon.Name = "tsmiPolygon";
-            this.tsmiPolygon.Size = new System.Drawing.Size(177, 22);
+            this.tsmiPolygon.Size = new System.Drawing.Size(186, 22);
             this.tsmiPolygon.Text = "Polygon";
             this.tsmiPolygon.Click += new System.EventHandler(this.tsmiPolygon_Click);
             // 
@@ -350,7 +357,7 @@ namespace ZUploader
             // 
             this.tsmiFreeHand.Image = global::ZUploader.Properties.Resources.FreeHand;
             this.tsmiFreeHand.Name = "tsmiFreeHand";
-            this.tsmiFreeHand.Size = new System.Drawing.Size(177, 22);
+            this.tsmiFreeHand.Size = new System.Drawing.Size(186, 22);
             this.tsmiFreeHand.Text = "Free Hand";
             this.tsmiFreeHand.Click += new System.EventHandler(this.tsmiFreeHand_Click);
             // 
@@ -361,7 +368,6 @@ namespace ZUploader
             this.tsmiTextUploaders,
             this.tsmiFileUploaders,
             this.tsmiURLShorteners,
-            this.tsmiCaptureOutput,
             this.tssDestinations1,
             this.tsmiUploadersConfig});
             this.tsddbDestinations.Image = global::ZUploader.Properties.Resources.drive_globe;
@@ -397,32 +403,6 @@ namespace ZUploader
             this.tsmiURLShorteners.Name = "tsmiURLShorteners";
             this.tsmiURLShorteners.Size = new System.Drawing.Size(162, 22);
             this.tsmiURLShorteners.Text = "URL shorteners";
-            // 
-            // tsmiCaptureOutput
-            // 
-            this.tsmiCaptureOutput.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiCaptureOutputUpload,
-            this.tsmiCaptureOutputClipboard});
-            this.tsmiCaptureOutput.Image = global::ZUploader.Properties.Resources.camera;
-            this.tsmiCaptureOutput.Name = "tsmiCaptureOutput";
-            this.tsmiCaptureOutput.Size = new System.Drawing.Size(162, 22);
-            this.tsmiCaptureOutput.Text = "Capture output";
-            // 
-            // tsmiCaptureOutputUpload
-            // 
-            this.tsmiCaptureOutputUpload.Checked = true;
-            this.tsmiCaptureOutputUpload.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmiCaptureOutputUpload.Name = "tsmiCaptureOutputUpload";
-            this.tsmiCaptureOutputUpload.Size = new System.Drawing.Size(126, 22);
-            this.tsmiCaptureOutputUpload.Text = "Upload";
-            this.tsmiCaptureOutputUpload.Click += new System.EventHandler(this.tsmiCaptureOutputUpload_Click);
-            // 
-            // tsmiCaptureOutputClipboard
-            // 
-            this.tsmiCaptureOutputClipboard.Name = "tsmiCaptureOutputClipboard";
-            this.tsmiCaptureOutputClipboard.Size = new System.Drawing.Size(126, 22);
-            this.tsmiCaptureOutputClipboard.Text = "Clipboard";
-            this.tsmiCaptureOutputClipboard.Click += new System.EventHandler(this.tsmiCaptureOutputClipboard_Click);
             // 
             // tssDestinations1
             // 
@@ -511,13 +491,13 @@ namespace ZUploader
             // 
             this.tscMain.ContentPanel.Controls.Add(this.lvUploads);
             this.tscMain.ContentPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.tscMain.ContentPanel.Size = new System.Drawing.Size(884, 329);
+            this.tscMain.ContentPanel.Size = new System.Drawing.Size(894, 329);
             this.tscMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tscMain.LeftToolStripPanelVisible = false;
             this.tscMain.Location = new System.Drawing.Point(0, 0);
             this.tscMain.Name = "tscMain";
             this.tscMain.RightToolStripPanelVisible = false;
-            this.tscMain.Size = new System.Drawing.Size(884, 362);
+            this.tscMain.Size = new System.Drawing.Size(894, 362);
             this.tscMain.TabIndex = 0;
             this.tscMain.Text = "toolStripContainer1";
             // 
@@ -544,7 +524,7 @@ namespace ZUploader
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.ShowItemToolTips = true;
-            this.lvUploads.Size = new System.Drawing.Size(878, 323);
+            this.lvUploads.Size = new System.Drawing.Size(888, 323);
             this.lvUploads.TabIndex = 0;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -648,10 +628,10 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 362);
+            this.ClientSize = new System.Drawing.Size(894, 362);
             this.Controls.Add(this.tscMain);
             this.DoubleBuffered = true;
-            this.MinimumSize = new System.Drawing.Size(900, 400);
+            this.MinimumSize = new System.Drawing.Size(910, 400);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
@@ -731,9 +711,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiDiamond;
         private System.Windows.Forms.ToolStripMenuItem tsmiPolygon;
         private System.Windows.Forms.ToolStripMenuItem tsmiFreeHand;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutput;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputUpload;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputClipboard;
         private System.Windows.Forms.ToolStripMenuItem tsmiWindow;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWindowRectangle;
     }
 }

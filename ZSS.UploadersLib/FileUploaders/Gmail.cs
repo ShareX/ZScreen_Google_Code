@@ -57,7 +57,6 @@ namespace UploadersLib.FileUploaders
             string response = SendRequest(HttpMethod.Get, url);
             if (!string.IsNullOrEmpty(response))
             {
-                Console.WriteLine(url);
                 string authurl = OAuthManager.GetAuthorizationURL(response, AuthInfo, URLAuthorize);
                 return authurl;
             }

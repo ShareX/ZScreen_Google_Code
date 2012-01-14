@@ -216,7 +216,8 @@ namespace HelpersLib
                 {
                     return base.Enabled && ownerMenuItem.Checked;
                 }
-                else return base.Enabled;
+
+                return base.Enabled;
             }
             set
             {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using ZScreenLib;
@@ -19,10 +16,11 @@ namespace ZScreenGUI
             HotkeyManager = new HotkeyManager(this, ZAppType.ZScreen);
 
             HotkeyManager.AddHotkey(ZScreenHotkey.EntireScreen, Engine.ConfigUI.HotkeyEntireScreen2, CaptureEntireScreen);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ActiveMonitor, Engine.ConfigUI.HotkeyActiveMonitor2, CaptureActiveMonitor);
             HotkeyManager.AddHotkey(ZScreenHotkey.ActiveWindow, Engine.ConfigUI.HotkeyActiveWindow2, CaptureActiveWindow);
             HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegion, Engine.ConfigUI.HotkeyRectangleRegion2, CaptureRectRegion);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionLast, Engine.ConfigUI.RectangleRegionLast2, CaptureRectRegionLast);
+            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionLast, Engine.ConfigUI.HotkeyRectangleRegionLast2, CaptureRectRegionLast);
             HotkeyManager.AddHotkey(ZScreenHotkey.SelectedWindow, Engine.ConfigUI.HotkeySelectedWindow2, CaptureSelectedWindow);
             HotkeyManager.AddHotkey(ZScreenHotkey.FreehandRegion, Engine.ConfigUI.HotkeyFreeHandRegion2, CaptureFreeHandRegion);
 

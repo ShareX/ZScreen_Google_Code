@@ -35,56 +35,32 @@ namespace ScreenCapture
     {
         public float Radius { get; set; }
 
-        private int radiusIncrease = 3;
+        public int RadiusIncrement { get; set; }
 
         public RoundedRectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             Radius = 25;
+            RadiusIncrement = 3;
 
-            MouseWheel += new MouseEventHandler(RoundedRectangleRegionSurface_MouseWheel);
+            MouseWheel += new MouseEventHandler(RoundedRectangleRegion_MouseWheel);
         }
 
-        private void RoundedRectangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
+        private void RoundedRectangleRegion_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
             {
-                Radius += radiusIncrease;
+                Radius += RadiusIncrement;
             }
             else if (e.Delta < 0)
             {
-                Radius = Math.Max(0, Radius - radiusIncrease);
+                Radius = Math.Max(0, Radius - RadiusIncrement);
             }
         }
 
-        protected override void Draw(Graphics g)
+        protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            if (CurrentArea.Width > 0 && CurrentArea.Height > 0)
-            {
-                regionPath = new GraphicsPath();
-
-                regionPath.AddRoundedRectangle(new Rectangle(CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1), Radius);
-
-                using (Region region = new Region(regionPath))
-                {
-                    g.ExcludeClip(region);
-                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                    DrawObjects(g);
-                    g.ResetClip();
-                }
-
-                if (areaObject.IsDragging || areaObject.IsMouseHover)
-                {
-                    g.FillPath(lightBrush, regionPath);
-                }
-
-                g.DrawPath(borderPen, regionPath);
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
-            }
-            else
-            {
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-            }
+            graphicsPath.AddRoundedRectangle(rect, Radius);
         }
     }
 }

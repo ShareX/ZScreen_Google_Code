@@ -33,13 +33,12 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using ScreenCapture;
+using ZUploader.HelperClasses;
 
 namespace ZUploader
 {
     public partial class MainForm
     {
-        public ScreenshotDestination CaptureDestination { get; set; }
-
         private delegate Image ScreenCaptureDelegate();
 
         private void InitHotkeys()
@@ -50,6 +49,7 @@ namespace ZUploader
             HotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
             HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
             HotkeyManager.AddHotkey(ZUploaderHotkey.ActiveMonitor, Program.Settings.HotkeyActiveMonitor, () => CaptureActiveMonitor(false));
+            HotkeyManager.AddHotkey(ZUploaderHotkey.WindowRectangle, Program.Settings.HotkeyWindowRectangle, () => WindowRectangleCapture(false), tsmiWindowRectangle);
             HotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
                 () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
             HotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
@@ -108,21 +108,39 @@ namespace ZUploader
             {
                 if (autoHideForm)
                 {
-                    Show();
+                    ShowActivate();
                 }
 
-                if (img != null)
+                AfterCapture(img);
+            }
+        }
+
+        private void AfterCapture(Image img)
+        {
+            if (img != null)
+            {
+                if (Program.Settings.CaptureCopyImage)
                 {
-                    switch (CaptureDestination)
+                    Clipboard.SetImage(img);
+                }
+
+                if (Program.Settings.CaptureSaveImage)
+                {
+                    ImageData imageData = TaskHelper.PrepareImageAndFilename(img);
+                    imageData.WriteToFile(Program.ScreenshotsPath);
+
+                    if (Program.Settings.CaptureUploadImage)
                     {
-                        default:
-                        case ScreenshotDestination.Upload:
-                            UploadManager.UploadImage(img);
-                            break;
-                        case ScreenshotDestination.Clipboard:
-                            Clipboard.SetImage(img);
-                            break;
+                        UploadManager.UploadImageStream(imageData.ImageStream, imageData.Filename);
                     }
+                    else
+                    {
+                        imageData.Dispose();
+                    }
+                }
+                else if (Program.Settings.CaptureUploadImage)
+                {
+                    UploadManager.UploadImage(img);
                 }
             }
         }
@@ -162,10 +180,8 @@ namespace ZUploader
                 {
                     return Screenshot.CaptureWindowTransparent(handle);
                 }
-                else
-                {
-                    return Screenshot.CaptureWindow(handle);
-                }
+
+                return Screenshot.CaptureWindow(handle);
             }, autoHideForm);
         }
 
@@ -177,12 +193,15 @@ namespace ZUploader
                 Image screenshot = Screenshot.CaptureFullscreen();
 
                 surface.Config = Program.Settings.SurfaceOptions;
-                surface.LoadBackground(screenshot);
+                surface.SurfaceImage = screenshot;
+                surface.Prepare();
 
                 if (surface.ShowDialog() == DialogResult.OK)
                 {
                     img = surface.GetRegionImage();
                 }
+
+                surface.Dispose();
 
                 return img;
             }, autoHideForm);
@@ -226,6 +245,18 @@ namespace ZUploader
             {
                 CaptureWindow(wi.Handle);
             }
+        }
+
+        private void WindowRectangleCapture(bool autoHideForm = true)
+        {
+            RectangleRegion rectangleRegion = new RectangleRegion();
+            rectangleRegion.AreaManager.WindowCaptureMode = true;
+            CaptureRegion(rectangleRegion, autoHideForm);
+        }
+
+        private void tsmiWindowRectangle_Click(object sender, EventArgs e)
+        {
+            WindowRectangleCapture();
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)

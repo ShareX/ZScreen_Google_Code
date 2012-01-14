@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -33,6 +32,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
+using ScreenCapture;
 using ZScreenCoreLib;
 using ZSS.ColorsLib;
 
@@ -55,7 +55,7 @@ namespace ZScreenLib
         private string strMouseDown = "Mouse Left Up: Capture screenshot" +
             "\nMouse Right Down & Escape & Space: Cancel crop region\nTab: Toggle crop grid mode\n" +
             "Arrow Keys: Re-position crop region (Hold shift to move faster)";
-        private Queue windows = new Queue();
+        private List<Rectangle> windows;
         private Timer timer = new Timer { Interval = 10 };
         private Timer windowCheck = new Timer { Interval = 250 };
         private DynamicCrosshair crosshair = new DynamicCrosshair();
@@ -103,8 +103,10 @@ namespace ZScreenLib
             {
                 captureObjects = Engine.ConfigUI.SelectedWindowCaptureObjects;
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
-                NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
-                NativeMethods.EnumWindows(ewp, IntPtr.Zero);
+                WindowsListAdvanced wla = new WindowsListAdvanced();
+                wla.IgnoreWindows.Add(Handle);
+                wla.IncludeChildWindows = captureObjects;
+                windows = wla.GetWindowsRectangleList();
             }
             else
             {
@@ -207,19 +209,14 @@ namespace ZScreenLib
 
                 dragging = IsDragging(mousePos);
 
-                if (selectedWindowMode)
+                if (selectedWindowMode && !dragging)
                 {
-                    if (!dragging)
+                    foreach (Rectangle rect in windows)
                     {
-                        IEnumerator enumerator = windows.GetEnumerator();
-                        while (enumerator.MoveNext())
+                        if (rect.Contains(Cursor.Position))
                         {
-                            KeyValuePair<IntPtr, Rectangle> kv = (KeyValuePair<IntPtr, Rectangle>)enumerator.Current;
-                            if (kv.Value.Contains(Cursor.Position))
-                            {
-                                CropRegion = new Rectangle(PointToClient(kv.Value.Location), kv.Value.Size);
-                                break;
-                            }
+                            CropRegion = CaptureHelpers.FixScreenCoordinates(rect);
+                            break;
                         }
                     }
                 }
@@ -235,32 +232,6 @@ namespace ZScreenLib
 
                 Refresh();
             }
-        }
-
-        private bool EvalWindow(IntPtr hWnd, IntPtr lParam)
-        {
-            if (!NativeMethods.IsWindowVisible(hWnd)) return true;
-            if (Handle == hWnd) return false;
-
-            foreach (KeyValuePair<IntPtr, Rectangle> pair in windows)
-            {
-                if (pair.Key == hWnd)
-                {
-                    return true;
-                }
-            }
-
-            if (captureObjects)
-            {
-                NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
-                NativeMethods.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
-            }
-
-            Rectangle rect = CaptureHelpers.GetWindowRectangle(hWnd);
-            rect.Intersect(Bounds);
-            windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
-
-            return true;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -616,7 +587,9 @@ namespace ZScreenLib
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+#if !DEBUG
             this.TopMost = true;
+#endif
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Crop_MouseUp);
             this.Shown += new System.EventHandler(this.Crop_Shown);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Crop_FormClosed);

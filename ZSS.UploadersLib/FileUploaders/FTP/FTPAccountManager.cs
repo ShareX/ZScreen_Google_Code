@@ -23,10 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
 using HelpersLib;
 
 namespace UploadersLib
@@ -47,7 +44,7 @@ namespace UploadersLib
 
         public void Save(string filePath)
         {
-            SettingsHelper.Save<FTPAccountManager>(this, filePath, SerializationType.Xml);
+            SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public static FTPAccountManager Read(string filePath)

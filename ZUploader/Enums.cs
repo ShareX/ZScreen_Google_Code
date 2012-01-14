@@ -69,6 +69,8 @@ namespace ZUploader
         SendSpace,
         [Description("minus.com")]
         Minus,
+        [Description("box.com")]
+        Box,
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
@@ -85,8 +87,8 @@ namespace ZUploader
         DataUpload, FileUpload, ImageUpload, TextUpload
     }
 
-    public enum ScreenshotDestination
+    public enum ImageScaleType
     {
-        Upload, Clipboard
+        Percentage, Width, Height, Specific
     }
 }

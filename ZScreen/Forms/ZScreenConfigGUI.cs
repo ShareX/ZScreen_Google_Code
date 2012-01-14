@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersLib.HelperClasses;
 using ZScreenCoreLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;
-using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {

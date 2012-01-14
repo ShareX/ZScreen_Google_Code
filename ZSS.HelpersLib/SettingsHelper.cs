@@ -38,7 +38,7 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save<T>(T obj, string filePath, SerializationType type)
+        public static bool Save(object obj, string filePath, SerializationType type)
         {
             StaticHelper.WriteLine("Settings save started: " + filePath);
 
@@ -58,7 +58,8 @@ namespace HelpersLib
                                     new BinaryFormatter().Serialize(ms, obj);
                                     break;
                                 case SerializationType.Xml:
-                                    new XmlSerializer(typeof(T)).Serialize(ms, obj);
+                                    Type t = obj.GetType();
+                                    new XmlSerializer(t).Serialize(ms, obj);
                                     break;
                             }
 
@@ -102,20 +103,29 @@ namespace HelpersLib
                     {
                         if (fs.Length > 0)
                         {
+                            T settings;
+
                             switch (type)
                             {
                                 case SerializationType.Binary:
-                                    return (T)new BinaryFormatter().Deserialize(fs);
+                                    settings = (T)new BinaryFormatter().Deserialize(fs);
+                                    break;
+                                default:
                                 case SerializationType.Xml:
-                                    return (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                                    settings = (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                                    break;
                             }
+
+                            StaticHelper.WriteLine("Settings load finished: " + path);
+
+                            return settings;
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                StaticHelper.WriteException(e, "Settings load failed");
 
                 if (onErrorShowWarning)
                 {
@@ -124,10 +134,8 @@ namespace HelpersLib
                     MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            finally
-            {
-                StaticHelper.WriteLine("Settings load finished: " + path);
-            }
+
+            StaticHelper.WriteLine("Settings not found. Loading new instance.");
 
             return new T();
         }

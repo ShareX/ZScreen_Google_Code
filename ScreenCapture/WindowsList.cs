@@ -25,7 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using HelpersLib;
 
 namespace ScreenCapture
@@ -34,6 +34,7 @@ namespace ScreenCapture
     {
         public List<IntPtr> IgnoreWindows { get; set; }
 
+        private string[] ignoreList = new string[] { "Progman", "Button" };
         private List<WindowInfo> windows;
 
         public WindowsList()
@@ -58,34 +59,32 @@ namespace ScreenCapture
         public List<WindowInfo> GetVisibleWindowsList()
         {
             List<WindowInfo> windows = GetWindowsList();
-            List<WindowInfo> visibleWindows = new List<WindowInfo>();
 
-            foreach (WindowInfo window in windows)
+            return windows.Where(window => IsValidWindow(window)).ToList();
+        }
+
+        private bool IsValidWindow(WindowInfo window)
+        {
+            return window.IsVisible && !string.IsNullOrEmpty(window.Text) && IsClassNameAllowed(window) && window.Rectangle.IsValid();
+        }
+
+        private bool IsClassNameAllowed(WindowInfo window)
+        {
+            string className = window.ClassName;
+
+            if (!string.IsNullOrEmpty(className))
             {
-                if (window.IsVisible && !string.IsNullOrEmpty(window.Text))
-                {
-                    string className = window.ClassName;
-
-                    if (!string.IsNullOrEmpty(className) && !className.Equals("Progman", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        Rectangle rect = window.Rectangle;
-
-                        if (rect.Width > 0 && rect.Height > 0 && CaptureHelpers.GetScreenBounds().Contains(rect))
-                        {
-                            visibleWindows.Add(window);
-                        }
-                    }
-                }
+                return ignoreList.All(ignore => !className.Equals(ignore, StringComparison.InvariantCultureIgnoreCase));
             }
 
-            return visibleWindows;
+            return true;
         }
 
         private bool EvalWindows(IntPtr hWnd, IntPtr lParam)
         {
-            foreach (IntPtr window in IgnoreWindows)
+            if (IgnoreWindows.Any(window => hWnd == window))
             {
-                if (hWnd == window) return true;
+                return true;
             }
 
             windows.Add(new WindowInfo(hWnd));

@@ -1,4 +1,11 @@
-﻿Version 4.7.2 - 2011-10-31
+﻿Version 5.0.0 - 2012-01-10
+
+5.1.0 Added image resize settings
+5.0.0 Added Window & Control capture support to shape captures
+4.9.0 Added new post-capture option: save screenshots to file
+4.8.0 Added Box file uploader support
+
+Version 4.7.2 - 2011-10-31
 
 4.7.2 Supported image/text/file based FTP destinations
 4.7.1 Added camera sound when capture is made

@@ -31,113 +31,115 @@ namespace ScreenCapture
 {
     public partial class RegionCapturePreview : Form
     {
-        public Image Result { get; private set; }
+        public Image Result
+        {
+            get
+            {
+                return result;
+            }
+            private set
+            {
+                result = value;
+
+                if (result != null)
+                {
+                    pbResult.Image = result;
+                    Text = string.Format("Region Capture: {0}x{1}", result.Width, result.Height);
+                }
+            }
+        }
+
+        public SurfaceOptions SurfaceConfig { get; set; }
 
         private Image screenshot;
-        private Surface surface;
-        public SurfaceOptions SurfaceConfig { get; set; }
+        private Image result;
+
+        public RegionCapturePreview()
+            : this(new SurfaceOptions())
+        {
+        }
 
         public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
-            Screenshot.DrawCursor = surfaceConfig.DrawChecker;
 
             screenshot = Screenshot.CaptureFullscreen();
             SurfaceConfig = surfaceConfig;
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;
             cbDrawChecker.Checked = surfaceConfig.DrawChecker;
+            cbIsFixedSize.Checked = surfaceConfig.IsFixedSize;
+            nudFixedWidth.Value = surfaceConfig.FixedSize.Width;
+            nudFixedHeight.Value = surfaceConfig.FixedSize.Height;
             cbQuickCrop.Checked = surfaceConfig.QuickCrop;
         }
 
-        private void CaptureRegion()
+        private void CaptureRegion(Surface surface)
         {
             pbResult.Image = null;
 
-            if (SurfaceConfig != null)
-            {
-                surface.Config = SurfaceConfig;
-            }
-            else
-            {
-                surface.Config = new SurfaceOptions()
-                {
-                    DrawBorder = cbDrawBorder.Checked,
-                    DrawChecker = cbDrawChecker.Checked,
-                    QuickCrop = cbQuickCrop.Checked,
-                    MinMoveSpeed = 1,
-                    MaxMoveSpeed = 5
-                };
-            }
-
-            if (surface is RectangleRegion)
-            {
-                RectangleRegion rectangle = (RectangleRegion)surface;
-                if (rectangle.Config.IsFixedSize = cbIsFixedSize.Checked)
-                {
-                    rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
-                }
-            }
+            surface.Config = SurfaceConfig;
+            surface.SurfaceImage = screenshot;
+            surface.Prepare();
 
             if (surface.ShowDialog() == DialogResult.OK)
             {
                 Result = surface.GetRegionImage();
-                pbResult.Image = Result;
-                Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
             }
+
+            surface.Dispose();
         }
 
         private void tsbFullscreen_Click(object sender, EventArgs e)
         {
             Result = screenshot;
-            pbResult.Image = Result;
+        }
+
+        private void tsbWindowRectangle_Click(object sender, EventArgs e)
+        {
+            RectangleRegion rectangleRegion = new RectangleRegion();
+            rectangleRegion.AreaManager.WindowCaptureMode = true;
+            CaptureRegion(rectangleRegion);
         }
 
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
-            surface = new RectangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new RectangleRegion());
         }
 
         private void tsbRoundedRectangle_Click(object sender, EventArgs e)
         {
-            surface = new RoundedRectangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new RoundedRectangleRegion());
         }
 
         private void tsbEllipse_Click(object sender, EventArgs e)
         {
-            surface = new EllipseRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new EllipseRegion());
         }
 
         private void tsbTriangle_Click(object sender, EventArgs e)
         {
-            surface = new TriangleRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new TriangleRegion());
         }
 
         private void tsbDiamond_Click(object sender, EventArgs e)
         {
-            surface = new DiamondRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new DiamondRegion());
         }
 
         private void tsbPolygon_Click(object sender, EventArgs e)
         {
-            surface = new PolygonRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new PolygonRegion());
         }
 
         private void tsbFreeHand_Click(object sender, EventArgs e)
         {
-            surface = new FreeHandRegion(screenshot);
-            CaptureRegion();
+            CaptureRegion(new FreeHandRegion());
         }
 
         private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (pbResult.Image != null)
+            if (Result != null)
             {
                 DialogResult = DialogResult.OK;
             }
@@ -175,6 +177,14 @@ namespace ScreenCapture
         private void cbQuickCrop_CheckedChanged(object sender, EventArgs e)
         {
             SurfaceConfig.QuickCrop = cbQuickCrop.Checked;
+        }
+
+        private void btnClipboardCopy_Click(object sender, EventArgs e)
+        {
+            if (Result != null)
+            {
+                Clipboard.SetImage(Result);
+            }
         }
     }
 }

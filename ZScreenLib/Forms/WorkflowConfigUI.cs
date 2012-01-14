@@ -3,7 +3,6 @@ using System.IO;
 using System.Windows.Forms;
 using FreeImageNetLib;
 using HelpersLib;
-using UploadersAPILib;
 using UploadersLib;
 using ZScreenCoreLib;
 
@@ -319,7 +318,7 @@ namespace ZScreenLib
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys) { Icon = this.Icon };
             ocf.ShowDialog();
             Engine.ConfigUploaders = ocf.Config;
         }

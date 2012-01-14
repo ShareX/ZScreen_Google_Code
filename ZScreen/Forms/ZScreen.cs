@@ -28,29 +28,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
-using GradientTester;
 using HelpersLib;
 using HelpersLib.CLI;
 using ScreenCapture;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using ZScreenCoreLib;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
 using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
-using ZSS.UpdateCheckerLib;
 using Timer = System.Timers.Timer;
 
 namespace ZScreenGUI
@@ -971,7 +964,7 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.UploadersConfigCustomPath))
                 {
-                    Engine.ConfigUploaders = UploadersConfig.Read(Engine.ConfigApp.UploadersConfigCustomPath);
+                    Engine.ConfigUploaders = UploadersConfig.Load(Engine.ConfigApp.UploadersConfigCustomPath);
                 }
 
                 if (!string.IsNullOrEmpty(Engine.ConfigApp.WorkflowConfigCustomPath))
@@ -1321,6 +1314,11 @@ namespace ZScreenGUI
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }
+        }
+
+        private void tsmiApiKeys_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowApiKeysUI();
         }
     }
 }
