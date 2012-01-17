@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ZScreen FTP Client")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
+[assembly: AssemblyCopyright("Copyright © 2006 - 2012 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.0.2973")]
+[assembly: AssemblyVersion("3.0.0.2982")]
 [assembly: AssemblyFileVersion("3.11.0.0")]

@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
+[assembly: AssemblyCopyright("Copyright © 2008 - 2012 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,5 +52,5 @@ using System.Runtime.InteropServices;
 //      Minor Version
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("4.9.0.2973")]
+[assembly: AssemblyVersion("4.9.0.2982")]
 [assembly: AssemblyFileVersion("4.9.0")]
