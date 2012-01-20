@@ -25,7 +25,6 @@
 
 using System;
 using System.Windows.Forms;
-using NDesk.Options;
 
 namespace Updater
 {
@@ -37,30 +36,24 @@ namespace Updater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string mUrl = string.Empty;
-            string mFilePath = string.Empty;
-            bool mRunAs = false;
+            string url = string.Empty;
 
-            var p = new OptionSet()
+            if (args.Length > 0)
             {
-                { "l|url=", "URL of the updated setup", v => mUrl = v },
-                { "fp|filepath=", "File path of the running application", v => mFilePath = v },
-                { "runas=", "Whether or not to run as Administrator", (bool v) => mRunAs = v },
-            };
-
-            p.Parse(args);
+                url = args[1];
+            }
 
 #if DEBUG
-            Application.Run(new UpdaterForm(mUrl, mFilePath, mRunAs));
+            Application.Run(new UpdaterForm(url));
 #else
-            if (!string.IsNullOrEmpty(mUrl) && File.Exists(mFilePath))
+            if (!string.IsNullOrEmpty(url))
             {
-                Application.Run(new UpdaterForm(mUrl, mFilePath, mRunAs));
+                Application.Run(new UpdaterForm(url));
             }
             else
             {
-                MessageBox.Show("Update did not succeed.\n\n" + String.Format("URL: {0}\nApplication Path: {1}\nCommand Line: {2}\nArguments: {3}",
-                    mUrl, mFilePath, Environment.CommandLine, args.Length), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Update did not succeed.\n\n" + String.Format("URL: {0}\nCommand Line: {1}\nArguments length: {2}",
+                    url, Environment.CommandLine, args.Length), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
 #endif
         }

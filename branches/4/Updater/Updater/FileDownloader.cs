@@ -36,6 +36,7 @@ namespace Updater
     {
         public string URL { get; private set; }
         public bool IsDownloading { get; private set; }
+        public bool IsCanceled { get; private set; }
         public long FileSize { get; private set; }
         public long DownloadedSize { get; private set; }
         public double DownloadSpeed { get; private set; }
@@ -110,6 +111,14 @@ namespace Updater
             }
         }
 
+        public void StopDownload()
+        {
+            if (IsDownloading)
+            {
+                IsCanceled = true;
+            }
+        }
+
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             HttpWebResponse response = null;
@@ -133,10 +142,15 @@ namespace Updater
 
                     while (DownloadedSize < FileSize && !worker.CancellationPending)
                     {
-                        while (IsPaused)
+                        while (IsPaused && !IsCanceled)
                         {
                             timer.Reset();
                             Thread.Sleep(10);
+                        }
+
+                        if (IsCanceled)
+                        {
+                            return;
                         }
 
                         if (!timer.IsRunning)
@@ -164,8 +178,11 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                LastException = ex;
-                ThrowEvent(ExceptionThrowed);
+                if (!IsCanceled)
+                {
+                    LastException = ex;
+                    ThrowEvent(ExceptionThrowed);
+                }
             }
             finally
             {

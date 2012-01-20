@@ -37,17 +37,14 @@ namespace Updater
     public partial class UpdaterForm : Form
     {
         public string URL { get; set; }
-        public string ProcessName { get; set; }
-        public string ProcessPath { get; private set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
-        public bool RunAs { get; set; }
+
+        public bool DownloadStarted { get; private set; }
+        public bool DownloadCompleted { get; private set; }
 
         private FileDownloader fileDownloader;
         private FileStream stream;
-        private bool downloadStarted;
-        private bool paused;
-
         private Rectangle fillRect, drawRect;
         private LinearGradientBrush backgroundBrush;
 
@@ -61,15 +58,11 @@ namespace Updater
             ChangeStatus("Waiting.");
         }
 
-        public UpdaterForm(string lUrl, string lProcessPath, bool lRunAs)
+        public UpdaterForm(string url)
             : this()
         {
-            URL = lUrl;
-            ProcessPath = lProcessPath;
-            RunAs = lRunAs;
-            Debug.WriteLine("RunAs: " + RunAs);
-            ProcessName = Path.GetFileNameWithoutExtension(lProcessPath);
-            FileName = HttpUtility.UrlDecode(lUrl.Substring(lUrl.LastIndexOf('/') + 1));
+            URL = url;
+            FileName = HttpUtility.UrlDecode(URL.Substring(URL.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
         }
 
@@ -93,90 +86,32 @@ namespace Updater
                 fileDownloader.FileSize / 1024);
         }
 
-        private void btnDownload_Click(object sender, EventArgs e)
+        private void StartDownload()
         {
-            if (!string.IsNullOrEmpty(URL))
+            if (!string.IsNullOrEmpty(URL) && !DownloadStarted)
             {
-                if (!downloadStarted)
-                {
-                    downloadStarted = true;
-                    btnDownload.Text = "Pause";
+                DownloadStarted = true;
 
-                    SavePath = Path.Combine(Path.GetTempPath(), FileName);
-                    stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-                    fileDownloader = new FileDownloader(URL, stream);
-                    fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
-                    fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
-                    fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
-                    fileDownloader.DownloadCompleted += new EventHandler(fileDownloader_DownloadCompleted);
-                    fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
-                    fileDownloader.StartDownload();
+                SavePath = Path.Combine(Path.GetTempPath(), FileName);
+                stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                fileDownloader = new FileDownloader(URL, stream);
+                fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
+                fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
+                fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
+                fileDownloader.DownloadCompleted += new EventHandler(fileDownloader_DownloadCompleted);
+                fileDownloader.ExceptionThrowed += (v1, v2) => ChangeStatus("Exception: " + fileDownloader.LastException.Message);
+                fileDownloader.StartDownload();
 
-                    ChangeStatus("Getting file size.");
-                }
-                else
-                {
-                    if (paused)
-                    {
-                        paused = false;
-                        btnDownload.Text = "Pause";
-                        ChangeStatus("Downloading.");
-                        fileDownloader.ResumeDownload();
-                    }
-                    else
-                    {
-                        paused = true;
-                        btnDownload.Text = "Resume";
-                        ChangeStatus("Paused.");
-                        fileDownloader.PauseDownload();
-                    }
-                }
+                ChangeStatus("Getting file size.");
             }
         }
 
         private void fileDownloader_DownloadCompleted(object sender, EventArgs e)
         {
             stream.Close();
+            DownloadCompleted = true;
             ChangeStatus("Download completed.");
-            btnDownload.Text = "Completed.";
-            btnDownload.Enabled = false;
-
-            if (MessageBox.Show("Download completed. If " + ProcessName + " is open please close for the setup to install properly. " +
-                "If you press Yes then Updater will automatically close " + ProcessName + " and open installer.",
-                this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                if (!string.IsNullOrEmpty(ProcessName))
-                {
-                    foreach (Process process in Process.GetProcessesByName(ProcessName))
-                    {
-                        process.CloseMainWindow();
-                    }
-                    System.Threading.Thread.Sleep(4000);
-                    foreach (Process process in Process.GetProcessesByName(ProcessName))
-                    {
-                        process.Kill();
-                    }
-                }
-            }
-            ProcessStartInfo psi = new ProcessStartInfo(SavePath);
-            psi.Arguments = "/SILENT";
-            if (RunAs)
-            {
-                psi.Verb = "runas";
-            }
-            psi.UseShellExecute = true;
-            Process exe = Process.Start(psi);
-            exe.EnableRaisingEvents = true;
-            exe.Exited += new EventHandler(Installer_Exited);
-        }
-
-        private void Installer_Exited(object sender, EventArgs e)
-        {
-            if (File.Exists(ProcessPath))
-            {
-                Process.Start(ProcessPath);
-            }
-            Application.Exit();
+            btnCancel.Text = "Install";
         }
 
         private void openDownloadUrlToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,6 +127,34 @@ namespace Updater
             if (!string.IsNullOrEmpty(URL))
             {
                 Clipboard.SetText(URL);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            if (DownloadCompleted)
+            {
+                try
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo(SavePath);
+                    psi.Verb = "runas";
+                    psi.UseShellExecute = true;
+                    Process.Start(psi);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Updater", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            Close();
+        }
+
+        private void UpdaterForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DownloadStarted && !DownloadCompleted)
+            {
+                fileDownloader.StopDownload();
             }
         }
     }

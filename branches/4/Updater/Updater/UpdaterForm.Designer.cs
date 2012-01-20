@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnDownload = new System.Windows.Forms.Button();
             this.cmsRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openDownloadUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrlToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,21 +41,6 @@
             this.cmsRightClickMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnDownload
-            // 
-            this.btnDownload.BackColor = System.Drawing.Color.DimGray;
-            this.btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDownload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDownload.ForeColor = System.Drawing.Color.White;
-            this.btnDownload.Location = new System.Drawing.Point(208, 104);
-            this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(128, 32);
-            this.btnDownload.TabIndex = 6;
-            this.btnDownload.Text = "Start download";
-            this.btnDownload.UseVisualStyleBackColor = false;
-            this.btnDownload.Visible = false;
-            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
             // cmsRightClickMenu
             // 
@@ -111,6 +95,7 @@
             this.btnCancel.Size = new System.Drawing.Size(128, 32);
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // pbProgress
             // 
@@ -154,13 +139,13 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblFilename);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.pbProgress);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "UpdaterForm";
             this.Text = "Update Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UpdaterForm_FormClosing);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdaterForm_Paint);
             this.cmsRightClickMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -172,7 +157,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.ContextMenuStrip cmsRightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem openDownloadUrlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyDownloadUrlToClipboardToolStripMenuItem;
