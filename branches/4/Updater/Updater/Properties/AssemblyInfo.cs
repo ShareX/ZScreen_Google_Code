@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Updater")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ZScreen")]
+[assembly: AssemblyCompany("ZScreen Developers")]
 [assembly: AssemblyProduct("Updater")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2009")]
+[assembly: AssemblyCopyright("Copyright (C) 2008-2012 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

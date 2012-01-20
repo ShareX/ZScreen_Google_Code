@@ -80,6 +80,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\MyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </EmbeddedResource>

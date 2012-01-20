@@ -1,7 +1,8 @@
 ﻿#region License Information (GPL v2)
+
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2008-2012 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -16,19 +17,20 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace Updater
 {
@@ -46,9 +48,16 @@ namespace Updater
         private bool downloadStarted;
         private bool paused;
 
+        private Rectangle fillRect, drawRect;
+        private LinearGradientBrush backgroundBrush;
+
         public UpdaterForm()
         {
             InitializeComponent();
+            fillRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+            drawRect = new Rectangle(0, 0, fillRect.Width - 1, fillRect.Height - 1);
+            backgroundBrush = new LinearGradientBrush(fillRect, Color.FromArgb(80, 80, 80), Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
+
             ChangeStatus("Waiting.");
         }
 
@@ -62,6 +71,12 @@ namespace Updater
             ProcessName = Path.GetFileNameWithoutExtension(lProcessPath);
             FileName = HttpUtility.UrlDecode(lUrl.Substring(lUrl.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
+        }
+
+        private void UpdaterForm_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.FillRectangle(backgroundBrush, fillRect);
         }
 
         private void ChangeStatus(string status)
@@ -147,30 +162,21 @@ namespace Updater
             psi.Arguments = "/SILENT";
             if (RunAs)
             {
-                psi.Verb = "runas"; 
+                psi.Verb = "runas";
             }
             psi.UseShellExecute = true;
             Process exe = Process.Start(psi);
             exe.EnableRaisingEvents = true;
-            exe.Exited += new EventHandler(Installer_Exited);            
+            exe.Exited += new EventHandler(Installer_Exited);
         }
 
-        void Installer_Exited(object sender, EventArgs e)
+        private void Installer_Exited(object sender, EventArgs e)
         {
             if (File.Exists(ProcessPath))
             {
                 Process.Start(ProcessPath);
             }
             Application.Exit();
-        }
-
-        private void UpdaterForm_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            Rectangle rect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
-            brush.SetSigmaBellShape(0.20f);
-            g.FillRectangle(brush, rect);
         }
 
         private void openDownloadUrlToolStripMenuItem_Click(object sender, EventArgs e)
