@@ -58,6 +58,14 @@ namespace HelpersLib
         public MyLabel()
         {
             InitializeComponent();
+
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.UserPaint |
+              ControlStyles.AllPaintingInWmPaint |
+              ControlStyles.ResizeRedraw |
+              ControlStyles.OptimizedDoubleBuffer |
+              ControlStyles.SupportsTransparentBackColor, true);
+
             Prepare();
         }
 
@@ -105,7 +113,6 @@ namespace HelpersLib
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
         }
 
         #endregion Component Designer generated code

@@ -124,6 +124,12 @@ namespace HelpersLib
         {
             InitializeComponent();
 
+            SetStyle(ControlStyles.UserPaint |
+              ControlStyles.AllPaintingInWmPaint |
+              ControlStyles.ResizeRedraw |
+              ControlStyles.OptimizedDoubleBuffer |
+              ControlStyles.SupportsTransparentBackColor, true);
+
             maximum = 100;
             minimum = 0;
             value = 50;

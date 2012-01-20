@@ -25,6 +25,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
@@ -32,6 +33,7 @@ using HistoryLib;
 using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZSS.UpdateCheckerLib;
 using ZUploader.Properties;
 
 namespace ZUploader
@@ -56,6 +58,11 @@ namespace ZUploader
 
             InitHotkeys();
             UseCommandLineArgs(Environment.GetCommandLineArgs());
+
+            if (Program.Settings.AutoCheckUpdate)
+            {
+                new Thread(CheckUpdate).Start();
+            }
 
             IsReady = true;
 
@@ -226,6 +233,24 @@ namespace ZUploader
             tsmiFileUploaders.Text = "File uploader: " + UploadManager.FileUploader.GetDescription();
             tsmiTextUploaders.Text = "Text uploader: " + UploadManager.TextUploader.GetDescription();
             tsmiURLShorteners.Text = "URL shortener: " + UploadManager.URLShortener.GetDescription();
+        }
+
+        private void CheckUpdate()
+        {
+            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Program.AssemblyVersion),
+                ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy) { AutoDownloadSummary = false };
+            updateChecker.CheckUpdate();
+
+            if (updateChecker.UpdateInfo != null && updateChecker.UpdateInfo.Status == UpdateStatus.UpdateRequired && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
+            {
+                if (MessageBox.Show("Update found. Do you want to download it?'", "Update check", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL);
+                    downloader.ShowDialog();
+                    if (downloader.InstallStarted) Application.Exit();
+                }
+            }
         }
 
         public void UseCommandLineArgs(string[] args)

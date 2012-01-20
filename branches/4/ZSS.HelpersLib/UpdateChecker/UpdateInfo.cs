@@ -39,7 +39,7 @@ namespace ZSS.UpdateCheckerLib
         public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateStatus Status { get; set; }
 
-        private const bool ForceUpdate = false;
+        private const bool ForceUpdate = true;
 
         public UpdateInfo(ReleaseChannelType channel)
         {
