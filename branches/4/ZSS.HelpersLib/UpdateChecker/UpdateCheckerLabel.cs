@@ -23,9 +23,9 @@
 
 #endregion License Information (GPL v2)
 
-using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -97,7 +97,9 @@ namespace ZSS.UpdateCheckerLib
         {
             if (updateChecker != null && updateChecker.UpdateInfo != null && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
             {
-                Process.Start(updateChecker.UpdateInfo.URL);
+                DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL);
+                downloader.ShowDialog();
+                if (downloader.InstallStarted) Application.Exit();
             }
         }
     }

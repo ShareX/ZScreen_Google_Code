@@ -34,7 +34,7 @@ using System.Windows.Forms;
 
 namespace Updater
 {
-    public partial class UpdaterForm : Form
+    public partial class DownloaderForm : Form
     {
         public string URL { get; set; }
         public string FileName { get; set; }
@@ -42,13 +42,14 @@ namespace Updater
 
         public bool DownloadStarted { get; private set; }
         public bool DownloadCompleted { get; private set; }
+        public bool InstallStarted { get; private set; }
 
         private FileDownloader fileDownloader;
         private FileStream stream;
         private Rectangle fillRect, drawRect;
         private LinearGradientBrush backgroundBrush;
 
-        public UpdaterForm()
+        public DownloaderForm()
         {
             InitializeComponent();
             fillRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
@@ -58,7 +59,7 @@ namespace Updater
             ChangeStatus("Waiting.");
         }
 
-        public UpdaterForm(string url)
+        public DownloaderForm(string url)
             : this()
         {
             URL = url;
@@ -140,6 +141,7 @@ namespace Updater
                     psi.Verb = "runas";
                     psi.UseShellExecute = true;
                     Process.Start(psi);
+                    InstallStarted = true;
                 }
                 catch (Exception ex)
                 {

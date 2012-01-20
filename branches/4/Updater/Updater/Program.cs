@@ -44,7 +44,7 @@ namespace Updater
             }
 
 #if DEBUG
-            Application.Run(new UpdaterForm(url));
+            Application.Run(new DownloaderForm(url));
 #else
             if (!string.IsNullOrEmpty(url))
             {

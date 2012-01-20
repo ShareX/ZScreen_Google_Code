@@ -1,6 +1,6 @@
 ﻿namespace Updater
 {
-    partial class UpdaterForm
+    partial class DownloaderForm
     {
         /// <summary>
         /// Required designer variable.
