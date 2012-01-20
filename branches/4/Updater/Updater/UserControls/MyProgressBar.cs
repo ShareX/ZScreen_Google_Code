@@ -59,7 +59,7 @@ namespace Updater
                         this.value = maximum;
                     }
 
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Updater
                         this.value = minimum;
                     }
 
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace Updater
 
                     this.value = value;
 
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -196,6 +196,7 @@ namespace Updater
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

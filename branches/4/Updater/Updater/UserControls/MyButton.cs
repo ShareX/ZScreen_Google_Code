@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -39,20 +40,44 @@ namespace Updater
             }
             set
             {
-                if (value != null && text != value)
+                if (value == null)
+                {
+                    value = "";
+                }
+
+                if (text != value)
                 {
                     text = value;
 
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
 
         private string text;
+        private bool isHover;
+        private LinearGradientBrush backgroundBrush, backgroundHoverBrush, innerBorderBrush;
+        private Pen innerBorderPen, borderPen;
+        private Font textFont;
 
         public MyButton()
         {
             InitializeComponent();
+            Prepare();
+        }
+
+        private void Prepare()
+        {
+            ForeColor = Color.White;
+            backgroundBrush = new LinearGradientBrush(new Rectangle(2, 2, ClientSize.Width - 4, ClientSize.Height - 4),
+                Color.FromArgb(105, 105, 105), Color.FromArgb(65, 65, 65), LinearGradientMode.Vertical);
+            backgroundHoverBrush = new LinearGradientBrush(new Rectangle(2, 2, ClientSize.Width - 4, ClientSize.Height - 4),
+                Color.FromArgb(115, 115, 115), Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical);
+            innerBorderBrush = new LinearGradientBrush(new Rectangle(1, 1, ClientSize.Width - 2, ClientSize.Height - 2),
+                Color.FromArgb(125, 125, 125), Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical);
+            innerBorderPen = new Pen(innerBorderBrush);
+            borderPen = new Pen(Color.FromArgb(30, 30, 30));
+            textFont = new Font("Arial", 12);
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -69,38 +94,45 @@ namespace Updater
             }
         }
 
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            isHover = true;
+            Refresh();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            isHover = false;
+            Refresh();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Prepare();
+        }
+
         private void DrawBackground(Graphics g)
         {
-            using (LinearGradientBrush backgroundBrush = new LinearGradientBrush(new Rectangle(2, 2, ClientSize.Width - 4, ClientSize.Height - 4),
-                Color.FromArgb(105, 105, 105), Color.FromArgb(65, 65, 65), LinearGradientMode.Vertical))
+            if (isHover)
+            {
+                g.FillRectangle(backgroundHoverBrush, new Rectangle(2, 2, ClientSize.Width - 4, ClientSize.Height - 4));
+            }
+            else
             {
                 g.FillRectangle(backgroundBrush, new Rectangle(2, 2, ClientSize.Width - 4, ClientSize.Height - 4));
             }
 
-            using (LinearGradientBrush innerBorderBrush = new LinearGradientBrush(new Rectangle(1, 1, ClientSize.Width - 2, ClientSize.Height - 2),
-                Color.FromArgb(125, 125, 125), Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical))
-            using (Pen innerBorderPen = new Pen(innerBorderBrush))
-            {
-                g.DrawRectangle(innerBorderPen, new Rectangle(1, 1, ClientSize.Width - 3, ClientSize.Height - 3));
-            }
-
-            using (Pen borderPen = new Pen(Color.FromArgb(30, 30, 30)))
-            {
-                g.DrawRectangle(borderPen, new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1));
-            }
+            g.DrawRectangle(innerBorderPen, new Rectangle(1, 1, ClientSize.Width - 3, ClientSize.Height - 3));
+            g.DrawRectangle(borderPen, new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1));
         }
 
         private void DrawText(Graphics g)
         {
-            using (Font textFont = new Font("Arial", 12))
-            {
-                Size textSize = TextRenderer.MeasureText(Text, textFont);
-                Point textPosition = new Point(ClientSize.Width / 2 - textSize.Width / 2, ClientSize.Height / 2 - textSize.Height / 2);
-                Point textShadowPosition = new Point(textPosition.X, textPosition.Y + 1);
-
-                TextRenderer.DrawText(g, Text, textFont, textShadowPosition, Color.Black);
-                TextRenderer.DrawText(g, Text, textFont, textPosition, Color.White);
-            }
+            TextRenderer.DrawText(g, Text, textFont, new Rectangle(ClientRectangle.X, ClientRectangle.Y + 1, ClientRectangle.Width, ClientRectangle.Height + 1), Color.Black);
+            TextRenderer.DrawText(g, Text, textFont, ClientRectangle, ForeColor);
         }
 
         #region Component Designer generated code
@@ -113,6 +145,14 @@ namespace Updater
             {
                 components.Dispose();
             }
+
+            if (backgroundBrush != null) backgroundBrush.Dispose();
+            if (backgroundHoverBrush != null) backgroundHoverBrush.Dispose();
+            if (innerBorderBrush != null) innerBorderBrush.Dispose();
+            if (innerBorderPen != null) innerBorderPen.Dispose();
+            if (borderPen != null) borderPen.Dispose();
+            if (textFont != null) textFont.Dispose();
+
             base.Dispose(disposing);
         }
 
