@@ -133,6 +133,7 @@ namespace HelpersLib
                 if (FileSize > 0)
                 {
                     Stopwatch timer = new Stopwatch();
+                    Stopwatch progressEventTimer = new Stopwatch();
                     long speedTest = 0;
 
                     byte[] buffer = new byte[(int)Math.Min(bufferSize, FileSize)];
@@ -158,6 +159,11 @@ namespace HelpersLib
                             timer.Start();
                         }
 
+                        if (!progressEventTimer.IsRunning)
+                        {
+                            progressEventTimer.Start();
+                        }
+
                         bytesRead = response.GetResponseStream().Read(buffer, 0, buffer.Length);
                         stream.Write(buffer, 0, bytesRead);
                         DownloadedSize += bytesRead;
@@ -170,9 +176,14 @@ namespace HelpersLib
                             timer.Reset();
                         }
 
-                        ThrowEvent(ProgressChanged);
+                        if (progressEventTimer.ElapsedMilliseconds > 100)
+                        {
+                            ThrowEvent(ProgressChanged);
+                            progressEventTimer.Reset();
+                        }
                     }
 
+                    ThrowEvent(ProgressChanged);
                     ThrowEvent(DownloadCompleted);
                 }
             }
@@ -187,6 +198,7 @@ namespace HelpersLib
             finally
             {
                 if (response != null) response.Close();
+                if (stream != null) stream.Close();
             }
         }
 

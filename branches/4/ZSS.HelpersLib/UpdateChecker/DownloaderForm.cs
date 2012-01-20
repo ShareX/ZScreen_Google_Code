@@ -114,7 +114,6 @@ namespace HelpersLib
 
         private void fileDownloader_DownloadCompleted(object sender, EventArgs e)
         {
-            stream.Close();
             DownloadCompleted = true;
             ChangeStatus("Download completed.");
             btnCancel.Text = "Install";
