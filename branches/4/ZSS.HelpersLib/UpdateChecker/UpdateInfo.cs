@@ -39,7 +39,6 @@ namespace ZSS.UpdateCheckerLib
         public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateStatus Status { get; set; }
 
-        private const bool ForceUpdate = true;
 
         public UpdateInfo(ReleaseChannelType channel)
         {
@@ -51,7 +50,7 @@ namespace ZSS.UpdateCheckerLib
             get
             {
                 return ApplicationVersion != null && LatestVersion != null && !string.IsNullOrEmpty(URL) &&
-                    (ZAppHelper.CheckVersion(LatestVersion, ApplicationVersion) || ForceUpdate);
+                    (ZAppHelper.CheckVersion(LatestVersion, ApplicationVersion));
             }
         }
 
