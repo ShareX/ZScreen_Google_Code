@@ -55,11 +55,14 @@ namespace ZSS.UpdateCheckerLib
     public class UpdateChecker
     {
         public string URL { get; private set; }
+
         public string ApplicationName { get; private set; }
+
         public Version ApplicationVersion { get; private set; }
+
         public ReleaseChannelType ReleaseChannel { get; private set; }
+
         public UpdateInfo UpdateInfo { get; private set; }
-        public bool AutoDownloadSummary { get; set; }
 
         private IWebProxy proxy;
 
@@ -69,7 +72,6 @@ namespace ZSS.UpdateCheckerLib
             ApplicationName = applicationName;
             ApplicationVersion = applicationVersion;
             ReleaseChannel = channel;
-            AutoDownloadSummary = true;
             this.proxy = proxy;
         }
 
@@ -118,7 +120,7 @@ namespace ZSS.UpdateCheckerLib
                             {
                                 UpdateInfo.Status = UpdateStatus.UpdateRequired;
 
-                                if (AutoDownloadSummary && !string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
+                                if (!string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
                                 {
                                     try
                                     {
@@ -146,24 +148,6 @@ namespace ZSS.UpdateCheckerLib
             }
 
             UpdateInfo.Status = UpdateStatus.UpdateCheckFailed;
-
-            return false;
-        }
-
-        public bool ShowPrompt()
-        {
-            if (UpdateInfo != null && UpdateInfo.IsUpdateRequired)
-            {
-                using (DownloaderForm df = new DownloaderForm(UpdateInfo.URL, UpdateInfo.Summary))
-                {
-                    df.ShowDialog();
-                    if (df.InstallStarted)
-                    {
-                        Application.Exit();
-                        return true;
-                    }
-                }
-            }
 
             return false;
         }

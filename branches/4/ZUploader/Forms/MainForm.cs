@@ -238,7 +238,7 @@ namespace ZUploader
         private void CheckUpdate()
         {
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Program.AssemblyVersion),
-                ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy) { AutoDownloadSummary = false };
+                ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy);
             updateChecker.CheckUpdate();
 
             if (updateChecker.UpdateInfo != null && updateChecker.UpdateInfo.Status == UpdateStatus.UpdateRequired && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))

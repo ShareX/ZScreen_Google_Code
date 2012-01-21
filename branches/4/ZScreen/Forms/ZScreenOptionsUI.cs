@@ -216,7 +216,6 @@ namespace ZScreenGUI
             }
 
             worker.ReportProgress(1, status);
-            updateChecker.ShowPrompt();
         }
 
         private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)

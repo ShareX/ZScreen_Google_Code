@@ -37,12 +37,17 @@ namespace HelpersLib
     public partial class DownloaderForm : Form
     {
         public string URL { get; set; }
+
         public string FileName { get; set; }
+
         public string SavePath { get; private set; }
+
         public string Changelog { get; set; }
 
         public bool DownloadStarted { get; private set; }
+
         public bool DownloadCompleted { get; private set; }
+
         public bool InstallStarted { get; private set; }
 
         private FileDownloader fileDownloader;
@@ -59,6 +64,7 @@ namespace HelpersLib
             this.Size = new Size(496, 235);
             ChangeStatus("Waiting.");
         }
+
         public DownloaderForm(string url, string Changelog)
             : this()
         {
