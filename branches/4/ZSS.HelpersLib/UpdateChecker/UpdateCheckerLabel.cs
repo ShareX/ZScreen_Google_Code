@@ -97,7 +97,7 @@ namespace ZSS.UpdateCheckerLib
         {
             if (updateChecker != null && updateChecker.UpdateInfo != null && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
             {
-                DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL);
+                DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
                 downloader.ShowDialog();
                 if (downloader.InstallStarted) Application.Exit();
             }

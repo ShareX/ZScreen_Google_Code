@@ -345,13 +345,13 @@ namespace ZScreenGUI
             this.toolStripSeparator3,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(201, 424);
+            this.cmTray.Size = new System.Drawing.Size(206, 446);
             // 
             // tsmEntireScreen
             // 
             this.tsmEntireScreen.Image = global::ZScreenGUI.Properties.Resources.monitor;
             this.tsmEntireScreen.Name = "tsmEntireScreen";
-            this.tsmEntireScreen.Size = new System.Drawing.Size(200, 22);
+            this.tsmEntireScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmEntireScreen.Text = "Entire Screen";
             this.tsmEntireScreen.Click += new System.EventHandler(this.entireScreenToolStripMenuItem_Click);
             // 
@@ -359,7 +359,7 @@ namespace ZScreenGUI
             // 
             this.tsmSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
             this.tsmSelectedWindow.Name = "tsmSelectedWindow";
-            this.tsmSelectedWindow.Size = new System.Drawing.Size(200, 22);
+            this.tsmSelectedWindow.Size = new System.Drawing.Size(205, 22);
             this.tsmSelectedWindow.Text = "Selected Window...";
             this.tsmSelectedWindow.Click += new System.EventHandler(this.selectedWindowToolStripMenuItem_Click);
             // 
@@ -367,7 +367,7 @@ namespace ZScreenGUI
             // 
             this.tsmCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
             this.tsmCropShot.Name = "tsmCropShot";
-            this.tsmCropShot.Size = new System.Drawing.Size(200, 22);
+            this.tsmCropShot.Size = new System.Drawing.Size(205, 22);
             this.tsmCropShot.Text = "Crop Shot...";
             this.tsmCropShot.Click += new System.EventHandler(this.rectangularRegionToolStripMenuItem_Click);
             // 
@@ -375,7 +375,7 @@ namespace ZScreenGUI
             // 
             this.tsmLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
             this.tsmLastCropShot.Name = "tsmLastCropShot";
-            this.tsmLastCropShot.Size = new System.Drawing.Size(200, 22);
+            this.tsmLastCropShot.Size = new System.Drawing.Size(205, 22);
             this.tsmLastCropShot.Text = "Last Crop Shot";
             this.tsmLastCropShot.Click += new System.EventHandler(this.lastRectangularRegionToolStripMenuItem_Click);
             // 
@@ -383,7 +383,7 @@ namespace ZScreenGUI
             // 
             this.tsmCaptureShape.Image = global::ZScreenGUI.Properties.Resources.shape_square_edit;
             this.tsmCaptureShape.Name = "tsmCaptureShape";
-            this.tsmCaptureShape.Size = new System.Drawing.Size(200, 22);
+            this.tsmCaptureShape.Size = new System.Drawing.Size(205, 22);
             this.tsmCaptureShape.Text = "Capture Shape";
             this.tsmCaptureShape.Click += new System.EventHandler(this.tsmFreehandCropShot_Click);
             // 
@@ -391,33 +391,33 @@ namespace ZScreenGUI
             // 
             this.autoScreenshotsToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.images_stack;
             this.autoScreenshotsToolStripMenuItem.Name = "autoScreenshotsToolStripMenuItem";
-            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.autoScreenshotsToolStripMenuItem.Text = "Auto Capture...";
             this.autoScreenshotsToolStripMenuItem.Click += new System.EventHandler(this.autoScreenshotsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmEditinImageSoftware
             // 
             this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
             this.tsmEditinImageSoftware.Text = "Perform Custom Actions";
             this.tsmEditinImageSoftware.Click += new System.EventHandler(this.tsmEditinImageSoftware_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmFileUpload
             // 
             this.tsmFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
             this.tsmFileUpload.Name = "tsmFileUpload";
-            this.tsmFileUpload.Size = new System.Drawing.Size(200, 22);
+            this.tsmFileUpload.Size = new System.Drawing.Size(205, 22);
             this.tsmFileUpload.Text = "File Upload...";
             this.tsmFileUpload.Click += new System.EventHandler(this.tsmFileUpload_Click);
             // 
@@ -425,7 +425,7 @@ namespace ZScreenGUI
             // 
             this.tsmClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
             this.tsmClipboardUpload.Name = "tsmClipboardUpload";
-            this.tsmClipboardUpload.Size = new System.Drawing.Size(200, 22);
+            this.tsmClipboardUpload.Size = new System.Drawing.Size(205, 22);
             this.tsmClipboardUpload.Text = "Clipboard Upload...";
             this.tsmClipboardUpload.Click += new System.EventHandler(this.tsmUploadFromClipboard_Click);
             // 
@@ -433,7 +433,7 @@ namespace ZScreenGUI
             // 
             this.tsmDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
             this.tsmDragDropWindow.Name = "tsmDragDropWindow";
-            this.tsmDragDropWindow.Size = new System.Drawing.Size(200, 22);
+            this.tsmDragDropWindow.Size = new System.Drawing.Size(205, 22);
             this.tsmDragDropWindow.Text = "Drag && Drop Window...";
             this.tsmDragDropWindow.Click += new System.EventHandler(this.tsmDropWindow_Click);
             // 
@@ -441,7 +441,7 @@ namespace ZScreenGUI
             // 
             this.tsmLanguageTranslator.Image = global::ZScreenGUI.Properties.Resources.comments;
             this.tsmLanguageTranslator.Name = "tsmLanguageTranslator";
-            this.tsmLanguageTranslator.Size = new System.Drawing.Size(200, 22);
+            this.tsmLanguageTranslator.Size = new System.Drawing.Size(205, 22);
             this.tsmLanguageTranslator.Text = "Language Translator";
             this.tsmLanguageTranslator.Click += new System.EventHandler(this.languageTranslatorToolStripMenuItem_Click);
             // 
@@ -449,21 +449,21 @@ namespace ZScreenGUI
             // 
             this.tsmScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
             this.tsmScreenColorPicker.Name = "tsmScreenColorPicker";
-            this.tsmScreenColorPicker.Size = new System.Drawing.Size(200, 22);
+            this.tsmScreenColorPicker.Size = new System.Drawing.Size(205, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmiTabs
             // 
             this.tsmiTabs.DoubleClickEnabled = true;
             this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.application_edit;
             this.tsmiTabs.Name = "tsmiTabs";
-            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
+            this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
             this.tsmiTabs.Text = "&Options...";
             this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
@@ -471,7 +471,7 @@ namespace ZScreenGUI
             // 
             this.historyToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.pictures;
             this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            this.historyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.historyToolStripMenuItem.Text = "&History...";
             this.historyToolStripMenuItem.Click += new System.EventHandler(this.historyToolStripMenuItem_Click);
             // 
@@ -479,7 +479,7 @@ namespace ZScreenGUI
             // 
             this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(200, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
@@ -487,7 +487,7 @@ namespace ZScreenGUI
             // 
             this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmFTPClient.Name = "tsmFTPClient";
-            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
+            this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
             this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
             // 
@@ -499,14 +499,14 @@ namespace ZScreenGUI
             this.tsmAbout});
             this.tsmHelp.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(200, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
             this.tsmLicense.Image = global::ZScreenGUI.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(169, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -514,7 +514,7 @@ namespace ZScreenGUI
             // 
             this.tsmVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(169, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -522,20 +522,20 @@ namespace ZScreenGUI
             // 
             this.tsmAbout.Image = global::ZScreenGUI.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(169, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmExitZScreen
             // 
             this.tsmExitZScreen.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(200, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.tsmExitZScreen_Click);
             // 
@@ -566,7 +566,7 @@ namespace ZScreenGUI
             this.tcMain.Multiline = true;
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(825, 446);
+            this.tcMain.Size = new System.Drawing.Size(820, 446);
             this.tcMain.TabIndex = 1;
             this.tcMain.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcMain_Selecting);
             // 
@@ -584,7 +584,7 @@ namespace ZScreenGUI
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(817, 420);
+            this.tpMain.Size = new System.Drawing.Size(812, 420);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
@@ -631,7 +631,7 @@ namespace ZScreenGUI
             this.tsLinks.Location = new System.Drawing.Point(3, 393);
             this.tsLinks.Name = "tsLinks";
             this.tsLinks.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsLinks.Size = new System.Drawing.Size(811, 24);
+            this.tsLinks.Size = new System.Drawing.Size(806, 24);
             this.tsLinks.TabIndex = 5;
             this.tsLinks.Text = "toolStrip1";
             // 
@@ -641,7 +641,7 @@ namespace ZScreenGUI
             this.tsbLinkTutorials.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsbLinkTutorials.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkTutorials.Name = "tsbLinkTutorials";
-            this.tsbLinkTutorials.Size = new System.Drawing.Size(68, 21);
+            this.tsbLinkTutorials.Size = new System.Drawing.Size(73, 21);
             this.tsbLinkTutorials.Text = "Tutorials";
             this.tsbLinkTutorials.Click += new System.EventHandler(this.tsbLinkHelp_Click);
             // 
@@ -651,7 +651,7 @@ namespace ZScreenGUI
             this.tsbLinkBugs.Image = global::ZScreenGUI.Properties.Resources.bug;
             this.tsbLinkBugs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkBugs.Name = "tsbLinkBugs";
-            this.tsbLinkBugs.Size = new System.Drawing.Size(117, 21);
+            this.tsbLinkBugs.Size = new System.Drawing.Size(127, 21);
             this.tsbLinkBugs.Text = "Bugs/Suggestions?";
             this.tsbLinkBugs.Click += new System.EventHandler(this.tsbLinkIssues_Click);
             // 
@@ -661,7 +661,7 @@ namespace ZScreenGUI
             this.tsbLinkHome.Image = global::ZScreenGUI.Properties.Resources.world_go;
             this.tsbLinkHome.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkHome.Name = "tsbLinkHome";
-            this.tsbLinkHome.Size = new System.Drawing.Size(81, 21);
+            this.tsbLinkHome.Size = new System.Drawing.Size(89, 21);
             this.tsbLinkHome.Text = "Home Page";
             this.tsbLinkHome.Click += new System.EventHandler(this.tsbLinkHome_Click);
             // 
@@ -757,7 +757,7 @@ namespace ZScreenGUI
             this.pbPreview.DisableViewer = false;
             this.pbPreview.Location = new System.Drawing.Point(392, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(422, 406);
+            this.pbPreview.Size = new System.Drawing.Size(417, 406);
             this.pbPreview.TabIndex = 4;
             // 
             // tpHotkeys
@@ -769,17 +769,18 @@ namespace ZScreenGUI
             this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotkeys.Size = new System.Drawing.Size(817, 420);
+            this.tpHotkeys.Size = new System.Drawing.Size(812, 420);
             this.tpHotkeys.TabIndex = 1;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
             // 
             // hmHotkeys
             // 
+            this.hmHotkeys.AutoScroll = true;
             this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hmHotkeys.Location = new System.Drawing.Point(3, 3);
             this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(811, 391);
+            this.hmHotkeys.Size = new System.Drawing.Size(806, 391);
             this.hmHotkeys.TabIndex = 0;
             // 
             // btnResetHotkeys
@@ -801,7 +802,7 @@ namespace ZScreenGUI
             this.lblHotkeyStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblHotkeyStatus.Location = new System.Drawing.Point(3, 394);
             this.lblHotkeyStatus.Name = "lblHotkeyStatus";
-            this.lblHotkeyStatus.Size = new System.Drawing.Size(811, 23);
+            this.lblHotkeyStatus.Size = new System.Drawing.Size(806, 23);
             this.lblHotkeyStatus.TabIndex = 2;
             this.lblHotkeyStatus.Text = "Click on a Hotkey to set";
             this.lblHotkeyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -813,7 +814,7 @@ namespace ZScreenGUI
             this.tpMainInput.Location = new System.Drawing.Point(4, 22);
             this.tpMainInput.Name = "tpMainInput";
             this.tpMainInput.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainInput.Size = new System.Drawing.Size(817, 420);
+            this.tpMainInput.Size = new System.Drawing.Size(812, 420);
             this.tpMainInput.TabIndex = 2;
             this.tpMainInput.Text = "Capture";
             this.tpMainInput.UseVisualStyleBackColor = true;
@@ -831,7 +832,7 @@ namespace ZScreenGUI
             this.tcCapture.Location = new System.Drawing.Point(3, 3);
             this.tcCapture.Name = "tcCapture";
             this.tcCapture.SelectedIndex = 0;
-            this.tcCapture.Size = new System.Drawing.Size(811, 414);
+            this.tcCapture.Size = new System.Drawing.Size(806, 414);
             this.tcCapture.TabIndex = 0;
             // 
             // tpActivewindow
@@ -843,7 +844,7 @@ namespace ZScreenGUI
             this.tpActivewindow.Location = new System.Drawing.Point(4, 22);
             this.tpActivewindow.Name = "tpActivewindow";
             this.tpActivewindow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpActivewindow.Size = new System.Drawing.Size(803, 388);
+            this.tpActivewindow.Size = new System.Drawing.Size(798, 388);
             this.tpActivewindow.TabIndex = 0;
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;
@@ -1000,7 +1001,7 @@ namespace ZScreenGUI
             this.tpSelectedWindow.ImageKey = "application_double.png";
             this.tpSelectedWindow.Location = new System.Drawing.Point(4, 22);
             this.tpSelectedWindow.Name = "tpSelectedWindow";
-            this.tpSelectedWindow.Size = new System.Drawing.Size(803, 388);
+            this.tpSelectedWindow.Size = new System.Drawing.Size(798, 388);
             this.tpSelectedWindow.TabIndex = 1;
             this.tpSelectedWindow.Text = "Selected Window";
             this.tpSelectedWindow.UseVisualStyleBackColor = true;
@@ -1190,7 +1191,7 @@ namespace ZScreenGUI
             this.tpCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpCropShot.Name = "tpCropShot";
             this.tpCropShot.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShot.Size = new System.Drawing.Size(803, 388);
+            this.tpCropShot.Size = new System.Drawing.Size(798, 388);
             this.tpCropShot.TabIndex = 2;
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
@@ -1706,7 +1707,7 @@ namespace ZScreenGUI
             this.tpCropShotLast.Location = new System.Drawing.Point(4, 22);
             this.tpCropShotLast.Name = "tpCropShotLast";
             this.tpCropShotLast.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCropShotLast.Size = new System.Drawing.Size(803, 388);
+            this.tpCropShotLast.Size = new System.Drawing.Size(798, 388);
             this.tpCropShotLast.TabIndex = 3;
             this.tpCropShotLast.Text = "Last Crop Shot";
             this.tpCropShotLast.UseVisualStyleBackColor = true;
@@ -1728,7 +1729,7 @@ namespace ZScreenGUI
             this.tpCaptureShape.Location = new System.Drawing.Point(4, 22);
             this.tpCaptureShape.Name = "tpCaptureShape";
             this.tpCaptureShape.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureShape.Size = new System.Drawing.Size(803, 388);
+            this.tpCaptureShape.Size = new System.Drawing.Size(798, 388);
             this.tpCaptureShape.TabIndex = 4;
             this.tpCaptureShape.Text = "Shape";
             this.tpCaptureShape.UseVisualStyleBackColor = true;
@@ -1738,7 +1739,7 @@ namespace ZScreenGUI
             this.pgSurfaceConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgSurfaceConfig.Location = new System.Drawing.Point(3, 3);
             this.pgSurfaceConfig.Name = "pgSurfaceConfig";
-            this.pgSurfaceConfig.Size = new System.Drawing.Size(797, 382);
+            this.pgSurfaceConfig.Size = new System.Drawing.Size(792, 382);
             this.pgSurfaceConfig.TabIndex = 0;
             // 
             // tpFreehandCropShot
@@ -1750,7 +1751,7 @@ namespace ZScreenGUI
             this.tpFreehandCropShot.ImageKey = "shape_square_edit.png";
             this.tpFreehandCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpFreehandCropShot.Name = "tpFreehandCropShot";
-            this.tpFreehandCropShot.Size = new System.Drawing.Size(803, 388);
+            this.tpFreehandCropShot.Size = new System.Drawing.Size(798, 388);
             this.tpFreehandCropShot.TabIndex = 5;
             this.tpFreehandCropShot.Text = "Freehand Crop Shot";
             this.tpFreehandCropShot.UseVisualStyleBackColor = true;
@@ -1805,7 +1806,7 @@ namespace ZScreenGUI
             this.tpCaptureClipboard.Location = new System.Drawing.Point(4, 22);
             this.tpCaptureClipboard.Name = "tpCaptureClipboard";
             this.tpCaptureClipboard.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureClipboard.Size = new System.Drawing.Size(803, 388);
+            this.tpCaptureClipboard.Size = new System.Drawing.Size(798, 388);
             this.tpCaptureClipboard.TabIndex = 6;
             this.tpCaptureClipboard.Text = "Clipboard";
             this.tpCaptureClipboard.UseVisualStyleBackColor = true;
@@ -1873,7 +1874,7 @@ namespace ZScreenGUI
             this.tpAdvanced.Location = new System.Drawing.Point(4, 22);
             this.tpAdvanced.Name = "tpAdvanced";
             this.tpAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanced.Size = new System.Drawing.Size(817, 420);
+            this.tpAdvanced.Size = new System.Drawing.Size(812, 420);
             this.tpAdvanced.TabIndex = 3;
             this.tpAdvanced.Text = "Advanced";
             this.tpAdvanced.UseVisualStyleBackColor = true;
@@ -1890,7 +1891,7 @@ namespace ZScreenGUI
             this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
             this.tcAdvanced.Name = "tcAdvanced";
             this.tcAdvanced.SelectedIndex = 0;
-            this.tcAdvanced.Size = new System.Drawing.Size(811, 414);
+            this.tcAdvanced.Size = new System.Drawing.Size(806, 414);
             this.tcAdvanced.TabIndex = 0;
             this.tcAdvanced.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcAdvanced_Selected);
             // 
@@ -1900,7 +1901,7 @@ namespace ZScreenGUI
             this.tpAdvancedDebug.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedDebug.Name = "tpAdvancedDebug";
             this.tpAdvancedDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedDebug.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvancedDebug.Size = new System.Drawing.Size(798, 388);
             this.tpAdvancedDebug.TabIndex = 0;
             this.tpAdvancedDebug.Text = "Debug";
             this.tpAdvancedDebug.UseVisualStyleBackColor = true;
@@ -1913,7 +1914,7 @@ namespace ZScreenGUI
             this.rtbDebugLog.Location = new System.Drawing.Point(3, 3);
             this.rtbDebugLog.Name = "rtbDebugLog";
             this.rtbDebugLog.ReadOnly = true;
-            this.rtbDebugLog.Size = new System.Drawing.Size(797, 382);
+            this.rtbDebugLog.Size = new System.Drawing.Size(792, 382);
             this.rtbDebugLog.TabIndex = 0;
             this.rtbDebugLog.Text = "";
             this.rtbDebugLog.WordWrap = false;
@@ -1924,7 +1925,7 @@ namespace ZScreenGUI
             this.tpAdvancedCore.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedCore.Name = "tpAdvancedCore";
             this.tpAdvancedCore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedCore.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvancedCore.Size = new System.Drawing.Size(798, 388);
             this.tpAdvancedCore.TabIndex = 1;
             this.tpAdvancedCore.Text = "Core";
             this.tpAdvancedCore.UseVisualStyleBackColor = true;
@@ -1935,7 +1936,7 @@ namespace ZScreenGUI
             this.pgAppSettings.HelpVisible = false;
             this.pgAppSettings.Location = new System.Drawing.Point(3, 3);
             this.pgAppSettings.Name = "pgAppSettings";
-            this.pgAppSettings.Size = new System.Drawing.Size(797, 382);
+            this.pgAppSettings.Size = new System.Drawing.Size(792, 382);
             this.pgAppSettings.TabIndex = 0;
             this.pgAppSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppSettings_PropertyValueChanged);
             // 
@@ -1945,7 +1946,7 @@ namespace ZScreenGUI
             this.tpAdvancedSettings.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedSettings.Name = "tpAdvancedSettings";
             this.tpAdvancedSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedSettings.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvancedSettings.Size = new System.Drawing.Size(798, 388);
             this.tpAdvancedSettings.TabIndex = 2;
             this.tpAdvancedSettings.Text = "Settings";
             this.tpAdvancedSettings.UseVisualStyleBackColor = true;
@@ -1955,7 +1956,7 @@ namespace ZScreenGUI
             this.pgAppConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgAppConfig.Location = new System.Drawing.Point(3, 3);
             this.pgAppConfig.Name = "pgAppConfig";
-            this.pgAppConfig.Size = new System.Drawing.Size(797, 382);
+            this.pgAppConfig.Size = new System.Drawing.Size(792, 382);
             this.pgAppConfig.TabIndex = 0;
             this.pgAppConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppConfig_PropertyValueChanged);
             // 
@@ -1965,7 +1966,7 @@ namespace ZScreenGUI
             this.tpAdvancedWorkflow.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedWorkflow.Name = "tpAdvancedWorkflow";
             this.tpAdvancedWorkflow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(798, 388);
             this.tpAdvancedWorkflow.TabIndex = 3;
             this.tpAdvancedWorkflow.Text = "Workflow";
             this.tpAdvancedWorkflow.UseVisualStyleBackColor = true;
@@ -1975,7 +1976,7 @@ namespace ZScreenGUI
             this.pgWorkflow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgWorkflow.Location = new System.Drawing.Point(3, 3);
             this.pgWorkflow.Name = "pgWorkflow";
-            this.pgWorkflow.Size = new System.Drawing.Size(797, 382);
+            this.pgWorkflow.Size = new System.Drawing.Size(792, 382);
             this.pgWorkflow.TabIndex = 0;
             // 
             // tpAdvanedUploaders
@@ -1984,7 +1985,7 @@ namespace ZScreenGUI
             this.tpAdvanedUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpAdvanedUploaders.Name = "tpAdvanedUploaders";
             this.tpAdvanedUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanedUploaders.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvanedUploaders.Size = new System.Drawing.Size(798, 388);
             this.tpAdvanedUploaders.TabIndex = 4;
             this.tpAdvanedUploaders.Text = "Uploaders";
             this.tpAdvanedUploaders.UseVisualStyleBackColor = true;
@@ -1994,7 +1995,7 @@ namespace ZScreenGUI
             this.pgUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgUploaders.Location = new System.Drawing.Point(3, 3);
             this.pgUploaders.Name = "pgUploaders";
-            this.pgUploaders.Size = new System.Drawing.Size(797, 382);
+            this.pgUploaders.Size = new System.Drawing.Size(792, 382);
             this.pgUploaders.TabIndex = 0;
             // 
             // tpAdvancedStats
@@ -2005,7 +2006,7 @@ namespace ZScreenGUI
             this.tpAdvancedStats.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedStats.Name = "tpAdvancedStats";
             this.tpAdvancedStats.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedStats.Size = new System.Drawing.Size(803, 388);
+            this.tpAdvancedStats.Size = new System.Drawing.Size(798, 388);
             this.tpAdvancedStats.TabIndex = 5;
             this.tpAdvancedStats.Text = "Statistics";
             this.tpAdvancedStats.UseVisualStyleBackColor = true;
@@ -2013,7 +2014,7 @@ namespace ZScreenGUI
             // btnOpenZScreenTester
             // 
             this.btnOpenZScreenTester.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenZScreenTester.Location = new System.Drawing.Point(599, 326);
+            this.btnOpenZScreenTester.Location = new System.Drawing.Point(594, 326);
             this.btnOpenZScreenTester.Name = "btnOpenZScreenTester";
             this.btnOpenZScreenTester.Size = new System.Drawing.Size(160, 23);
             this.btnOpenZScreenTester.TabIndex = 2;
@@ -2030,7 +2031,7 @@ namespace ZScreenGUI
             this.gbStatistics.Controls.Add(this.rtbStats);
             this.gbStatistics.Location = new System.Drawing.Point(8, 8);
             this.gbStatistics.Name = "gbStatistics";
-            this.gbStatistics.Size = new System.Drawing.Size(766, 300);
+            this.gbStatistics.Size = new System.Drawing.Size(761, 300);
             this.gbStatistics.TabIndex = 0;
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Statistics";
@@ -2055,7 +2056,7 @@ namespace ZScreenGUI
             this.rtbStats.Location = new System.Drawing.Point(16, 56);
             this.rtbStats.Name = "rtbStats";
             this.rtbStats.ReadOnly = true;
-            this.rtbStats.Size = new System.Drawing.Size(736, 234);
+            this.rtbStats.Size = new System.Drawing.Size(731, 234);
             this.rtbStats.TabIndex = 1;
             this.rtbStats.Text = "";
             this.rtbStats.WordWrap = false;
@@ -2069,7 +2070,7 @@ namespace ZScreenGUI
             this.gbLastSource.Controls.Add(this.btnOpenSourceBrowser);
             this.gbLastSource.Location = new System.Drawing.Point(8, 318);
             this.gbLastSource.Name = "gbLastSource";
-            this.gbLastSource.Size = new System.Drawing.Size(400, 64);
+            this.gbLastSource.Size = new System.Drawing.Size(395, 64);
             this.gbLastSource.TabIndex = 1;
             this.gbLastSource.TabStop = false;
             this.gbLastSource.Text = "Last Source";
@@ -2386,7 +2387,7 @@ namespace ZScreenGUI
             this.helpToolStripMenuItem});
             this.msApp.Location = new System.Drawing.Point(2, 2);
             this.msApp.Name = "msApp";
-            this.msApp.Size = new System.Drawing.Size(825, 24);
+            this.msApp.Size = new System.Drawing.Size(820, 24);
             this.msApp.TabIndex = 0;
             this.msApp.Text = "menuStrip1";
             // 
@@ -2397,7 +2398,7 @@ namespace ZScreenGUI
             this.toolStripSeparator,
             this.tsmiExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // tsmiFileUpload
@@ -2406,20 +2407,20 @@ namespace ZScreenGUI
             this.tsmiFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmiFileUpload.Name = "tsmiFileUpload";
             this.tsmiFileUpload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiFileUpload.Size = new System.Drawing.Size(151, 22);
+            this.tsmiFileUpload.Size = new System.Drawing.Size(146, 22);
             this.tsmiFileUpload.Text = "&Open";
             this.tsmiFileUpload.Click += new System.EventHandler(this.tsmiFileUpload_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(151, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(146, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -2433,39 +2434,39 @@ namespace ZScreenGUI
             this.tsmiConfigureActions,
             this.tsmiOutputs});
             this.tsmiConfigure.Name = "tsmiConfigure";
-            this.tsmiConfigure.Size = new System.Drawing.Size(66, 20);
+            this.tsmiConfigure.Size = new System.Drawing.Size(72, 20);
             this.tsmiConfigure.Text = "&Configure";
             // 
             // tsmiConfigureFileNaming
             // 
             this.tsmiConfigureFileNaming.Name = "tsmiConfigureFileNaming";
-            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(164, 22);
+            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(157, 22);
             this.tsmiConfigureFileNaming.Text = "&File Naming...";
             this.tsmiConfigureFileNaming.Click += new System.EventHandler(this.tsmiConfigureFileNaming_Click);
             // 
             // tsmiImageSettings
             // 
             this.tsmiImageSettings.Name = "tsmiImageSettings";
-            this.tsmiImageSettings.Size = new System.Drawing.Size(164, 22);
+            this.tsmiImageSettings.Size = new System.Drawing.Size(157, 22);
             this.tsmiImageSettings.Text = "&Image Format...";
             this.tsmiImageSettings.Click += new System.EventHandler(this.tsmiImageSettings_Click);
             // 
             // tsmiWatermark
             // 
             this.tsmiWatermark.Name = "tsmiWatermark";
-            this.tsmiWatermark.Size = new System.Drawing.Size(164, 22);
+            this.tsmiWatermark.Size = new System.Drawing.Size(157, 22);
             this.tsmiWatermark.Text = "&Watermark...";
             this.tsmiWatermark.Click += new System.EventHandler(this.tsmiWatermark_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(154, 6);
             // 
             // tsmiConfigureActions
             // 
             this.tsmiConfigureActions.Name = "tsmiConfigureActions";
-            this.tsmiConfigureActions.Size = new System.Drawing.Size(164, 22);
+            this.tsmiConfigureActions.Size = new System.Drawing.Size(157, 22);
             this.tsmiConfigureActions.Text = "&Actions...";
             this.tsmiConfigureActions.Click += new System.EventHandler(this.tsmiConfigureActions_Click);
             // 
@@ -2474,7 +2475,7 @@ namespace ZScreenGUI
             this.tsmiOutputs.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmiOutputs.Name = "tsmiOutputs";
             this.tsmiOutputs.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiOutputs.Size = new System.Drawing.Size(164, 22);
+            this.tsmiOutputs.Size = new System.Drawing.Size(157, 22);
             this.tsmiOutputs.Text = "&Outputs...";
             this.tsmiOutputs.Click += new System.EventHandler(this.tsmiOutputs_Click);
             // 
@@ -2485,14 +2486,14 @@ namespace ZScreenGUI
             this.tsmiProxy,
             this.tsmiOptions});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // tsmiApiKeys
             // 
             this.tsmiApiKeys.Image = global::ZScreenGUI.Properties.Resources.tab_edit;
             this.tsmiApiKeys.Name = "tsmiApiKeys";
-            this.tsmiApiKeys.Size = new System.Drawing.Size(167, 22);
+            this.tsmiApiKeys.Size = new System.Drawing.Size(157, 22);
             this.tsmiApiKeys.Text = "API Keys...";
             this.tsmiApiKeys.Click += new System.EventHandler(this.tsmiApiKeys_Click);
             // 
@@ -2500,7 +2501,7 @@ namespace ZScreenGUI
             // 
             this.tsmiProxy.Image = global::ZScreenGUI.Properties.Resources.world_edit;
             this.tsmiProxy.Name = "tsmiProxy";
-            this.tsmiProxy.Size = new System.Drawing.Size(167, 22);
+            this.tsmiProxy.Size = new System.Drawing.Size(157, 22);
             this.tsmiProxy.Text = "&Proxy Settings...";
             this.tsmiProxy.Click += new System.EventHandler(this.tsmiProxy_Click);
             // 
@@ -2509,7 +2510,7 @@ namespace ZScreenGUI
             this.tsmiOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
             this.tsmiOptions.Name = "tsmiOptions";
             this.tsmiOptions.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsmiOptions.Size = new System.Drawing.Size(167, 22);
+            this.tsmiOptions.Size = new System.Drawing.Size(157, 22);
             this.tsmiOptions.Text = "&Options...";
             this.tsmiOptions.Click += new System.EventHandler(this.tsmiOptions_Click);
             // 
@@ -2520,27 +2521,27 @@ namespace ZScreenGUI
             this.toolStripSeparator10,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // tsmiVersionHistory
             // 
             this.tsmiVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmiVersionHistory.Name = "tsmiVersionHistory";
-            this.tsmiVersionHistory.Size = new System.Drawing.Size(169, 22);
+            this.tsmiVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmiVersionHistory.Text = "&Version History...";
             this.tsmiVersionHistory.Click += new System.EventHandler(this.tsmiVersionHistory_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(160, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.information;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

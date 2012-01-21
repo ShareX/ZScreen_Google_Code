@@ -474,6 +474,7 @@ namespace ZScreenLib
                     Engine.ConfigOptions.Write(OptionsFilePath);
                 }
             });
+            settingsOptions.Name = "SettingsOptions";
 
             Thread settingsThread = new Thread(() =>
             {
@@ -482,6 +483,7 @@ namespace ZScreenLib
                     Engine.ConfigUI.Write();
                 }
             });
+            settingsThread.Name = "SettingsThread";
 
             Thread workflowConfigThread = new Thread(() =>
             {
@@ -490,6 +492,7 @@ namespace ZScreenLib
                     Engine.ConfigWorkflow.Write(WorkflowConfigPath);
                 }
             });
+            workflowConfigThread.Name = "WorkFlowConfigThread";
 
             Thread uploadersConfigThread = new Thread(() =>
             {
@@ -498,6 +501,7 @@ namespace ZScreenLib
                     Engine.ConfigUploaders.Save(UploadersConfigPath);
                 }
             });
+            uploadersConfigThread.Name = "UploadersConfigThread";
 
             Thread googleTranslateThread = new Thread(() =>
             {
@@ -506,6 +510,7 @@ namespace ZScreenLib
                     Engine.ConfigGT.Write(GoogleTranslateConfigPath);
                 }
             });
+            googleTranslateThread.Name = "GoogleTranslateThread";
 
             settingsOptions.Start();
             settingsThread.Start();

@@ -246,7 +246,7 @@ namespace ZUploader
                 if (MessageBox.Show("Update found. Do you want to download it?", "Update check", MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
-                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL);
+                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
                     downloader.ShowDialog();
                     if (downloader.InstallStarted) Application.Exit();
                 }

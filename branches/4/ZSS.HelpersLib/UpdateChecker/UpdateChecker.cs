@@ -62,7 +62,6 @@ namespace ZSS.UpdateCheckerLib
         public bool AutoDownloadSummary { get; set; }
 
         private IWebProxy proxy;
-        private NewVersionWindowOptions nvwo;
 
         public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo = null)
         {
@@ -72,7 +71,6 @@ namespace ZSS.UpdateCheckerLib
             ReleaseChannel = channel;
             AutoDownloadSummary = true;
             this.proxy = proxy;
-            this.nvwo = nvwo;
         }
 
         public bool CheckUpdate()
@@ -156,15 +154,12 @@ namespace ZSS.UpdateCheckerLib
         {
             if (UpdateInfo != null && UpdateInfo.IsUpdateRequired)
             {
-                nvwo.Question = string.Format("Do you want to download it now?\n\n{0}", UpdateInfo.ToString());
-                nvwo.UpdateInfo = UpdateInfo;
-                nvwo.ProjectName = ApplicationName;
-
-                using (UpdaterForm ver = new UpdaterForm(nvwo))
+                using (DownloaderForm df = new DownloaderForm(UpdateInfo.URL, UpdateInfo.Summary))
                 {
-                    if (ver.ShowDialog() == DialogResult.Yes)
+                    df.ShowDialog();
+                    if (df.InstallStarted)
                     {
-                        ZAppHelper.LoadBrowserAsync(UpdateInfo.URL);
+                        Application.Exit();
                         return true;
                     }
                 }

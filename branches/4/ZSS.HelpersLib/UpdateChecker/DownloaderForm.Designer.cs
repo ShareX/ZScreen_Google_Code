@@ -29,14 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloaderForm));
             this.cmsRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openDownloadUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrlToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cbHistory = new System.Windows.Forms.CheckBox();
+            this.txtChangelog = new System.Windows.Forms.TextBox();
             this.lblProgress = new HelpersLib.MyLabel();
             this.lblStatus = new HelpersLib.MyLabel();
-            this.btnCancel = new HelpersLib.MyButton();
             this.lblFilename = new HelpersLib.MyLabel();
+            this.btnCancel = new HelpersLib.MyButton();
             this.pbProgress = new HelpersLib.MyProgressBar();
             this.cmsRightClickMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,13 +78,37 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // cbHistory
+            // 
+            this.cbHistory.AutoSize = true;
+            this.cbHistory.ForeColor = System.Drawing.Color.White;
+            this.cbHistory.Location = new System.Drawing.Point(352, 142);
+            this.cbHistory.Name = "cbHistory";
+            this.cbHistory.Size = new System.Drawing.Size(112, 17);
+            this.cbHistory.TabIndex = 13;
+            this.cbHistory.Text = "Show changelog?";
+            this.cbHistory.UseVisualStyleBackColor = true;
+            this.cbHistory.CheckedChanged += new System.EventHandler(this.cbHistory_CheckedChanged);
+            // 
+            // txtChangelog
+            // 
+            this.txtChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.txtChangelog.ForeColor = System.Drawing.Color.White;
+            this.txtChangelog.Location = new System.Drawing.Point(8, 212);
+            this.txtChangelog.Multiline = true;
+            this.txtChangelog.Name = "txtChangelog";
+            this.txtChangelog.ReadOnly = true;
+            this.txtChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtChangelog.Size = new System.Drawing.Size(472, 201);
+            this.txtChangelog.TabIndex = 14;
+            // 
             // lblProgress
             // 
             this.lblProgress.BackColor = System.Drawing.Color.Transparent;
             this.lblProgress.ForeColor = System.Drawing.Color.White;
             this.lblProgress.Location = new System.Drawing.Point(8, 72);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(328, 64);
+            this.lblProgress.Size = new System.Drawing.Size(328, 78);
             this.lblProgress.TabIndex = 12;
             this.lblProgress.Text = "Progress:";
             // 
@@ -95,18 +122,6 @@
             this.lblStatus.TabIndex = 11;
             this.lblStatus.Text = "Status:";
             // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.Black;
-            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(352, 144);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(128, 32);
-            this.btnCancel.TabIndex = 9;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // lblFilename
             // 
             this.lblFilename.BackColor = System.Drawing.Color.Transparent;
@@ -117,9 +132,21 @@
             this.lblFilename.TabIndex = 10;
             this.lblFilename.Text = "Filename:";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.Black;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(352, 163);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(128, 32);
+            this.btnCancel.TabIndex = 9;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // pbProgress
             // 
-            this.pbProgress.Location = new System.Drawing.Point(8, 144);
+            this.pbProgress.Location = new System.Drawing.Point(8, 163);
             this.pbProgress.Maximum = 100;
             this.pbProgress.Minimum = 0;
             this.pbProgress.Name = "pbProgress";
@@ -132,16 +159,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.ClientSize = new System.Drawing.Size(490, 185);
+            this.ClientSize = new System.Drawing.Size(490, 421);
             this.ContextMenuStrip = this.cmsRightClickMenu;
+            this.Controls.Add(this.cbHistory);
+            this.Controls.Add(this.txtChangelog);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblFilename);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pbProgress);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "DownloaderForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -167,5 +197,7 @@
         private MyLabel lblFilename;
         private MyLabel lblStatus;
         private MyLabel lblProgress;
+        private System.Windows.Forms.CheckBox cbHistory;
+        private System.Windows.Forms.TextBox txtChangelog;
     }
 }

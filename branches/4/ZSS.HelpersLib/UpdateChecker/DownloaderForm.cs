@@ -39,6 +39,7 @@ namespace HelpersLib
         public string URL { get; set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
+        public string Changelog { get; set; }
 
         public bool DownloadStarted { get; private set; }
         public bool DownloadCompleted { get; private set; }
@@ -55,14 +56,15 @@ namespace HelpersLib
             fillRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
             drawRect = new Rectangle(0, 0, fillRect.Width - 1, fillRect.Height - 1);
             backgroundBrush = new LinearGradientBrush(fillRect, Color.FromArgb(80, 80, 80), Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
-
+            this.Size = new Size(496, 235);
             ChangeStatus("Waiting.");
         }
-
-        public DownloaderForm(string url)
+        public DownloaderForm(string url, string Changelog)
             : this()
         {
             URL = url;
+            this.Changelog = Changelog;
+            txtChangelog.Text = Changelog;
             FileName = HttpUtility.UrlDecode(URL.Substring(URL.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
         }
@@ -161,6 +163,18 @@ namespace HelpersLib
             if (DownloadStarted && !DownloadCompleted)
             {
                 fileDownloader.StopDownload();
+            }
+        }
+
+        private void cbHistory_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbHistory.Checked)
+            {
+                this.Size = new Size(496, 449);
+            }
+            else
+            {
+                this.Size = new Size(496, 235);
             }
         }
     }
