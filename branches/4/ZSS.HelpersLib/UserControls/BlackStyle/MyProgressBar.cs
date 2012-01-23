@@ -179,7 +179,7 @@ namespace HelpersLib
                 ColorBlend cb = new ColorBlend();
                 cb.Positions = new float[] { 0, 0.49f, 0.50f, 1 };
                 cb.Colors = new Color[] { Color.FromArgb(102, 163, 226), Color.FromArgb(83, 135, 186), Color.FromArgb(75, 121, 175), Color.FromArgb(56, 93, 135) };
-                progressBarBrush.InterpolationColors= cb;
+                progressBarBrush.InterpolationColors = cb;
 
                 g.FillRectangle(progressBarBrush, progressBarRect);
             }

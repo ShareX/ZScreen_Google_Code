@@ -109,13 +109,16 @@
       <DependentUpon>DownloaderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FileDownloader.cs" />
-    <Compile Include="UserControls\MyButton.cs">
+    <Compile Include="UserControls\BlackStyle\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\MyLabel.cs">
+    <Compile Include="UserControls\BlackStyle\MyCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\MyProgressBar.cs">
+    <Compile Include="UserControls\BlackStyle\MyLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\BlackStyle\MyProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Wizards\ClipboardContentViewer.cs">

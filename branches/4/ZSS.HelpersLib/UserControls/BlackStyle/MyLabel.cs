@@ -53,7 +53,6 @@ namespace HelpersLib
         }
 
         private string text;
-        private Font textFont;
 
         public MyLabel()
         {
@@ -73,7 +72,7 @@ namespace HelpersLib
         {
             BackColor = Color.Transparent;
             ForeColor = Color.White;
-            textFont = new Font("Arial", 12);
+            Font = new Font("Arial", 12);
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -89,9 +88,9 @@ namespace HelpersLib
         private void DrawText(Graphics g)
         {
             TextFormatFlags tff = TextFormatFlags.Left | TextFormatFlags.Top;
-            TextRenderer.DrawText(g, Text, textFont, new Rectangle(ClientRectangle.X, ClientRectangle.Y + 1, ClientRectangle.Width, ClientRectangle.Height + 1),
+            TextRenderer.DrawText(g, Text, Font, new Rectangle(ClientRectangle.X, ClientRectangle.Y + 1, ClientRectangle.Width, ClientRectangle.Height + 1),
                 Color.Black, tff);
-            TextRenderer.DrawText(g, Text, textFont, ClientRectangle, ForeColor, tff);
+            TextRenderer.DrawText(g, Text, Font, ClientRectangle, ForeColor, tff);
         }
 
         #region Component Designer generated code
@@ -104,8 +103,6 @@ namespace HelpersLib
             {
                 components.Dispose();
             }
-
-            if (textFont != null) textFont.Dispose();
 
             base.Dispose(disposing);
         }

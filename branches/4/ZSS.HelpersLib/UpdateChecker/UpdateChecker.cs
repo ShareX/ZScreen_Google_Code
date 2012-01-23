@@ -28,7 +28,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Windows.Forms;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using HelpersLib;
@@ -55,13 +55,9 @@ namespace ZSS.UpdateCheckerLib
     public class UpdateChecker
     {
         public string URL { get; private set; }
-
         public string ApplicationName { get; private set; }
-
         public Version ApplicationVersion { get; private set; }
-
         public ReleaseChannelType ReleaseChannel { get; private set; }
-
         public UpdateInfo UpdateInfo { get; private set; }
 
         private IWebProxy proxy;
@@ -124,6 +120,7 @@ namespace ZSS.UpdateCheckerLib
                                 {
                                     try
                                     {
+                                        wc.Encoding = Encoding.UTF8;
                                         UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
                                     }
                                     catch (Exception ex)

@@ -37,17 +37,11 @@ namespace HelpersLib
     public partial class DownloaderForm : Form
     {
         public string URL { get; set; }
-
         public string FileName { get; set; }
-
         public string SavePath { get; private set; }
-
         public string Changelog { get; set; }
-
         public bool DownloadStarted { get; private set; }
-
         public bool DownloadCompleted { get; private set; }
-
         public bool InstallStarted { get; private set; }
 
         private FileDownloader fileDownloader;
@@ -65,12 +59,12 @@ namespace HelpersLib
             ChangeStatus("Waiting.");
         }
 
-        public DownloaderForm(string url, string Changelog)
+        public DownloaderForm(string url, string changelog)
             : this()
         {
             URL = url;
-            this.Changelog = Changelog;
-            txtChangelog.Text = Changelog;
+            Changelog = changelog;
+            txtChangelog.Text = changelog;
             FileName = HttpUtility.UrlDecode(URL.Substring(URL.LastIndexOf('/') + 1));
             lblFilename.Text = "Filename: " + FileName;
         }
@@ -149,6 +143,7 @@ namespace HelpersLib
             {
                 try
                 {
+                    btnCancel.Enabled = false;
                     ProcessStartInfo psi = new ProcessStartInfo(SavePath);
                     psi.Verb = "runas";
                     psi.UseShellExecute = true;
@@ -172,15 +167,15 @@ namespace HelpersLib
             }
         }
 
-        private void cbHistory_CheckedChanged(object sender, EventArgs e)
+        private void cbShowChangelog_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbHistory.Checked)
+            if (cbShowChangelog.Checked)
             {
-                this.Size = new Size(496, 449);
+                Size = new Size(496, 449);
             }
             else
             {
-                this.Size = new Size(496, 235);
+                Size = new Size(496, 235);
             }
         }
     }

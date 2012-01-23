@@ -58,7 +58,6 @@ namespace HelpersLib
         private bool isHover;
         private LinearGradientBrush backgroundBrush, backgroundHoverBrush, innerBorderBrush;
         private Pen innerBorderPen, borderPen;
-        private Font textFont;
 
         public MyButton()
         {
@@ -84,7 +83,7 @@ namespace HelpersLib
                 Color.FromArgb(125, 125, 125), Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical);
             innerBorderPen = new Pen(innerBorderBrush);
             borderPen = new Pen(Color.FromArgb(30, 30, 30));
-            textFont = new Font("Arial", 12);
+            Font = new Font("Arial", 12);
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -138,8 +137,8 @@ namespace HelpersLib
 
         private void DrawText(Graphics g)
         {
-            TextRenderer.DrawText(g, Text, textFont, new Rectangle(ClientRectangle.X, ClientRectangle.Y + 1, ClientRectangle.Width, ClientRectangle.Height + 1), Color.Black);
-            TextRenderer.DrawText(g, Text, textFont, ClientRectangle, ForeColor);
+            TextRenderer.DrawText(g, Text, Font, new Rectangle(ClientRectangle.X, ClientRectangle.Y + 1, ClientRectangle.Width, ClientRectangle.Height + 1), Color.Black);
+            TextRenderer.DrawText(g, Text, Font, ClientRectangle, ForeColor);
         }
 
         #region Component Designer generated code
@@ -158,7 +157,6 @@ namespace HelpersLib
             if (innerBorderBrush != null) innerBorderBrush.Dispose();
             if (innerBorderPen != null) innerBorderPen.Dispose();
             if (borderPen != null) borderPen.Dispose();
-            if (textFont != null) textFont.Dispose();
 
             base.Dispose(disposing);
         }
