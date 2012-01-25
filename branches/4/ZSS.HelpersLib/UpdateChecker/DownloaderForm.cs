@@ -55,7 +55,7 @@ namespace HelpersLib
             fillRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
             drawRect = new Rectangle(0, 0, fillRect.Width - 1, fillRect.Height - 1);
             backgroundBrush = new LinearGradientBrush(fillRect, Color.FromArgb(80, 80, 80), Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
-            this.Size = new Size(496, 235);
+            UpdateFormSize();
             ChangeStatus("Waiting.");
         }
 
@@ -114,27 +114,23 @@ namespace HelpersLib
             }
         }
 
+        private void UpdateFormSize()
+        {
+            if (cbShowChangelog.Checked)
+            {
+                Size = new Size(Size.Width, 450);
+            }
+            else
+            {
+                Size = new Size(Size.Width, 235);
+            }
+        }
+
         private void fileDownloader_DownloadCompleted(object sender, EventArgs e)
         {
             DownloadCompleted = true;
             ChangeStatus("Download completed.");
             btnCancel.Text = "Install";
-        }
-
-        private void openDownloadUrlToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(URL))
-            {
-                Process.Start(URL);
-            }
-        }
-
-        private void copyDownloadUrlToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(URL))
-            {
-                Clipboard.SetText(URL);
-            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -169,14 +165,7 @@ namespace HelpersLib
 
         private void cbShowChangelog_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbShowChangelog.Checked)
-            {
-                Size = new Size(496, 449);
-            }
-            else
-            {
-                Size = new Size(496, 235);
-            }
+            UpdateFormSize();
         }
     }
 }

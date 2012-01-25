@@ -28,11 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloaderForm));
-            this.cmsRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openDownloadUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyDownloadUrlToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtChangelog = new System.Windows.Forms.TextBox();
             this.lblProgress = new HelpersLib.MyLabel();
@@ -41,31 +37,8 @@
             this.lblFilename = new HelpersLib.MyLabel();
             this.btnCancel = new HelpersLib.MyButton();
             this.pbProgress = new HelpersLib.MyProgressBar();
-            this.cmsRightClickMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cmsRightClickMenu
-            // 
-            this.cmsRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openDownloadUrlToolStripMenuItem,
-            this.copyDownloadUrlToClipboardToolStripMenuItem});
-            this.cmsRightClickMenu.Name = "cmsRightClickMenu";
-            this.cmsRightClickMenu.Size = new System.Drawing.Size(243, 48);
-            // 
-            // openDownloadUrlToolStripMenuItem
-            // 
-            this.openDownloadUrlToolStripMenuItem.Name = "openDownloadUrlToolStripMenuItem";
-            this.openDownloadUrlToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
-            this.openDownloadUrlToolStripMenuItem.Text = "Open download url";
-            this.openDownloadUrlToolStripMenuItem.Click += new System.EventHandler(this.openDownloadUrlToolStripMenuItem_Click);
-            // 
-            // copyDownloadUrlToClipboardToolStripMenuItem
-            // 
-            this.copyDownloadUrlToClipboardToolStripMenuItem.Name = "copyDownloadUrlToClipboardToolStripMenuItem";
-            this.copyDownloadUrlToClipboardToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
-            this.copyDownloadUrlToClipboardToolStripMenuItem.Text = "Copy download url to clipboard";
-            this.copyDownloadUrlToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyDownloadUrlToClipboardToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -104,6 +77,7 @@
             // cbShowChangelog
             // 
             this.cbShowChangelog.BackColor = System.Drawing.Color.Transparent;
+            this.cbShowChangelog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbShowChangelog.Font = new System.Drawing.Font("Arial", 8F);
             this.cbShowChangelog.ForeColor = System.Drawing.Color.White;
             this.cbShowChangelog.Location = new System.Drawing.Point(352, 142);
@@ -165,8 +139,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.ClientSize = new System.Drawing.Size(490, 421);
-            this.ContextMenuStrip = this.cmsRightClickMenu;
+            this.ClientSize = new System.Drawing.Size(488, 421);
             this.Controls.Add(this.txtChangelog);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.cbShowChangelog);
@@ -185,7 +158,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UpdaterForm_FormClosing);
             this.Shown += new System.EventHandler(this.DownloaderForm_Shown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdaterForm_Paint);
-            this.cmsRightClickMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -195,9 +167,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ContextMenuStrip cmsRightClickMenu;
-        private System.Windows.Forms.ToolStripMenuItem openDownloadUrlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyDownloadUrlToClipboardToolStripMenuItem;
         private MyProgressBar pbProgress;
         private MyButton btnCancel;
         private MyLabel lblFilename;

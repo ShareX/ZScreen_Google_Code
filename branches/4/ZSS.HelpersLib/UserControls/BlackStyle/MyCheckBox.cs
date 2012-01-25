@@ -111,15 +111,18 @@ namespace HelpersLib
             backgroundBrush = new LinearGradientBrush(new Rectangle(2, 2, checkBoxSize - 4, checkBoxSize - 3),
                 Color.FromArgb(105, 105, 105), Color.FromArgb(55, 55, 55), LinearGradientMode.Vertical);
 
-            backgroundCheckedBrush = new LinearGradientBrush(new Rectangle(3, 3, checkBoxSize - 6, checkBoxSize - 5),
-                Color.FromArgb(102, 163, 226), Color.FromArgb(56, 93, 135), LinearGradientMode.Vertical);
-
             innerBorderBrush = new LinearGradientBrush(new Rectangle(1, 1, checkBoxSize - 2, checkBoxSize - 2),
                 Color.FromArgb(125, 125, 125), Color.FromArgb(65, 75, 75), LinearGradientMode.Vertical);
             innerBorderPen = new Pen(innerBorderBrush);
 
-            innerBorderCheckedBrush = new LinearGradientBrush(new Rectangle(2, 2, checkBoxSize - 4, checkBoxSize - 3),
-                Color.FromArgb(70, 70, 70), Color.FromArgb(90, 90, 90), LinearGradientMode.Vertical);
+            backgroundCheckedBrush = new LinearGradientBrush(new Rectangle(2, 2, checkBoxSize - 4, checkBoxSize - 3), Color.Black, Color.Black, LinearGradientMode.Vertical);
+            ColorBlend cb = new ColorBlend();
+            cb.Positions = new float[] { 0, 0.49f, 0.50f, 1 };
+            cb.Colors = new Color[] { Color.FromArgb(102, 163, 226), Color.FromArgb(83, 135, 186), Color.FromArgb(75, 121, 175), Color.FromArgb(56, 93, 135) };
+            backgroundCheckedBrush.InterpolationColors = cb;
+
+            innerBorderCheckedBrush = new LinearGradientBrush(new Rectangle(1, 1, checkBoxSize - 2, checkBoxSize - 2),
+                Color.FromArgb(133, 192, 241), Color.FromArgb(76, 119, 163), LinearGradientMode.Vertical);
             innerBorderCheckedPen = new Pen(innerBorderCheckedBrush);
 
             borderPen = new Pen(Color.FromArgb(30, 30, 30));
@@ -145,15 +148,15 @@ namespace HelpersLib
         {
             if (Checked)
             {
-                g.FillRectangle(backgroundCheckedBrush, new Rectangle(3, 3, checkBoxSize - 6, checkBoxSize - 6));
-                g.DrawRectangle(innerBorderCheckedPen, new Rectangle(2, 2, checkBoxSize - 5, checkBoxSize - 5));
+                g.FillRectangle(backgroundCheckedBrush, new Rectangle(2, 2, checkBoxSize - 4, checkBoxSize - 4));
+                g.DrawRectangle(innerBorderCheckedPen, new Rectangle(1, 1, checkBoxSize - 3, checkBoxSize - 3));
             }
             else
             {
                 g.FillRectangle(backgroundBrush, new Rectangle(2, 2, checkBoxSize - 4, checkBoxSize - 4));
+                g.DrawRectangle(innerBorderPen, new Rectangle(1, 1, checkBoxSize - 3, checkBoxSize - 3));
             }
 
-            g.DrawRectangle(innerBorderPen, new Rectangle(1, 1, checkBoxSize - 3, checkBoxSize - 3));
             g.DrawRectangle(borderPen, new Rectangle(0, 0, checkBoxSize - 1, checkBoxSize - 1));
         }
 
