@@ -57,6 +57,7 @@ namespace ZUploader
             cbShowTray.Checked = Program.Settings.ShowTray;
             cbStartWithWindows.Checked = RegistryHelper.CheckStartWithWindows();
             cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
+            cbCheckUpdates.Checked = Program.Settings.AutoCheckUpdate;
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
@@ -255,6 +256,11 @@ namespace ZUploader
             {
                 RegistryHelper.SetShellContextMenu(cbShellContextMenu.Checked);
             }
+        }
+
+        private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AutoCheckUpdate = cbCheckUpdates.Checked;
         }
 
         private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)

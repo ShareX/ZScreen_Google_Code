@@ -54,7 +54,6 @@
             this.gbUpdates = new System.Windows.Forms.GroupBox();
             this.cboReleaseChannel = new System.Windows.Forms.ComboBox();
             this.lblUpdateInfo = new System.Windows.Forms.Label();
-            this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbWindowButtons = new System.Windows.Forms.GroupBox();
             this.cboCloseButtonAction = new System.Windows.Forms.ComboBox();
@@ -302,7 +301,6 @@
             // 
             this.gbUpdates.Controls.Add(this.cboReleaseChannel);
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
-            this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.chkCheckUpdates);
             this.gbUpdates.Location = new System.Drawing.Point(11, 232);
             this.gbUpdates.Name = "gbUpdates";
@@ -328,18 +326,8 @@
             this.lblUpdateInfo.Location = new System.Drawing.Point(24, 56);
             this.lblUpdateInfo.Name = "lblUpdateInfo";
             this.lblUpdateInfo.Size = new System.Drawing.Size(116, 16);
-            this.lblUpdateInfo.TabIndex = 3;
+            this.lblUpdateInfo.TabIndex = 2;
             this.lblUpdateInfo.Text = "Update information";
-            // 
-            // btnCheckUpdate
-            // 
-            this.btnCheckUpdate.Location = new System.Drawing.Point(368, 24);
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(104, 24);
-            this.btnCheckUpdate.TabIndex = 2;
-            this.btnCheckUpdate.Text = "Check Update";
-            this.btnCheckUpdate.UseVisualStyleBackColor = true;
-            this.btnCheckUpdate.Click += new System.EventHandler(this.btnCheckUpdate_Click);
             // 
             // chkCheckUpdates
             // 
@@ -1072,7 +1060,6 @@
         internal System.Windows.Forms.GroupBox gbUpdates;
         private System.Windows.Forms.ComboBox cboReleaseChannel;
         internal System.Windows.Forms.Label lblUpdateInfo;
-        internal System.Windows.Forms.Button btnCheckUpdate;
         internal System.Windows.Forms.CheckBox chkCheckUpdates;
         private System.Windows.Forms.GroupBox gbWindowButtons;
         private System.Windows.Forms.ComboBox cboCloseButtonAction;

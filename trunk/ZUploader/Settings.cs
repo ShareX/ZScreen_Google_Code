@@ -47,6 +47,7 @@ namespace ZUploader
 
         // General
         public bool ShowTray = true;
+        public bool AutoCheckUpdate = true;
         public bool ClipboardAutoCopy = true;
         public bool URLShortenAfterUpload = false;
         public bool AutoPlaySound = true;

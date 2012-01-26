@@ -186,12 +186,10 @@ namespace ZScreenGUI
 
         public void CheckUpdates()
         {
-            btnCheckUpdate.Enabled = false;
             lblUpdateInfo.Text = "Checking for Updates...";
             BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
-            updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
             updateThread.RunWorkerAsync();
         }
 
@@ -216,7 +214,6 @@ namespace ZScreenGUI
             }
 
             worker.ReportProgress(1, status);
-            updateChecker.ShowPrompt();
         }
 
         private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -227,11 +224,6 @@ namespace ZScreenGUI
                     lblUpdateInfo.Text = (string)e.UserState;
                     break;
             }
-        }
-
-        private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            btnCheckUpdate.Enabled = true;
         }
 
         #endregion Check Updates
@@ -301,11 +293,6 @@ namespace ZScreenGUI
                 Engine.ConfigUI = XMLSettings.Read();
                 Loader.MainForm.ZScreen_ConfigGUI();
             }
-        }
-
-        private void btnCheckUpdate_Click(object sender, EventArgs e)
-        {
-            CheckUpdates();
         }
 
         private void btnClearHistory_Click(object sender, EventArgs e)
@@ -435,6 +422,7 @@ namespace ZScreenGUI
         private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.ConfigUI.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
+            CheckUpdates();
         }
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)

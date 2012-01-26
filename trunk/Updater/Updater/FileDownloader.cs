@@ -1,7 +1,8 @@
 ﻿#region License Information (GPL v2)
+
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2008-2012 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.ComponentModel;
@@ -34,6 +36,7 @@ namespace Updater
     {
         public string URL { get; private set; }
         public bool IsDownloading { get; private set; }
+        public bool IsCanceled { get; private set; }
         public long FileSize { get; private set; }
         public long DownloadedSize { get; private set; }
         public double DownloadSpeed { get; private set; }
@@ -108,6 +111,14 @@ namespace Updater
             }
         }
 
+        public void StopDownload()
+        {
+            if (IsDownloading)
+            {
+                IsCanceled = true;
+            }
+        }
+
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             HttpWebResponse response = null;
@@ -131,10 +142,15 @@ namespace Updater
 
                     while (DownloadedSize < FileSize && !worker.CancellationPending)
                     {
-                        while (IsPaused)
+                        while (IsPaused && !IsCanceled)
                         {
                             timer.Reset();
                             Thread.Sleep(10);
+                        }
+
+                        if (IsCanceled)
+                        {
+                            return;
                         }
 
                         if (!timer.IsRunning)
@@ -162,8 +178,11 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                LastException = ex;
-                ThrowEvent(ExceptionThrowed);
+                if (!IsCanceled)
+                {
+                    LastException = ex;
+                    ThrowEvent(ExceptionThrowed);
+                }
             }
             finally
             {
