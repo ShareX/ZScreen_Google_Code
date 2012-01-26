@@ -248,7 +248,7 @@ namespace ZUploader
                 {
                     DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
                     downloader.ShowDialog();
-                    if (downloader.InstallStarted) Application.Exit();
+                    if (downloader.Status == DownloaderFormStatus.InstallStarted) Application.Exit();
                 }
             }
         }
