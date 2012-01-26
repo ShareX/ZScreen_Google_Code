@@ -35,7 +35,7 @@
             this.cbShowChangelog = new HelpersLib.MyCheckBox();
             this.lblStatus = new HelpersLib.MyLabel();
             this.lblFilename = new HelpersLib.MyLabel();
-            this.btnCancel = new HelpersLib.MyButton();
+            this.btnAction = new HelpersLib.MyButton();
             this.pbProgress = new HelpersLib.MyProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -54,8 +54,9 @@
             // txtChangelog
             // 
             this.txtChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.txtChangelog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtChangelog.ForeColor = System.Drawing.Color.White;
-            this.txtChangelog.Location = new System.Drawing.Point(8, 212);
+            this.txtChangelog.Location = new System.Drawing.Point(8, 208);
             this.txtChangelog.Multiline = true;
             this.txtChangelog.Name = "txtChangelog";
             this.txtChangelog.ReadOnly = true;
@@ -110,18 +111,18 @@
             this.lblFilename.TabIndex = 10;
             this.lblFilename.Text = "Filename:";
             // 
-            // btnCancel
+            // btnAction
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.Transparent;
-            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.Font = new System.Drawing.Font("Arial", 12F);
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(352, 163);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(128, 32);
-            this.btnCancel.TabIndex = 9;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnAction.BackColor = System.Drawing.Color.Transparent;
+            this.btnAction.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAction.Font = new System.Drawing.Font("Arial", 12F);
+            this.btnAction.ForeColor = System.Drawing.Color.White;
+            this.btnAction.Location = new System.Drawing.Point(352, 163);
+            this.btnAction.Name = "btnAction";
+            this.btnAction.Size = new System.Drawing.Size(128, 32);
+            this.btnAction.TabIndex = 9;
+            this.btnAction.Text = "Download";
+            this.btnAction.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // pbProgress
             // 
@@ -139,13 +140,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.ClientSize = new System.Drawing.Size(488, 421);
+            this.ClientSize = new System.Drawing.Size(488, 417);
             this.Controls.Add(this.txtChangelog);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.cbShowChangelog);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblFilename);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnAction);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pbProgress);
             this.DoubleBuffered = true;
@@ -168,7 +169,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private MyProgressBar pbProgress;
-        private MyButton btnCancel;
+        private MyButton btnAction;
         private MyLabel lblFilename;
         private MyLabel lblStatus;
         private MyLabel lblProgress;
