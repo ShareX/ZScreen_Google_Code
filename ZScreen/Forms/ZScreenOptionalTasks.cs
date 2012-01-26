@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
 using ZScreenLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
@@ -72,6 +73,24 @@ namespace ZScreenGUI
             Adapter.UpdateTinyPicRegCode();
         }
 
+        private void CheckUpdate()
+        {
+            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Adapter.AssemblyVersion),
+                Engine.ConfigUI.ReleaseChannel, Uploader.ProxySettings.GetWebProxy);
+            updateChecker.CheckUpdate();
+
+            if (updateChecker.UpdateInfo != null && updateChecker.UpdateInfo.Status == UpdateStatus.UpdateRequired && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
+            {
+                if (MessageBox.Show("Update found. Do you want to download it?", Application.ProductName, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
+                    downloader.ShowDialog();
+                    if (downloader.InstallStarted) Application.Exit();
+                }
+            }
+        }
+
         private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -82,6 +101,8 @@ namespace ZScreenGUI
                 {
                     Adapter.TestFTPAccount(acc, true);
                 }
+
+                CheckUpdate();
             }
             catch (Exception ex)
             {

@@ -66,7 +66,7 @@ namespace ZScreenLib
 
             if (File.Exists(settingsFile) && settingsFile != Engine.SettingsFilePath)
             {
-                File.Copy(settingsFile, Engine.SettingsFilePath);                 // Update AppSettings.xml
+                File.Copy(settingsFile, Engine.SettingsFilePath, true);             // Update AppSettings.xml
             }
 
             Engine.ConfigApp.XMLSettingsPath = Engine.SettingsFilePath;

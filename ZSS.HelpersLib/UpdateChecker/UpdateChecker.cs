@@ -28,7 +28,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Windows.Forms;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using HelpersLib;
@@ -59,10 +59,8 @@ namespace ZSS.UpdateCheckerLib
         public Version ApplicationVersion { get; private set; }
         public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateInfo UpdateInfo { get; private set; }
-        public bool AutoDownloadSummary { get; set; }
 
         private IWebProxy proxy;
-        private NewVersionWindowOptions nvwo;
 
         public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo = null)
         {
@@ -70,9 +68,7 @@ namespace ZSS.UpdateCheckerLib
             ApplicationName = applicationName;
             ApplicationVersion = applicationVersion;
             ReleaseChannel = channel;
-            AutoDownloadSummary = true;
             this.proxy = proxy;
-            this.nvwo = nvwo;
         }
 
         public bool CheckUpdate()
@@ -120,10 +116,11 @@ namespace ZSS.UpdateCheckerLib
                             {
                                 UpdateInfo.Status = UpdateStatus.UpdateRequired;
 
-                                if (AutoDownloadSummary && !string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
+                                if (!string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
                                 {
                                     try
                                     {
+                                        wc.Encoding = Encoding.UTF8;
                                         UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
                                     }
                                     catch (Exception ex)
@@ -148,27 +145,6 @@ namespace ZSS.UpdateCheckerLib
             }
 
             UpdateInfo.Status = UpdateStatus.UpdateCheckFailed;
-
-            return false;
-        }
-
-        public bool ShowPrompt()
-        {
-            if (UpdateInfo != null && UpdateInfo.IsUpdateRequired)
-            {
-                nvwo.Question = string.Format("Do you want to download it now?\n\n{0}", UpdateInfo.ToString());
-                nvwo.UpdateInfo = UpdateInfo;
-                nvwo.ProjectName = ApplicationName;
-
-                using (UpdaterForm ver = new UpdaterForm(nvwo))
-                {
-                    if (ver.ShowDialog() == DialogResult.Yes)
-                    {
-                        ZAppHelper.LoadBrowserAsync(UpdateInfo.URL);
-                        return true;
-                    }
-                }
-            }
 
             return false;
         }
