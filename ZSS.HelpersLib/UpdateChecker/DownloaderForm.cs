@@ -34,29 +34,35 @@ using System.Windows.Forms;
 
 namespace HelpersLib
 {
+    public enum DownloaderFormStatus { Waiting, DownloadStarted, DownloadCompleted, InstallStarted }
+
     public partial class DownloaderForm : Form
     {
         public string URL { get; set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
         public string Changelog { get; set; }
-        public bool DownloadStarted { get; private set; }
-        public bool DownloadCompleted { get; private set; }
-        public bool InstallStarted { get; private set; }
+        public bool AutoStartDownload { get; set; }
+        public DownloaderFormStatus Status { get; private set; }
 
         private FileDownloader fileDownloader;
-        private FileStream stream;
-        private Rectangle fillRect, drawRect;
+        private FileStream fileStream;
+        private Rectangle fillRect;
         private LinearGradientBrush backgroundBrush;
 
         public DownloaderForm()
         {
             InitializeComponent();
             fillRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-            drawRect = new Rectangle(0, 0, fillRect.Width - 1, fillRect.Height - 1);
             backgroundBrush = new LinearGradientBrush(fillRect, Color.FromArgb(80, 80, 80), Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
             UpdateFormSize();
             ChangeStatus("Waiting.");
+
+            Status = DownloaderFormStatus.Waiting;
+
+#if !DEBUG
+            AutoStartDownload = true;
+#endif
         }
 
         public DownloaderForm(string url, string changelog)
@@ -77,7 +83,10 @@ namespace HelpersLib
 
         private void DownloaderForm_Shown(object sender, EventArgs e)
         {
-            StartDownload();
+            if (AutoStartDownload)
+            {
+                StartDownload();
+            }
         }
 
         private void ChangeStatus(string status)
@@ -96,13 +105,14 @@ namespace HelpersLib
 
         private void StartDownload()
         {
-            if (!string.IsNullOrEmpty(URL) && !DownloadStarted)
+            if (!string.IsNullOrEmpty(URL) && Status == DownloaderFormStatus.Waiting)
             {
-                DownloadStarted = true;
+                Status = DownloaderFormStatus.DownloadStarted;
+                btnAction.Text = "Cancel";
 
                 SavePath = Path.Combine(Path.GetTempPath(), FileName);
-                stream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-                fileDownloader = new FileDownloader(URL, stream);
+                fileStream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                fileDownloader = new FileDownloader(URL, fileStream);
                 fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
                 fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
                 fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
@@ -118,54 +128,63 @@ namespace HelpersLib
         {
             if (cbShowChangelog.Checked)
             {
-                Size = new Size(Size.Width, 450);
+                Size = new Size(Size.Width, 445);
             }
             else
             {
-                Size = new Size(Size.Width, 235);
+                Size = new Size(Size.Width, 233);
             }
         }
 
         private void fileDownloader_DownloadCompleted(object sender, EventArgs e)
         {
-            DownloadCompleted = true;
+            Status = DownloaderFormStatus.DownloadCompleted;
             ChangeStatus("Download completed.");
-            btnCancel.Text = "Install";
+            btnAction.Text = "Install";
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if (DownloadCompleted)
+            switch (Status)
             {
-                try
-                {
-                    btnCancel.Enabled = false;
-                    ProcessStartInfo psi = new ProcessStartInfo(SavePath);
-                    psi.Verb = "runas";
-                    psi.UseShellExecute = true;
-                    Process.Start(psi);
-                    InstallStarted = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Updater", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+                case DownloaderFormStatus.Waiting:
+                    StartDownload();
+                    break;
+                default:
+                case DownloaderFormStatus.DownloadStarted:
+                    Close();
+                    break;
+                case DownloaderFormStatus.DownloadCompleted:
+                    try
+                    {
+                        btnAction.Enabled = false;
+                        ProcessStartInfo psi = new ProcessStartInfo(SavePath);
+                        psi.Verb = "runas";
+                        psi.UseShellExecute = true;
+                        Process.Start(psi);
+                        Status = DownloaderFormStatus.InstallStarted;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "Updater", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-            Close();
-        }
-
-        private void UpdaterForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (DownloadStarted && !DownloadCompleted)
-            {
-                fileDownloader.StopDownload();
+                    Close();
+                    break;
             }
         }
 
         private void cbShowChangelog_CheckedChanged(object sender, EventArgs e)
         {
             UpdateFormSize();
+        }
+
+        private void UpdaterForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Status == DownloaderFormStatus.DownloadStarted)
+            {
+                fileDownloader.StopDownload();
+            }
         }
     }
 }
