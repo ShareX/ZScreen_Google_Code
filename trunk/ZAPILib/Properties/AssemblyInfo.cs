@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen")]
 [assembly: AssemblyProduct("ZAPILib")]
-[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
+[assembly: AssemblyCopyright("Copyright (C) 2008-2012 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -35,16 +36,20 @@ namespace HelpersLib
     public class HotkeyForm : Form
     {
         public List<HotkeyInfo> HotkeyList { get; private set; }
+        public bool IgnoreHotkeys { get; set; }
+        public int HotkeyRepeatLimit { get; set; }
 
         public delegate void HotkeyEventHandler(KeyEventArgs e);
-
         public event HotkeyEventHandler HotkeyPress;
 
-        public bool IgnoreHotkeys { get; set; }
+        private Stopwatch repeatLimitTimer;
 
         public HotkeyForm()
         {
             HotkeyList = new List<HotkeyInfo>();
+            HotkeyRepeatLimit = 1000;
+
+            repeatLimitTimer = Stopwatch.StartNew();
         }
 
         public HotkeyStatus RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = 0)
@@ -159,7 +164,7 @@ namespace HelpersLib
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == (int)WindowsMessages.HOTKEY && !IgnoreHotkeys)
+            if (m.Msg == (int)WindowsMessages.HOTKEY && !IgnoreHotkeys && CheckRepeatLimitTime())
             {
                 HotkeyInfo hotkey = GetHotkeyInfoFromID((ushort)m.WParam);
 
@@ -192,6 +197,24 @@ namespace HelpersLib
             UnregisterAllHotkeys();
 
             base.OnClosed(e);
+        }
+
+        private bool CheckRepeatLimitTime()
+        {
+            if (HotkeyRepeatLimit > 0)
+            {
+                if (repeatLimitTimer.ElapsedMilliseconds >= HotkeyRepeatLimit)
+                {
+                    repeatLimitTimer.Reset();
+                    repeatLimitTimer.Start();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
