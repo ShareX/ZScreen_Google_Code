@@ -85,6 +85,13 @@ namespace HelpersLib
         SW_MAX = 11
     }
 
+    public enum WindowPlacementFlags : uint
+    {
+        WPF_SETMINPOSITION = 0x1,
+        WPF_RESTORETOMAXIMIZED = 0x2,
+        WPF_ASYNCWINDOWPLACEMENT = 0x4
+    }
+
     public enum GetWindowConstants : uint
     {
         GW_HWNDFIRST = 0,
