@@ -675,16 +675,6 @@ namespace ZUploader
             }
         }
 
-        private void tsmiTrayClipboardUpload_Click(object sender, EventArgs e)
-        {
-            UploadManager.ClipboardUploadWithContentViewer();
-        }
-
-        private void tsmiTrayFileUpload_Click(object sender, EventArgs e)
-        {
-            UploadManager.UploadFile();
-        }
-
         private void tsmiTrayExit_Click(object sender, EventArgs e)
         {
             trayClose = true;
