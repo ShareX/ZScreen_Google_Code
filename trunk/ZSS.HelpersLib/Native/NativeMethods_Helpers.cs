@@ -437,5 +437,22 @@ namespace HelpersLib
                 return SetWindowsHookEx(hookType, hookProc, GetModuleHandle(currentModule.ModuleName), 0);
             }
         }
+
+        public static void RestoreWindow(IntPtr handle)
+        {
+            WINDOWPLACEMENT wp = new WINDOWPLACEMENT();
+            GetWindowPlacement(handle, ref wp);
+
+            if (wp.flags == (int)WindowPlacementFlags.WPF_RESTORETOMAXIMIZED)
+            {
+                wp.showCmd = (int)SHOWWINDOW.SW_SHOWMAXIMIZED;
+            }
+            else
+            {
+                wp.showCmd = (int)SHOWWINDOW.SW_RESTORE;
+            }
+
+            SetWindowPlacement(handle, ref wp);
+        }
     }
 }

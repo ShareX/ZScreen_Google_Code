@@ -173,6 +173,11 @@ namespace ZUploader
 
             Capture(() =>
             {
+                if (NativeMethods.IsIconic(handle))
+                {
+                    NativeMethods.RestoreWindow(handle);
+                }
+
                 NativeMethods.SetForegroundWindow(handle);
                 Thread.Sleep(250);
 
