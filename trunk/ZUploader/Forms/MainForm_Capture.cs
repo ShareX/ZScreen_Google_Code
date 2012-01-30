@@ -207,9 +207,16 @@ namespace ZUploader
             }, autoHideForm);
         }
 
-        private void tsddbCapture_DropDownOpening(object sender, EventArgs e)
+        private void WindowRectangleCapture(bool autoHideForm = true)
         {
-            tsmiWindow.DropDownItems.Clear();
+            RectangleRegion rectangleRegion = new RectangleRegion();
+            rectangleRegion.AreaManager.WindowCaptureMode = true;
+            CaptureRegion(rectangleRegion, autoHideForm);
+        }
+
+        private void PrepareWindowsMenu(ToolStripMenuItem tsmi, EventHandler handler)
+        {
+            tsmi.DropDownItems.Clear();
 
             WindowsList windowsList = new WindowsList();
             List<WindowInfo> windows = windowsList.GetVisibleWindowsList();
@@ -217,8 +224,8 @@ namespace ZUploader
             foreach (WindowInfo window in windows)
             {
                 string title = window.Text.Truncate(50);
-                ToolStripItem tsi = tsmiWindow.DropDownItems.Add(title);
-                tsi.Click += tsmiWindowItems_Click;
+                ToolStripItem tsi = tsmi.DropDownItems.Add(title);
+                tsi.Click += handler;
 
                 using (Icon icon = window.Icon)
                 {
@@ -232,26 +239,23 @@ namespace ZUploader
             }
         }
 
+        #region Menu events
+
         private void tsmiFullscreen_Click(object sender, EventArgs e)
         {
             CaptureScreen();
+        }
+
+        private void tsddbCapture_DropDownOpening(object sender, EventArgs e)
+        {
+            PrepareWindowsMenu(tsmiWindow, tsmiWindowItems_Click);
         }
 
         private void tsmiWindowItems_Click(object sender, EventArgs e)
         {
             ToolStripItem tsi = (ToolStripItem)sender;
             WindowInfo wi = tsi.Tag as WindowInfo;
-            if (wi != null)
-            {
-                CaptureWindow(wi.Handle);
-            }
-        }
-
-        private void WindowRectangleCapture(bool autoHideForm = true)
-        {
-            RectangleRegion rectangleRegion = new RectangleRegion();
-            rectangleRegion.AreaManager.WindowCaptureMode = true;
-            CaptureRegion(rectangleRegion, autoHideForm);
+            if (wi != null) CaptureWindow(wi.Handle);
         }
 
         private void tsmiWindowRectangle_Click(object sender, EventArgs e)
@@ -293,5 +297,63 @@ namespace ZUploader
         {
             CaptureRegion(new FreeHandRegion());
         }
+
+        #endregion Menu events
+
+        #region Tray events
+
+        private void tsmiTrayFullscreen_Click(object sender, EventArgs e)
+        {
+            CaptureScreen(false);
+        }
+
+        private void tsmiCapture_DropDownOpening(object sender, EventArgs e)
+        {
+            PrepareWindowsMenu(tsmiTrayWindow, tsmiTrayWindowItems_Click);
+        }
+
+        private void tsmiTrayWindowItems_Click(object sender, EventArgs e)
+        {
+            ToolStripItem tsi = (ToolStripItem)sender;
+            WindowInfo wi = tsi.Tag as WindowInfo;
+            if (wi != null) CaptureWindow(wi.Handle, false);
+        }
+
+        private void tsmiTrayWindowRectangle_Click(object sender, EventArgs e)
+        {
+            WindowRectangleCapture(false);
+        }
+
+        private void tsmiTrayRectangle_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new RectangleRegion(), false);
+        }
+
+        private void tsmiTrayRoundedRectangle_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new RoundedRectangleRegion(), false);
+        }
+
+        private void tsmiTrayTriangle_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new TriangleRegion(), false);
+        }
+
+        private void tsmiTrayDiamond_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new DiamondRegion(), false);
+        }
+
+        private void tsmiTrayPolygon_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new PolygonRegion(), false);
+        }
+
+        private void tsmiTrayFreeHand_Click(object sender, EventArgs e)
+        {
+            CaptureRegion(new FreeHandRegion(), false);
+        }
+
+        #endregion Tray events
     }
 }

@@ -110,13 +110,6 @@ namespace ZUploader
             this.cmsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTrayClipboardUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayFileUpload = new System.Windows.Forms.ToolStripMenuItem();
-            this.tssTray1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDonate = new System.Windows.Forms.ToolStripMenuItem();
-            this.tssTray2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayWindow = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,6 +120,13 @@ namespace ZUploader
             this.tsmiTrayDiamond = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayPolygon = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayFreeHand = new System.Windows.Forms.ToolStripMenuItem();
+            this.tssTray1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDonate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tssTray2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -613,7 +613,7 @@ namespace ZUploader
             this.tssTray2,
             this.tsmiTrayExit});
             this.cmsTray.Name = "cmsTray";
-            this.cmsTray.Size = new System.Drawing.Size(176, 192);
+            this.cmsTray.Size = new System.Drawing.Size(176, 214);
             // 
             // tsmiTrayClipboardUpload
             // 
@@ -630,6 +630,95 @@ namespace ZUploader
             this.tsmiTrayFileUpload.Size = new System.Drawing.Size(175, 22);
             this.tsmiTrayFileUpload.Text = "File upload...";
             this.tsmiTrayFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
+            // 
+            // tsmiCapture
+            // 
+            this.tsmiCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTrayFullscreen,
+            this.tsmiTrayWindow,
+            this.tsmiTrayWindowRectangle,
+            this.tsmiTrayRectangle,
+            this.tsmiTrayRoundedRectangle,
+            this.tsmiTrayTriangle,
+            this.tsmiTrayDiamond,
+            this.tsmiTrayPolygon,
+            this.tsmiTrayFreeHand});
+            this.tsmiCapture.Image = global::ZUploader.Properties.Resources.camera;
+            this.tsmiCapture.Name = "tsmiCapture";
+            this.tsmiCapture.Size = new System.Drawing.Size(175, 22);
+            this.tsmiCapture.Text = "Capture";
+            this.tsmiCapture.DropDownOpening += new System.EventHandler(this.tsmiCapture_DropDownOpening);
+            // 
+            // tsmiTrayFullscreen
+            // 
+            this.tsmiTrayFullscreen.Image = global::ZUploader.Properties.Resources.Fullscreen;
+            this.tsmiTrayFullscreen.Name = "tsmiTrayFullscreen";
+            this.tsmiTrayFullscreen.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayFullscreen.Text = "Fullscreen";
+            this.tsmiTrayFullscreen.Click += new System.EventHandler(this.tsmiTrayFullscreen_Click);
+            // 
+            // tsmiTrayWindow
+            // 
+            this.tsmiTrayWindow.Image = global::ZUploader.Properties.Resources.Window;
+            this.tsmiTrayWindow.Name = "tsmiTrayWindow";
+            this.tsmiTrayWindow.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayWindow.Text = "Window";
+            // 
+            // tsmiTrayWindowRectangle
+            // 
+            this.tsmiTrayWindowRectangle.Image = global::ZUploader.Properties.Resources.Window;
+            this.tsmiTrayWindowRectangle.Name = "tsmiTrayWindowRectangle";
+            this.tsmiTrayWindowRectangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayWindowRectangle.Text = "Window && Rectangle";
+            this.tsmiTrayWindowRectangle.Click += new System.EventHandler(this.tsmiTrayWindowRectangle_Click);
+            // 
+            // tsmiTrayRectangle
+            // 
+            this.tsmiTrayRectangle.Image = global::ZUploader.Properties.Resources.Rectangle;
+            this.tsmiTrayRectangle.Name = "tsmiTrayRectangle";
+            this.tsmiTrayRectangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayRectangle.Text = "Rectangle";
+            this.tsmiTrayRectangle.Click += new System.EventHandler(this.tsmiTrayRectangle_Click);
+            // 
+            // tsmiTrayRoundedRectangle
+            // 
+            this.tsmiTrayRoundedRectangle.Image = global::ZUploader.Properties.Resources.RoundedRectangle;
+            this.tsmiTrayRoundedRectangle.Name = "tsmiTrayRoundedRectangle";
+            this.tsmiTrayRoundedRectangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayRoundedRectangle.Text = "Rounded Rectangle";
+            this.tsmiTrayRoundedRectangle.Click += new System.EventHandler(this.tsmiTrayRoundedRectangle_Click);
+            // 
+            // tsmiTrayTriangle
+            // 
+            this.tsmiTrayTriangle.Image = global::ZUploader.Properties.Resources.Triangle;
+            this.tsmiTrayTriangle.Name = "tsmiTrayTriangle";
+            this.tsmiTrayTriangle.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayTriangle.Text = "Triangle";
+            this.tsmiTrayTriangle.Click += new System.EventHandler(this.tsmiTrayTriangle_Click);
+            // 
+            // tsmiTrayDiamond
+            // 
+            this.tsmiTrayDiamond.Image = global::ZUploader.Properties.Resources.Diamond;
+            this.tsmiTrayDiamond.Name = "tsmiTrayDiamond";
+            this.tsmiTrayDiamond.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayDiamond.Text = "Diamond";
+            this.tsmiTrayDiamond.Click += new System.EventHandler(this.tsmiTrayDiamond_Click);
+            // 
+            // tsmiTrayPolygon
+            // 
+            this.tsmiTrayPolygon.Image = global::ZUploader.Properties.Resources.Polygon;
+            this.tsmiTrayPolygon.Name = "tsmiTrayPolygon";
+            this.tsmiTrayPolygon.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayPolygon.Text = "Polygon";
+            this.tsmiTrayPolygon.Click += new System.EventHandler(this.tsmiTrayPolygon_Click);
+            // 
+            // tsmiTrayFreeHand
+            // 
+            this.tsmiTrayFreeHand.Image = global::ZUploader.Properties.Resources.FreeHand;
+            this.tsmiTrayFreeHand.Name = "tsmiTrayFreeHand";
+            this.tsmiTrayFreeHand.Size = new System.Drawing.Size(186, 22);
+            this.tsmiTrayFreeHand.Text = "Free Hand";
+            this.tsmiTrayFreeHand.Click += new System.EventHandler(this.tsmiTrayFreeHand_Click);
             // 
             // tssTray1
             // 
@@ -680,86 +769,6 @@ namespace ZUploader
             this.tsmiTrayExit.Size = new System.Drawing.Size(175, 22);
             this.tsmiTrayExit.Text = "Exit";
             this.tsmiTrayExit.Click += new System.EventHandler(this.tsmiTrayExit_Click);
-            // 
-            // tsmiCapture
-            // 
-            this.tsmiCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiTrayFullscreen,
-            this.tsmiTrayWindow,
-            this.tsmiTrayWindowRectangle,
-            this.tsmiTrayRectangle,
-            this.tsmiTrayRoundedRectangle,
-            this.tsmiTrayTriangle,
-            this.tsmiTrayDiamond,
-            this.tsmiTrayPolygon,
-            this.tsmiTrayFreeHand});
-            this.tsmiCapture.Image = global::ZUploader.Properties.Resources.camera;
-            this.tsmiCapture.Name = "tsmiCapture";
-            this.tsmiCapture.Size = new System.Drawing.Size(175, 22);
-            this.tsmiCapture.Text = "Capture";
-            // 
-            // tsmiTrayFullscreen
-            // 
-            this.tsmiTrayFullscreen.Image = global::ZUploader.Properties.Resources.Fullscreen;
-            this.tsmiTrayFullscreen.Name = "tsmiTrayFullscreen";
-            this.tsmiTrayFullscreen.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayFullscreen.Text = "Fullscreen";
-            // 
-            // tsmiTrayWindow
-            // 
-            this.tsmiTrayWindow.Image = global::ZUploader.Properties.Resources.Window;
-            this.tsmiTrayWindow.Name = "tsmiTrayWindow";
-            this.tsmiTrayWindow.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayWindow.Text = "Window";
-            // 
-            // tsmiTrayWindowRectangle
-            // 
-            this.tsmiTrayWindowRectangle.Image = global::ZUploader.Properties.Resources.Window;
-            this.tsmiTrayWindowRectangle.Name = "tsmiTrayWindowRectangle";
-            this.tsmiTrayWindowRectangle.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayWindowRectangle.Text = "Window && Rectangle";
-            // 
-            // tsmiTrayRectangle
-            // 
-            this.tsmiTrayRectangle.Image = global::ZUploader.Properties.Resources.Rectangle;
-            this.tsmiTrayRectangle.Name = "tsmiTrayRectangle";
-            this.tsmiTrayRectangle.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayRectangle.Text = "Rectangle";
-            // 
-            // tsmiTrayRoundedRectangle
-            // 
-            this.tsmiTrayRoundedRectangle.Image = global::ZUploader.Properties.Resources.RoundedRectangle;
-            this.tsmiTrayRoundedRectangle.Name = "tsmiTrayRoundedRectangle";
-            this.tsmiTrayRoundedRectangle.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayRoundedRectangle.Text = "Rounded Rectangle";
-            // 
-            // tsmiTrayTriangle
-            // 
-            this.tsmiTrayTriangle.Image = global::ZUploader.Properties.Resources.Triangle;
-            this.tsmiTrayTriangle.Name = "tsmiTrayTriangle";
-            this.tsmiTrayTriangle.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayTriangle.Text = "Triangle";
-            // 
-            // tsmiTrayDiamond
-            // 
-            this.tsmiTrayDiamond.Image = global::ZUploader.Properties.Resources.Diamond;
-            this.tsmiTrayDiamond.Name = "tsmiTrayDiamond";
-            this.tsmiTrayDiamond.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayDiamond.Text = "Diamond";
-            // 
-            // tsmiTrayPolygon
-            // 
-            this.tsmiTrayPolygon.Image = global::ZUploader.Properties.Resources.Polygon;
-            this.tsmiTrayPolygon.Name = "tsmiTrayPolygon";
-            this.tsmiTrayPolygon.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayPolygon.Text = "Polygon";
-            // 
-            // tsmiTrayFreeHand
-            // 
-            this.tsmiTrayFreeHand.Image = global::ZUploader.Properties.Resources.FreeHand;
-            this.tsmiTrayFreeHand.Name = "tsmiTrayFreeHand";
-            this.tsmiTrayFreeHand.Size = new System.Drawing.Size(186, 22);
-            this.tsmiTrayFreeHand.Text = "Free Hand";
             // 
             // MainForm
             // 
