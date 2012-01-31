@@ -1033,6 +1033,18 @@ namespace ZScreenLib
         public void RunWorker()
         {
             Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
+
+            // PerformActions should happen in main thread
+            if (this.Job1 == EDataType.Image && this.TempImage != null && !this.States.Contains(WorkerTask.TaskState.ImageEdited))
+            {
+                this.States.Add(WorkerTask.TaskState.ImageEdited);
+                if (this.WorkflowConfig.PerformActions && this.Job2 != WorkerTask.JobLevel2.UploadImage)
+                {
+                    this.PerformActions();
+                }
+            }
+
+            // Any code before the line below will run in main thread
             MyWorker.RunWorkerAsync(this);
         }
 

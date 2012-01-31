@@ -381,41 +381,26 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync(WorkerTask imageTask)
+        public void RunWorkerAsync(WorkerTask screenshotTask)
         {
-            if (imageTask == null) return;
-            if (imageTask.States.Contains(WorkerTask.TaskState.CancellationPending))
+            if (screenshotTask == null) return;
+            if (screenshotTask.States.Contains(WorkerTask.TaskState.CancellationPending))
             {
                 PostWorkerTasks();
                 return;
             }
 
-            imageTask.WasToTakeScreenshot = true;
+            screenshotTask.WasToTakeScreenshot = true;
             // the last point before the task enters background
-            if (imageTask.TempImage != null)
+            if (screenshotTask.TempImage != null)
             {
-                pbPreview.LoadImage(imageTask.TempImage);
-
-                DialogResult result = System.Windows.Forms.DialogResult.OK;
-
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    // PerformActions should happen in main thread
-                    if (imageTask.TempImage != null && !imageTask.States.Contains(WorkerTask.TaskState.ImageEdited))
-                    {
-                        imageTask.States.Add(WorkerTask.TaskState.ImageEdited);
-                        if (imageTask.WorkflowConfig.PerformActions && imageTask.Job2 != WorkerTask.JobLevel2.UploadImage)
-                        {
-                            imageTask.PerformActions();
-                        }
-                    }
-                    imageTask.RunWorker();
-                }
-                else
-                {
-                    imageTask.States.Add(WorkerTask.TaskState.CancellationPending);
-                    PostWorkerTasks();
-                }
+                pbPreview.LoadImage(screenshotTask.TempImage);
+                screenshotTask.RunWorker();
+            }
+            else
+            {
+                screenshotTask.States.Add(WorkerTask.TaskState.CancellationPending);
+                PostWorkerTasks();
             }
         }
 
