@@ -98,7 +98,7 @@ namespace ZUploader
 
         // Capture
         public bool ShowCursor = false;
-        public bool CaptureTransparent = false;
+        public bool CaptureTransparent = true;
         public bool CaptureCopyImage = false;
         public bool CaptureSaveImage = false;
         public string SaveImageSubFolderPattern = "%y-%mo";

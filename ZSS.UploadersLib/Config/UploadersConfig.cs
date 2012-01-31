@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -125,13 +126,13 @@ namespace UploadersLib
         public bool EmailRememberLastTo = true;
         public bool EmailConfirmSend = true;
         public string EmailLastTo = string.Empty;
-        public string EmailDefaultSubject = "Sending Email from ZScreen";
+        public string EmailDefaultSubject = "Sending email from " + Application.ProductName;
         public string EmailDefaultBody = "Screenshot is attached.";
 
         // Dropbox
 
         public OAuthInfo DropboxOAuthInfo = null;
-        public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
+        public string DropboxUploadPath = "Public/" + Application.ProductName + "/%y-%mo";
         public DropboxAccountInfo DropboxAccountInfo = null;
 
         // RapidShare

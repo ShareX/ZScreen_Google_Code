@@ -899,7 +899,7 @@ namespace UploadersLib
             }
             else
             {
-                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You must give access from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Config.GoogleURLShortenerOAuthInfo = null;
