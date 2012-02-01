@@ -38,6 +38,7 @@ namespace ZScreenGUI
     /// </summary>
     public partial class ZScreen : ZScreenCoreUI
     {
+        private DialogResult UpdaterAck = DialogResult.Yes;
         private Timer tmrTinyPicRegCodeUpdater = new Timer() { Interval = 3 * 3600 * 1000, Enabled = true };
 
         #region Cache Cleaner Methods
@@ -75,18 +76,23 @@ namespace ZScreenGUI
 
         private void CheckUpdate()
         {
-            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Adapter.AssemblyVersion),
-                Engine.ConfigUI.ReleaseChannel, Uploader.ProxySettings.GetWebProxy);
-            updateChecker.CheckUpdate();
-
-            if (updateChecker.UpdateInfo != null && updateChecker.UpdateInfo.Status == UpdateStatus.UpdateRequired && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
+            if (UpdaterAck != System.Windows.Forms.DialogResult.None)
             {
-                if (MessageBox.Show("Update found. Do you want to download it?", Application.ProductName, MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Adapter.AssemblyVersion),
+                    Engine.ConfigUI.ReleaseChannel, Uploader.ProxySettings.GetWebProxy);
+                updateChecker.CheckUpdate();
+                UpdaterAck = System.Windows.Forms.DialogResult.None;
+
+                if (updateChecker.UpdateInfo != null && updateChecker.UpdateInfo.Status == UpdateStatus.UpdateRequired && !string.IsNullOrEmpty(updateChecker.UpdateInfo.URL))
                 {
-                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
-                    downloader.ShowDialog();
-                    if (downloader.Status == DownloaderFormStatus.InstallStarted) Application.Exit();
+                    UpdaterAck = MessageBox.Show("Update found. Do you want to download it?", Application.ProductName, MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    if (UpdaterAck == DialogResult.Yes)
+                    {
+                        DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
+                        downloader.ShowDialog();
+                        if (downloader.Status == DownloaderFormStatus.InstallStarted) Application.Exit();
+                    }
                 }
             }
         }
