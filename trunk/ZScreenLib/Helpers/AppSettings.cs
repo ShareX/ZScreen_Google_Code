@@ -12,7 +12,14 @@ namespace ZScreenLib
 {
     public class AppSettings
     {
-        public readonly static string AppSettingsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ZScreen\AppSettings.xml");
+        public static string AppSettingsFile
+        {
+            get
+            {
+                string dir = Engine.IsPortable ? Path.Combine(Application.StartupPath, Engine.PortableRootFolder) : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName);
+                return Path.Combine(dir, "AppSettings.xml");
+            }
+        }
 
         [Browsable(false), EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor)), Description("Relocate Root folder location")]
         public string RootDir { get; set; }

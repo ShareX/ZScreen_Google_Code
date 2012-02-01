@@ -54,13 +54,12 @@ namespace ZScreenLib
 
         public static string zPreviousSetClipboardText = Clipboard.GetText();
 
-        public static bool IsPortable { get; private set; }
+        private static readonly string ApplicationName = Application.ProductName;
+        public static readonly string PortableRootFolder = ApplicationName; // using relative paths
+        public static readonly bool IsPortable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
 
         public static bool IsMultiInstance { get; set; }
 
-        private static readonly string ApplicationName = Application.ProductName;
-
-        private static readonly string PortableRootFolder = ApplicationName; // using relative paths
         public static readonly string DocsAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
         #region 100 Properties - File Names
@@ -285,8 +284,6 @@ namespace ZScreenLib
 
             DialogResult startEngine = DialogResult.OK;
 
-            IsPortable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
-
             if (IsPortable)
             {
                 ConfigApp.PreferSystemFolders = false;
@@ -317,12 +314,13 @@ namespace ZScreenLib
                         Engine.ConfigApp.LinkUploaders = cw.cwLinkUploaders;
 
                         ConfigWorkflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
-                        ConfigApp.Write();
 
                         RunConfig = true;
                     }
                 }
             }
+
+            ConfigApp.Write();
 
             if (!ConfigApp.PreferSystemFolders && Directory.Exists(Engine.ConfigApp.RootDir))
             {
@@ -437,13 +435,9 @@ namespace ZScreenLib
 
         public static void TurnOff()
         {
-            if (!IsPortable)
-            {
-                ConfigApp.UploadersConfigPath = Engine.UploadersConfigPath;
-                ConfigApp.WorkflowConfigPath = Engine.WorkflowConfigPath;
-                ConfigApp.Write();
-            }
-
+            ConfigApp.UploadersConfigPath = Engine.UploadersConfigPath;
+            ConfigApp.WorkflowConfigPath = Engine.WorkflowConfigPath;
+            ConfigApp.Write();
             StaticHelper.WriteLine("ZScreen closing");
 
             if (Engine.ConfigUI != null && Engine.ConfigUI.WriteDebugFile)
