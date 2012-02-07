@@ -154,7 +154,8 @@ namespace ZUploader
 
         public static MainForm mainForm;
 
-        private static ManualResetEvent settingsResetEvent;
+        public static ManualResetEvent SettingsResetEvent;
+        public static ManualResetEvent UploaderSettingsResetEvent;
 
         [STAThread]
         private static void Main(string[] args)
@@ -189,14 +190,15 @@ namespace ZUploader
             MyLogger.WriteLine("IsSilentRun: " + IsSilentRun);
             MyLogger.WriteLine("IsPortable: " + IsPortable);
 
-            settingsResetEvent = new ManualResetEvent(false);
+            SettingsResetEvent = new ManualResetEvent(false);
+            UploaderSettingsResetEvent = new ManualResetEvent(false);
             ThreadPool.QueueUserWorkItem(state => LoadSettings());
 
             MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
 
-            settingsResetEvent.WaitOne();
+            SettingsResetEvent.WaitOne();
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -211,8 +213,9 @@ namespace ZUploader
         public static void LoadSettings()
         {
             Settings = Settings.Load(SettingsFilePath);
-            settingsResetEvent.Set();
+            SettingsResetEvent.Set();
             LoadUploadersConfig();
+            UploaderSettingsResetEvent.Set();
         }
 
         public static void LoadUploadersConfig()
@@ -241,7 +244,11 @@ namespace ZUploader
             {
                 Action d = () =>
                 {
-                    mainForm.ShowActivate();
+                    if (mainForm.Visible)
+                    {
+                        mainForm.ShowActivate();
+                    }
+
                     mainForm.UseCommandLineArgs(args.CommandLineArgs);
                 };
 

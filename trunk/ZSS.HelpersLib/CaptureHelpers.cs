@@ -174,6 +174,18 @@ namespace HelpersLib
             return rect;
         }
 
+        public static Rectangle GetActiveWindowRectangle(bool maximizeFix = true)
+        {
+            IntPtr handle = NativeMethods.GetForegroundWindow();
+
+            if (handle.ToInt32() > 0)
+            {
+                return CaptureHelpers.GetWindowRectangle(handle);
+            }
+
+            return Rectangle.Empty;
+        }
+
         public static Image CropImage(Image img, Rectangle rect)
         {
             if (img != null && rect.X >= 0 && rect.Y >= 0 && rect.Width > 0 && rect.Height > 0)
