@@ -146,6 +146,8 @@ namespace ZUploader
         {
             CheckJob();
 
+            Program.UploaderSettingsResetEvent.WaitOne();
+
             Status = TaskStatus.Uploading;
             Info.Status = "Uploading";
             Info.StartTime = DateTime.UtcNow;

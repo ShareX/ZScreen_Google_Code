@@ -82,7 +82,7 @@ namespace ZSS.UpdateCheckerLib
                         lblStatus.Visible = true;
                         break;
                     case UpdateStatus.UpdateRequired:
-                        llblUpdateAvailable.Text = "Newest version of " + updateChecker.ApplicationName + " available";
+                        llblUpdateAvailable.Text = "A newer version of " + updateChecker.ApplicationName + " is available";
                         llblUpdateAvailable.Visible = true;
                         break;
                     case UpdateStatus.UpToDate:
