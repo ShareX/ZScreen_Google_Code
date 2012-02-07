@@ -146,7 +146,10 @@ namespace ZUploader
         {
             CheckJob();
 
-            Program.UploaderSettingsResetEvent.WaitOne();
+            if (Program.UploadersConfig == null)
+            {
+                Program.UploaderSettingsResetEvent.WaitOne();
+            }
 
             Status = TaskStatus.Uploading;
             Info.Status = "Uploading";
