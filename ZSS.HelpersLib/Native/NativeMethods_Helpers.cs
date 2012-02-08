@@ -132,18 +132,11 @@ namespace HelpersLib
         {
             Icon icon = null;
 
-            try
-            {
-                icon = GetSmallApplicationIcon(handle);
+            icon = GetSmallApplicationIcon(handle);
 
-                if (icon == null)
-                {
-                    icon = GetBigApplicationIcon(handle);
-                }
-            }
-            catch (Exception e)
+            if (icon == null)
             {
-                StaticHelper.WriteException(e);
+                icon = GetBigApplicationIcon(handle);
             }
 
             return icon;
