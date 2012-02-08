@@ -232,12 +232,19 @@ namespace ZUploader
                 ToolStripItem tsi = tsmi.DropDownItems.Add(title);
                 tsi.Click += handler;
 
-                using (Icon icon = window.Icon)
+                try
                 {
-                    if (icon != null)
+                    using (Icon icon = window.Icon)
                     {
-                        tsi.Image = icon.ToBitmap();
+                        if (icon != null)
+                        {
+                            tsi.Image = icon.ToBitmap();
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    StaticHelper.WriteException(e);
                 }
 
                 tsi.Tag = window;
