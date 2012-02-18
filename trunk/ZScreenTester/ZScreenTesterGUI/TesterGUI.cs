@@ -74,7 +74,7 @@ namespace ZScreenTesterGUI
             {
                 switch (uploader)
                 {
-                    case ImageDestination.MediaWiki:
+                    //case ImageDestination.MediaWiki:
                     case ImageDestination.Twitsnaps: // Not possible to upload without post Twitter
                     case ImageDestination.FileUploader: // We are going to test this in File Uploader tests
                         continue;

@@ -28,6 +28,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
@@ -246,6 +247,29 @@ namespace ZUploader
                     break;
                 case ImageDestination.UploadScreenshot:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
+                    break;
+                case ImageDestination.Twitpic:
+                    TwitPicOptions twitPicOptions = new TwitPicOptions();
+                    twitPicOptions.Username = Program.UploadersConfig.TwitPicUsername;
+                    twitPicOptions.Password = Program.UploadersConfig.TwitPicPassword;
+                    twitPicOptions.TwitPicThumbnailMode = Program.UploadersConfig.TwitPicThumbnailMode;
+                    twitPicOptions.ShowFull = Program.UploadersConfig.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(twitPicOptions);
+                    break;
+                case ImageDestination.Twitsnaps:
+                    int index = Program.UploadersConfig.TwitterSelectedAccount;
+
+                    if (Program.UploadersConfig.TwitterOAuthInfoList.HasValidIndex(index))
+                    {
+                        imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Program.UploadersConfig.TwitterOAuthInfoList[index]);
+                    }
+                    break;
+                case ImageDestination.yFrog:
+                    YfrogOptions yFrogOptions = new YfrogOptions(ZKeys.ImageShackKey);
+                    yFrogOptions.Username = Program.UploadersConfig.YFrogUsername;
+                    yFrogOptions.Password = Program.UploadersConfig.YFrogPassword;
+                    yFrogOptions.Source = Application.ProductName;
+                    imageUploader = new YfrogUploader(yFrogOptions);
                     break;
             }
 

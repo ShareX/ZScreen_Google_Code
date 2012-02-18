@@ -1843,9 +1843,6 @@ namespace ZScreenLib
                 case ImageDestination.UploadScreenshot:
                     imageUploader = new UploadScreenshot(Engine.ConfigUI.ApiKeys.UploadScreenshotKey);
                     break;
-                case ImageDestination.MediaWiki:
-                    UploadToMediaWiki();
-                    break;
                 case ImageDestination.Twitpic:
                     var twitpicOpt = new TwitPicOptions();
                     twitpicOpt.Username = Engine.ConfigUploaders.TwitPicUsername;
@@ -1855,6 +1852,9 @@ namespace ZScreenLib
                     twitpicOpt.ShowFull = Engine.ConfigUploaders.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
+                case ImageDestination.Twitsnaps:
+                    imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
+                    break;
                 case ImageDestination.yFrog:
                     var yfrogOp = new YfrogOptions(Engine.ConfigUI.ApiKeys.ImageShackKey);
                     yfrogOp.Username = Engine.ConfigUploaders.YFrogUsername;
@@ -1863,9 +1863,9 @@ namespace ZScreenLib
                     // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
-                case ImageDestination.Twitsnaps:
-                    imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
-                    break;
+                /*case ImageDestination.MediaWiki:
+                    UploadToMediaWiki();
+                    break;*/
                 case ImageDestination.FileUploader:
                     foreach (FileDestination ft in WorkflowConfig.DestConfig.FileUploaders)
                     {
