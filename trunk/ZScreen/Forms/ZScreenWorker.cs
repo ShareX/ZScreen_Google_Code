@@ -307,9 +307,9 @@ namespace ZScreenGUI
             Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, DestConfig.Outputs);
             Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, DestConfig.TaskClipboardContent);
             Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, DestConfig.LinkFormat);
-            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, DestConfig.ImageUploaders);
-            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, DestConfig.TextUploaders);
-            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, DestConfig.FileUploaders);
+            Adapter.SaveMenuConfigToList<ImageDestination>(ucDestOptions.tsddbDestImage, DestConfig.ImageUploaders);
+            Adapter.SaveMenuConfigToList<TextDestination>(ucDestOptions.tsddbDestText, DestConfig.TextUploaders);
+            Adapter.SaveMenuConfigToList<FileDestination>(ucDestOptions.tsddbDestFile, DestConfig.FileUploaders);
             Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, DestConfig.LinkUploaders);
 
             return DestConfig;
@@ -732,26 +732,26 @@ namespace ZScreenGUI
                     {
                         if (Engine.ConfigUI.ImageUploadRandomRetryOnFail)
                         {
-                            List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
+                            List<ImageDestination> randomDest = new List<ImageDestination>() { ImageDestination.ImageShack, ImageDestination.TinyPic, ImageDestination.Imgur };
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while (task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageUploaderType)r))
+                            while (task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageDestination)r))
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }
-                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageUploaderType)r))
+                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageDestination)r))
                             {
-                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType)r);
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageDestination)r);
                             }
                         }
                         else
                         {
-                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.TinyPic))
                             {
-                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType.TINYPIC));
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageDestination.TinyPic));
                             }
-                            else if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                            else if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.ImageShack))
                             {
-                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType.IMAGESHACK));
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageDestination.ImageShack));
                             }
                         }
                     }

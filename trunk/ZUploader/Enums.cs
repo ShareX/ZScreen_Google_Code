@@ -23,60 +23,8 @@
 
 #endregion License Information (GPL v2)
 
-using System.ComponentModel;
-
 namespace ZUploader
 {
-    public enum ImageDestination
-    {
-        [Description("imageshack.us")]
-        ImageShack,
-        [Description("tinypic.com")]
-        TinyPic,
-        [Description("imgur.com")]
-        Imgur,
-        [Description("flickr.com")]
-        Flickr,
-        [Description("photobucket.com")]
-        Photobucket,
-        [Description("uploadscreenshot.com")]
-        UploadScreenshot,
-        [Description("File Uploader")]
-        FileUploader
-    }
-
-    public enum TextDestination
-    {
-        [Description("pastebin.com")]
-        Pastebin,
-        [Description("pastebin.ca")]
-        PastebinCA,
-        [Description("paste2.org")]
-        Paste2,
-        [Description("slexy.org")]
-        Slexy,
-        [Description("File Uploader")]
-        FileUploader
-    }
-
-    public enum FileDestination
-    {
-        [Description("dropbox.com")]
-        Dropbox,
-        [Description("rapidshare.com")]
-        RapidShare,
-        [Description("sendspace.com")]
-        SendSpace,
-        [Description("minus.com")]
-        Minus,
-        [Description("box.com")]
-        Box,
-        [Description("Custom Uploader")]
-        CustomUploader,
-        [Description("FTP Server")]
-        FTP
-    }
-
     public enum EImageFormat
     {
         PNG, JPEG, GIF, BMP, TIFF

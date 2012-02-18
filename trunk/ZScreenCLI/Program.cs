@@ -151,13 +151,13 @@ namespace ZScreenCLI
 
             foreach (int ut in listImageHosts)
             {
-                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
-                tempTask.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType)ut);
+                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageDestination)ut).GetDescription()));
+                tempTask.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageDestination)ut);
             }
             foreach (int ut in listFileHosts)
             {
-                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((FileUploaderType)ut).GetDescription()));
-                tempTask.WorkflowConfig.DestConfig.FileUploaders.Add((FileUploaderType)ut);
+                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((FileDestination)ut).GetDescription()));
+                tempTask.WorkflowConfig.DestConfig.FileUploaders.Add((FileDestination)ut);
             }
             return tempTask;
         }
@@ -248,19 +248,19 @@ namespace ZScreenCLI
             }
             Console.WriteLine();
             Console.WriteLine("Image hosts:\n");
-            foreach (ImageUploaderType ut in Enum.GetValues(typeof(ImageUploaderType)))
+            foreach (ImageDestination ut in Enum.GetValues(typeof(ImageDestination)))
             {
                 Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
             Console.WriteLine();
             Console.WriteLine("Text hosts:\n");
-            foreach (TextUploaderType ut in Enum.GetValues(typeof(TextUploaderType)))
+            foreach (TextDestination ut in Enum.GetValues(typeof(TextDestination)))
             {
                 Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
             Console.WriteLine();
             Console.WriteLine("File hosts:\n");
-            foreach (FileUploaderType ut in Enum.GetValues(typeof(FileUploaderType)))
+            foreach (FileDestination ut in Enum.GetValues(typeof(FileDestination)))
             {
                 Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }

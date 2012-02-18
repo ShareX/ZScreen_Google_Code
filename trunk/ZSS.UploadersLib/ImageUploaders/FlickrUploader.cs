@@ -49,7 +49,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.FLICKR.GetDescription();
+                return ImageDestination.Flickr.GetDescription();
             }
         }
 

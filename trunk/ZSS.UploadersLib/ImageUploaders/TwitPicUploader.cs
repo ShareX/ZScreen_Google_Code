@@ -66,7 +66,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.TWITPIC.GetDescription();
+                return ImageDestination.Twitpic.GetDescription();
             }
         }
 

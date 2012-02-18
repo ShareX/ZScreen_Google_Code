@@ -11,9 +11,9 @@ namespace UploadersLib
         public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> LinkFormat = new List<LinkFormatEnum>();
 
-        public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
-        public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();
-        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
+        public List<ImageDestination> ImageUploaders = new List<ImageDestination>();
+        public List<TextDestination> TextUploaders = new List<TextDestination>();
+        public List<FileDestination> FileUploaders = new List<FileDestination>();
         public List<UrlShortenerType> LinkUploaders = new List<UrlShortenerType>();
 
         public override string ToString()
@@ -80,17 +80,17 @@ namespace UploadersLib
 
         public string ToStringImageUploaders()
         {
-            return ToString<ImageUploaderType>(ImageUploaders);
+            return ToString<ImageDestination>(ImageUploaders);
         }
 
         public string ToStringTextUploaders()
         {
-            return ToString<TextUploaderType>(TextUploaders);
+            return ToString<TextDestination>(TextUploaders);
         }
 
         public string ToStringFileUploaders()
         {
-            return ToString<FileUploaderType>(FileUploaders);
+            return ToString<FileDestination>(FileUploaders);
         }
 
         public string ToStringLinkUploaders()

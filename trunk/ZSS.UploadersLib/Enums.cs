@@ -61,7 +61,7 @@ namespace UploadersLib
         [Description("FTPS (FTP over SSL)")]
         FTPS,
         [Description("SFTP (SSH FTP)")]
-        SFTP,
+        SFTP
     }
 
     public enum BrowserProtocol
@@ -73,7 +73,7 @@ namespace UploadersLib
         [Description("Same as ServerProtocol")]
         ServerProtocol,
         [Description("file://")]
-        File,
+        File
     }
 
     public enum ServerProtocol
@@ -81,7 +81,7 @@ namespace UploadersLib
         [Description("ftp://")]
         Ftp,
         [Description("ftps://")]
-        Ftps,
+        Ftps
     }
 
     public enum LinkType
@@ -166,54 +166,54 @@ namespace UploadersLib
         LocalFilePathUri
     }
 
-    public enum ImageUploaderType
+    public enum ImageDestination
     {
         [Description("imageshack.us")]
-        IMAGESHACK,
+        ImageShack,
         [Description("tinypic.com")]
-        TINYPIC,
+        TinyPic,
         [Description("imgur.com")]
-        IMGUR,
+        Imgur,
         [Description("flickr.com")]
-        FLICKR,
+        Flickr,
         [Description("photobucket.com")]
         Photobucket,
         [Description("uploadscreenshot.com")]
-        UPLOADSCREENSHOT,
+        UploadScreenshot,
         [Description("twitpic.com")]
-        TWITPIC,
+        Twitpic,
         [Description("twitsnaps.com")]
-        TWITSNAPS,
+        Twitsnaps,
         [Description("yfrog.com")]
-        YFROG,
+        yFrog,
         [Description("MediaWiki")]
-        MEDIAWIKI,
+        MediaWiki,
         [Description("File Uploader")]
         FileUploader
     }
 
-    public enum TextUploaderType
+    public enum TextDestination
     {
         [Description("pastebin.com")]
-        PASTEBIN,
+        Pastebin,
         [Description("pastebin.ca")]
-        PASTEBIN_CA,
+        PastebinCA,
         [Description("paste2.org")]
-        PASTE2,
+        Paste2,
         [Description("slexy.org")]
-        SLEXY,
+        Slexy,
         [Description("File Uploader")]
         FileUploader
     }
 
-    public enum FileUploaderType
+    public enum FileDestination
     {
+        [Description("dropbox.com")]
+        Dropbox,
         [Description("rapidshare.com")]
         RapidShare,
         [Description("sendspace.com")]
         SendSpace,
-        [Description("dropbox.com")]
-        Dropbox,
         [Description("minus.com")]
         Minus,
         [Description("box.com")]
@@ -230,10 +230,6 @@ namespace UploadersLib
         Google,
         [Description("bit.ly")]
         BITLY,
-        /*
-        [Description("deb.li")]
-        Debli,
-        */
         [Description("j.mp")]
         Jmp,
         [Description("is.gd")]
