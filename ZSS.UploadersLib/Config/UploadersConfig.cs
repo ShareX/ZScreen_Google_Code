@@ -278,8 +278,8 @@ namespace UploadersLib
                     return TinyPicAccountType == AccountType.Anonymous || !string.IsNullOrEmpty(TinyPicRegistrationCode);
                 case ImageDestination.Imgur:
                     return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.UserToken) && !string.IsNullOrEmpty(ImgurOAuthInfo.UserSecret);
-                case ImageDestination.MediaWiki:
-                    return MediaWikiAccountList.Count > 0;
+                /*case ImageDestination.MediaWiki:
+                    return MediaWikiAccountList.Count > 0;*/
                 case ImageDestination.Photobucket:
                     return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null;
                 case ImageDestination.Twitpic:

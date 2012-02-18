@@ -74,9 +74,9 @@ namespace ZScreenLib
                     case ImageDestination.Imgur:
                         tsmi.Enabled = Engine.ConfigUploaders.ImgurOAuthInfo != null;
                         break;
-                    case ImageDestination.MediaWiki:
+                    /*case ImageDestination.MediaWiki:
                         tsmi.Enabled = Engine.ConfigUploaders.MediaWikiAccountList.Count > 0;
-                        break;
+                        break;*/
                     case ImageDestination.Photobucket:
                         tsmi.Enabled = Engine.ConfigUploaders.PhotobucketOAuthInfo != null;
                         break;
