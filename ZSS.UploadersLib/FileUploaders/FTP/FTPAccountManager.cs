@@ -49,7 +49,7 @@ namespace UploadersLib
 
         public static FTPAccountManager Read(string filePath)
         {
-            return SettingsHelper.Load<FTPAccountManager>(filePath, SerializationType.Xml, false);
+            return SettingsHelper.Load<FTPAccountManager>(filePath, SerializationType.Xml);
         }
     }
 }

@@ -26,7 +26,6 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace HelpersLib
@@ -38,7 +37,7 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save(object obj, string filePath, SerializationType type)
+        public static bool Save(object obj, string filePath, SerializationType type, bool createBackup = true)
         {
             StaticHelper.WriteLine("Settings save started: " + filePath);
 
@@ -61,6 +60,11 @@ namespace HelpersLib
                                     Type t = obj.GetType();
                                     new XmlSerializer(t).Serialize(ms, obj);
                                     break;
+                            }
+
+                            if (createBackup && File.Exists(filePath))
+                            {
+                                File.Copy(filePath, filePath + ".bak", true);
                             }
 
                             isSuccess = ms.WriteToFile(filePath);
@@ -91,48 +95,49 @@ namespace HelpersLib
             return isSuccess;
         }
 
-        public static T Load<T>(string path, SerializationType type, bool onErrorShowWarning = true) where T : new()
+        public static T Load<T>(string path, SerializationType type, bool checkBackup = true) where T : new()
         {
-            StaticHelper.WriteLine("Settings load started: " + path);
-
-            try
+            if (!string.IsNullOrEmpty(path))
             {
-                if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                StaticHelper.WriteLine("Settings load started: " + path);
+
+                try
                 {
-                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    if (File.Exists(path))
                     {
-                        if (fs.Length > 0)
+                        using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
-                            T settings;
-
-                            switch (type)
+                            if (fs.Length > 0)
                             {
-                                case SerializationType.Binary:
-                                    settings = (T)new BinaryFormatter().Deserialize(fs);
-                                    break;
-                                default:
-                                case SerializationType.Xml:
-                                    settings = (T)new XmlSerializer(typeof(T)).Deserialize(fs);
-                                    break;
+                                T settings;
+
+                                switch (type)
+                                {
+                                    case SerializationType.Binary:
+                                        settings = (T)new BinaryFormatter().Deserialize(fs);
+                                        break;
+                                    default:
+                                    case SerializationType.Xml:
+                                        settings = (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                                        break;
+                                }
+
+                                StaticHelper.WriteLine("Settings load finished: " + path);
+
+                                return settings;
                             }
-
-                            StaticHelper.WriteLine("Settings load finished: " + path);
-
-                            return settings;
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                StaticHelper.WriteException(e, "Settings load failed");
-
-                if (onErrorShowWarning)
+                catch (Exception e)
                 {
-                    string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}", path, e.ToString());
-
-                    MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    StaticHelper.WriteException(e, "Settings load failed");
                 }
+            }
+
+            if (checkBackup)
+            {
+                return Load<T>(path + ".bak", type, false);
             }
 
             StaticHelper.WriteLine("Settings not found. Loading new instance.");
