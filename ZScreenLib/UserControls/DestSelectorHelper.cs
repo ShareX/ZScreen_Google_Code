@@ -55,7 +55,7 @@ namespace ZScreenLib
         {
             if (tsddb.DropDownItems.Count == 0)
             {
-                foreach (FileUploaderType ut in Enum.GetValues(typeof(FileUploaderType)))
+                foreach (FileDestination ut in Enum.GetValues(typeof(FileDestination)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;
@@ -85,7 +85,7 @@ namespace ZScreenLib
         {
             if (tsddb.DropDownItems.Count == 0)
             {
-                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
+                foreach (ImageDestination t in Enum.GetValues(typeof(ImageDestination)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                     tsmi.Tag = t;
@@ -141,7 +141,7 @@ namespace ZScreenLib
         {
             if (tsddb.DropDownItems.Count == 0)
             {
-                foreach (TextUploaderType ut in Enum.GetValues(typeof(TextUploaderType)))
+                foreach (TextDestination ut in Enum.GetValues(typeof(TextDestination)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;

@@ -45,7 +45,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.TINYPIC.GetDescription();
+                return ImageDestination.TinyPic.GetDescription();
             }
         }
 

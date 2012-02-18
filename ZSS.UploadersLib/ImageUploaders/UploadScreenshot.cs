@@ -39,7 +39,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.UPLOADSCREENSHOT.GetDescription();
+                return ImageDestination.UploadScreenshot.GetDescription();
             }
         }
 

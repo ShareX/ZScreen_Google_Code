@@ -27,9 +27,9 @@ namespace ZScreenTesterGUI
         public class UploaderInfo
         {
             public UploaderType UploaderType;
-            public ImageUploaderType ImageUploader;
-            public TextUploaderType TextUploader;
-            public FileUploaderType FileUploader;
+            public ImageDestination ImageUploader;
+            public TextDestination TextUploader;
+            public FileDestination FileUploader;
             public UrlShortenerType UrlShortener;
             public WorkerTask Task;
             public int Index;
@@ -70,13 +70,13 @@ namespace ZScreenTesterGUI
             ListViewGroup urlShortenersGroup = new ListViewGroup("URL Shorteners", HorizontalAlignment.Left);
             lvUploaders.Groups.AddRange(new[] { imageUploadersGroup, textUploadersGroup, fileUploadersGroup, urlShortenersGroup });
 
-            foreach (ImageUploaderType uploader in Enum.GetValues(typeof(ImageUploaderType)))
+            foreach (ImageDestination uploader in Enum.GetValues(typeof(ImageDestination)))
             {
                 switch (uploader)
                 {
-                    case ImageUploaderType.MEDIAWIKI:
-                    case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
-                    case ImageUploaderType.FileUploader: // We are going to test this in File Uploader tests
+                    case ImageDestination.MediaWiki:
+                    case ImageDestination.Twitsnaps: // Not possible to upload without post Twitter
+                    case ImageDestination.FileUploader: // We are going to test this in File Uploader tests
                         continue;
                 }
 
@@ -86,11 +86,11 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            foreach (TextUploaderType uploader in Enum.GetValues(typeof(TextUploaderType)))
+            foreach (TextDestination uploader in Enum.GetValues(typeof(TextDestination)))
             {
                 switch (uploader)
                 {
-                    case TextUploaderType.FileUploader:
+                    case TextDestination.FileUploader:
                         continue;
                 }
 
@@ -100,11 +100,11 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            foreach (FileUploaderType uploader in Enum.GetValues(typeof(FileUploaderType)))
+            foreach (FileDestination uploader in Enum.GetValues(typeof(FileDestination)))
             {
                 switch (uploader)
                 {
-                    case FileUploaderType.CustomUploader:
+                    case FileDestination.CustomUploader:
                         continue;
                 }
 

@@ -98,7 +98,7 @@ namespace ZScreenLib
             chkUpload.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.RemoteHost);
             chkPrinter.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.Printer);
 
-            foreach (FileUploaderType fut in Enum.GetValues(typeof(FileUploaderType)))
+            foreach (FileDestination fut in Enum.GetValues(typeof(FileDestination)))
             {
                 CheckBox chkUploader = new CheckBox()
                 {
@@ -117,7 +117,7 @@ namespace ZScreenLib
             {
                 flpImageUploaders.Visible = true;
                 flpTextUploaders.Visible = false;
-                foreach (ImageUploaderType iut in Enum.GetValues(typeof(ImageUploaderType)))
+                foreach (ImageDestination iut in Enum.GetValues(typeof(ImageDestination)))
                 {
                     CheckBox chkUploader = new CheckBox()
                     {
@@ -135,7 +135,7 @@ namespace ZScreenLib
             {
                 flpTextUploaders.Visible = true;
                 flpImageUploaders.Visible = false;
-                foreach (TextUploaderType tut in Enum.GetValues(typeof(TextUploaderType)))
+                foreach (TextDestination tut in Enum.GetValues(typeof(TextDestination)))
                 {
                     CheckBox chkUploader = new CheckBox()
                     {
@@ -517,21 +517,21 @@ namespace ZScreenLib
             Config.DestConfig.FileUploaders.Clear();
             foreach (CheckBox chk in flpFileUploaders.Controls)
             {
-                FileUploaderType ut = (FileUploaderType)chk.Tag;
+                FileDestination ut = (FileDestination)chk.Tag;
                 if (chk.Checked) Config.DestConfig.FileUploaders.Add(ut);
             }
 
             Config.DestConfig.ImageUploaders.Clear();
             foreach (CheckBox chk in flpImageUploaders.Controls)
             {
-                ImageUploaderType ut = (ImageUploaderType)chk.Tag;
+                ImageDestination ut = (ImageDestination)chk.Tag;
                 if (chk.Checked) Config.DestConfig.ImageUploaders.Add(ut);
             }
 
             Config.DestConfig.TextUploaders.Clear();
             foreach (CheckBox chk in flpTextUploaders.Controls)
             {
-                TextUploaderType ut = (TextUploaderType)chk.Tag;
+                TextDestination ut = (TextDestination)chk.Tag;
                 if (chk.Checked) Config.DestConfig.TextUploaders.Add(ut);
             }
 

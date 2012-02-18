@@ -155,7 +155,7 @@ namespace JBirdGUI
             {
                 bwTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.Clipboard);
                 bwTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.RemoteHost);
-                bwTask.WorkflowConfig.DestConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                bwTask.WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.ImageShack);
                 bwTask.WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Remote);
                 bwTask.WorkflowConfig.DestConfig.LinkFormat.Add(LinkFormatEnum.FULL);
             }

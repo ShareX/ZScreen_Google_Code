@@ -60,9 +60,9 @@ namespace ZScreenLib
             cwOutputs.Add(OutputEnum.Clipboard);
             cwClipboardContent.Add((int)ClipboardContentEnum.Data);
             cwLinkFormat.Add((int)LinkFormatEnum.FULL);
-            cwImageUploaders.Add((int)ImageUploaderType.IMAGESHACK);
-            cwTextUploaders.Add((int)TextUploaderType.PASTE2);
-            cwFileUploaders.Add((int)FileUploaderType.SendSpace);
+            cwImageUploaders.Add((int)ImageDestination.ImageShack);
+            cwTextUploaders.Add((int)TextDestination.Paste2);
+            cwFileUploaders.Add((int)FileDestination.SendSpace);
             cwLinkUploaders.Add((int)UrlShortenerType.Google);
 
             dsh.AddEnumOutputsWithConfigSettings(cwOutputs);

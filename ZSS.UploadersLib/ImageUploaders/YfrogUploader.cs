@@ -73,7 +73,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.YFROG.GetDescription();
+                return ImageDestination.yFrog.GetDescription();
             }
         }
 

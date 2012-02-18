@@ -14,23 +14,23 @@ namespace ZScreenLib
         {
             foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
             {
-                FileUploaderType ut = (FileUploaderType)tsmi.Tag;
+                FileDestination ut = (FileDestination)tsmi.Tag;
                 switch (ut)
                 {
-                    case FileUploaderType.CustomUploader:
+                    case FileDestination.CustomUploader:
                         tsmi.Enabled = Engine.ConfigUploaders.CustomUploadersList.Count > 0;
                         break;
-                    case FileUploaderType.Dropbox:
+                    case FileDestination.Dropbox:
                         tsmi.Enabled = Engine.ConfigUploaders.DropboxOAuthInfo != null;
                         break;
-                    case FileUploaderType.FTP:
+                    case FileDestination.FTP:
                         tsmi.Enabled = Engine.ConfigUploaders.FTPAccountList2.Count > 0;
                         break;
-                    case FileUploaderType.Minus:
+                    case FileDestination.Minus:
                         tsmi.Enabled = Engine.ConfigUploaders.MinusConfig.Tokens.Count > 0;
                         break;
-                    case FileUploaderType.RapidShare:
-                    case FileUploaderType.SendSpace:
+                    case FileDestination.RapidShare:
+                    case FileDestination.SendSpace:
                         break;
                 }
             }
@@ -58,42 +58,42 @@ namespace ZScreenLib
         {
             foreach (ToolStripMenuItem tsmi in tsddbDestImage.DropDownItems)
             {
-                ImageUploaderType ut = (ImageUploaderType)tsmi.Tag;
+                ImageDestination ut = (ImageDestination)tsmi.Tag;
                 switch (ut)
                 {
-                    case ImageUploaderType.FileUploader:
+                    case ImageDestination.FileUploader:
                         tsmi.Enabled = bHasValidFileUploader;
                         break;
-                    case ImageUploaderType.FLICKR:
+                    case ImageDestination.Flickr:
                         tsmi.Enabled = !string.IsNullOrEmpty(Engine.ConfigUploaders.FlickrAuthInfo.Token);
                         break;
-                    case ImageUploaderType.IMAGESHACK:
+                    case ImageDestination.ImageShack:
                         tsmi.Enabled = Engine.ConfigUploaders.ImageShackAccountType == AccountType.Anonymous ||
                             Engine.ConfigUploaders.ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(Engine.ConfigUploaders.ImageShackRegistrationCode);
                         break;
-                    case ImageUploaderType.IMGUR:
+                    case ImageDestination.Imgur:
                         tsmi.Enabled = Engine.ConfigUploaders.ImgurOAuthInfo != null;
                         break;
-                    case ImageUploaderType.MEDIAWIKI:
+                    case ImageDestination.MediaWiki:
                         tsmi.Enabled = Engine.ConfigUploaders.MediaWikiAccountList.Count > 0;
                         break;
-                    case ImageUploaderType.Photobucket:
+                    case ImageDestination.Photobucket:
                         tsmi.Enabled = Engine.ConfigUploaders.PhotobucketOAuthInfo != null;
                         break;
-                    case ImageUploaderType.TINYPIC:
+                    case ImageDestination.TinyPic:
                         tsmi.Enabled = Engine.ConfigUploaders.TinyPicAccountType == AccountType.Anonymous ||
                             Engine.ConfigUploaders.TinyPicAccountType == AccountType.User &&
                          !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicRegistrationCode);
                         break;
-                    case ImageUploaderType.TWITPIC:
+                    case ImageDestination.Twitpic:
                         tsmi.Enabled = !string.IsNullOrEmpty(Engine.ConfigUploaders.TwitPicPassword);
                         break;
-                    case ImageUploaderType.TWITSNAPS:
+                    case ImageDestination.Twitsnaps:
                         tsmi.Enabled = Engine.ConfigUploaders.TwitterOAuthInfoList.Count > 0;
                         break;
-                    case ImageUploaderType.UPLOADSCREENSHOT:
+                    case ImageDestination.UploadScreenshot:
                         break;
-                    case ImageUploaderType.YFROG:
+                    case ImageDestination.yFrog:
                         tsmi.Enabled = !string.IsNullOrEmpty(Engine.ConfigUploaders.YFrogPassword);
                         break;
                 }
@@ -122,10 +122,10 @@ namespace ZScreenLib
         {
             foreach (ToolStripMenuItem tsmi in tsddbDestText.DropDownItems)
             {
-                TextUploaderType ut = (TextUploaderType)tsmi.Tag;
+                TextDestination ut = (TextDestination)tsmi.Tag;
                 switch (ut)
                 {
-                    case TextUploaderType.FileUploader:
+                    case TextDestination.FileUploader:
                         tsmi.Enabled = bHasValidFileUploader;
                         if (!tsmi.Enabled)
                         {

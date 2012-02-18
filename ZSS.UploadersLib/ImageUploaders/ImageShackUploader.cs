@@ -42,7 +42,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.IMAGESHACK.GetDescription();
+                return ImageDestination.ImageShack.GetDescription();
             }
         }
 

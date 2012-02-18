@@ -22,21 +22,3 @@
 */
 
 #endregion License Information (GPL v2)
-
-namespace ZUploader
-{
-    public enum EImageFormat
-    {
-        PNG, JPEG, GIF, BMP, TIFF
-    }
-
-    public enum TaskJob
-    {
-        DataUpload, FileUpload, ImageUpload, TextUpload
-    }
-
-    public enum ImageScaleType
-    {
-        Percentage, Width, Height, Specific
-    }
-}

@@ -1235,7 +1235,7 @@ namespace ZScreenLib
             TempText = text;
 
             string ext = ".log";
-            if (Directory.Exists(text) && WorkflowConfig.DestConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
+            if (Directory.Exists(text) && WorkflowConfig.DestConfig.TextUploaders.Contains(TextDestination.FileUploader))
             {
                 ext = ".html";
             }
@@ -1675,13 +1675,13 @@ namespace ZScreenLib
             return false;
         }
 
-        private void UploadFile(FileUploaderType fileUploaderType, Stream data)
+        private void UploadFile(FileDestination fileUploaderType, Stream data)
         {
             FileUploader fileUploader = null;
 
             switch (fileUploaderType)
             {
-                case FileUploaderType.FTP:
+                case FileDestination.FTP:
                     if (Engine.ConfigUI.ShowFTPSettingsBeforeUploading)
                     {
                         var ucf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys);
@@ -1704,14 +1704,14 @@ namespace ZScreenLib
                             break;
                     }
                     break;
-                case FileUploaderType.Minus:
+                case FileDestination.Minus:
                     fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(Engine.ConfigUI.ApiKeys.MinusConsumerKey, Engine.ConfigUI.ApiKeys.MinusConsumerSecret));
                     break;
-                case FileUploaderType.Dropbox:
+                case FileDestination.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
                     fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo);
                     break;
-                case FileUploaderType.Box:
+                case FileDestination.Box:
                     fileUploader = new Box(ZKeys.BoxKey)
                      {
                          AuthToken = Engine.ConfigUploaders.BoxAuthToken,
@@ -1719,7 +1719,7 @@ namespace ZScreenLib
                          Share = Engine.ConfigUploaders.BoxShare
                      };
                     break;
-                case FileUploaderType.SendSpace:
+                case FileDestination.SendSpace:
                     fileUploader = new SendSpace(Engine.ConfigUI.ApiKeys.SendSpaceKey);
                     switch (Engine.ConfigUploaders.SendSpaceAccountType)
                     {
@@ -1731,11 +1731,11 @@ namespace ZScreenLib
                             break;
                     }
                     break;
-                case FileUploaderType.RapidShare:
+                case FileDestination.RapidShare:
                     fileUploader = new RapidShare(Engine.ConfigUploaders.RapidShareUsername, Engine.ConfigUploaders.RapidSharePassword,
                         Engine.ConfigUploaders.RapidShareFolderID);
                     break;
-                case FileUploaderType.CustomUploader:
+                case FileDestination.CustomUploader:
                     fileUploader = new CustomUploader(Engine.ConfigUploaders.CustomUploadersList[Engine.ConfigUploaders.CustomUploaderSelected]);
                     break;
             }
@@ -1761,7 +1761,7 @@ namespace ZScreenLib
         {
             StaticHelper.WriteLine("Uploading File: " + Info.LocalFilePath);
 
-            foreach (FileUploaderType fileUploaderType in WorkflowConfig.DestConfig.FileUploaders)
+            foreach (FileDestination fileUploaderType in WorkflowConfig.DestConfig.FileUploaders)
             {
                 UploadFile(fileUploaderType, Data);
             }
@@ -1772,20 +1772,20 @@ namespace ZScreenLib
             if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 if (Engine.ConfigUI != null && TempImage != null && Engine.ConfigUI.TinyPicSizeCheck &&
-                    WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                    WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.TinyPic))
                 {
                     if (TempImage.Width > 1600 || TempImage.Height > 1600)
                     {
                         StaticHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
-                        if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                        if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.ImageShack))
                         {
-                            WorkflowConfig.DestConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
-                            WorkflowConfig.DestConfig.ImageUploaders.Remove(ImageUploaderType.TINYPIC);
+                            WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.ImageShack);
+                            WorkflowConfig.DestConfig.ImageUploaders.Remove(ImageDestination.TinyPic);
                         }
                     }
                 }
 
-                foreach (ImageUploaderType t in WorkflowConfig.DestConfig.ImageUploaders)
+                foreach (ImageDestination t in WorkflowConfig.DestConfig.ImageUploaders)
                 {
                     UploadImage(t, Data);
                 }
@@ -1794,24 +1794,24 @@ namespace ZScreenLib
             if (Engine.ConfigUI != null && Engine.ConfigUI.ImageUploadRetryOnTimeout &&
                 UploadDuration > Engine.ConfigUI.UploadDurationLimit)
             {
-                if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.TinyPic))
                 {
-                    WorkflowConfig.DestConfig.ImageUploaders.Add(ImageUploaderType.TINYPIC);
+                    WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.TinyPic);
                 }
-                else if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                else if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.TinyPic))
                 {
-                    WorkflowConfig.DestConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                    WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.ImageShack);
                 }
             }
         }
 
-        private void UploadImage(ImageUploaderType imageUploaderType, Stream data)
+        private void UploadImage(ImageDestination imageUploaderType, Stream data)
         {
             ImageUploader imageUploader = null;
 
             switch (imageUploaderType)
             {
-                case ImageUploaderType.IMAGESHACK:
+                case ImageDestination.ImageShack:
                     imageUploader = new ImageShackUploader(Engine.ConfigUI.ApiKeys.ImageShackKey,
                                                            Engine.ConfigUploaders.ImageShackAccountType,
                                                            Engine.ConfigUploaders.ImageShackRegistrationCode)
@@ -1819,34 +1819,34 @@ namespace ZScreenLib
                                             IsPublic = Engine.ConfigUploaders.ImageShackShowImagesInPublic
                                         };
                     break;
-                case ImageUploaderType.TINYPIC:
+                case ImageDestination.TinyPic:
                     imageUploader = new TinyPicUploader(Engine.ConfigUI.ApiKeys.TinyPicID, Engine.ConfigUI.ApiKeys.TinyPicKey,
                                                         Engine.ConfigUploaders.TinyPicAccountType,
                                                         Engine.ConfigUploaders.TinyPicRegistrationCode);
                     break;
-                case ImageUploaderType.IMGUR:
+                case ImageDestination.Imgur:
                     imageUploader = new Imgur(Engine.ConfigUploaders.ImgurAccountType, Engine.ConfigUI.ApiKeys.ImgurAnonymousKey,
                                               Engine.ConfigUploaders.ImgurOAuthInfo)
                                         {
                                             ThumbnailType = Engine.ConfigUploaders.ImgurThumbnailType
                                         };
                     break;
-                case ImageUploaderType.FLICKR:
+                case ImageDestination.Flickr:
                     imageUploader = new FlickrUploader(Engine.ConfigUI.ApiKeys.FlickrKey, Engine.ConfigUI.ApiKeys.FlickrSecret,
                                                        Engine.ConfigUploaders.FlickrAuthInfo,
                                                        Engine.ConfigUploaders.FlickrSettings);
                     break;
-                case ImageUploaderType.Photobucket:
+                case ImageDestination.Photobucket:
                     imageUploader = new Photobucket(Engine.ConfigUploaders.PhotobucketOAuthInfo,
                                                     Engine.ConfigUploaders.PhotobucketAccountInfo);
                     break;
-                case ImageUploaderType.UPLOADSCREENSHOT:
+                case ImageDestination.UploadScreenshot:
                     imageUploader = new UploadScreenshot(Engine.ConfigUI.ApiKeys.UploadScreenshotKey);
                     break;
-                case ImageUploaderType.MEDIAWIKI:
+                case ImageDestination.MediaWiki:
                     UploadToMediaWiki();
                     break;
-                case ImageUploaderType.TWITPIC:
+                case ImageDestination.Twitpic:
                     var twitpicOpt = new TwitPicOptions();
                     twitpicOpt.Username = Engine.ConfigUploaders.TwitPicUsername;
                     twitpicOpt.Password = Engine.ConfigUploaders.TwitPicPassword;
@@ -1855,7 +1855,7 @@ namespace ZScreenLib
                     twitpicOpt.ShowFull = Engine.ConfigUploaders.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
-                case ImageUploaderType.YFROG:
+                case ImageDestination.yFrog:
                     var yfrogOp = new YfrogOptions(Engine.ConfigUI.ApiKeys.ImageShackKey);
                     yfrogOp.Username = Engine.ConfigUploaders.YFrogUsername;
                     yfrogOp.Password = Engine.ConfigUploaders.YFrogPassword;
@@ -1863,11 +1863,11 @@ namespace ZScreenLib
                     // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
-                case ImageUploaderType.TWITSNAPS:
+                case ImageDestination.Twitsnaps:
                     imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
                     break;
-                case ImageUploaderType.FileUploader:
-                    foreach (FileUploaderType ft in WorkflowConfig.DestConfig.FileUploaders)
+                case ImageDestination.FileUploader:
+                    foreach (FileDestination ft in WorkflowConfig.DestConfig.FileUploaders)
                     {
                         UploadFile(ft, data);
                     }
@@ -1934,32 +1934,32 @@ namespace ZScreenLib
             }
             else if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
-                foreach (TextUploaderType textUploaderType in WorkflowConfig.DestConfig.TextUploaders)
+                foreach (TextDestination textUploaderType in WorkflowConfig.DestConfig.TextUploaders)
                 {
                     UploadText(textUploaderType);
                 }
             }
         }
 
-        private void UploadText(TextUploaderType textUploaderType)
+        private void UploadText(TextDestination textUploaderType)
         {
             TextUploader textUploader = null;
 
             switch (textUploaderType)
             {
-                case TextUploaderType.PASTEBIN:
+                case TextDestination.Pastebin:
                     textUploader = new PastebinUploader(Engine.ConfigUI.ApiKeys.PastebinKey, Engine.ConfigUploaders.PastebinSettings);
                     break;
-                case TextUploaderType.PASTEBIN_CA:
+                case TextDestination.PastebinCA:
                     textUploader = new PastebinCaUploader(Engine.ConfigUI.ApiKeys.PastebinCaKey);
                     break;
-                case TextUploaderType.PASTE2:
+                case TextDestination.Paste2:
                     textUploader = new Paste2Uploader();
                     break;
-                case TextUploaderType.SLEXY:
+                case TextDestination.Slexy:
                     textUploader = new SlexyUploader();
                     break;
-                case TextUploaderType.FileUploader:
+                case TextDestination.FileUploader:
                     UploadFile();
                     break;
             }
@@ -1999,7 +1999,7 @@ namespace ZScreenLib
             var ur_remote_file_ftp = new UploadResult
                                          {
                                              LocalFilePath = Info.LocalFilePath,
-                                             Host = FileUploaderType.FTP.GetDescription()
+                                             Host = FileDestination.FTP.GetDescription()
                                          };
 
             try

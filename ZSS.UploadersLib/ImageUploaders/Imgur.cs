@@ -61,7 +61,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.IMGUR.GetDescription();
+                return ImageDestination.Imgur.GetDescription();
             }
         }
 

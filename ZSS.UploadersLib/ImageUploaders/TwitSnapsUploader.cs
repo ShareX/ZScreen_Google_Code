@@ -43,7 +43,7 @@ namespace UploadersLib.ImageUploaders
         {
             get
             {
-                return ImageUploaderType.TWITSNAPS.GetDescription();
+                return ImageDestination.Twitsnaps.GetDescription();
             }
         }
 
