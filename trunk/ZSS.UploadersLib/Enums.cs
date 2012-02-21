@@ -27,6 +27,80 @@ using System.ComponentModel;
 
 namespace UploadersLib
 {
+    public enum ImageDestination
+    {
+        [Description("imageshack.us")]
+        ImageShack,
+        [Description("tinypic.com")]
+        TinyPic,
+        [Description("imgur.com")]
+        Imgur,
+        [Description("flickr.com")]
+        Flickr,
+        [Description("photobucket.com")]
+        Photobucket,
+        [Description("uploadscreenshot.com")]
+        UploadScreenshot,
+        [Description("twitpic.com")]
+        Twitpic,
+        [Description("twitsnaps.com")]
+        Twitsnaps,
+        [Description("yfrog.com")]
+        yFrog,
+        //[Description("MediaWiki")]
+        //MediaWiki,
+        [Description("File Uploader")]
+        FileUploader
+    }
+
+    public enum TextDestination
+    {
+        [Description("pastebin.com")]
+        Pastebin,
+        [Description("pastebin.ca")]
+        PastebinCA,
+        [Description("paste2.org")]
+        Paste2,
+        [Description("slexy.org")]
+        Slexy,
+        [Description("File Uploader")]
+        FileUploader
+    }
+
+    public enum FileDestination
+    {
+        [Description("dropbox.com")]
+        Dropbox,
+        [Description("rapidshare.com")]
+        RapidShare,
+        [Description("sendspace.com")]
+        SendSpace,
+        [Description("minus.com")]
+        Minus,
+        [Description("box.com")]
+        Box,
+        [Description("Custom Uploader")]
+        CustomUploader,
+        [Description("FTP Server")]
+        FTP
+    }
+
+    public enum UrlShortenerType
+    {
+        [Description("goo.gl")]
+        Google,
+        [Description("bit.ly")]
+        BITLY,
+        [Description("j.mp")]
+        Jmp,
+        [Description("is.gd")]
+        ISGD,
+        [Description("tinyurl.com")]
+        TINYURL,
+        [Description("turl.ca")]
+        TURL
+    }
+
     public enum HttpMethod
     {
         [Description("GET")]
@@ -164,79 +238,5 @@ namespace UploadersLib
         LocalFilePath,
         [Description("Local File path as URI")]
         LocalFilePathUri
-    }
-
-    public enum ImageDestination
-    {
-        [Description("imageshack.us")]
-        ImageShack,
-        [Description("tinypic.com")]
-        TinyPic,
-        [Description("imgur.com")]
-        Imgur,
-        [Description("flickr.com")]
-        Flickr,
-        [Description("photobucket.com")]
-        Photobucket,
-        [Description("uploadscreenshot.com")]
-        UploadScreenshot,
-        [Description("twitpic.com")]
-        Twitpic,
-        [Description("twitsnaps.com")]
-        Twitsnaps,
-        [Description("yfrog.com")]
-        yFrog,
-        //[Description("MediaWiki")]
-        //MediaWiki,
-        [Description("File Uploader")]
-        FileUploader
-    }
-
-    public enum TextDestination
-    {
-        [Description("pastebin.com")]
-        Pastebin,
-        [Description("pastebin.ca")]
-        PastebinCA,
-        [Description("paste2.org")]
-        Paste2,
-        [Description("slexy.org")]
-        Slexy,
-        [Description("File Uploader")]
-        FileUploader
-    }
-
-    public enum FileDestination
-    {
-        [Description("dropbox.com")]
-        Dropbox,
-        [Description("rapidshare.com")]
-        RapidShare,
-        [Description("sendspace.com")]
-        SendSpace,
-        [Description("minus.com")]
-        Minus,
-        [Description("box.com")]
-        Box,
-        [Description("Custom Uploader")]
-        CustomUploader,
-        [Description("FTP Server")]
-        FTP
-    }
-
-    public enum UrlShortenerType
-    {
-        [Description("goo.gl")]
-        Google,
-        [Description("bit.ly")]
-        BITLY,
-        [Description("j.mp")]
-        Jmp,
-        [Description("is.gd")]
-        ISGD,
-        [Description("tinyurl.com")]
-        TINYURL,
-        [Description("turl.ca")]
-        TURL
     }
 }

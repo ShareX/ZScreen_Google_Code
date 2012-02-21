@@ -37,7 +37,7 @@ namespace HelpersLib.Hotkey
         ClipboardUpload,
         [Description("File Upload")]
         FileUpload,
-        [Description("Print Screen")]
+        [Description("Fullscreen")]
         PrintScreen,
         [Description("Active Window")]
         ActiveWindow,
