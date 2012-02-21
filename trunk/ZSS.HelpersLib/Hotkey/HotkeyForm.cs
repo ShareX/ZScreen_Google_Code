@@ -63,7 +63,7 @@ namespace HelpersLib
 
             if (IsHotkeyExist(hotkey))
             {
-                StaticHelper.WriteLine("Hotkey already exist: " + keyInfo);
+                DebugHelper.WriteLine("Hotkey already exist: " + keyInfo);
                 return HotkeyStatus.Failed;
             }
 
@@ -73,14 +73,14 @@ namespace HelpersLib
 
             if (id == 0)
             {
-                StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
+                DebugHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
                 return HotkeyStatus.Failed;
             }
 
             if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)keyInfo.ModifiersEnum, (uint)keyInfo.KeyCode))
             {
                 NativeMethods.GlobalDeleteAtom(id);
-                StaticHelper.WriteLine("Unable to register hotkey: {0}\r\nError code: {1}", keyInfo, Marshal.GetLastWin32Error());
+                DebugHelper.WriteLine("Unable to register hotkey: {0}\r\nError code: {1}", keyInfo, Marshal.GetLastWin32Error());
                 return HotkeyStatus.Failed;
             }
 

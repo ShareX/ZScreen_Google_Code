@@ -39,7 +39,7 @@ namespace HelpersLib
     {
         public static bool Save(object obj, string filePath, SerializationType type, bool createBackup = true)
         {
-            StaticHelper.WriteLine("Settings save started: " + filePath);
+            DebugHelper.WriteLine("Settings save started: " + filePath);
 
             bool isSuccess = false;
 
@@ -74,7 +74,7 @@ namespace HelpersLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
             finally
             {
@@ -89,7 +89,7 @@ namespace HelpersLib
                     message = "Settings save failed";
                 }
 
-                StaticHelper.WriteLine(string.Format("{0}: {1}", message, filePath));
+                DebugHelper.WriteLine(string.Format("{0}: {1}", message, filePath));
             }
 
             return isSuccess;
@@ -99,7 +99,7 @@ namespace HelpersLib
         {
             if (!string.IsNullOrEmpty(path))
             {
-                StaticHelper.WriteLine("Settings load started: " + path);
+                DebugHelper.WriteLine("Settings load started: " + path);
 
                 try
                 {
@@ -122,7 +122,7 @@ namespace HelpersLib
                                         break;
                                 }
 
-                                StaticHelper.WriteLine("Settings load finished: " + path);
+                                DebugHelper.WriteLine("Settings load finished: " + path);
 
                                 return settings;
                             }
@@ -131,7 +131,7 @@ namespace HelpersLib
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e, "Settings load failed");
+                    DebugHelper.WriteException(e, "Settings load failed");
                 }
             }
 
@@ -140,7 +140,7 @@ namespace HelpersLib
                 return Load<T>(path + ".bak", type, false);
             }
 
-            StaticHelper.WriteLine("Settings not found. Loading new instance.");
+            DebugHelper.WriteLine("Settings not found. Loading new instance.");
 
             return new T();
         }

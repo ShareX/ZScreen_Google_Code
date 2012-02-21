@@ -55,7 +55,7 @@ namespace ZScreenGUI
                             // check if the file is complete
                         }
                     }
-                    StaticHelper.WriteLine(string.Format("Created {0}", filepathWatchFolder));
+                    DebugHelper.WriteLine(string.Format("Created {0}", filepathWatchFolder));
                     Loader.MainForm.UploadUsingFileSystem(filepathWatchFolder);
                     break;
                 }
@@ -63,7 +63,7 @@ namespace ZScreenGUI
                 {
                     if (--retry == 0)
                     {
-                        StaticHelper.WriteLine("Unable to open file '" + filepathWatchFolder + "'");
+                        DebugHelper.WriteLine("Unable to open file '" + filepathWatchFolder + "'");
                     }
                     Thread.Sleep(500);
                 }

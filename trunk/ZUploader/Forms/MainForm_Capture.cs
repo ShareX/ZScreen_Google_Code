@@ -102,7 +102,7 @@ namespace ZUploader
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex);
+                DebugHelper.WriteException(ex);
             }
             finally
             {
@@ -244,7 +244,7 @@ namespace ZUploader
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e);
+                    DebugHelper.WriteException(e);
                 }
 
                 tsi.Tag = window;

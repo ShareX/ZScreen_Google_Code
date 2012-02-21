@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using HelpersLib;
 using ScreenCapture;
@@ -603,14 +604,20 @@ namespace ZUploader
             {
                 Program.Settings.ProxySettings.UserName = Environment.UserName;
             }
-            if (string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+
+            WebProxy proxy = ZAppHelper.GetDefaultWebProxy();
+            if (proxy != null && proxy.Address != null)
             {
-                Program.Settings.ProxySettings.Host = ZAppHelper.GetDefaultWebProxyHost();
+                if (string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+                {
+                    Program.Settings.ProxySettings.Host = proxy.Address.Host;
+                }
+                if (Program.Settings.ProxySettings.Port == 0)
+                {
+                    Program.Settings.ProxySettings.Port = proxy.Address.Port;
+                }
             }
-            if (Program.Settings.ProxySettings.Port == 0)
-            {
-                Program.Settings.ProxySettings.Port = ZAppHelper.GetDefaultWebProxyPort();
-            }
+
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
         }
 

@@ -83,7 +83,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error in DelayedTrimMemoryUse");
+                    DebugHelper.WriteException(ex, "Error in DelayedTrimMemoryUse");
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace ZScreenGUI
         private readonly ContextMenuStrip codesMenu = new ContextMenuStrip();
         private readonly ImageList tabImageList = new ImageList();
         public CloseMethod CloseMethod;
-        private DebugHelper mDebug;
+        private ZScreenDebugHelper mDebug;
 
         #endregion Variables
 
@@ -165,7 +165,7 @@ namespace ZScreenGUI
 
             if (Engine.ConfigUI.ConfigProxy.ProxyConfigType != EProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
-                StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive);
+                DebugHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive);
             }
 
             if (Engine.ConfigUI.BackupApplicationSettings)
@@ -186,7 +186,7 @@ namespace ZScreenGUI
             }
 
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
-            StaticHelper.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
+            DebugHelper.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
 
             UseCommandLineArg(Loader.CommandLineArg);
 
@@ -240,7 +240,7 @@ namespace ZScreenGUI
             // If really ZScreen is closing
             if (!e.Cancel)
             {
-                StaticHelper.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason,
+                DebugHelper.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason,
                                        CloseMethod);
                 Engine.WriteSettings();
                 Engine.TurnOff();
@@ -319,7 +319,7 @@ namespace ZScreenGUI
 
             ZScreen_Preconfig();
 
-            mDebug = new DebugHelper();
+            mDebug = new ZScreenDebugHelper();
             mDebug.GetDebugInfo += debug_GetDebugInfo;
 
             SetToolTip(nudScreenshotDelay);
@@ -382,7 +382,7 @@ namespace ZScreenGUI
         {
             if (!string.IsNullOrEmpty(arg))
             {
-                StaticHelper.WriteLine("CommandLine: " + arg);
+                DebugHelper.WriteLine("CommandLine: " + arg);
                 var cli = new CLIManagerRegex();
 
                 cli.Commands = new List<CLICommandRegex>
@@ -479,7 +479,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while moving image files");
+                DebugHelper.WriteException(ex, "Error while moving image files");
                 MessageBox.Show(ex.Message);
             }
         }

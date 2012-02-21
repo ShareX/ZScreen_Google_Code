@@ -109,7 +109,7 @@ namespace ZScreenLib
 
         static Engine()
         {
-            StaticHelper.MyLogger = EngineLogger;
+            DebugHelper.MyLogger = EngineLogger;
         }
 
         #region Paths
@@ -275,9 +275,9 @@ namespace ZScreenLib
         {
             StartTimer = Stopwatch.StartNew();
 
-            StaticHelper.WriteLine("");
-            StaticHelper.WriteLine(string.Format("{0} r{1} started", GetProductName(), Adapter.AppRevision));
-            StaticHelper.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
+            DebugHelper.WriteLine("");
+            DebugHelper.WriteLine(string.Format("{0} r{1} started", GetProductName(), Adapter.AppRevision));
+            DebugHelper.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -333,12 +333,12 @@ namespace ZScreenLib
 
             if (startEngine == DialogResult.OK)
             {
-                StaticHelper.WriteLine("Core file: " + AppSettings.AppSettingsFile);
+                DebugHelper.WriteLine("Core file: " + AppSettings.AppSettingsFile);
                 if (!ConfigApp.PreferSystemFolders)
                 {
-                    StaticHelper.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
+                    DebugHelper.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
                 }
-                StaticHelper.WriteLine("Initializing Default folder paths...");
+                DebugHelper.WriteLine("Initializing Default folder paths...");
                 Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
 
                 bool bGrantedOwnership;
@@ -438,12 +438,12 @@ namespace ZScreenLib
             ConfigApp.UploadersConfigPath = Engine.UploadersConfigPath;
             ConfigApp.WorkflowConfigPath = Engine.WorkflowConfigPath;
             ConfigApp.Write();
-            StaticHelper.WriteLine("ZScreen closing");
+            DebugHelper.WriteLine("ZScreen closing");
 
             if (Engine.ConfigUI != null && Engine.ConfigUI.WriteDebugFile)
             {
                 string path = Engine.LogFilePath;
-                StaticHelper.WriteLine("Writing debug file: " + path);
+                DebugHelper.WriteLine("Writing debug file: " + path);
                 Engine.EngineLogger.SaveLog(path);
             }
         }
@@ -459,7 +459,7 @@ namespace ZScreenLib
 
         public static void WriteSettings(bool isAsync = false)
         {
-            StaticHelper.WriteLine("WriteSettings is async: " + isAsync);
+            DebugHelper.WriteLine("WriteSettings is async: " + isAsync);
 
             Thread settingsOptions = new Thread(() =>
             {
@@ -718,7 +718,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex);
+                DebugHelper.WriteException(ex);
             }
             finally
             {

@@ -155,7 +155,7 @@ namespace ZScreenCoreLib
             else
             {
                 psi.Arguments = Args.Replace(SyntaxParser.FilePath, fp);
-                StaticHelper.WriteLine(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
+                DebugHelper.WriteLine(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
             }
             p.StartInfo = psi;
             p.Start();

@@ -118,7 +118,7 @@ namespace ZScreenCoreLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while drwaing image watermark");
+                DebugHelper.WriteException(ex, "Error while drwaing image watermark");
             }
             return img;
         }
@@ -180,7 +180,7 @@ namespace ZScreenCoreLib
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Errow while drawing watermark");
+                    DebugHelper.WriteException(ex, "Errow while drawing watermark");
                 }
             }
 

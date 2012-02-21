@@ -31,6 +31,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -369,14 +370,18 @@ namespace HelpersLib
             OpenFolder(string.Format("/select,\"{0}\"", filePath));
         }
 
-        public static string GetDefaultWebProxyHost()
+        public static WebProxy GetDefaultWebProxy()
         {
-            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Host;
-        }
+            try
+            {
+                return ((WebProxy)typeof(WebProxy).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, new Type[] { typeof(bool) }, null).Invoke(new object[] { true }));
+            }
+            catch (Exception e)
+            {
+            }
 
-        public static int GetDefaultWebProxyPort()
-        {
-            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Port;
+            return null;
         }
 
         public static bool CheckVersion(Version verRemote, Version verLocal)

@@ -61,7 +61,7 @@ namespace ZScreenLib
                     // Step 3 - Attempt to read conventional Settings file
                     settingsFile = Engine.SettingsFilePath;
                 }
-                StaticHelper.WriteLine("Using " + settingsFile);
+                DebugHelper.WriteLine("Using " + settingsFile);
             }
 
             if (File.Exists(settingsFile) && settingsFile != Engine.SettingsFilePath)

@@ -143,7 +143,7 @@ namespace ZScreenLib
                     CopyImageToClipboard(img, false);
                 }
 
-                StaticHelper.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));
+                DebugHelper.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));
             }
         }
 
@@ -298,7 +298,7 @@ namespace ZScreenLib
             }
             if (succ && silent)
             {
-                StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                DebugHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
             }
             else if (succ)
             {
@@ -367,7 +367,7 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            StaticHelper.WriteLine("Proxy Config: " + Engine.ConfigUI.ConfigProxy.ProxyConfigType.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
+            DebugHelper.WriteLine("Proxy Config: " + Engine.ConfigUI.ConfigProxy.ProxyConfigType.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
             return new ProxySettings { ProxyConfig = Engine.ConfigUI.ConfigProxy.ProxyConfigType, ProxyActive = Engine.ConfigUI.ConfigProxy.ProxyActive };
         }
 
@@ -559,7 +559,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error while adding Recent Item to Windows 7 Taskbar");
+                    DebugHelper.WriteException(ex, "Error while adding Recent Item to Windows 7 Taskbar");
                 }
             }
         }
@@ -589,14 +589,14 @@ namespace ZScreenLib
                             Engine.ConfigUploaders.TinyPicPassword);
                         if (Engine.ConfigUploaders.TinyPicRegistrationCode != regCode)
                         {
-                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.ConfigUploaders.TinyPicRegistrationCode, regCode));
+                            DebugHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.ConfigUploaders.TinyPicRegistrationCode, regCode));
                             Engine.ConfigUploaders.TinyPicRegistrationCode = regCode;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "error while trying to update TinyPic registration code.");
+                    DebugHelper.WriteException(ex, "error while trying to update TinyPic registration code.");
                 }
             }
         }

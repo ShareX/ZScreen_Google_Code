@@ -29,7 +29,7 @@ using System.Text;
 
 namespace ZScreenLib
 {
-    public class DebugHelper
+    public class ZScreenDebugHelper
     {
         public event StringEventHandler GetDebugInfo;
         private Process currProc = Process.GetCurrentProcess();
@@ -41,7 +41,7 @@ namespace ZScreenLib
         public Memory MaxMemoryUsage { get; private set; }
         public DateTime StartTime { get; private set; }
 
-        public DebugHelper()
+        public ZScreenDebugHelper()
         {
             StartTime = DateTime.Now;
             DebugTimer = new System.Windows.Forms.Timer { Interval = 500 };

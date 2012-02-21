@@ -43,7 +43,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static Image CaptureWithGDI2(Workflow WorkflowConfig)
         {
-            StaticHelper.WriteLine("Capturing with GDI");
+            DebugHelper.WriteLine("Capturing with GDI");
             Image tempImage = null;
 
             Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
@@ -64,7 +64,7 @@ namespace ZScreenLib
         /// <returns>the captured window image with or without cursor</returns>
         public static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle)
         {
-            StaticHelper.WriteLine("Capturing with DWM");
+            DebugHelper.WriteLine("Capturing with DWM");
             Image windowImageDwm = null;
             Bitmap redBGImage = null;
 
@@ -89,7 +89,7 @@ namespace ZScreenLib
 
             if (windowImageDwm == null)
             {
-                StaticHelper.WriteLine("Standard capture (no transparency)");
+                DebugHelper.WriteLine("Standard capture (no transparency)");
                 windowImageDwm = Screenshot.CaptureRectangleNative(windowRect);
             }
 
@@ -108,12 +108,12 @@ namespace ZScreenLib
                 {
                     Point shadowOffset = GraphicsMgr.ShadowOffset;
 #if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
+                    DebugHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
 #endif
                     windowRect.X -= shadowOffset.X;
                     windowRect.Y -= shadowOffset.Y;
 #if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
+                    DebugHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
 #endif
                 }
             }
@@ -166,8 +166,8 @@ namespace ZScreenLib
                 NativeMethods.DwmQueryThumbnailSourceSize(thumb, out size);
 
 #if DEBUG
-                StaticHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
-                StaticHelper.WriteLine("Window    Size: " + size.ToString());
+                DebugHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
+                DebugHelper.WriteLine("Window    Size: " + size.ToString());
 #endif
 
                 if (size.Width <= 0 || size.Height <= 0)
@@ -224,7 +224,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Detected animated image => cannot compute transparency");
+                        DebugHelper.WriteLine("Detected animated image => cannot compute transparency");
                         form.Close();
                         Application.DoEvents();
                         Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);
@@ -253,7 +253,7 @@ namespace ZScreenLib
         /// <returns>the captured window image</returns>
         private static Image CaptureWithGDI(Workflow wfgdi, IntPtr handle, out Rectangle windowRect)
         {
-            StaticHelper.WriteLine("Capturing with GDI");
+            DebugHelper.WriteLine("Capturing with GDI");
 
             windowRect = CaptureHelpers.GetWindowRectangle(handle);
 
@@ -356,12 +356,12 @@ namespace ZScreenLib
                 if (wfgdi.DrawCursor)
                 {
 #if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
+                    DebugHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
 #endif
                     windowRect.X += windowRectCropped.X;
                     windowRect.Y += windowRectCropped.Y;
 #if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
+                    DebugHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
 #endif
                 }
             }
@@ -381,7 +381,7 @@ namespace ZScreenLib
             const int cornerSize = 5;
             if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
             {
-                StaticHelper.WriteLine("Clean transparent corners");
+                DebugHelper.WriteLine("Clean transparent corners");
 
                 if (redBGImage == null)
                 {

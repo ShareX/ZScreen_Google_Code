@@ -52,7 +52,7 @@ namespace UploadersLib.FileUploaders
             else
             {
                 //Need to do something here...
-                StaticHelper.WriteLine("Can't instantiate a SFTP client...");
+                DebugHelper.WriteLine("Can't instantiate a SFTP client...");
                 isInstantiated = false;
                 return;
             }
@@ -77,7 +77,7 @@ namespace UploadersLib.FileUploaders
 
         public static void CallBack(IAsyncResult ia)
         {
-            StaticHelper.WriteLine("Finished Uploading");
+            DebugHelper.WriteLine("Finished Uploading");
         }
 
         public void ChangeDirectory(string Path)
@@ -98,12 +98,12 @@ namespace UploadersLib.FileUploaders
             try
             {
                 Client.CreateDirectory(Path);
-                StaticHelper.WriteLine("Created Directory: " + Path);
+                DebugHelper.WriteLine("Created Directory: " + Path);
             }
             catch (SftpPathNotFoundException)
             {
-                StaticHelper.WriteLine("Failed to create directory " + Path);
-                StaticHelper.WriteLine("Attempting to fix...");
+                DebugHelper.WriteLine("Failed to create directory " + Path);
+                DebugHelper.WriteLine("Attempting to fix...");
                 CreateMultipleDirectorys(FTPHelpers.GetPaths(Path));
             }
             catch (SftpPermissionDeniedException)

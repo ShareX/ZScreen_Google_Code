@@ -25,7 +25,7 @@ namespace ZScreenLib
 
                     if (bTargetFileSize)
                     {
-                        StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+                        DebugHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                         while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
                         {
                             if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
@@ -35,7 +35,7 @@ namespace ZScreenLib
 
                             wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
                             stream = img.SaveImage(wf, EImageFormat.JPEG);
-                            StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+                            DebugHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                         }
                     }
 

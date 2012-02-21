@@ -171,7 +171,7 @@ namespace UploadersLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex);
+                DebugHelper.WriteException(ex);
             }
         }
 

@@ -22,7 +22,7 @@ namespace ZScreenCoreLib
                 }
                 catch (Exception err)
                 {
-                    StaticHelper.WriteException(err, "Error while initializing Font and Color");
+                    DebugHelper.WriteException(err, "Error while initializing Font and Color");
                 }
 
                 result = fDialog.ShowDialog();
@@ -34,7 +34,7 @@ namespace ZScreenCoreLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while setting Watermark Font");
+                DebugHelper.WriteException(ex, "Error while setting Watermark Font");
             }
             return result;
         }
