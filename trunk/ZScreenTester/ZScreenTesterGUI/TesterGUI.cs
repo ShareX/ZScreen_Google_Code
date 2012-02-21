@@ -225,12 +225,19 @@ namespace ZScreenTesterGUI
                     break;
                 }
 
-                TaskInfo tiTester = new TaskInfo() { Job = WorkerTask.JobLevel2.UploadFromClipboard };
+                DestConfig dcTester = new DestConfig();
+                dcTester.Outputs.Add(OutputEnum.RemoteHost);
+
+                TaskInfo tiTester = new TaskInfo()
+                {
+                    Job = WorkerTask.JobLevel2.UploadFromClipboard,
+                    DestConfig = dcTester
+                };
                 WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, tiTester);
 
                 uploader.Timer = new Stopwatch();
                 uploader.Timer.Start();
-
+                uploader.Task = task;
                 bw.ReportProgress((int)UploadStatus.Uploading, uploader);
 
                 try
@@ -238,26 +245,28 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
-                            {
-                                task.WorkflowConfig.DestConfig.ImageUploaders.Add(uploader.ImageUploader);
-                                task.UpdateLocalFilePath(TestImageFilePath);
-                                task.UploadImage();
-                            }
+                            task.WorkflowConfig.DestConfig.ImageUploaders.Add(uploader.ImageUploader);
+                            task.UpdateLocalFilePath(TestImageFilePath);
+                            task.PublishData();
                             break;
                         case UploaderType.FileUploader:
+                            task.WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.FileUploader);
                             task.WorkflowConfig.DestConfig.FileUploaders.Add(uploader.FileUploader);
                             task.UpdateLocalFilePath(TestFilePath);
-                            task.UploadFile();
+                            task.PublishData();
                             break;
                         case UploaderType.TextUploader:
                             task.WorkflowConfig.DestConfig.TextUploaders.Add(uploader.TextUploader);
                             task.SetText(TestText);
-                            task.UploadText();
+                            task.PublishData();
                             break;
                         case UploaderType.UrlShortener:
                             task.WorkflowConfig.DestConfig.LinkUploaders.Add(uploader.UrlShortener);
                             task.ShortenURL(TestURL);
+                            if (task.UploadResults.Count > 0)
+                            {
+                                task.UploadResults[0].URL = task.UploadResults[0].ShortenedURL;
+                            }
                             break;
                         default:
                             throw new Exception("Unknown uploader.");
@@ -267,11 +276,12 @@ namespace ZScreenTesterGUI
                 {
                     ConsoleWriteLine(ex.ToString());
                 }
-
-                uploader.Timer.Stop();
-                uploader.Task = task;
-
-                bw.ReportProgress((int)UploadStatus.Uploaded, uploader);
+                finally
+                {
+                    uploader.Timer.Stop();
+                    uploader.Task = task;
+                    bw.ReportProgress((int)UploadStatus.Uploaded, uploader);
+                }
             }
         }
 
@@ -281,7 +291,7 @@ namespace ZScreenTesterGUI
             {
                 UploaderInfo uploader = e.UserState as UploaderInfo;
 
-                if (uploader != null && uploader.Task.UploadResults.Count > 0)
+                if (uploader != null)
                 {
                     lvUploaders.Items[uploader.Index].Tag = uploader;
 
@@ -293,17 +303,19 @@ namespace ZScreenTesterGUI
                             lvUploaders.Items[uploader.Index].SubItems[2].Text = string.Empty;
                             break;
                         case UploadStatus.Uploaded:
-                            if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
+                            if (uploader.Task.UploadResults.Count > 0)
                             {
-                                lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
-                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.UploadResults[0].URL;
+                                if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
+                                {
+                                    lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
+                                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.UploadResults[0].URL;
+                                }
+                                else
+                                {
+                                    lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
+                                    lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
+                                }
                             }
-                            else
-                            {
-                                lvUploaders.Items[uploader.Index].BackColor = Color.LightCoral;
-                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Failed: " + uploader.Task.ToErrorString();
-                            }
-
                             lvUploaders.Items[uploader.Index].SubItems[2].Text = uploader.Timer.ElapsedMilliseconds + " ms";
 
                             break;
