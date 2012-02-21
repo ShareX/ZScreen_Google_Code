@@ -59,8 +59,7 @@ namespace ZSS.UpdateCheckerLib
         public Version ApplicationVersion { get; private set; }
         public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateInfo UpdateInfo { get; private set; }
-
-        private IWebProxy proxy;
+        public IWebProxy Proxy { get; set; }
 
         public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo = null)
         {
@@ -68,7 +67,7 @@ namespace ZSS.UpdateCheckerLib
             ApplicationName = applicationName;
             ApplicationVersion = applicationVersion;
             ReleaseChannel = channel;
-            this.proxy = proxy;
+            Proxy = proxy;
         }
 
         public bool CheckUpdate()
@@ -78,7 +77,7 @@ namespace ZSS.UpdateCheckerLib
 
             try
             {
-                using (WebClient wc = new WebClient { Proxy = proxy })
+                using (WebClient wc = new WebClient { Proxy = Proxy })
                 using (MemoryStream ms = new MemoryStream(wc.DownloadData(URL)))
                 using (XmlTextReader xml = new XmlTextReader(ms))
                 {

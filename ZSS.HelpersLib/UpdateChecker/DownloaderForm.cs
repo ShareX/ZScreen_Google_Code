@@ -29,6 +29,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Web;
 using System.Windows.Forms;
 
@@ -41,6 +42,7 @@ namespace HelpersLib
         public string URL { get; set; }
         public string FileName { get; set; }
         public string SavePath { get; private set; }
+        public IWebProxy Proxy { get; set; }
         public string Changelog { get; set; }
         public bool AutoStartDownload { get; set; }
         public DownloaderFormStatus Status { get; private set; }
@@ -65,10 +67,11 @@ namespace HelpersLib
 #endif
         }
 
-        public DownloaderForm(string url, string changelog)
+        public DownloaderForm(string url, IWebProxy proxy, string changelog)
             : this()
         {
             URL = url;
+            Proxy = proxy;
             Changelog = changelog;
             txtChangelog.Text = changelog;
             FileName = HttpUtility.UrlDecode(URL.Substring(URL.LastIndexOf('/') + 1));
