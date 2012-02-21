@@ -329,7 +329,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while moving image files");
+                DebugHelper.WriteException(ex, "Error while moving image files");
                 MessageBox.Show(ex.Message);
             }
         }

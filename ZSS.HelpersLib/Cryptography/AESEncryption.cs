@@ -97,7 +97,7 @@ namespace HelpersLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex);
+                DebugHelper.WriteException(ex);
                 return CipherText;
             }
         }

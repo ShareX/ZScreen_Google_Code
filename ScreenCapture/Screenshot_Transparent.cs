@@ -69,7 +69,7 @@ namespace ScreenCapture
                         if (!NativeMethods.SetWindowPos(form.Handle, handle, rect.X, rect.Y, rect.Width, rect.Height, NativeMethods.SWP_NOACTIVATE))
                         {
                             form.Close();
-                            StaticHelper.WriteLine("Transparent capture failed. Reason: SetWindowPos fail.");
+                            DebugHelper.WriteLine("Transparent capture failed. Reason: SetWindowPos fail.");
                             return CaptureWindow(handle);
                         }
 
@@ -100,7 +100,7 @@ namespace ScreenCapture
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Transparent capture failed. Reason: Images not equal.");
+                        DebugHelper.WriteLine("Transparent capture failed. Reason: Images not equal.");
                         transparentImage = whiteBackground2;
                     }
 

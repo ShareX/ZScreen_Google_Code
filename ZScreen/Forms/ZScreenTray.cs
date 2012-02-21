@@ -53,7 +53,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error while clicking Balloon Tip");
+                    DebugHelper.WriteException(ex, "Error while clicking Balloon Tip");
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace ZScreenGUI
                                     }
                                     catch (Exception ex)
                                     {
-                                        StaticHelper.WriteException(ex);
+                                        DebugHelper.WriteException(ex);
                                     }
                                 }
                             }

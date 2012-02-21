@@ -709,7 +709,7 @@ namespace UploadersLib
             }
             if (silent)
             {
-                StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                DebugHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
             }
             else
             {

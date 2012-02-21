@@ -41,7 +41,7 @@ namespace ZScreenLib
             switch (imageFormat)
             {
                 case EImageFormat.PNG:
-                    StaticHelper.WriteLine("Performing PNG {0} {1} interlace", workflow.ImagePngCompression.GetDescription(), workflow.ImagePngInterlaced ? "with" : "without");
+                    DebugHelper.WriteLine("Performing PNG {0} {1} interlace", workflow.ImagePngCompression.GetDescription(), workflow.ImagePngInterlaced ? "with" : "without");
                     FreeImageNETHelper.SavePng(img, stream, workflow.ImagePngCompression, workflow.ImagePngInterlaced);
                     break;
                 case EImageFormat.JPEG:
@@ -55,7 +55,7 @@ namespace ZScreenLib
                     img.Save(stream, ImageFormat.Bmp);
                     break;
                 case EImageFormat.TIFF:
-                    StaticHelper.WriteLine("Performing TIFF {0} ", workflow.ImageTiffCompression.GetDescription());
+                    DebugHelper.WriteLine("Performing TIFF {0} ", workflow.ImageTiffCompression.GetDescription());
                     FreeImageNETHelper.SaveTiff(img, stream, workflow.ImageTiffCompression);
                     break;
             }

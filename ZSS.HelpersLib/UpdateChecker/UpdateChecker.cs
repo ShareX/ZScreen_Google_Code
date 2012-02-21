@@ -124,7 +124,7 @@ namespace ZSS.UpdateCheckerLib
                                     }
                                     catch (Exception ex)
                                     {
-                                        StaticHelper.WriteException(ex);
+                                        DebugHelper.WriteException(ex);
                                     }
                                 }
                             }
@@ -140,7 +140,7 @@ namespace ZSS.UpdateCheckerLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex);
+                DebugHelper.WriteException(ex);
             }
 
             UpdateInfo.Status = UpdateStatus.UpdateCheckFailed;

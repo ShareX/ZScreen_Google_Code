@@ -217,7 +217,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
-                                    StaticHelper.WriteException(ex, "Error while finalizing job");
+                                    DebugHelper.WriteException(ex, "Error while finalizing job");
                                 }
                             }
                             break;
@@ -253,7 +253,7 @@ namespace ZScreenGUI
                     {
                         foreach (string error in task.Errors)
                         {
-                            StaticHelper.WriteLine(error);
+                            DebugHelper.WriteLine(error);
                         }
                         niTray.ShowBalloonTip(5000, Application.ProductName, niTray.BalloonTipText + Environment.NewLine + task.Errors[task.Errors.Count - 1], ToolTipIcon.Error);
                     }
@@ -269,7 +269,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Job Completed with errors: ");
+                DebugHelper.WriteException(ex, "Job Completed with errors: ");
             }
             finally
             {
@@ -281,8 +281,8 @@ namespace ZScreenGUI
                 }
             }
 
-            StaticHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
-            StaticHelper.WriteLine(string.Format("Task duration: {0} ms", task.UploadDuration));
+            DebugHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
+            DebugHelper.WriteLine(string.Format("Task duration: {0} ms", task.UploadDuration));
             PostWorkerTasks();
         }
 
@@ -317,7 +317,7 @@ namespace ZScreenGUI
 
         public override WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
-            StaticHelper.WriteLine(string.Format("Creating job: {0}", job));
+            DebugHelper.WriteLine(string.Format("Creating job: {0}", job));
             if (tiCreateTask == null) tiCreateTask = new TaskInfo();
 
             tiCreateTask.Job = job;
@@ -550,7 +550,7 @@ namespace ZScreenGUI
                                 catch (Exception e)
                                 {
                                     fsfp = fp;
-                                    StaticHelper.WriteException(e);
+                                    DebugHelper.WriteException(e);
                                 }
                                 strListFilePath.Add(fsfp);
                             }
@@ -567,7 +567,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error while uploading using file system");
+                    DebugHelper.WriteException(ex, "Error while uploading using file system");
                     succ = false;
                 }
             }

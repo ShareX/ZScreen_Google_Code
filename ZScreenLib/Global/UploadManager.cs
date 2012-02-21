@@ -108,7 +108,7 @@ namespace ZScreenLib
         {
             string status = string.Format("Upload started. ID: {0}, Filename: {1}", task.Id, task.Info.FileName);
             if (!string.IsNullOrEmpty(task.Info.LocalFilePath)) status += ", Filepath: " + task.Info.LocalFilePath;
-            StaticHelper.WriteLine(status);
+            DebugHelper.WriteLine(status);
 
             ListViewItem lvi = ListViewControl.Items[task.Id];
             lvi.Text = task.Info.FileName;
@@ -142,7 +142,7 @@ namespace ZScreenLib
                     {
                         string errors = string.Join("\r\n\r\n", task.Result.Errors.ToArray());
 
-                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", task.Id, task.Info.FileName, errors);
+                        DebugHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", task.Id, task.Info.FileName, errors);
 
                         lvi.SubItems[1].Text = "Error";
                         lvi.SubItems[8].Text = string.Empty;
@@ -155,7 +155,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", task.Id, task.Info.FileName,
+                        DebugHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", task.Id, task.Info.FileName,
                             task.Result.URL, (int)task.UploadDuration);
 
                         lvi.SubItems[1].Text = task.Status.GetDescription();
@@ -207,7 +207,7 @@ namespace ZScreenLib
         {
             if (ListViewControl != null)
             {
-                StaticHelper.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
+                DebugHelper.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
                     wt.Id, wt.Job1, wt.Job2, wt.GetDestinationName());
 
                 ListViewItem lvi = new ListViewItem();
@@ -436,7 +436,7 @@ namespace ZScreenLib
 
                         if (!string.IsNullOrEmpty(tempText))
                         {
-                            StaticHelper.WriteLine("Setting Clipboard with URL: " + tempText);
+                            DebugHelper.WriteLine("Setting Clipboard with URL: " + tempText);
                             Clipboard.SetText(tempText); // auto
                             Engine.zPreviousSetClipboardText = tempText;
                             Engine.IsClipboardUploading = false;
@@ -449,7 +449,7 @@ namespace ZScreenLib
                                     string linkdel = ur.DeletionURL;
                                     if (!string.IsNullOrEmpty(linkdel))
                                     {
-                                        StaticHelper.WriteLine("Deletion Link: " + linkdel);
+                                        DebugHelper.WriteLine("Deletion Link: " + linkdel);
                                     }
                                 }
                             }

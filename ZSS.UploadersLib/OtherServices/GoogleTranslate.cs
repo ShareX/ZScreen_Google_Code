@@ -61,7 +61,7 @@ namespace UploadersLib.OtherServices
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e);
+                    DebugHelper.WriteException(e);
                 }
             }
 
@@ -96,7 +96,7 @@ namespace UploadersLib.OtherServices
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e);
+                    DebugHelper.WriteException(e);
                 }
             }
 

@@ -122,7 +122,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while deleting file in View Remote");
+                DebugHelper.WriteException(ex, "Error while deleting file in View Remote");
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -253,7 +253,7 @@ namespace ZScreenLib
                 }
                 catch (System.Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error while viewing file in View Remote");
+                    DebugHelper.WriteException(ex, "Error while viewing file in View Remote");
                     // bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.VIEWING_FILE, "");
                 }
             }
@@ -332,7 +332,7 @@ namespace ZScreenLib
 
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
-                    StaticHelper.WriteLine("Viewing file: ", fp);
+                    DebugHelper.WriteLine("Viewing file: ", fp);
                     if (GraphicsMgr.IsValidImage(fp))
                     {
                         pbViewer.Visible = true;

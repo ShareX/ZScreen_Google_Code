@@ -229,7 +229,7 @@ namespace UploadersLib
 
         public void CryptPasswords(bool bEncrypt)
         {
-            StaticHelper.WriteLine((bEncrypt ? "Encrypting " : "Decrypting") + " passwords.");
+            DebugHelper.WriteLine((bEncrypt ? "Encrypting " : "Decrypting") + " passwords.");
 
             CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength2 };
 

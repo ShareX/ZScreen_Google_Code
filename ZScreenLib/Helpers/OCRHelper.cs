@@ -27,7 +27,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error attempting to OCR " + fp);
+                DebugHelper.WriteException(ex, "Error attempting to OCR " + fp);
                 return string.Empty;
             }
         }

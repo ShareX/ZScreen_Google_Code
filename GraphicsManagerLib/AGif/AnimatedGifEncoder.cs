@@ -185,7 +185,7 @@ namespace Gif.Components
             catch (IOException e)
             {
                 ok = false;
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             return ok;
@@ -214,7 +214,7 @@ namespace Gif.Components
             catch (IOException e)
             {
                 ok = false;
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             // reset for subsequent use
@@ -303,7 +303,7 @@ namespace Gif.Components
             catch (IOException e)
             {
                 ok = false;
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
             return started = ok;
         }
@@ -328,7 +328,7 @@ namespace Gif.Components
             catch (IOException e)
             {
                 ok = false;
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
             return started = ok;
         }

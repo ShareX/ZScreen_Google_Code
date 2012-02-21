@@ -63,7 +63,7 @@ namespace UploadersLib.FileUploaders
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e);
+                    DebugHelper.WriteException(e);
                     Errors.Add(e.Message);
                 }
 

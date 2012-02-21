@@ -80,21 +80,21 @@ namespace ZScreenLib
 
                 if (dirSize > mCacheSize)
                 {
-                    StaticHelper.WriteLine(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
+                    DebugHelper.WriteLine(string.Format("Cache Size (before): {0} MiB", dirSize.ToString("0.00")));
 
                     while (dirSize > mCacheSize)
                     {
                         if (files.Count > 0)
                         {
                             ImageFile f = files[0];
-                            StaticHelper.WriteLine("Deleting: " + f.LocalFilePath);
+                            DebugHelper.WriteLine("Deleting: " + f.LocalFilePath);
                             dirSize -= f.Size;
                             File.Delete(f.LocalFilePath);
                             files.RemoveAt(0);
                         }
                     }
 
-                    StaticHelper.WriteLine(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
+                    DebugHelper.WriteLine(string.Format("Cache Size (after): {0} MiB", dirSize.ToString("0.00")));
                 }
             }
         }

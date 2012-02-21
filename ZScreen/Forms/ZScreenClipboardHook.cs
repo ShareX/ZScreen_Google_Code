@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using HelpersLib;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -45,7 +46,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                DebugHelper.WriteLine(ex.ToString());
             }
         }
 

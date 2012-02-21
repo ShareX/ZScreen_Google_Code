@@ -58,7 +58,7 @@ namespace ZScreenLib.Helpers
             }
             else
             {
-                StaticHelper.WriteLine(text);
+                DebugHelper.WriteLine(text);
             }
 
             return text;

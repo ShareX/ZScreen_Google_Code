@@ -282,7 +282,7 @@ namespace UploadersLib
                 }
                 catch (Exception e)
                 {
-                    StaticHelper.WriteException(e);
+                    DebugHelper.WriteException(e);
                 }
             }
         }

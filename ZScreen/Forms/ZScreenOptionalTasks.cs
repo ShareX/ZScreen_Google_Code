@@ -89,7 +89,7 @@ namespace ZScreenGUI
                         MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
                     if (UpdaterAck == DialogResult.Yes)
                     {
-                        DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
+                        DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.Proxy, updateChecker.UpdateInfo.Summary);
                         downloader.ShowDialog();
                         if (downloader.Status == DownloaderFormStatus.InstallStarted) Application.Exit();
                     }
@@ -112,7 +112,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while performing Online Tasks");
+                DebugHelper.WriteException(ex, "Error while performing Online Tasks");
             }
         }
 

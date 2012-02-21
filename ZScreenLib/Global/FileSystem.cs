@@ -126,7 +126,7 @@ namespace ZScreenLib
                     }
                     catch (Exception ex)
                     {
-                        StaticHelper.WriteException(ex, "Error while saving image");
+                        DebugHelper.WriteException(ex, "Error while saving image");
                     }
                 }
             }
@@ -172,7 +172,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "WriteText");
+                DebugHelper.WriteException(ex, "WriteText");
             }
             return succ;
         }
@@ -189,7 +189,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while exporting text");
+                DebugHelper.WriteException(ex, "Error while exporting text");
                 succ = false;
             }
 
@@ -218,7 +218,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while getting text from resource");
+                DebugHelper.WriteException(ex, "Error while getting text from resource");
             }
 
             return text;

@@ -52,7 +52,7 @@ namespace HistoryLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             return false;
@@ -66,7 +66,7 @@ namespace HistoryLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             return new List<HistoryItem>();

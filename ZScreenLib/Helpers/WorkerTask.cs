@@ -267,7 +267,7 @@ namespace ZScreenLib
 
         public bool StartWork(JobLevel2 job)
         {
-            StaticHelper.WriteLine(WorkflowConfig.DestConfig.ToString());
+            DebugHelper.WriteLine(WorkflowConfig.DestConfig.ToString());
 
             Job2 = job;
 
@@ -275,7 +275,7 @@ namespace ZScreenLib
 
             Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
 #if DEBUG
-            StaticHelper.WriteLine("Retrieved Window Title at " + new StackFrame().GetMethod().Name);
+            DebugHelper.WriteLine("Retrieved Window Title at " + new StackFrame().GetMethod().Name);
 #endif
             bool success = true;
 
@@ -449,7 +449,7 @@ namespace ZScreenLib
                         }
                         else
                         {
-                            StaticHelper.WriteLine("DWM is not found in the system.");
+                            DebugHelper.WriteLine("DWM is not found in the system.");
                             TempImage = Capture.CaptureWithGDI2(WorkflowConfig);
                         }
                         break;
@@ -542,7 +542,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    StaticHelper.WriteException(ex, "Error while capturing region");
+                    DebugHelper.WriteException(ex, "Error while capturing region");
                     Errors.Add(ex.Message);
                     if (Engine.ConfigOptions.CaptureEntireScreenOnError)
                     {
@@ -726,7 +726,7 @@ namespace ZScreenLib
 
                 if (bShortenUrlJob || bLongUrl)
                 {
-                    StaticHelper.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(),
+                    DebugHelper.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(),
                                                          Engine.ConfigUI.ShortenUrlAfterUploadAfter));
                 }
                 return Engine.ConfigOptions.TwitterEnabled || bShortenUrlJob || bLongUrl ||
@@ -898,7 +898,7 @@ namespace ZScreenLib
                         }
                         catch (Exception ex)
                         {
-                            StaticHelper.WriteException(ex, "ImageEdit");
+                            DebugHelper.WriteException(ex, "ImageEdit");
                         }
                     }
                     else if (IsValidActionImage(app) && app.Name == Engine.zImageEffects)
@@ -929,7 +929,7 @@ namespace ZScreenLib
                             app.OpenFile(Info.LocalFilePath);
                         }
                     }
-                    StaticHelper.WriteLine(string.Format("Performed Actions using {0}.", app.Name));
+                    DebugHelper.WriteLine(string.Format("Performed Actions using {0}.", app.Name));
                 }
             }
         }
@@ -1122,7 +1122,7 @@ namespace ZScreenLib
                 TempImage = img;
                 Job1 = EDataType.Image;
 
-                StaticHelper.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+                DebugHelper.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
 
                 if (Engine.ConfigUI != null && Engine.ConfigUI.ShowOutputsAsap)
                 {
@@ -1409,7 +1409,7 @@ namespace ZScreenLib
         private Stream PrepareDataFromImage(Image img)
         {
             Stream data = null;
-            StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
+            DebugHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
             EImageFormat imageFormat;
             data = WorkerTaskHelper.PrepareImage(WorkflowConfig, Engine.ConfigOptions, img, out imageFormat, bTargetFileSize: true);
             return data;
@@ -1426,7 +1426,7 @@ namespace ZScreenLib
 
             if (File.Exists(Info.LocalFilePath)) // priority 1: filepath before image
             {
-                StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from " + Info.LocalFilePath);
+                DebugHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from " + Info.LocalFilePath);
                 data = PrepareDataFromFile(Info.LocalFilePath);
             }
             else if (TempImage != null)
@@ -1435,7 +1435,7 @@ namespace ZScreenLib
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
-                StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from text");
+                DebugHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from text");
                 data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
             }
 
@@ -1663,7 +1663,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
-                        StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
+                        DebugHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
                         urShorturl.Host = us.Host;
                         urShorturl.URL = fullUrl;
                         urShorturl.ShortenedURL = shortenUrl;
@@ -1744,7 +1744,7 @@ namespace ZScreenLib
             {
                 MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Indeterminate);
                 DestinationName = fileUploaderType.GetDescription();
-                StaticHelper.WriteLine("Initialized " + DestinationName);
+                DebugHelper.WriteLine("Initialized " + DestinationName);
                 fileUploader.ProgressChanged += UploadProgressChanged;
                 UploadResult ur_remote_file = fileUploader.Upload(data, Info.FileName);
                 if (ur_remote_file != null)
@@ -1759,7 +1759,7 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
-            StaticHelper.WriteLine("Uploading File: " + Info.LocalFilePath);
+            DebugHelper.WriteLine("Uploading File: " + Info.LocalFilePath);
 
             foreach (FileDestination fileUploaderType in WorkflowConfig.DestConfig.FileUploaders)
             {
@@ -1776,7 +1776,7 @@ namespace ZScreenLib
                 {
                     if (TempImage.Width > 1600 || TempImage.Height > 1600)
                     {
-                        StaticHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
+                        DebugHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
                         if (!WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageDestination.ImageShack))
                         {
                             WorkflowConfig.DestConfig.ImageUploaders.Add(ImageDestination.ImageShack);
@@ -1878,7 +1878,7 @@ namespace ZScreenLib
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
                 DestinationName = WorkflowConfig.DestConfig.ToStringImageUploaders();
-                StaticHelper.WriteLine("Initialized " + DestinationName);
+                DebugHelper.WriteLine("Initialized " + DestinationName);
 
                 if (data != null)
                 {
@@ -1967,7 +1967,7 @@ namespace ZScreenLib
             if (textUploader != null)
             {
                 DestinationName = textUploaderType.GetDescription();
-                StaticHelper.WriteLine("Uploading to " + DestinationName);
+                DebugHelper.WriteLine("Uploading to " + DestinationName);
 
                 string url = string.Empty;
 
@@ -2010,7 +2010,7 @@ namespace ZScreenLib
                 {
                     FTPAccount acc = Engine.ConfigUploaders.FTPAccountList2[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
-                    StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
+                    DebugHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
 
                     MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Normal);
                     switch (acc.Protocol)
@@ -2047,7 +2047,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                StaticHelper.WriteException(ex, "Error while uploading to FTP Server");
+                DebugHelper.WriteException(ex, "Error while uploading to FTP Server");
                 Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
             return ur_remote_file_ftp;
@@ -2065,7 +2065,7 @@ namespace ZScreenLib
                     Engine.ConfigUploaders.MediaWikiAccountList[Engine.ConfigUploaders.MediaWikiAccountSelected];
                 IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
                 DestinationName = acc.Name;
-                StaticHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", Info.FileName, acc.Url));
+                DebugHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", Info.FileName, acc.Url));
                 var uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
                 UploadResult ur_remote_img_mediawiki = uploader.UploadImage(Info.LocalFilePath);
                 if (ur_remote_img_mediawiki != null)
@@ -2179,7 +2179,7 @@ namespace ZScreenLib
                 }
 
                 UpdateLocalFilePath(outputFilePath);
-                StaticHelper.WriteLine("Wrote animated image: " + outputFilePath);
+                DebugHelper.WriteLine("Wrote animated image: " + outputFilePath);
                 tempImages.Clear();
             }
         }

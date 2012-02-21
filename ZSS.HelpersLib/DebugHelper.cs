@@ -28,7 +28,7 @@ using System.Diagnostics;
 
 namespace HelpersLib
 {
-    public static class StaticHelper
+    public static class DebugHelper
     {
         public static Logger MyLogger { private get; set; }
 

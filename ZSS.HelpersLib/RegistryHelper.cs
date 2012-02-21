@@ -52,7 +52,7 @@ namespace HelpersLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             return false;
@@ -79,7 +79,7 @@ namespace HelpersLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
         }
 
@@ -91,7 +91,7 @@ namespace HelpersLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
 
             return false;
@@ -112,7 +112,7 @@ namespace HelpersLib
             }
             catch (Exception e)
             {
-                StaticHelper.WriteException(e);
+                DebugHelper.WriteException(e);
             }
         }
 
