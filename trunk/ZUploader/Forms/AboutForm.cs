@@ -41,7 +41,6 @@ namespace ZUploader
             lblProductName.Text = Program.Title;
             lblCopyright.Text = AssemblyCopyright;
 
-            UploadManager.UpdateProxySettings();
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Program.AssemblyVersion),
                 ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy);
             uclUpdate.CheckUpdate(updateChecker);
@@ -84,11 +83,6 @@ namespace ZUploader
         private void pbMikeURL_Click(object sender, EventArgs e)
         {
             ZAppHelper.LoadBrowserAsync(ZLinks.URL_MIKE);
-        }
-
-        private void pbBrandonURL_Click(object sender, EventArgs e)
-        {
-            ZAppHelper.LoadBrowserAsync(ZLinks.URL_BRANDON);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

@@ -118,8 +118,6 @@ namespace ZUploader
             {
                 OnUploadPreparing();
 
-                UploadManager.UpdateProxySettings();
-
                 bw = new BackgroundWorker();
                 bw.WorkerReportsProgress = true;
                 bw.DoWork += new DoWorkEventHandler(UploadThread);

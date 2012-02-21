@@ -57,7 +57,6 @@ namespace ZUploader
             LoadSettings();
 
             InitHotkeys();
-            UseCommandLineArgs(Environment.GetCommandLineArgs());
 
             if (Program.Settings.AutoCheckUpdate)
             {
@@ -67,6 +66,8 @@ namespace ZUploader
             IsReady = true;
 
             Program.MyLogger.WriteLine("Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
+
+            UseCommandLineArgs(Environment.GetCommandLineArgs());
         }
 
         private void AfterShownJobs()
@@ -160,6 +161,8 @@ namespace ZUploader
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
 
             UpdateUploaderMenuNames();
+
+            UploadManager.UpdateProxySettings();
         }
 
         private void UpdateControls()
@@ -246,7 +249,7 @@ namespace ZUploader
                 if (MessageBox.Show("Update found. Do you want to download it?", "Update check", MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
-                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.UpdateInfo.Summary);
+                    DownloaderForm downloader = new DownloaderForm(updateChecker.UpdateInfo.URL, updateChecker.Proxy, updateChecker.UpdateInfo.Summary);
                     downloader.ShowDialog();
                     if (downloader.Status == DownloaderFormStatus.InstallStarted) Application.Exit();
                 }
@@ -572,6 +575,7 @@ namespace ZUploader
         private void tsbSettings_Click(object sender, EventArgs e)
         {
             new SettingsForm() { Icon = this.Icon }.ShowDialog();
+            UploadManager.UpdateProxySettings();
             Program.Settings.SaveAsync();
         }
 
