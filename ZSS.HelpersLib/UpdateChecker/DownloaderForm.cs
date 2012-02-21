@@ -115,7 +115,7 @@ namespace HelpersLib
 
                 SavePath = Path.Combine(Path.GetTempPath(), FileName);
                 fileStream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-                fileDownloader = new FileDownloader(URL, fileStream);
+                fileDownloader = new FileDownloader(URL, fileStream, Proxy);
                 fileDownloader.FileSizeReceived += (v1, v2) => ChangeProgress();
                 fileDownloader.DownloadStarted += (v1, v2) => ChangeStatus("Download started.");
                 fileDownloader.ProgressChanged += (v1, v2) => ChangeProgress();
