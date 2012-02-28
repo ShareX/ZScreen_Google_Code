@@ -2,8 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ZScreen"     
-#define ExePath "ZScreen\bin\x86\Debug\ZScreen.exe"
-#define MyAppVersion GetStringFileInfo(ExePath, "Assembly Version")
+#define ExePath "ZScreen\bin\x86\Release\ZScreen.exe"
+#define DllPath "ZScreen\bin\x86\Release\ZScreenLib.dll"
+#define MyAppVersion GetStringFileInfo(DllPath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
 
@@ -30,8 +31,8 @@ InfoBeforeFile=ZScreenLib\Documents\VersionHistory.txt
 InternalCompressLevel=ultra64
 LanguageDetectionMethod=uilanguage
 MinVersion=4.90.3000,5.0.2195sp3
-OutputBaseFilename={#MyAppName}-{#MyAppVersion}-dev-setup
-OutputDir=..\Output\
+OutputBaseFilename={#MyAppName}-{#MyAppVersion}-setup
+OutputDir=Output\
 PrivilegesRequired=none
 ;SetupIconFile=ZScreen\Resources\zss-main.ico
 ShowLanguageDialog=auto
@@ -53,18 +54,14 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ZScreen\bin\x86\Debug\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\x86\Debug\*.pdb; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\x86\Debug\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
-Source: ZScreen\bin\x86\Debug\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
-Source: ZScreen\bin\x86\Debug\*.html; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZScreen\bin\x86\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\x86\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZScreen\bin\x86\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"
+Name: "{group}\Uninstall {#MyAppName}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"; Tasks: desktopicon
-
-[InstallDelete] 
-Type: files; Name: "{group}\ZUploader.lnk";
-
+              
 [Run]
-Filename: {app}\{#MyAppName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
+Filename: {app}\{#MyAppName}.exe; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
