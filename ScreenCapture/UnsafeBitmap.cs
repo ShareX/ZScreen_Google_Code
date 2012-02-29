@@ -138,14 +138,29 @@ namespace ScreenCapture
             Pointer[i] = color;
         }
 
+        public void SetPixel(int i, uint color)
+        {
+            Pointer[i] = color;
+        }
+
         public void SetPixel(int x, int y, ColorBgra color)
         {
             Pointer[x + y * Width] = color;
         }
 
-        public void SetPixel(int i, uint color)
+        public void SetPixel(int x, int y, uint color)
         {
-            Pointer[i] = color;
+            Pointer[x + y * Width] = color;
+        }
+
+        public void ClearPixel(int i)
+        {
+            Pointer[i] = 0;
+        }
+
+        public void ClearPixel(int x, int y)
+        {
+            Pointer[x + y * Width] = 0;
         }
 
         public void Dispose()
