@@ -33,6 +33,7 @@
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
             this.lblGeneralSeparator = new System.Windows.Forms.Label();
             this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
             this.cbShowTray = new System.Windows.Forms.CheckBox();
@@ -137,7 +138,7 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbCheckUpdates = new System.Windows.Forms.CheckBox();
+            this.cbCaptureShadow = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -240,6 +241,17 @@
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbCheckUpdates
+            // 
+            this.cbCheckUpdates.AutoSize = true;
+            this.cbCheckUpdates.Location = new System.Drawing.Point(16, 88);
+            this.cbCheckUpdates.Name = "cbCheckUpdates";
+            this.cbCheckUpdates.Size = new System.Drawing.Size(209, 17);
+            this.cbCheckUpdates.TabIndex = 10;
+            this.cbCheckUpdates.Text = "Automatically check updates at startup";
+            this.cbCheckUpdates.UseVisualStyleBackColor = true;
+            this.cbCheckUpdates.CheckedChanged += new System.EventHandler(this.cbCheckUpdates_CheckedChanged);
             // 
             // lblGeneralSeparator
             // 
@@ -664,7 +676,7 @@
             this.tpResize.Location = new System.Drawing.Point(4, 22);
             this.tpResize.Name = "tpResize";
             this.tpResize.Padding = new System.Windows.Forms.Padding(3);
-            this.tpResize.Size = new System.Drawing.Size(505, 293);
+            this.tpResize.Size = new System.Drawing.Size(504, 294);
             this.tpResize.TabIndex = 1;
             this.tpResize.Text = "Resize";
             this.tpResize.UseVisualStyleBackColor = true;
@@ -1106,6 +1118,7 @@
             // 
             // tpCaptureGeneral
             // 
+            this.tpCaptureGeneral.Controls.Add(this.cbCaptureShadow);
             this.tpCaptureGeneral.Controls.Add(this.gbCaptureAfter);
             this.tpCaptureGeneral.Controls.Add(this.cbShowCursor);
             this.tpCaptureGeneral.Controls.Add(this.cbCaptureTransparent);
@@ -1125,7 +1138,7 @@
             this.gbCaptureAfter.Controls.Add(this.cbCaptureUploadImage);
             this.gbCaptureAfter.Controls.Add(this.cbCaptureSaveImage);
             this.gbCaptureAfter.Controls.Add(this.cbCaptureCopyImage);
-            this.gbCaptureAfter.Location = new System.Drawing.Point(16, 72);
+            this.gbCaptureAfter.Location = new System.Drawing.Point(16, 96);
             this.gbCaptureAfter.Name = "gbCaptureAfter";
             this.gbCaptureAfter.Size = new System.Drawing.Size(472, 152);
             this.gbCaptureAfter.TabIndex = 2;
@@ -1207,9 +1220,9 @@
             this.cbCaptureTransparent.AutoSize = true;
             this.cbCaptureTransparent.Location = new System.Drawing.Point(16, 40);
             this.cbCaptureTransparent.Name = "cbCaptureTransparent";
-            this.cbCaptureTransparent.Size = new System.Drawing.Size(256, 17);
+            this.cbCaptureTransparent.Size = new System.Drawing.Size(188, 17);
             this.cbCaptureTransparent.TabIndex = 1;
-            this.cbCaptureTransparent.Text = "Capture with transparency (For window captures)";
+            this.cbCaptureTransparent.Text = "Capture window with transparency";
             this.cbCaptureTransparent.UseVisualStyleBackColor = true;
             this.cbCaptureTransparent.CheckedChanged += new System.EventHandler(this.cbCaptureTransparent_CheckedChanged);
             // 
@@ -1228,7 +1241,7 @@
             this.tpCaptureShape.Location = new System.Drawing.Point(4, 22);
             this.tpCaptureShape.Name = "tpCaptureShape";
             this.tpCaptureShape.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureShape.Size = new System.Drawing.Size(505, 293);
+            this.tpCaptureShape.Size = new System.Drawing.Size(504, 294);
             this.tpCaptureShape.TabIndex = 1;
             this.tpCaptureShape.Text = "Shape capture";
             this.tpCaptureShape.UseVisualStyleBackColor = true;
@@ -1512,16 +1525,16 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbCheckUpdates
+            // cbCaptureShadow
             // 
-            this.cbCheckUpdates.AutoSize = true;
-            this.cbCheckUpdates.Location = new System.Drawing.Point(16, 88);
-            this.cbCheckUpdates.Name = "cbCheckUpdates";
-            this.cbCheckUpdates.Size = new System.Drawing.Size(209, 17);
-            this.cbCheckUpdates.TabIndex = 10;
-            this.cbCheckUpdates.Text = "Automatically check updates at startup";
-            this.cbCheckUpdates.UseVisualStyleBackColor = true;
-            this.cbCheckUpdates.CheckedChanged += new System.EventHandler(this.cbCheckUpdates_CheckedChanged);
+            this.cbCaptureShadow.AutoSize = true;
+            this.cbCaptureShadow.Location = new System.Drawing.Point(16, 64);
+            this.cbCaptureShadow.Name = "cbCaptureShadow";
+            this.cbCaptureShadow.Size = new System.Drawing.Size(279, 17);
+            this.cbCaptureShadow.TabIndex = 3;
+            this.cbCaptureShadow.Text = "Capture window with shadow (Transparency required)";
+            this.cbCaptureShadow.UseVisualStyleBackColor = true;
+            this.cbCaptureShadow.CheckedChanged += new System.EventHandler(this.cbCaptureShadow_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1695,5 +1708,6 @@
         private System.Windows.Forms.TextBox txtSaveImageSubFolderPattern;
         private System.Windows.Forms.Label lblSaveImageSubFolderPattern;
         private System.Windows.Forms.CheckBox cbCheckUpdates;
+        private System.Windows.Forms.CheckBox cbCaptureShadow;
     }
 }

@@ -117,6 +117,8 @@ namespace ZUploader
             // Capture
             cbShowCursor.Checked = Program.Settings.ShowCursor;
             cbCaptureTransparent.Checked = Program.Settings.CaptureTransparent;
+            cbCaptureShadow.Enabled = Program.Settings.CaptureTransparent;
+            cbCaptureShadow.Checked = Program.Settings.CaptureShadow;
             cbCaptureCopyImage.Checked = Program.Settings.CaptureCopyImage;
             cbCaptureSaveImage.Checked = Program.Settings.CaptureSaveImage;
             txtSaveImageSubFolderPattern.Text = Program.Settings.SaveImageSubFolderPattern;
@@ -496,6 +498,13 @@ namespace ZUploader
         private void cbCaptureTransparent_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.CaptureTransparent = cbCaptureTransparent.Checked;
+
+            cbCaptureShadow.Enabled = Program.Settings.CaptureTransparent;
+        }
+
+        private void cbCaptureShadow_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureShadow = cbCaptureShadow.Checked;
         }
 
         private void cbCaptureCopyImage_CheckedChanged(object sender, EventArgs e)
