@@ -88,6 +88,7 @@ namespace ZUploader
             try
             {
                 Screenshot.DrawCursor = Program.Settings.ShowCursor;
+                Screenshot.CaptureShadow = Program.Settings.CaptureShadow;
                 img = capture();
 
                 if (img != null && Program.Settings.AutoPlaySound)

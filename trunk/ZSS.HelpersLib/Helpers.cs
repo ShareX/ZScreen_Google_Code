@@ -377,7 +377,7 @@ namespace HelpersLib
                 return ((WebProxy)typeof(WebProxy).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
                     null, new Type[] { typeof(bool) }, null).Invoke(new object[] { true }));
             }
-            catch (Exception e)
+            catch
             {
             }
 
