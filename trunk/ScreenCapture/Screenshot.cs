@@ -34,6 +34,7 @@ namespace ScreenCapture
     {
         public static bool RemoveOutsideScreenArea = true;
         public static bool DrawCursor = false;
+        public static bool CaptureShadow = true;
 
         public static Image CaptureRectangle(Rectangle rect)
         {

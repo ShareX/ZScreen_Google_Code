@@ -56,7 +56,7 @@ namespace ScreenCapture
                         form.FormBorderStyle = FormBorderStyle.None;
                         form.ShowInTaskbar = false;
 
-                        if (!NativeMethods.IsZoomed(handle) && NativeMethods.IsDWMEnabled())
+                        if (CaptureShadow && !NativeMethods.IsZoomed(handle) && NativeMethods.IsDWMEnabled())
                         {
                             const int offset = 20;
 
@@ -113,6 +113,11 @@ namespace ScreenCapture
                     if (isTransparent)
                     {
                         transparentImage = TrimTransparent(transparentImage);
+
+                        if (!CaptureShadow)
+                        {
+                            TrimShadow(transparentImage);
+                        }
                     }
 
                     return transparentImage;
@@ -334,6 +339,77 @@ namespace ScreenCapture
             return bitmap;
         }
 
+        private static void TrimShadow(Bitmap bitmap)
+        {
+            int sizeLimit = 10;
+            int alphaLimit = 200;
+
+            using (UnsafeBitmap unsafeBitmap = new UnsafeBitmap(bitmap, true, ImageLockMode.ReadWrite))
+            {
+                for (int i = 0; i < sizeLimit; i++)
+                {
+                    int y = i;
+                    int width = bitmap.Width;
+
+                    // Left top
+                    for (int x = 0; x < sizeLimit; x++)
+                    {
+                        if (unsafeBitmap.GetPixel(x, y).Alpha < alphaLimit)
+                        {
+                            unsafeBitmap.ClearPixel(x, y);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    // Right top
+                    for (int x = width - 1; x > width - sizeLimit - 1; x--)
+                    {
+                        if (unsafeBitmap.GetPixel(x, y).Alpha < alphaLimit)
+                        {
+                            unsafeBitmap.ClearPixel(x, y);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    y = bitmap.Height - i - 1;
+
+                    // Left bottom
+                    for (int x = 0; x < sizeLimit; x++)
+                    {
+                        if (unsafeBitmap.GetPixel(x, y).Alpha < alphaLimit)
+                        {
+                            unsafeBitmap.ClearPixel(x, y);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    // Right bottom
+                    for (int x = width - 1; x > width - sizeLimit - 1; x--)
+                    {
+                        if (unsafeBitmap.GetPixel(x, y).Alpha < alphaLimit)
+                        {
+                            unsafeBitmap.ClearPixel(x, y);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        #region Not in use
+
         private static byte[,] windows7Corner = new byte[12, 2] {
             {0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0},
             {0, 1}, {1, 1}, {2, 1},
@@ -392,5 +468,7 @@ namespace ScreenCapture
 
             return bmp;
         }
+
+        #endregion Not in use
     }
 }
