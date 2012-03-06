@@ -32,6 +32,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.GUI;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
@@ -368,6 +369,30 @@ namespace ZUploader
                     if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(index))
                     {
                         fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[index]);
+                    }
+                    break;
+                case FileDestination.Email:
+                    using (EmailForm emailForm = new EmailForm(Program.UploadersConfig.EmailRememberLastTo ? Program.UploadersConfig.EmailLastTo : string.Empty,
+                        Program.UploadersConfig.EmailDefaultSubject, Program.UploadersConfig.EmailDefaultBody))
+                    {
+                        if (emailForm.ShowDialog() == DialogResult.OK)
+                        {
+                            if (Program.UploadersConfig.EmailRememberLastTo)
+                            {
+                                Program.UploadersConfig.EmailLastTo = emailForm.ToEmail;
+                            }
+
+                            fileUploader = new Email
+                            {
+                                SmtpServer = Program.UploadersConfig.EmailSmtpServer,
+                                SmtpPort = Program.UploadersConfig.EmailSmtpPort,
+                                FromEmail =  Program.UploadersConfig.EmailFrom,
+                                Password = Program.UploadersConfig.EmailPassword,
+                                ToEmail = emailForm.ToEmail,
+                                Subject = emailForm.Subject,
+                                Body = emailForm.Body
+                            };
+                        }
                     }
                     break;
             }

@@ -98,6 +98,7 @@
             this.lblImageScaleSpecificWidth = new System.Windows.Forms.Label();
             this.nudImageScaleSpecificWidth = new System.Windows.Forms.NumericUpDown();
             this.tpClipboardUpload = new System.Windows.Forms.TabPage();
+            this.cbClipboardUploadAutoDetectURL = new System.Windows.Forms.CheckBox();
             this.lblClipboardUploadInfo = new System.Windows.Forms.Label();
             this.lblNameFormatPatternPreview = new System.Windows.Forms.Label();
             this.lblNameFormatPattern = new System.Windows.Forms.Label();
@@ -139,7 +140,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbClipboardUploadAutoDetectURL = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -1046,6 +1046,17 @@
             this.tpClipboardUpload.Text = "Clipboard upload";
             this.tpClipboardUpload.UseVisualStyleBackColor = true;
             // 
+            // cbClipboardUploadAutoDetectURL
+            // 
+            this.cbClipboardUploadAutoDetectURL.AutoSize = true;
+            this.cbClipboardUploadAutoDetectURL.Location = new System.Drawing.Point(16, 16);
+            this.cbClipboardUploadAutoDetectURL.Name = "cbClipboardUploadAutoDetectURL";
+            this.cbClipboardUploadAutoDetectURL.Size = new System.Drawing.Size(401, 17);
+            this.cbClipboardUploadAutoDetectURL.TabIndex = 5;
+            this.cbClipboardUploadAutoDetectURL.Text = "Automatically detect URL when performing Text Upload and use URL shortener";
+            this.cbClipboardUploadAutoDetectURL.UseVisualStyleBackColor = true;
+            this.cbClipboardUploadAutoDetectURL.CheckedChanged += new System.EventHandler(this.cbClipboardUploadAutoDetectURL_CheckedChanged);
+            // 
             // lblClipboardUploadInfo
             // 
             this.lblClipboardUploadInfo.BackColor = System.Drawing.Color.DimGray;
@@ -1537,17 +1548,6 @@
             this.txtDebugLog.Size = new System.Drawing.Size(516, 324);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
-            // 
-            // cbClipboardUploadAutoDetectURL
-            // 
-            this.cbClipboardUploadAutoDetectURL.AutoSize = true;
-            this.cbClipboardUploadAutoDetectURL.Location = new System.Drawing.Point(16, 16);
-            this.cbClipboardUploadAutoDetectURL.Name = "cbClipboardUploadAutoDetectURL";
-            this.cbClipboardUploadAutoDetectURL.Size = new System.Drawing.Size(407, 17);
-            this.cbClipboardUploadAutoDetectURL.TabIndex = 5;
-            this.cbClipboardUploadAutoDetectURL.Text = "Automatically detect url when doing clipboard text upload and use URL shortener";
-            this.cbClipboardUploadAutoDetectURL.UseVisualStyleBackColor = true;
-            this.cbClipboardUploadAutoDetectURL.CheckedChanged += new System.EventHandler(this.cbClipboardUploadAutoDetectURL_CheckedChanged);
             // 
             // SettingsForm
             // 
