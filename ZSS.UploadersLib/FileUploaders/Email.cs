@@ -71,7 +71,7 @@ namespace UploadersLib.FileUploaders
         public override UploadResult Upload(Stream stream, string fileName)
         {
             Send(ToEmail, Subject, Body, stream, fileName);
-            return new UploadResult();
+            return new UploadResult { IsURLExpected = false };
         }
     }
 }

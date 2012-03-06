@@ -40,6 +40,7 @@ namespace UploadersLib.HelperClasses
         public string ShortenedURL { get; set; }
         public string Source { get; set; }
         public List<string> Errors { get; set; }
+        public bool IsURLExpected { get; set; }
 
         public bool IsError
         {
@@ -59,6 +60,7 @@ namespace UploadersLib.HelperClasses
         public UploadResult()
         {
             Errors = new List<string>();
+            IsURLExpected = true;
         }
 
         public UploadResult(string source, string url = null)
