@@ -150,4 +150,9 @@ namespace HelpersLib
     {
         Top, Right, Bottom, Left
     }
+
+    public enum CryptoType
+    {
+        MD5, SHA1
+    }
 }

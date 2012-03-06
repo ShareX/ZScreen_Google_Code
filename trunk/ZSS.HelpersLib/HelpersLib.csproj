@@ -102,6 +102,8 @@
     <Compile Include="ImageQuantization\OctreeQuantizer.cs" />
     <Compile Include="ImageQuantization\PaletteQuantizer.cs" />
     <Compile Include="ImageQuantization\Quantizer.cs" />
+    <Compile Include="Translator.cs" />
+    <Compile Include="TranslatorHelper.cs" />
     <Compile Include="UpdateChecker\DownloaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
