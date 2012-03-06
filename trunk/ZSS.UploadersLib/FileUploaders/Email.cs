@@ -23,19 +23,23 @@
 
 #endregion License Information (GPL v2)
 
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
-    public class Email
+    public class Email : FileUploader
     {
         public string SmtpServer { get; set; }
         public int SmtpPort { get; set; }
         public string FromEmail { get; set; }
         public string Password { get; set; }
+
+        public string ToEmail { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
 
         public void Send(string toEmail, string subject, string body, Stream stream, string fileName)
         {
@@ -63,13 +67,11 @@ namespace UploadersLib.FileUploaders
                 smtp.Send(message);
             }
         }
-    }
 
-    public enum EmailProtocol
-    {
-        [Description("SMTP")]
-        Smtp,
-        [Description("IMAP")]
-        Imap
+        public override UploadResult Upload(Stream stream, string fileName)
+        {
+            Send(ToEmail, Subject, Body, stream, fileName);
+            return new UploadResult();
+        }
     }
 }

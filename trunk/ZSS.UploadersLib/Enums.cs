@@ -82,7 +82,9 @@ namespace UploadersLib
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
-        FTP
+        FTP,
+        [Description("Email")]
+        Email
     }
 
     public enum UrlShortenerType
