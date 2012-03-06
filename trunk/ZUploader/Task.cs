@@ -189,14 +189,13 @@ namespace ZUploader
                 if (uploader != null) Info.Result.Errors = uploader.Errors;
             }
 
-            if (!IsStopped && Info.Result != null)
+            if (!IsStopped && Info.Result != null && Info.Result.IsURLExpected && !Info.Result.IsError)
             {
-                if (!Info.Result.IsError && string.IsNullOrEmpty(Info.Result.URL))
+                if (string.IsNullOrEmpty(Info.Result.URL))
                 {
                     Info.Result.Errors.Add("URL is empty.");
                 }
-
-                if (!Info.Result.IsError && (Program.Settings.URLShortenAfterUpload || Info.Job == TaskJob.ShortenURL))
+                else if (Program.Settings.URLShortenAfterUpload || Info.Job == TaskJob.ShortenURL)
                 {
                     Info.Result.ShortenedURL = ShortenURL(Info.Result.URL);
                 }
@@ -392,6 +391,10 @@ namespace ZUploader
                                 Subject = emailForm.Subject,
                                 Body = emailForm.Body
                             };
+                        }
+                        else
+                        {
+                            IsStopped = true;
                         }
                     }
                     break;
