@@ -106,6 +106,7 @@
             this.tpCapture = new System.Windows.Forms.TabPage();
             this.tcCapture = new System.Windows.Forms.TabControl();
             this.tpCaptureGeneral = new System.Windows.Forms.TabPage();
+            this.cbCaptureShadow = new System.Windows.Forms.CheckBox();
             this.gbCaptureAfter = new System.Windows.Forms.GroupBox();
             this.lblSaveImageSubFolderPatternPreview = new System.Windows.Forms.Label();
             this.txtSaveImageSubFolderPattern = new System.Windows.Forms.TextBox();
@@ -138,7 +139,7 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbCaptureShadow = new System.Windows.Forms.CheckBox();
+            this.cbClipboardUploadAutoDetectURL = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -1031,6 +1032,7 @@
             // 
             // tpClipboardUpload
             // 
+            this.tpClipboardUpload.Controls.Add(this.cbClipboardUploadAutoDetectURL);
             this.tpClipboardUpload.Controls.Add(this.lblClipboardUploadInfo);
             this.tpClipboardUpload.Controls.Add(this.lblNameFormatPatternPreview);
             this.tpClipboardUpload.Controls.Add(this.lblNameFormatPattern);
@@ -1061,7 +1063,7 @@
             // lblNameFormatPatternPreview
             // 
             this.lblNameFormatPatternPreview.AutoSize = true;
-            this.lblNameFormatPatternPreview.Location = new System.Drawing.Point(16, 72);
+            this.lblNameFormatPatternPreview.Location = new System.Drawing.Point(16, 104);
             this.lblNameFormatPatternPreview.Name = "lblNameFormatPatternPreview";
             this.lblNameFormatPatternPreview.Size = new System.Drawing.Size(48, 13);
             this.lblNameFormatPatternPreview.TabIndex = 3;
@@ -1070,7 +1072,7 @@
             // lblNameFormatPattern
             // 
             this.lblNameFormatPattern.AutoSize = true;
-            this.lblNameFormatPattern.Location = new System.Drawing.Point(16, 16);
+            this.lblNameFormatPattern.Location = new System.Drawing.Point(16, 48);
             this.lblNameFormatPattern.Name = "lblNameFormatPattern";
             this.lblNameFormatPattern.Size = new System.Drawing.Size(362, 13);
             this.lblNameFormatPattern.TabIndex = 0;
@@ -1078,7 +1080,7 @@
             // 
             // btnNameFormatPatternHelp
             // 
-            this.btnNameFormatPatternHelp.Location = new System.Drawing.Point(440, 39);
+            this.btnNameFormatPatternHelp.Location = new System.Drawing.Point(440, 71);
             this.btnNameFormatPatternHelp.Name = "btnNameFormatPatternHelp";
             this.btnNameFormatPatternHelp.Size = new System.Drawing.Size(24, 23);
             this.btnNameFormatPatternHelp.TabIndex = 2;
@@ -1088,7 +1090,7 @@
             // 
             // txtNameFormatPattern
             // 
-            this.txtNameFormatPattern.Location = new System.Drawing.Point(16, 40);
+            this.txtNameFormatPattern.Location = new System.Drawing.Point(16, 72);
             this.txtNameFormatPattern.Name = "txtNameFormatPattern";
             this.txtNameFormatPattern.Size = new System.Drawing.Size(416, 20);
             this.txtNameFormatPattern.TabIndex = 1;
@@ -1129,6 +1131,17 @@
             this.tpCaptureGeneral.TabIndex = 0;
             this.tpCaptureGeneral.Text = "General";
             this.tpCaptureGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbCaptureShadow
+            // 
+            this.cbCaptureShadow.AutoSize = true;
+            this.cbCaptureShadow.Location = new System.Drawing.Point(16, 64);
+            this.cbCaptureShadow.Name = "cbCaptureShadow";
+            this.cbCaptureShadow.Size = new System.Drawing.Size(279, 17);
+            this.cbCaptureShadow.TabIndex = 3;
+            this.cbCaptureShadow.Text = "Capture window with shadow (Transparency required)";
+            this.cbCaptureShadow.UseVisualStyleBackColor = true;
+            this.cbCaptureShadow.CheckedChanged += new System.EventHandler(this.cbCaptureShadow_CheckedChanged);
             // 
             // gbCaptureAfter
             // 
@@ -1525,16 +1538,16 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbCaptureShadow
+            // cbClipboardUploadAutoDetectURL
             // 
-            this.cbCaptureShadow.AutoSize = true;
-            this.cbCaptureShadow.Location = new System.Drawing.Point(16, 64);
-            this.cbCaptureShadow.Name = "cbCaptureShadow";
-            this.cbCaptureShadow.Size = new System.Drawing.Size(279, 17);
-            this.cbCaptureShadow.TabIndex = 3;
-            this.cbCaptureShadow.Text = "Capture window with shadow (Transparency required)";
-            this.cbCaptureShadow.UseVisualStyleBackColor = true;
-            this.cbCaptureShadow.CheckedChanged += new System.EventHandler(this.cbCaptureShadow_CheckedChanged);
+            this.cbClipboardUploadAutoDetectURL.AutoSize = true;
+            this.cbClipboardUploadAutoDetectURL.Location = new System.Drawing.Point(16, 16);
+            this.cbClipboardUploadAutoDetectURL.Name = "cbClipboardUploadAutoDetectURL";
+            this.cbClipboardUploadAutoDetectURL.Size = new System.Drawing.Size(407, 17);
+            this.cbClipboardUploadAutoDetectURL.TabIndex = 5;
+            this.cbClipboardUploadAutoDetectURL.Text = "Automatically detect url when doing clipboard text upload and use URL shortener";
+            this.cbClipboardUploadAutoDetectURL.UseVisualStyleBackColor = true;
+            this.cbClipboardUploadAutoDetectURL.CheckedChanged += new System.EventHandler(this.cbClipboardUploadAutoDetectURL_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1709,5 +1722,6 @@
         private System.Windows.Forms.Label lblSaveImageSubFolderPattern;
         private System.Windows.Forms.CheckBox cbCheckUpdates;
         private System.Windows.Forms.CheckBox cbCaptureShadow;
+        private System.Windows.Forms.CheckBox cbClipboardUploadAutoDetectURL;
     }
 }

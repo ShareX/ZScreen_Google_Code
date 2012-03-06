@@ -111,6 +111,7 @@ namespace ZUploader
             nudImageScaleSpecificHeight.Value = Program.Settings.ImageScaleSpecificHeight;
 
             // Clipboard upload
+            cbClipboardUploadAutoDetectURL.Checked = Program.Settings.ClipboardUploadAutoDetectURL;
             txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
             CreateCodesMenu();
 
@@ -472,6 +473,11 @@ namespace ZUploader
         #endregion Image
 
         #region Clipboard upload
+
+        private void cbClipboardUploadAutoDetectURL_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ClipboardUploadAutoDetectURL = cbClipboardUploadAutoDetectURL.Checked;
+        }
 
         private void txtNameFormatPattern_TextChanged(object sender, EventArgs e)
         {

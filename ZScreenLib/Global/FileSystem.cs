@@ -402,12 +402,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static bool IsValidLink(string url)
         {
-            bool b = false;
-            if (!string.IsNullOrEmpty(url))
-            {
-                b = !url.StartsWith("file") && Uri.IsWellFormedUriString(url, UriKind.Absolute);
-            }
-            return b;
+            return !string.IsNullOrEmpty(url) && !url.StartsWith("file://") && Uri.IsWellFormedUriString(url, UriKind.Absolute);
         }
 
         public static bool ManageImageFolders(string path)

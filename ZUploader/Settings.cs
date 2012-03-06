@@ -93,6 +93,7 @@ namespace ZUploader
         public int ImageScaleSpecificHeight = 100;
 
         // Clipboard upload
+        public bool ClipboardUploadAutoDetectURL = true;
         // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver
         public string NameFormatPattern = "%y-%mo-%d_%h-%mi-%s";
 

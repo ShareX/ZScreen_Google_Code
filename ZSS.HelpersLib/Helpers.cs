@@ -406,5 +406,16 @@ namespace HelpersLib
                 ThreadPool.QueueUserWorkItem(x => Process.Start(url));
             }
         }
+
+        public static bool IsValidURL(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                url = url.Trim();
+                return !url.StartsWith("file://") && Uri.IsWellFormedUriString(url, UriKind.Absolute);
+            }
+
+            return false;
+        }
     }
 }

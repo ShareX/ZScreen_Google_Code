@@ -135,7 +135,15 @@ namespace ZUploader
             else if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                UploadText(text);
+
+                if (Program.Settings.ClipboardUploadAutoDetectURL && ZAppHelper.IsValidURL(text))
+                {
+                    ShortenURL(text.Trim());
+                }
+                else
+                {
+                    UploadText(text);
+                }
             }
         }
 
@@ -204,6 +212,15 @@ namespace ZUploader
             {
                 EDataType destination = ImageUploader == ImageDestination.FileUploader ? EDataType.File : EDataType.Image;
                 Task task = Task.CreateDataUploaderTask(EDataType.Image, stream, filename, destination);
+                StartUpload(task);
+            }
+        }
+
+        public static void ShortenURL(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                Task task = Task.CreateURLShortenerTask(url);
                 StartUpload(task);
             }
         }
@@ -387,8 +404,8 @@ namespace ZUploader
 
                             if (Program.mainForm.niTray.Visible)
                             {
-                                Program.mainForm.niTray.Tag = info.Result.URL;
-                                Program.mainForm.niTray.ShowBalloonTip(5000, "ZUploader - Upload completed", info.Result.URL, ToolTipIcon.Info);
+                                Program.mainForm.niTray.Tag = url;
+                                Program.mainForm.niTray.ShowBalloonTip(5000, "ZUploader - Upload completed", url, ToolTipIcon.Info);
                             }
                         }
 

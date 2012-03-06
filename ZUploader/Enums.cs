@@ -32,7 +32,7 @@ namespace ZUploader
 
     public enum TaskJob
     {
-        DataUpload, FileUpload, ImageUpload, TextUpload
+        DataUpload, FileUpload, ImageUpload, TextUpload, ShortenURL
     }
 
     public enum ImageScaleType
