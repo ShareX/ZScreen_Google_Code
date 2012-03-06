@@ -31,6 +31,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace HelpersLib
 {
@@ -186,6 +187,19 @@ namespace HelpersLib
         public static Rectangle SizeOffset(this Rectangle rect, int width, int height)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width + width, rect.Height + height);
+        }
+
+        public static string Join<T>(this T[] array, string separator = " ")
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (sb.Length > 0 && !string.IsNullOrEmpty(separator)) sb.Append(separator);
+                sb.Append(array[i].ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }
