@@ -79,6 +79,9 @@ namespace ZUploader
                     case EDataType.Text:
                         UploaderHost = UploadManager.TextUploader.GetDescription();
                         break;
+                    case EDataType.URL:
+                        UploaderHost = UploadManager.URLShortener.GetDescription();
+                        break;
                 }
             }
         }

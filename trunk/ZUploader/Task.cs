@@ -110,6 +110,14 @@ namespace ZUploader
             return task;
         }
 
+        public static Task CreateURLShortenerTask(string url)
+        {
+            Task task = new Task(EDataType.URL, TaskJob.ShortenURL);
+            task.Info.FileName = "URL shorten";
+            task.Info.Result.URL = url;
+            return task;
+        }
+
         #endregion Constructors
 
         public void Start()
@@ -187,7 +195,7 @@ namespace ZUploader
                     Info.Result.Errors.Add("URL is empty.");
                 }
 
-                if (!Info.Result.IsError && Program.Settings.URLShortenAfterUpload)
+                if (!Info.Result.IsError && (Program.Settings.URLShortenAfterUpload || Info.Job == TaskJob.ShortenURL))
                 {
                     Info.Result.ShortenedURL = ShortenURL(Info.Result.URL);
                 }
