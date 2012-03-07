@@ -52,19 +52,8 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("SFTP"), Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
-        public string Passphrase { get; set; }
-
-        [Category("SFTP"), Description("Key Location")]
-        [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
-        public string Keypath { get; set; }
-
-        [Category("FTPS"), Description("Certification Location")]
-        [EditorAttribute(typeof(CertFileNameEditor), typeof(UITypeEditor))]
-        public string FtpsCertLocation { get; set; }
-
-        [Category("FTPS"), Description("Security Protocol"), DefaultValue(FtpSecurityProtocol.Ssl2Explicit)]
-        public FtpSecurityProtocol FtpsSecurityProtocol { get; set; }
+        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the server. This affects the server address."), DefaultValue(ServerProtocol.Ftp)]
+        public ServerProtocol ServerProtocol { get; set; }
 
         [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
@@ -72,11 +61,11 @@ namespace UploadersLib
         [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(BrowserProtocol.Http)]
         public BrowserProtocol BrowserProtocol { get; set; }
 
-        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the server. This affects the server address."), DefaultValue(ServerProtocol.Ftp)]
-        public ServerProtocol ServerProtocol { get; set; }
-
         [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. google.com\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
+
+        [Category("FTP"), Description("Don't add file extension to URL"), DefaultValue(false)]
+        public bool HttpHomePathNoExtension { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
@@ -115,34 +104,42 @@ namespace UploadersLib
             }
         }
 
+        [Category("FTPS"), Description("Certification Location")]
+        [EditorAttribute(typeof(CertFileNameEditor), typeof(UITypeEditor))]
+        public string FtpsCertLocation { get; set; }
+
+        [Category("FTPS"), Description("Security Protocol"), DefaultValue(FtpSecurityProtocol.Ssl2Explicit)]
+        public FtpSecurityProtocol FtpsSecurityProtocol { get; set; }
+
+        [Category("SFTP"), Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
+        public string Passphrase { get; set; }
+
+        [Category("SFTP"), Description("Key Location")]
+        [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
+        public string Keypath { get; set; }
+
         public FTPAccount()
         {
+            Protocol = FTPProtocol.FTP;
             Name = "New Account";
-            UserName = "username";
-            Password = "password";
             Host = "host";
             Port = 21;
+            UserName = "username";
+            Password = "password";
+            ServerProtocol = ServerProtocol.Ftp;
             SubFolderPath = string.Empty;
+            BrowserProtocol = BrowserProtocol.Http;
             HttpHomePath = string.Empty;
+            HttpHomePathNoExtension = false;
             IsActive = false;
 
-            ApplyDefaultValues(this);
+            FtpsSecurityProtocol = FtpSecurityProtocol.Ssl2Explicit;
         }
 
         public FTPAccount(string name)
             : this()
         {
-            this.Name = name;
-        }
-
-        public static void ApplyDefaultValues(object self)
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
+            Name = name;
         }
 
         public string GetSubFolderPath()
@@ -173,7 +170,16 @@ namespace UploadersLib
             string path = string.Empty;
             string host = this.Host;
             string lHttpHomePath = GetHttpHomePath();
-            string lFolderPath = this.GetSubFolderPath();
+            string lFolderPath = GetSubFolderPath();
+
+            if (HttpHomePathNoExtension)
+            {
+                int index = fileName.LastIndexOf('.');
+                if (index > -1)
+                {
+                    fileName = fileName.Remove(index);
+                }
+            }
 
             if (host.StartsWith("ftp."))
             {
@@ -228,18 +234,14 @@ namespace UploadersLib
             return string.Format("{0} - {1}:{2}", this.Name, this.Host, this.Port);
         }
 
-        #region ICloneable Members
+        public FTPAccount Clone()
+        {
+            return MemberwiseClone() as FTPAccount;
+        }
 
         object ICloneable.Clone()
         {
-            return this.MemberwiseClone() as FTPAccount;
-        }
-
-        #endregion ICloneable Members
-
-        public FTPAccount Clone()
-        {
-            return this.MemberwiseClone() as FTPAccount;
+            return MemberwiseClone();
         }
     }
 }
