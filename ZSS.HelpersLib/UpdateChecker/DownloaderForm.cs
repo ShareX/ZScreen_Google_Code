@@ -40,11 +40,17 @@ namespace HelpersLib
     public partial class DownloaderForm : Form
     {
         public string URL { get; set; }
+
         public string FileName { get; set; }
+
         public string SavePath { get; private set; }
+
         public IWebProxy Proxy { get; set; }
+
         public string Changelog { get; set; }
+
         public bool AutoStartDownload { get; set; }
+
         public DownloaderFormStatus Status { get; private set; }
 
         private FileDownloader fileDownloader;

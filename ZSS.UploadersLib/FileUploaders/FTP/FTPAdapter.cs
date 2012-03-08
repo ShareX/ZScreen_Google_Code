@@ -45,6 +45,7 @@ namespace UploadersLib
         }
 
         public FTPAccount Account { get; set; }
+
         public IWebProxy ProxySettings { get; set; }
     }
 

@@ -38,9 +38,13 @@ namespace ScreenCapture
     public class Surface : Form
     {
         public Image SurfaceImage { get; set; }
+
         public SurfaceOptions Config { get; set; }
+
         public int FPS { get; private set; }
+
         public Rectangle ScreenRectangle { get; private set; }
+
         public Rectangle ScreenRectangle0Based { get; private set; }
 
         protected List<DrawableObject> DrawableObjects { get; set; }

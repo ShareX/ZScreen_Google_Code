@@ -47,9 +47,13 @@ namespace UploadersLib
         public static ProxySettings ProxySettings = new ProxySettings();
 
         public List<string> Errors { get; private set; }
+
         public bool IsUploading { get; private set; }
+
         public int BufferSize { get; set; }
+
         public string UserAgent { get; set; }
+
         public CookieCollection LastResponseCookies { get; private set; }
 
         private bool stopUpload;

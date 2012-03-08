@@ -35,6 +35,7 @@ namespace HelpersLib.CLI
     public class CLIManagerRegex
     {
         public List<CLICommandRegex> Commands { get; set; }
+
         public Action<string> FilePathAction { get; set; }
 
         public bool Parse(string text)

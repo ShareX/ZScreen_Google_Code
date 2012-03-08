@@ -33,17 +33,27 @@ namespace HistoryLib
     public class HistoryItemManager
     {
         public HistoryItem HistoryItem { get; private set; }
+
         public int HistoryItemCount { get; private set; }
 
         public bool IsURLExist { get; private set; }
+
         public bool IsShortenedURLExist { get; private set; }
+
         public bool IsThumbnailURLExist { get; private set; }
+
         public bool IsDeletionURLExist { get; private set; }
+
         public bool IsImageURL { get; private set; }
+
         public bool IsTextURL { get; private set; }
+
         public bool IsFilePathValid { get; private set; }
+
         public bool IsFileExist { get; private set; }
+
         public bool IsImageFile { get; private set; }
+
         public bool IsTextFile { get; private set; }
 
         private ListView lv;

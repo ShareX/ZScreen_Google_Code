@@ -32,7 +32,9 @@ namespace ScreenCapture
     public struct MouseState
     {
         public MouseButtons Buttons { get; private set; }
+
         public Point Position { get; private set; }
+
         public Point ZeroBasedPosition { get; private set; }
 
         public void Update()
