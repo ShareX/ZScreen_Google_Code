@@ -327,7 +327,10 @@ namespace ZUploader
                 case FileDestination.Dropbox:
                     NameParser parser = new NameParser { IsFolderPath = true };
                     string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.UploadersConfig.DropboxUploadPath));
-                    fileUploader = new Dropbox(Program.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.UploadersConfig.DropboxAccountInfo);
+                    fileUploader = new Dropbox(Program.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.UploadersConfig.DropboxAccountInfo)
+                    {
+                        AutoCreateShareableLink = Program.UploadersConfig.DropboxAutoCreateShareableLink
+                    };
                     break;
                 case FileDestination.RapidShare:
                     fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUsername, Program.UploadersConfig.RapidSharePassword,

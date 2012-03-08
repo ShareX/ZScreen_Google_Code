@@ -256,6 +256,7 @@
             this.cboSharedFolderImages = new System.Windows.Forms.ComboBox();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.cbDropboxAutoCreateShareableLink = new System.Windows.Forms.CheckBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -1212,6 +1213,7 @@
             // 
             // tpDropbox
             // 
+            this.tpDropbox.Controls.Add(this.cbDropboxAutoCreateShareableLink);
             this.tpDropbox.Controls.Add(this.btnDropboxShowFiles);
             this.tpDropbox.Controls.Add(this.btnDropboxCompleteAuth);
             this.tpDropbox.Controls.Add(this.pbDropboxLogo);
@@ -1232,7 +1234,7 @@
             // btnDropboxShowFiles
             // 
             this.btnDropboxShowFiles.Enabled = false;
-            this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 86);
+            this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 120);
             this.btnDropboxShowFiles.Name = "btnDropboxShowFiles";
             this.btnDropboxShowFiles.Size = new System.Drawing.Size(56, 24);
             this.btnDropboxShowFiles.TabIndex = 3;
@@ -1243,7 +1245,7 @@
             // btnDropboxCompleteAuth
             // 
             this.btnDropboxCompleteAuth.Enabled = false;
-            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(176, 120);
+            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(176, 88);
             this.btnDropboxCompleteAuth.Name = "btnDropboxCompleteAuth";
             this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(152, 24);
             this.btnDropboxCompleteAuth.TabIndex = 6;
@@ -1276,7 +1278,7 @@
             // 
             this.lblDropboxStatus.AutoSize = true;
             this.lblDropboxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 160);
+            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 176);
             this.lblDropboxStatus.Name = "lblDropboxStatus";
             this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
             this.lblDropboxStatus.TabIndex = 7;
@@ -1285,7 +1287,7 @@
             // lblDropboxPathTip
             // 
             this.lblDropboxPathTip.AutoSize = true;
-            this.lblDropboxPathTip.Location = new System.Drawing.Point(408, 92);
+            this.lblDropboxPathTip.Location = new System.Drawing.Point(408, 126);
             this.lblDropboxPathTip.Name = "lblDropboxPathTip";
             this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
             this.lblDropboxPathTip.TabIndex = 4;
@@ -1294,7 +1296,7 @@
             // lblDropboxPath
             // 
             this.lblDropboxPath.AutoSize = true;
-            this.lblDropboxPath.Location = new System.Drawing.Point(16, 92);
+            this.lblDropboxPath.Location = new System.Drawing.Point(16, 126);
             this.lblDropboxPath.Name = "lblDropboxPath";
             this.lblDropboxPath.Size = new System.Drawing.Size(68, 13);
             this.lblDropboxPath.TabIndex = 1;
@@ -1302,7 +1304,7 @@
             // 
             // btnDropboxOpenAuthorize
             // 
-            this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(16, 120);
+            this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(16, 88);
             this.btnDropboxOpenAuthorize.Name = "btnDropboxOpenAuthorize";
             this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(152, 24);
             this.btnDropboxOpenAuthorize.TabIndex = 5;
@@ -1312,7 +1314,7 @@
             // 
             // txtDropboxPath
             // 
-            this.txtDropboxPath.Location = new System.Drawing.Point(88, 88);
+            this.txtDropboxPath.Location = new System.Drawing.Point(88, 122);
             this.txtDropboxPath.Name = "txtDropboxPath";
             this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
             this.txtDropboxPath.TabIndex = 2;
@@ -2699,6 +2701,18 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
+            // cbDropboxAutoCreateShareableLink
+            // 
+            this.cbDropboxAutoCreateShareableLink.AutoSize = true;
+            this.cbDropboxAutoCreateShareableLink.Location = new System.Drawing.Point(16, 152);
+            this.cbDropboxAutoCreateShareableLink.Name = "cbDropboxAutoCreateShareableLink";
+            this.cbDropboxAutoCreateShareableLink.Size = new System.Drawing.Size(463, 17);
+            this.cbDropboxAutoCreateShareableLink.TabIndex = 20;
+            this.cbDropboxAutoCreateShareableLink.Text = "Auto shorten url using Dropbox URL shortener (http://db.tt), these urls expire af" +
+    "ter thirty days.";
+            this.cbDropboxAutoCreateShareableLink.UseVisualStyleBackColor = true;
+            this.cbDropboxAutoCreateShareableLink.CheckedChanged += new System.EventHandler(this.cbDropboxAutoCreateShareableLink_CheckedChanged);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3021,5 +3035,6 @@
         private System.Windows.Forms.Label lblBoxFolderID;
         private System.Windows.Forms.Button btnBoxRefreshFolders;
         private System.Windows.Forms.TreeView tvBoxFolders;
+        private System.Windows.Forms.CheckBox cbDropboxAutoCreateShareableLink;
     }
 }

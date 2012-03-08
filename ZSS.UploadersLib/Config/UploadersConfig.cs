@@ -133,6 +133,7 @@ namespace UploadersLib
 
         public OAuthInfo DropboxOAuthInfo = null;
         public string DropboxUploadPath = "Public/" + Application.ProductName + "/%y-%mo";
+        public bool DropboxAutoCreateShareableLink = false;
         public DropboxAccountInfo DropboxAccountInfo = null;
 
         // RapidShare
