@@ -222,6 +222,7 @@ namespace UploadersLib
             // Dropbox
 
             txtDropboxPath.Text = Config.DropboxUploadPath;
+            cbDropboxAutoCreateShareableLink.Checked = Config.DropboxAutoCreateShareableLink;
             UpdateDropboxStatus();
 
             // Minus

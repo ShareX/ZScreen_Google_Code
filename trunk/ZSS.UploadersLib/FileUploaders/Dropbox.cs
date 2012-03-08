@@ -38,6 +38,7 @@ namespace UploadersLib.FileUploaders
         public OAuthInfo AuthInfo { get; set; }
         public DropboxAccountInfo AccountInfo { get; set; }
         public string UploadPath { get; set; }
+        public bool AutoCreateShareableLink { get; set; }
 
         private const string APIVersion = "1";
         private const string URLAPI = "https://api.dropbox.com/" + APIVersion;
@@ -47,6 +48,7 @@ namespace UploadersLib.FileUploaders
         private const string URLAccountInfo = URLAPI + "/account/info";
         private const string URLFiles = URLAPIContent + "/files/dropbox";
         private const string URLMetaData = URLAPI + "/metadata/dropbox";
+        private const string URLShares = URLAPI + "/shares/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
         private const string URLRequestToken = URLAPI + "/oauth/request_token";
@@ -104,6 +106,8 @@ namespace UploadersLib.FileUploaders
             return null;
         }
 
+        /// <summary>Retrieves information about the user's account.</summary>
+        /// <returns>User account information.</returns>
         public DropboxAccountInfo GetAccountInfo()
         {
             if (OAuthInfo.CheckOAuth(AuthInfo))
@@ -127,6 +131,12 @@ namespace UploadersLib.FileUploaders
             return null;
         }
 
+        /// <summary>Retrieves file and folder metadata.</summary>
+        /// <param name="path">The path to the file or folder.</param>
+        /// <returns>
+        /// The metadata for the file or folder at the given <path>.
+        /// If <path> represents a folder and the list parameter is true, the metadata will also include a listing of metadata for the folder's contents.
+        /// </returns>
         public DropboxDirectoryInfo GetFilesList(string path)
         {
             DropboxDirectoryInfo directoryInfo = null;
@@ -146,6 +156,32 @@ namespace UploadersLib.FileUploaders
             return directoryInfo;
         }
 
+        /// <summary>
+        /// Creates and returns a shareable link to files or folders.
+        /// Note: Links created by the /shares API call expire after thirty days.
+        /// </summary>
+        /// <returns>
+        /// A shareable link to the file or folder. The link can be used publicly and directs to a preview page of the file.
+        /// Also returns the link's expiration date in Dropbox's usual date format.
+        /// </returns>
+        public DropboxShares CreateShareableLink(string path, string fileName = "")
+        {
+            if (OAuthInfo.CheckOAuth(AuthInfo))
+            {
+                string url = OAuthManager.GenerateQuery(ZAppHelper.CombineURL(URLShares, path, fileName), null, HttpMethod.Get, AuthInfo);
+
+                string response = SendGetRequest(url);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    DropboxShares shares = JsonConvert.DeserializeObject<DropboxShares>(response);
+                    return shares;
+                }
+            }
+
+            return null;
+        }
+
         public override UploadResult Upload(Stream stream, string fileName)
         {
             if (AuthInfo == null || string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
@@ -161,13 +197,26 @@ namespace UploadersLib.FileUploaders
 
             string query = OAuthManager.GenerateQuery(url, args, HttpMethod.Post, AuthInfo);
 
+            // There's a 150MB limit to all uploads through the API.
             string response = UploadData(stream, query, fileName);
 
             UploadResult result = new UploadResult(response);
 
             if (!string.IsNullOrEmpty(response))
             {
-                result.URL = GetDropboxURL(AccountInfo.Uid, UploadPath, fileName);
+                if (AutoCreateShareableLink)
+                {
+                    DropboxShares shares = CreateShareableLink(UploadPath, fileName);
+
+                    if (shares != null)
+                    {
+                        result.URL = shares.URL;
+                    }
+                }
+                else
+                {
+                    result.URL = GetDropboxURL(AccountInfo.Uid, UploadPath, fileName);
+                }
             }
 
             return result;
@@ -240,5 +289,11 @@ namespace UploadersLib.FileUploaders
         public bool Is_dir { get; set; }
         public string Icon { get; set; }
         public string Size { get; set; }
+    }
+
+    public class DropboxShares
+    {
+        public string URL { get; set; }
+        public string Expires { get; set; }
     }
 }

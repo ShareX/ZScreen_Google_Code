@@ -266,19 +266,20 @@ namespace HelpersLib
 
         public static string CombineURL(string url1, string url2)
         {
-            if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
+            bool url1Empty = string.IsNullOrEmpty(url1);
+            bool url2Empty = string.IsNullOrEmpty(url2);
+
+            if (url1Empty && url2Empty)
             {
-                if (!string.IsNullOrEmpty(url1))
-                {
-                    return url1;
-                }
-
-                if (!string.IsNullOrEmpty(url2))
-                {
-                    return url2;
-                }
-
                 return string.Empty;
+            }
+            else if (url1Empty)
+            {
+                return url2;
+            }
+            else if (url2Empty)
+            {
+                return url1;
             }
 
             if (url1.EndsWith("/"))

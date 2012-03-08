@@ -322,11 +322,6 @@ namespace UploadersLib
             ZAppHelper.LoadBrowserAsync("https://www.dropbox.com/register");
         }
 
-        private void btnDropboxShowFiles_Click(object sender, EventArgs e)
-        {
-            DropboxOpenFiles();
-        }
-
         private void btnDropboxAuthOpen_Click(object sender, EventArgs e)
         {
             DropboxAuthOpen();
@@ -341,6 +336,16 @@ namespace UploadersLib
         {
             Config.DropboxUploadPath = txtDropboxPath.Text;
             UpdateDropboxStatus();
+        }
+
+        private void btnDropboxShowFiles_Click(object sender, EventArgs e)
+        {
+            DropboxOpenFiles();
+        }
+
+        private void cbDropboxAutoCreateShareableLink_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.DropboxAutoCreateShareableLink = cbDropboxAutoCreateShareableLink.Checked;
         }
 
         #endregion Dropbox
