@@ -60,6 +60,11 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"; Check:
 [Run]
 Filename: "{app}\{#MyAppName}.exe"; Description: {cm:LaunchProgram,ZUploader}; Flags: nowait postinstall skipifsilent
 
+[Registry]
+Root: "HKCU"; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "{#MyAppName}"; Flags: uninsdeletevalue
+Root: "HKCU"; Subkey: "Software\Classes\*\shell\{#MyAppName}"; Flags: uninsdeletekey
+Root: "HKCU"; Subkey: "Software\Classes\Folder\shell\{#MyAppName}"; Flags: uninsdeletekey
+
 [Code]
 function DesktopIconExists(): Boolean;
 begin
