@@ -39,6 +39,7 @@ namespace HistoryLib
     public partial class HistoryForm : Form
     {
         public string DatabasePath { get; private set; }
+
         public int MaxItemCount { get; set; }
 
         private HistoryManager history;

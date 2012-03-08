@@ -157,7 +157,7 @@ namespace ZScreenLib
 
         // Options / Paths
 
-        [Category(ComponentModelStrings.AppPaths), DefaultValue(true), Description("Periodically backup application settings.")]
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(true), Description("Periodically backup application settings in My Documents\\ZScreen\\Archive.")]
         public bool BackupApplicationSettings { get; set; }
 
         // General - Check Updates

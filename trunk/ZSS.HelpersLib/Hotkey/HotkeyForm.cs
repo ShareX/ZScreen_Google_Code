@@ -36,7 +36,9 @@ namespace HelpersLib
     public class HotkeyForm : Form
     {
         public List<HotkeyInfo> HotkeyList { get; private set; }
+
         public bool IgnoreHotkeys { get; set; }
+
         public int HotkeyRepeatLimit { get; set; }
 
         public delegate void HotkeyEventHandler(KeyEventArgs e);

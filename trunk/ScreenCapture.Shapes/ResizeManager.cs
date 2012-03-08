@@ -54,7 +54,9 @@ namespace ScreenCapture
         public bool IsResizing { get; private set; }
 
         public int MaxMoveSpeed { get; set; }
+
         public int MinMoveSpeed { get; set; }
+
         public bool IsBottomRightResizing { get; set; }
 
         private Surface surface;

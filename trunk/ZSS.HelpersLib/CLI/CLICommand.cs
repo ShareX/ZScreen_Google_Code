@@ -28,6 +28,7 @@ namespace HelpersLib.CLI
     public class CLICommand
     {
         public string Command { get; set; }
+
         public string Parameter { get; set; }
 
         public CLICommand(string command)

@@ -31,6 +31,7 @@ namespace HelpersLib.CLI
     public class CLIManager
     {
         public List<CLICommand> Commands { get; set; }
+
         public List<CLICommandAction> Actions { get; set; }
 
         private string input;
