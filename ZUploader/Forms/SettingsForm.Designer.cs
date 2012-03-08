@@ -1557,6 +1557,7 @@
             this.Controls.Add(this.tcSettings);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(552, 400);
+            this.MinimumSize = new System.Drawing.Size(552, 400);
             this.Name = "SettingsForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

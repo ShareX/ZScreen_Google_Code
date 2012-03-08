@@ -68,9 +68,7 @@ namespace HelpersLib
 
             Status = DownloaderFormStatus.Waiting;
 
-#if !DEBUG
             AutoStartDownload = true;
-#endif
         }
 
         public DownloaderForm(string url, IWebProxy proxy, string changelog)
