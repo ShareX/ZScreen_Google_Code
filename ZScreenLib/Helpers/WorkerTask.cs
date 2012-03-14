@@ -1709,7 +1709,10 @@ namespace ZScreenLib
                     break;
                 case FileDestination.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
-                    fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo);
+                    fileUploader = new Dropbox(Engine.ConfigUploaders.DropboxOAuthInfo, uploadPath, Engine.ConfigUploaders.DropboxAccountInfo)
+                    {
+                        AutoCreateShareableLink = Engine.ConfigUploaders.DropboxAutoCreateShareableLink
+                    };
                     break;
                 case FileDestination.Box:
                     fileUploader = new Box(ZKeys.BoxKey)

@@ -85,7 +85,7 @@ namespace UploadersLib.Forms
                     }
 
                     CurrentFolderPath = directory.Path.Trim('/');
-                    Text = "Dropbox - Path: " + CurrentFolderPath;
+                    Text = "Dropbox - " + CurrentFolderPath;
                 }
                 else
                 {
