@@ -114,6 +114,7 @@
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
+            this.cbDropboxAutoCreateShareableLink = new System.Windows.Forms.CheckBox();
             this.btnDropboxShowFiles = new System.Windows.Forms.Button();
             this.btnDropboxCompleteAuth = new System.Windows.Forms.Button();
             this.pbDropboxLogo = new System.Windows.Forms.PictureBox();
@@ -256,7 +257,6 @@
             this.cboSharedFolderImages = new System.Windows.Forms.ComboBox();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.cbDropboxAutoCreateShareableLink = new System.Windows.Forms.CheckBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -1231,13 +1231,25 @@
             this.tpDropbox.Text = "Dropbox";
             this.tpDropbox.UseVisualStyleBackColor = true;
             // 
+            // cbDropboxAutoCreateShareableLink
+            // 
+            this.cbDropboxAutoCreateShareableLink.AutoSize = true;
+            this.cbDropboxAutoCreateShareableLink.Location = new System.Drawing.Point(16, 152);
+            this.cbDropboxAutoCreateShareableLink.Name = "cbDropboxAutoCreateShareableLink";
+            this.cbDropboxAutoCreateShareableLink.Size = new System.Drawing.Size(485, 17);
+            this.cbDropboxAutoCreateShareableLink.TabIndex = 7;
+            this.cbDropboxAutoCreateShareableLink.Text = "Auto shorten URL using Dropbox URL shortener (http://db.tt), these URLs expire af" +
+    "ter thirty days.";
+            this.cbDropboxAutoCreateShareableLink.UseVisualStyleBackColor = true;
+            this.cbDropboxAutoCreateShareableLink.CheckedChanged += new System.EventHandler(this.cbDropboxAutoCreateShareableLink_CheckedChanged);
+            // 
             // btnDropboxShowFiles
             // 
             this.btnDropboxShowFiles.Enabled = false;
             this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 120);
             this.btnDropboxShowFiles.Name = "btnDropboxShowFiles";
             this.btnDropboxShowFiles.Size = new System.Drawing.Size(56, 24);
-            this.btnDropboxShowFiles.TabIndex = 3;
+            this.btnDropboxShowFiles.TabIndex = 5;
             this.btnDropboxShowFiles.Text = "Open...";
             this.btnDropboxShowFiles.UseVisualStyleBackColor = true;
             this.btnDropboxShowFiles.Click += new System.EventHandler(this.btnDropboxShowFiles_Click);
@@ -1248,7 +1260,7 @@
             this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(176, 88);
             this.btnDropboxCompleteAuth.Name = "btnDropboxCompleteAuth";
             this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(152, 24);
-            this.btnDropboxCompleteAuth.TabIndex = 6;
+            this.btnDropboxCompleteAuth.TabIndex = 2;
             this.btnDropboxCompleteAuth.Text = "2. Complete authorization";
             this.btnDropboxCompleteAuth.UseVisualStyleBackColor = true;
             this.btnDropboxCompleteAuth.Click += new System.EventHandler(this.btnDropboxAuthComplete_Click);
@@ -1281,7 +1293,7 @@
             this.lblDropboxStatus.Location = new System.Drawing.Point(16, 176);
             this.lblDropboxStatus.Name = "lblDropboxStatus";
             this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
-            this.lblDropboxStatus.TabIndex = 7;
+            this.lblDropboxStatus.TabIndex = 8;
             this.lblDropboxStatus.Text = "Login status:";
             // 
             // lblDropboxPathTip
@@ -1290,7 +1302,7 @@
             this.lblDropboxPathTip.Location = new System.Drawing.Point(408, 126);
             this.lblDropboxPathTip.Name = "lblDropboxPathTip";
             this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
-            this.lblDropboxPathTip.TabIndex = 4;
+            this.lblDropboxPathTip.TabIndex = 6;
             this.lblDropboxPathTip.Text = "Use \"Public\" folder for be able to get URL.";
             // 
             // lblDropboxPath
@@ -1299,7 +1311,7 @@
             this.lblDropboxPath.Location = new System.Drawing.Point(16, 126);
             this.lblDropboxPath.Name = "lblDropboxPath";
             this.lblDropboxPath.Size = new System.Drawing.Size(68, 13);
-            this.lblDropboxPath.TabIndex = 1;
+            this.lblDropboxPath.TabIndex = 3;
             this.lblDropboxPath.Text = "Upload path:";
             // 
             // btnDropboxOpenAuthorize
@@ -1307,7 +1319,7 @@
             this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(16, 88);
             this.btnDropboxOpenAuthorize.Name = "btnDropboxOpenAuthorize";
             this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(152, 24);
-            this.btnDropboxOpenAuthorize.TabIndex = 5;
+            this.btnDropboxOpenAuthorize.TabIndex = 1;
             this.btnDropboxOpenAuthorize.Text = "1. Open authorize page...";
             this.btnDropboxOpenAuthorize.UseVisualStyleBackColor = true;
             this.btnDropboxOpenAuthorize.Click += new System.EventHandler(this.btnDropboxAuthOpen_Click);
@@ -1317,7 +1329,7 @@
             this.txtDropboxPath.Location = new System.Drawing.Point(88, 122);
             this.txtDropboxPath.Name = "txtDropboxPath";
             this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
-            this.txtDropboxPath.TabIndex = 2;
+            this.txtDropboxPath.TabIndex = 4;
             this.txtDropboxPath.TextChanged += new System.EventHandler(this.txtDropboxPath_TextChanged);
             // 
             // tpBox
@@ -2700,18 +2712,6 @@
             this.actRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
-            // 
-            // cbDropboxAutoCreateShareableLink
-            // 
-            this.cbDropboxAutoCreateShareableLink.AutoSize = true;
-            this.cbDropboxAutoCreateShareableLink.Location = new System.Drawing.Point(16, 152);
-            this.cbDropboxAutoCreateShareableLink.Name = "cbDropboxAutoCreateShareableLink";
-            this.cbDropboxAutoCreateShareableLink.Size = new System.Drawing.Size(463, 17);
-            this.cbDropboxAutoCreateShareableLink.TabIndex = 20;
-            this.cbDropboxAutoCreateShareableLink.Text = "Auto shorten url using Dropbox URL shortener (http://db.tt), these urls expire af" +
-    "ter thirty days.";
-            this.cbDropboxAutoCreateShareableLink.UseVisualStyleBackColor = true;
-            this.cbDropboxAutoCreateShareableLink.CheckedChanged += new System.EventHandler(this.cbDropboxAutoCreateShareableLink_CheckedChanged);
             // 
             // UploadersConfigForm
             // 
