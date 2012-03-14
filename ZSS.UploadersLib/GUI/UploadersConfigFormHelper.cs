@@ -330,7 +330,13 @@ namespace UploadersLib
         {
             if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo))
             {
-                new DropboxFilesForm(Config.DropboxOAuthInfo, GetDropboxUploadPath()).ShowDialog();
+                using (DropboxFilesForm filesForm = new DropboxFilesForm(Config.DropboxOAuthInfo, GetDropboxUploadPath()))
+                {
+                    if (filesForm.ShowDialog() == DialogResult.OK)
+                    {
+                        txtDropboxPath.Text = filesForm.CurrentFolderPath;
+                    }
+                }
             }
         }
 
@@ -402,11 +408,8 @@ namespace UploadersLib
                 sb.AppendLine("Name: " + Config.DropboxAccountInfo.Display_name);
                 sb.AppendLine("User ID: " + Config.DropboxAccountInfo.Uid.ToString());
                 string uploadPath = GetDropboxUploadPath();
-                if (!string.IsNullOrEmpty(uploadPath))
-                {
-                    sb.AppendLine("Upload path: " + uploadPath);
-                    sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Config.DropboxAccountInfo.Uid, uploadPath, "{Filename}"));
-                }
+                sb.AppendLine("Upload path: " + uploadPath);
+                sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Config.DropboxAccountInfo.Uid, uploadPath, "{Filename}"));
                 lblDropboxStatus.Text = sb.ToString();
                 btnDropboxShowFiles.Enabled = true;
             }

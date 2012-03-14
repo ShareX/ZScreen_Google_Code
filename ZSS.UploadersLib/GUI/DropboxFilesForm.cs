@@ -26,7 +26,6 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 
@@ -34,6 +33,8 @@ namespace UploadersLib.Forms
 {
     public partial class DropboxFilesForm : Form
     {
+        public string CurrentFolderPath { get; private set; }
+
         private Dropbox dropbox;
         private ImageListManager ilm;
 
@@ -83,7 +84,8 @@ namespace UploadersLib.Forms
                         lvDropboxFiles.Items.Add(lvi);
                     }
 
-                    Text = "Dropbox - Path: " + ZAppHelper.CombineURL(directory.Root, directory.Path);
+                    CurrentFolderPath = directory.Path.Trim('/');
+                    Text = "Dropbox - Path: " + CurrentFolderPath;
                 }
                 else
                 {
@@ -100,7 +102,7 @@ namespace UploadersLib.Forms
 
                 DropboxContentInfo content = new DropboxContentInfo() { Icon = "folder", Is_dir = true, Path = parentFolder };
 
-                ListViewItem lvi = new ListViewItem("Parent folder");
+                ListViewItem lvi = new ListViewItem("..");
                 lvi.ImageKey = ilm.AddImage(content.Icon);
                 lvi.Tag = content;
                 return lvi;
@@ -120,6 +122,11 @@ namespace UploadersLib.Forms
                     OpenDirectory(content.Path);
                 }
             }
+        }
+
+        private void tsbSelectFolder_Click(object sender, System.EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }
