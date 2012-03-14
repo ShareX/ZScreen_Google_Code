@@ -49,7 +49,7 @@ namespace UploadersLib.FileUploaders
         private const string URLFiles = URLAPIContent + "/files/dropbox";
         private const string URLMetaData = URLAPI + "/metadata/dropbox";
         private const string URLShares = URLAPI + "/shares/dropbox";
-        private const string URLDownload = "http://dl.dropbox.com/u";
+        private const string URLDownload = "https://dl.dropbox.com/u";
 
         private const string URLRequestToken = URLAPI + "/oauth/request_token";
         private const string URLAuthorize = "https://www.dropbox.com/" + APIVersion + "/oauth/authorize";
