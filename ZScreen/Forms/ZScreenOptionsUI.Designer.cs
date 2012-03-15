@@ -83,6 +83,7 @@
             this.btnRelocateRootDir = new System.Windows.Forms.Button();
             this.txtRootFolder = new System.Windows.Forms.TextBox();
             this.gbImages = new System.Windows.Forms.GroupBox();
+            this.txtImagesRootDir = new System.Windows.Forms.TextBox();
             this.btnBrowseImagesDir = new System.Windows.Forms.Button();
             this.btnMoveImageFiles = new System.Windows.Forms.Button();
             this.lblImagesFolderPattern = new System.Windows.Forms.Label();
@@ -645,6 +646,7 @@
             this.gbImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbImages.BackColor = System.Drawing.Color.Transparent;
+            this.gbImages.Controls.Add(this.txtImagesRootDir);
             this.gbImages.Controls.Add(this.btnBrowseImagesDir);
             this.gbImages.Controls.Add(this.btnMoveImageFiles);
             this.gbImages.Controls.Add(this.lblImagesFolderPattern);
@@ -655,20 +657,31 @@
             this.gbImages.Controls.Add(this.txtImagesDir);
             this.gbImages.Location = new System.Drawing.Point(8, 80);
             this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(592, 120);
+            this.gbImages.Size = new System.Drawing.Size(592, 152);
             this.gbImages.TabIndex = 1;
             this.gbImages.TabStop = false;
             this.gbImages.Text = "Images";
+            // 
+            // txtImagesRootDir
+            // 
+            this.txtImagesRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImagesRootDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtImagesRootDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtImagesRootDir.Location = new System.Drawing.Point(20, 24);
+            this.txtImagesRootDir.Name = "txtImagesRootDir";
+            this.txtImagesRootDir.Size = new System.Drawing.Size(560, 20);
+            this.txtImagesRootDir.TabIndex = 0;
             // 
             // btnBrowseImagesDir
             // 
             this.btnBrowseImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImagesDir.Location = new System.Drawing.Point(387, 21);
+            this.btnBrowseImagesDir.Location = new System.Drawing.Point(387, 48);
             this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
             this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseImagesDir.TabIndex = 1;
+            this.btnBrowseImagesDir.TabIndex = 2;
             this.btnBrowseImagesDir.Text = "Relocate...";
             this.btnBrowseImagesDir.UseVisualStyleBackColor = true;
             this.btnBrowseImagesDir.Click += new System.EventHandler(this.BtnBrowseImagesDirClick);
@@ -676,10 +689,10 @@
             // btnMoveImageFiles
             // 
             this.btnMoveImageFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveImageFiles.Location = new System.Drawing.Point(404, 56);
+            this.btnMoveImageFiles.Location = new System.Drawing.Point(404, 83);
             this.btnMoveImageFiles.Name = "btnMoveImageFiles";
             this.btnMoveImageFiles.Size = new System.Drawing.Size(176, 23);
-            this.btnMoveImageFiles.TabIndex = 6;
+            this.btnMoveImageFiles.TabIndex = 7;
             this.btnMoveImageFiles.Text = "Move Images to Sub-folders...";
             this.btnMoveImageFiles.UseVisualStyleBackColor = true;
             this.btnMoveImageFiles.Click += new System.EventHandler(this.btnMoveImageFiles_Click);
@@ -687,37 +700,37 @@
             // lblImagesFolderPattern
             // 
             this.lblImagesFolderPattern.AutoSize = true;
-            this.lblImagesFolderPattern.Location = new System.Drawing.Point(16, 59);
+            this.lblImagesFolderPattern.Location = new System.Drawing.Point(16, 86);
             this.lblImagesFolderPattern.Name = "lblImagesFolderPattern";
             this.lblImagesFolderPattern.Size = new System.Drawing.Size(95, 13);
-            this.lblImagesFolderPattern.TabIndex = 3;
+            this.lblImagesFolderPattern.TabIndex = 4;
             this.lblImagesFolderPattern.Text = "Sub-folder Pattern:";
             // 
             // lblImagesFolderPatternPreview
             // 
             this.lblImagesFolderPatternPreview.AutoSize = true;
-            this.lblImagesFolderPatternPreview.Location = new System.Drawing.Point(232, 59);
+            this.lblImagesFolderPatternPreview.Location = new System.Drawing.Point(232, 86);
             this.lblImagesFolderPatternPreview.Name = "lblImagesFolderPatternPreview";
             this.lblImagesFolderPatternPreview.Size = new System.Drawing.Size(81, 13);
-            this.lblImagesFolderPatternPreview.TabIndex = 5;
+            this.lblImagesFolderPatternPreview.TabIndex = 6;
             this.lblImagesFolderPatternPreview.Text = "Pattern preview";
             // 
             // txtImagesFolderPattern
             // 
-            this.txtImagesFolderPattern.Location = new System.Drawing.Point(120, 56);
+            this.txtImagesFolderPattern.Location = new System.Drawing.Point(120, 83);
             this.txtImagesFolderPattern.Name = "txtImagesFolderPattern";
             this.txtImagesFolderPattern.Size = new System.Drawing.Size(100, 20);
-            this.txtImagesFolderPattern.TabIndex = 4;
+            this.txtImagesFolderPattern.TabIndex = 5;
             this.txtImagesFolderPattern.TextChanged += new System.EventHandler(this.txtImagesFolderPattern_TextChanged);
             // 
             // chkDeleteLocal
             // 
             this.chkDeleteLocal.AutoSize = true;
             this.chkDeleteLocal.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkDeleteLocal.Location = new System.Drawing.Point(16, 88);
+            this.chkDeleteLocal.Location = new System.Drawing.Point(16, 115);
             this.chkDeleteLocal.Name = "chkDeleteLocal";
             this.chkDeleteLocal.Size = new System.Drawing.Size(283, 17);
-            this.chkDeleteLocal.TabIndex = 7;
+            this.chkDeleteLocal.TabIndex = 8;
             this.chkDeleteLocal.Text = "Delete captured screenshots after upload is completed";
             this.chkDeleteLocal.UseVisualStyleBackColor = true;
             this.chkDeleteLocal.CheckedChanged += new System.EventHandler(this.cbDeleteLocal_CheckedChanged);
@@ -725,10 +738,10 @@
             // btnViewImagesDir
             // 
             this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewImagesDir.Location = new System.Drawing.Point(476, 21);
+            this.btnViewImagesDir.Location = new System.Drawing.Point(476, 48);
             this.btnViewImagesDir.Name = "btnViewImagesDir";
             this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
-            this.btnViewImagesDir.TabIndex = 2;
+            this.btnViewImagesDir.TabIndex = 3;
             this.btnViewImagesDir.Text = "View Directory...";
             this.btnViewImagesDir.UseVisualStyleBackColor = true;
             this.btnViewImagesDir.Click += new System.EventHandler(this.btnViewLocalDirectory_Click);
@@ -739,11 +752,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImagesDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtImagesDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
+            this.txtImagesDir.Location = new System.Drawing.Point(16, 51);
             this.txtImagesDir.Name = "txtImagesDir";
             this.txtImagesDir.ReadOnly = true;
             this.txtImagesDir.Size = new System.Drawing.Size(355, 20);
-            this.txtImagesDir.TabIndex = 0;
+            this.txtImagesDir.TabIndex = 1;
             // 
             // gbLogs
             // 
@@ -752,7 +765,7 @@
             this.gbLogs.BackColor = System.Drawing.Color.Transparent;
             this.gbLogs.Controls.Add(this.btnViewCacheDir);
             this.gbLogs.Controls.Add(this.txtLogsDir);
-            this.gbLogs.Location = new System.Drawing.Point(8, 208);
+            this.gbLogs.Location = new System.Drawing.Point(8, 240);
             this.gbLogs.Name = "gbLogs";
             this.gbLogs.Size = new System.Drawing.Size(592, 64);
             this.gbLogs.TabIndex = 2;
@@ -1094,6 +1107,7 @@
         internal System.Windows.Forms.GroupBox gbLogs;
         internal System.Windows.Forms.Button btnViewCacheDir;
         internal System.Windows.Forms.TextBox txtLogsDir;
+        internal System.Windows.Forms.TextBox txtImagesRootDir;
 
     }
 }

@@ -265,26 +265,26 @@ namespace ZScreenLib
             return false;
         }
 
-        public static string GetUniqueFileName(Workflow workflow, string fileName)
+        public static string GetUniqueFileName(Workflow workflow, string fileNameOrPath)
         {
             if (!workflow.ConfigFileNaming.OverwriteFiles)
             {
-                string fn = Path.GetFileNameWithoutExtension(fileName);
-                string ext = Path.GetExtension(fileName);
+                string fn = Path.GetFileNameWithoutExtension(fileNameOrPath);
+                string ext = Path.GetExtension(fileNameOrPath);
 
                 if (fn.Length > workflow.ConfigFileNaming.MaxNameLength - ext.Length)
                 {
                     string nfn = fn.Substring(0, workflow.ConfigFileNaming.MaxNameLength - ext.Length);
-                    fileName = nfn + ext;
+                    fileNameOrPath = nfn + ext;
                 }
 
                 string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
                 int num = 1;
-                GroupCollection groups = Regex.Match(fileName, pattern).Groups;
+                GroupCollection groups = Regex.Match(fileNameOrPath, pattern).Groups;
                 if (string.IsNullOrEmpty(groups[2].Value))
                 {
-                    fp = fileName.Substring(0, fileName.LastIndexOf('.')) + "(";
-                    fileExt = ")" + fileName.Remove(0, fileName.LastIndexOf('.'));
+                    fp = fileNameOrPath.Substring(0, fileNameOrPath.LastIndexOf('.')) + "(";
+                    fileExt = ")" + fileNameOrPath.Remove(0, fileNameOrPath.LastIndexOf('.'));
                 }
                 else
                 {
@@ -292,13 +292,13 @@ namespace ZScreenLib
                     fileExt = groups[3].Value;
                     num = Convert.ToInt32(groups[2].Value);
                 }
-                while (File.Exists(fileName))
+                while (File.Exists(fileNameOrPath))
                 {
-                    fileName = fp + ++num + fileExt;
+                    fileNameOrPath = fp + ++num + fileExt;
                 }
             }
 
-            return fileName;
+            return fileNameOrPath;
         }
 
         /// <summary>
@@ -417,13 +417,15 @@ namespace ZScreenLib
                 {
                     foreach (string s in Engine.zImageFileTypes)
                     {
-                        if (Path.HasExtension(image) && Path.GetExtension(image) == "." + s)
+                        if (Path.HasExtension(image) && Path.GetExtension(image.ToLower()) == "." + s)
                         {
                             imagesList.Add(image);
                             break;
                         }
                     }
                 }
+
+                DebugHelper.WriteLine(string.Format("Found {0} images to move to sub-folders", imagesList.Count));
 
                 if (imagesList.Count > 0)
                 {
@@ -443,14 +445,14 @@ namespace ZScreenLib
                         {
                             time = File.GetCreationTime(image);
                             newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.ConfigWorkflow.SaveFolderPattern);
-                            newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
+                            newFolderPath = Path.Combine(path, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))
                             {
                                 Directory.CreateDirectory(newFolderPath);
                             }
 
-                            movePath = Path.Combine(newFolderPath, Path.GetFileName(image));
+                            movePath = FileSystem.GetUniqueFileName(Engine.ConfigWorkflow, Path.Combine(newFolderPath, Path.GetFileName(image)));
                             File.Move(image, movePath);
                         }
                     }
