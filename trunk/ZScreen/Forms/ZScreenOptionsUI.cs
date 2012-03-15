@@ -232,6 +232,7 @@ namespace ZScreenGUI
         {
             Engine.InitializeDefaultFolderPaths(dirCreation: false);
 
+            txtImagesRootDir.Text = Engine.RootImagesDir;
             txtImagesDir.Text = Engine.ImagesDir;
             txtLogsDir.Text = Engine.LogsDir;
 
@@ -267,11 +268,11 @@ namespace ZScreenGUI
         private void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
             string oldDir = txtImagesDir.Text;
-            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."),
-                                         "Images");
+            string dir = Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory...");
 
-            if (!string.IsNullOrEmpty(dirNew))
+            if (!string.IsNullOrEmpty(dir))
             {
+                string dirNew = Path.Combine(dir, "Images");
                 Engine.ConfigUI.UseCustomImagesDir = true;
                 Engine.ConfigUI.CustomImagesDir = dirNew;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
@@ -322,7 +323,7 @@ namespace ZScreenGUI
         {
             try
             {
-                if (FileSystem.ManageImageFolders(Engine.RootImagesDir))
+                if (FileSystem.ManageImageFolders(txtImagesRootDir.Text))
                 {
                     MessageBox.Show("Files successfully moved to save folders.");
                 }
