@@ -13,21 +13,15 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class SFTP : IDisposable
     {
-        //properties
         public FTPAccount FTPAccount { get; set; }
-
-        public bool IsConnected { get { return Client.IsConnected; } }
-
+        public bool IsConnected { get { return client.IsConnected; } }
         public string HomeDir { get; set; }
+        public bool IsInstantiated { get; set; }
 
-        public bool isInstantiated { get; set; }
-
-        //Variables
-        SftpClient Client;
-
-        //Misc
         public event Uploader.ProgressEventHandler ProgressChanged;
         private ProgressManager progress;
+
+        private SftpClient client;
 
         public SFTP(FTPAccount account)
         {
@@ -39,40 +33,40 @@ namespace UploadersLib.FileUploaders
             }
             if (!string.IsNullOrEmpty(FTPAccount.Password) && (string.IsNullOrEmpty(FTPAccount.Keypath)))
             {
-                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, FTPAccount.Password);
+                client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, FTPAccount.Password);
             }
             else if (string.IsNullOrEmpty(FTPAccount.Password) && (File.Exists(FTPAccount.Keypath)) && (string.IsNullOrEmpty(FTPAccount.Passphrase)))
             {
-                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath));
+                client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath));
             }
             else if (string.IsNullOrEmpty(FTPAccount.Password) && (File.Exists(FTPAccount.Keypath)) && (!string.IsNullOrEmpty(FTPAccount.Passphrase)))
             {
-                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath, FTPAccount.Passphrase));
+                client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath, FTPAccount.Passphrase));
             }
             else
             {
                 //Need to do something here...
                 DebugHelper.WriteLine("Can't instantiate a SFTP client...");
-                isInstantiated = false;
+                IsInstantiated = false;
                 return;
             }
-            isInstantiated = true;
+            IsInstantiated = true;
         }
 
         public bool Connect()
         {
             if (!IsConnected)
             {
-                Client.Connect();
-                HomeDir = Client.WorkingDirectory;
+                client.Connect();
+                HomeDir = client.WorkingDirectory;
             }
-            return Client.IsConnected;
+            return client.IsConnected;
         }
 
         public void Disconnect()
         {
             if (IsConnected)
-                Client.Disconnect();
+                client.Disconnect();
         }
 
         public static void CallBack(IAsyncResult ia)
@@ -84,7 +78,7 @@ namespace UploadersLib.FileUploaders
         {
             try
             {
-                Client.ChangeDirectory(Path);
+                client.ChangeDirectory(Path);
             }
             catch (SftpPathNotFoundException)
             {
@@ -97,7 +91,7 @@ namespace UploadersLib.FileUploaders
         {
             try
             {
-                Client.CreateDirectory(Path);
+                client.CreateDirectory(Path);
                 DebugHelper.WriteLine("Created Directory: " + Path);
             }
             catch (SftpPathNotFoundException)
@@ -116,9 +110,9 @@ namespace UploadersLib.FileUploaders
             Connect();
             try
             {
-                string cdir = Client.WorkingDirectory;
-                Client.ChangeDirectory(Dir);
-                Client.ChangeDirectory(cdir);
+                string cdir = client.WorkingDirectory;
+                client.ChangeDirectory(Dir);
+                client.ChangeDirectory(cdir);
                 return true;
             }
             catch (SftpPathNotFoundException)
@@ -145,7 +139,7 @@ namespace UploadersLib.FileUploaders
         public SftpFile[] DirectoryListing(string RootDir)
         {
             Connect();
-            IEnumerable<SftpFile> dirlist = Client.ListDirectory(RootDir);
+            IEnumerable<SftpFile> dirlist = client.ListDirectory(RootDir);
             return dirlist.ToArray<SftpFile>();
         }
 
@@ -169,7 +163,7 @@ namespace UploadersLib.FileUploaders
             object s = new object();
             AsyncCallback ac = new AsyncCallback(CallBack);
 
-            var result = Client.BeginUploadFile(stream, fileName, ac, s);
+            var result = client.BeginUploadFile(stream, fileName, ac, s);
             SftpUploadAsyncResult sftpresult = result as SftpUploadAsyncResult;
 
             while (!sftpresult.IsCompleted)
