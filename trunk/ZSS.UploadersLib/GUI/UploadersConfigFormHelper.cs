@@ -637,7 +637,7 @@ namespace UploadersLib
             {
                 case FTPProtocol.SFTP:
                     SFTP sftp = new SFTP(account);
-                    if (!sftp.isInstantiated)
+                    if (!sftp.IsInstantiated)
                     {
                         msg = "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.";
                     }

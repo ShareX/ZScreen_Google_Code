@@ -43,37 +43,60 @@ namespace UploadersLib.FileUploaders
         {
             UploadResult result = new UploadResult();
 
-            using (FTP ftpClient = new FTP(FTPAccount))
+            string remotePath = GetRemotePath(fileName);
+
+            try
             {
-                ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
+                stream.Position = 0;
 
-                fileName = ZAppHelper.ReplaceIllegalChars(fileName, '_');
-
-                while (fileName.IndexOf("__") != -1)
+                if (FTPAccount.Protocol == FTPProtocol.SFTP)
                 {
-                    fileName = fileName.Replace("__", "_");
+                    using (SFTP sftpClient = new SFTP(FTPAccount))
+                    {
+                        if (!sftpClient.IsInstantiated)
+                        {
+                            Errors.Add("An SFTP client couldn't be instantiated, not enough information.\r\nCould be a missing key file.");
+                        }
+                        else
+                        {
+                            sftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
+                            sftpClient.UploadData(stream, remotePath);
+                        }
+                    }
                 }
-
-                string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
-
-                try
+                else // FTP or FTPS
                 {
-                    stream.Position = 0;
-                    ftpClient.UploadData(stream, remotePath);
+                    using (FTP ftpClient = new FTP(FTPAccount))
+                    {
+                        ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
+                        ftpClient.UploadData(stream, remotePath);
+                    }
                 }
-                catch (Exception e)
-                {
-                    DebugHelper.WriteException(e);
-                    Errors.Add(e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                DebugHelper.WriteException(e);
+                Errors.Add(e.Message);
+            }
 
-                if (Errors.Count == 0)
-                {
-                    result.URL = FTPAccount.GetUriPath(fileName);
-                }
+            if (Errors.Count == 0)
+            {
+                result.URL = FTPAccount.GetUriPath(fileName);
             }
 
             return result;
+        }
+
+        private string GetRemotePath(string fileName)
+        {
+            fileName = ZAppHelper.ReplaceIllegalChars(fileName, '_');
+
+            while (fileName.IndexOf("__") != -1)
+            {
+                fileName = fileName.Replace("__", "_");
+            }
+
+            return FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
         }
     }
 }

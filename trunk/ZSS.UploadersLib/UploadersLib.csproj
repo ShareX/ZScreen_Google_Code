@@ -122,7 +122,6 @@
     <Compile Include="FileUploaders\Email.cs" />
     <Compile Include="FileUploaders\FTP\SFTP.cs" />
     <Compile Include="FileUploaders\Minus.cs" />
-    <Compile Include="FileUploaders\SFTPUploader.cs" />
     <Compile Include="GUI\AccountTypeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

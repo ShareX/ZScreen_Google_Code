@@ -1350,39 +1350,6 @@ namespace ZScreenLib
             return null;
         }
 
-        private string CreateThumbnail(string url, SFTPUploader fu)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                if (CreateThumbnail())
-                {
-                    double thar = Engine.ConfigUploaders.FTPThumbnailWidthLimit / (double)TempImage.Width;
-                    using (
-                        Image img = GraphicsMgr.ChangeImageSize(TempImage, Engine.ConfigUploaders.FTPThumbnailWidthLimit,
-                                                                (int)(thar * TempImage.Height)))
-                    {
-                        var sb = new StringBuilder(Path.GetFileNameWithoutExtension(Info.LocalFilePath));
-                        sb.Append(".th");
-                        sb.Append(Path.GetExtension(Info.LocalFilePath));
-                        string thPath = Path.Combine(Path.GetDirectoryName(Info.LocalFilePath), sb.ToString());
-                        img.Save(thPath);
-
-                        if (File.Exists(thPath))
-                        {
-                            string thumb = fu.Upload(thPath).URL;
-
-                            if (!string.IsNullOrEmpty(thumb))
-                            {
-                                return thumb;
-                            }
-                        }
-                    }
-                }
-                return null;
-            }
-            return null;
-        }
-
         private void FlashIcon()
         {
             for (int i = 0; i < (int)Engine.ConfigOptions.FlashTrayCount; i++)
@@ -2016,31 +1983,13 @@ namespace ZScreenLib
                     DebugHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
 
                     MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Normal);
-                    switch (acc.Protocol)
-                    {
-                        case FTPProtocol.SFTP:
-                            var sftp = new SFTPUploader(acc);
-                            if (!sftp.isInstantiated)
-                            {
-                                Errors.Add(
-                                    "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.");
-                                return ur_remote_file_ftp;
-                            }
-                            sftp.ProgressChanged += UploadProgressChanged;
-                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
-                                                         ? sftp.Upload(Info.LocalFilePath).URL
-                                                         : sftp.Upload(data, Info.FileName).URL;
-                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, sftp);
-                            break;
-                        default:
-                            var fu = new FTPUploader(acc);
-                            fu.ProgressChanged += UploadProgressChanged;
-                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
+
+                    FTPUploader fu = new FTPUploader(acc);
+                    fu.ProgressChanged += UploadProgressChanged;
+                    ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
                                                          ? fu.Upload(Info.LocalFilePath).URL
                                                          : fu.Upload(data, Info.FileName).URL;
-                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, fu);
-                            break;
-                    }
+                    ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, fu);
 
                     if (!string.IsNullOrEmpty(ur_remote_file_ftp.URL))
                     {
