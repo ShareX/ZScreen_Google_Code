@@ -81,7 +81,7 @@ namespace HelpersLib
 
         public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        #endregion
+        #endregion Delegates
 
         #region user32.dll
 

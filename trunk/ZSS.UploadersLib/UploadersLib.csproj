@@ -187,7 +187,6 @@
     <Compile Include="FileUploaders\DropIO.cs" />
     <Compile Include="FileUploaders\FileBin.cs" />
     <Compile Include="FileUploaders\FileSonic.cs" />
-    <Compile Include="FileUploaders\FilezFiles.cs" />
     <Compile Include="FileUploaders\FTP\FTPAccount.cs" />
     <Compile Include="FileUploaders\FTP\FTPAccountManager.cs" />
     <Compile Include="FileUploaders\FTP\FTPAdapter.cs" />
