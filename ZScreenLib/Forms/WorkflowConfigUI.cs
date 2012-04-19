@@ -545,7 +545,10 @@ namespace ZScreenLib
         private void UpdateImageSize(bool bChangeConfig = false)
         {
             if (Task == null) return;
-            if (Task.Info.ImageSize.IsEmpty) return;
+            if (Task.Info.ImageSize.IsEmpty)
+            {
+                Task.Info.ImageSize = new System.Drawing.Size(500, 500);
+            }
 
             double w2 = 0.0, h2 = 0.0, ratio = 0.0;
 
