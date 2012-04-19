@@ -506,7 +506,7 @@ namespace ZScreenGUI
             // 
             this.tsmLicense.Image = global::ZScreenGUI.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(169, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -514,7 +514,7 @@ namespace ZScreenGUI
             // 
             this.tsmVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(169, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -522,7 +522,7 @@ namespace ZScreenGUI
             // 
             this.tsmAbout.Image = global::ZScreenGUI.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(169, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
@@ -566,7 +566,7 @@ namespace ZScreenGUI
             this.tcMain.Multiline = true;
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(820, 446);
+            this.tcMain.Size = new System.Drawing.Size(825, 446);
             this.tcMain.TabIndex = 1;
             this.tcMain.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcMain_Selecting);
             // 
@@ -584,7 +584,7 @@ namespace ZScreenGUI
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(812, 420);
+            this.tpMain.Size = new System.Drawing.Size(817, 420);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
@@ -631,7 +631,7 @@ namespace ZScreenGUI
             this.tsLinks.Location = new System.Drawing.Point(3, 393);
             this.tsLinks.Name = "tsLinks";
             this.tsLinks.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsLinks.Size = new System.Drawing.Size(806, 24);
+            this.tsLinks.Size = new System.Drawing.Size(811, 24);
             this.tsLinks.TabIndex = 5;
             this.tsLinks.Text = "toolStrip1";
             // 
@@ -641,7 +641,7 @@ namespace ZScreenGUI
             this.tsbLinkTutorials.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsbLinkTutorials.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkTutorials.Name = "tsbLinkTutorials";
-            this.tsbLinkTutorials.Size = new System.Drawing.Size(73, 21);
+            this.tsbLinkTutorials.Size = new System.Drawing.Size(68, 21);
             this.tsbLinkTutorials.Text = "Tutorials";
             this.tsbLinkTutorials.Click += new System.EventHandler(this.tsbLinkHelp_Click);
             // 
@@ -651,7 +651,7 @@ namespace ZScreenGUI
             this.tsbLinkBugs.Image = global::ZScreenGUI.Properties.Resources.bug;
             this.tsbLinkBugs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkBugs.Name = "tsbLinkBugs";
-            this.tsbLinkBugs.Size = new System.Drawing.Size(127, 21);
+            this.tsbLinkBugs.Size = new System.Drawing.Size(117, 21);
             this.tsbLinkBugs.Text = "Bugs/Suggestions?";
             this.tsbLinkBugs.Click += new System.EventHandler(this.tsbLinkIssues_Click);
             // 
@@ -661,7 +661,7 @@ namespace ZScreenGUI
             this.tsbLinkHome.Image = global::ZScreenGUI.Properties.Resources.world_go;
             this.tsbLinkHome.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkHome.Name = "tsbLinkHome";
-            this.tsbLinkHome.Size = new System.Drawing.Size(89, 21);
+            this.tsbLinkHome.Size = new System.Drawing.Size(81, 21);
             this.tsbLinkHome.Text = "Home Page";
             this.tsbLinkHome.Click += new System.EventHandler(this.tsbLinkHome_Click);
             // 
@@ -757,7 +757,7 @@ namespace ZScreenGUI
             this.pbPreview.DisableViewer = false;
             this.pbPreview.Location = new System.Drawing.Point(392, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(417, 406);
+            this.pbPreview.Size = new System.Drawing.Size(422, 406);
             this.pbPreview.TabIndex = 4;
             // 
             // tpHotkeys
@@ -2387,7 +2387,7 @@ namespace ZScreenGUI
             this.helpToolStripMenuItem});
             this.msApp.Location = new System.Drawing.Point(2, 2);
             this.msApp.Name = "msApp";
-            this.msApp.Size = new System.Drawing.Size(820, 24);
+            this.msApp.Size = new System.Drawing.Size(825, 24);
             this.msApp.TabIndex = 0;
             this.msApp.Text = "menuStrip1";
             // 
@@ -2398,7 +2398,7 @@ namespace ZScreenGUI
             this.toolStripSeparator,
             this.tsmiExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // tsmiFileUpload
@@ -2407,20 +2407,20 @@ namespace ZScreenGUI
             this.tsmiFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmiFileUpload.Name = "tsmiFileUpload";
             this.tsmiFileUpload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiFileUpload.Size = new System.Drawing.Size(146, 22);
+            this.tsmiFileUpload.Size = new System.Drawing.Size(152, 22);
             this.tsmiFileUpload.Text = "&Open";
             this.tsmiFileUpload.Click += new System.EventHandler(this.tsmiFileUpload_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(149, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(146, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(152, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -2434,39 +2434,39 @@ namespace ZScreenGUI
             this.tsmiConfigureActions,
             this.tsmiOutputs});
             this.tsmiConfigure.Name = "tsmiConfigure";
-            this.tsmiConfigure.Size = new System.Drawing.Size(72, 20);
+            this.tsmiConfigure.Size = new System.Drawing.Size(66, 20);
             this.tsmiConfigure.Text = "&Configure";
             // 
             // tsmiConfigureFileNaming
             // 
             this.tsmiConfigureFileNaming.Name = "tsmiConfigureFileNaming";
-            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(157, 22);
+            this.tsmiConfigureFileNaming.Size = new System.Drawing.Size(164, 22);
             this.tsmiConfigureFileNaming.Text = "&File Naming...";
             this.tsmiConfigureFileNaming.Click += new System.EventHandler(this.tsmiConfigureFileNaming_Click);
             // 
             // tsmiImageSettings
             // 
             this.tsmiImageSettings.Name = "tsmiImageSettings";
-            this.tsmiImageSettings.Size = new System.Drawing.Size(157, 22);
+            this.tsmiImageSettings.Size = new System.Drawing.Size(164, 22);
             this.tsmiImageSettings.Text = "&Image Format...";
             this.tsmiImageSettings.Click += new System.EventHandler(this.tsmiImageSettings_Click);
             // 
             // tsmiWatermark
             // 
             this.tsmiWatermark.Name = "tsmiWatermark";
-            this.tsmiWatermark.Size = new System.Drawing.Size(157, 22);
+            this.tsmiWatermark.Size = new System.Drawing.Size(164, 22);
             this.tsmiWatermark.Text = "&Watermark...";
             this.tsmiWatermark.Click += new System.EventHandler(this.tsmiWatermark_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
             // 
             // tsmiConfigureActions
             // 
             this.tsmiConfigureActions.Name = "tsmiConfigureActions";
-            this.tsmiConfigureActions.Size = new System.Drawing.Size(157, 22);
+            this.tsmiConfigureActions.Size = new System.Drawing.Size(164, 22);
             this.tsmiConfigureActions.Text = "&Actions...";
             this.tsmiConfigureActions.Click += new System.EventHandler(this.tsmiConfigureActions_Click);
             // 
@@ -2475,7 +2475,7 @@ namespace ZScreenGUI
             this.tsmiOutputs.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmiOutputs.Name = "tsmiOutputs";
             this.tsmiOutputs.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiOutputs.Size = new System.Drawing.Size(157, 22);
+            this.tsmiOutputs.Size = new System.Drawing.Size(164, 22);
             this.tsmiOutputs.Text = "&Outputs...";
             this.tsmiOutputs.Click += new System.EventHandler(this.tsmiOutputs_Click);
             // 
@@ -2486,14 +2486,14 @@ namespace ZScreenGUI
             this.tsmiProxy,
             this.tsmiOptions});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // tsmiApiKeys
             // 
             this.tsmiApiKeys.Image = global::ZScreenGUI.Properties.Resources.tab_edit;
             this.tsmiApiKeys.Name = "tsmiApiKeys";
-            this.tsmiApiKeys.Size = new System.Drawing.Size(157, 22);
+            this.tsmiApiKeys.Size = new System.Drawing.Size(167, 22);
             this.tsmiApiKeys.Text = "API Keys...";
             this.tsmiApiKeys.Click += new System.EventHandler(this.tsmiApiKeys_Click);
             // 
@@ -2501,7 +2501,7 @@ namespace ZScreenGUI
             // 
             this.tsmiProxy.Image = global::ZScreenGUI.Properties.Resources.world_edit;
             this.tsmiProxy.Name = "tsmiProxy";
-            this.tsmiProxy.Size = new System.Drawing.Size(157, 22);
+            this.tsmiProxy.Size = new System.Drawing.Size(167, 22);
             this.tsmiProxy.Text = "&Proxy Settings...";
             this.tsmiProxy.Click += new System.EventHandler(this.tsmiProxy_Click);
             // 
@@ -2510,7 +2510,7 @@ namespace ZScreenGUI
             this.tsmiOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
             this.tsmiOptions.Name = "tsmiOptions";
             this.tsmiOptions.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsmiOptions.Size = new System.Drawing.Size(157, 22);
+            this.tsmiOptions.Size = new System.Drawing.Size(167, 22);
             this.tsmiOptions.Text = "&Options...";
             this.tsmiOptions.Click += new System.EventHandler(this.tsmiOptions_Click);
             // 
@@ -2521,27 +2521,27 @@ namespace ZScreenGUI
             this.toolStripSeparator10,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // tsmiVersionHistory
             // 
             this.tsmiVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmiVersionHistory.Name = "tsmiVersionHistory";
-            this.tsmiVersionHistory.Size = new System.Drawing.Size(163, 22);
+            this.tsmiVersionHistory.Size = new System.Drawing.Size(169, 22);
             this.tsmiVersionHistory.Text = "&Version History...";
             this.tsmiVersionHistory.Click += new System.EventHandler(this.tsmiVersionHistory_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(166, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.information;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
