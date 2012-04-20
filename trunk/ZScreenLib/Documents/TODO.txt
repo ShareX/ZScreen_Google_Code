@@ -19,9 +19,6 @@ Clipboard Upload Wizard
 
 Greenshot Editor Mods
 
-- build GreenshotPlugin
-- remove Greenshot\Helpers\IECaptureHelper.cs
-
 - remove General and Output tabs in SettingsForm
 - remove MainForm.RegisterHotkeys();
 - remove UnregisterHotkeys
@@ -35,3 +32,4 @@ Greenshot Editor Mods
 - remove code until compilable
 - modify ImageEditorFormFormClosing to have DialogResult result = System.Windows.Forms.DialogResult.OK;
 - delete InitializeQuickSettingsMenu
+- add MainForm.instance = new MainForm(transport); to MainForm -> Start()

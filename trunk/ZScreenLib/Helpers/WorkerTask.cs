@@ -14,7 +14,9 @@ using System.Windows.Forms;
 using Crop;
 using Gif.Components;
 using GraphicsMgrLib;
+using Greenshot.IniFile;
 using Greenshot.Plugin;
+using GreenshotPlugin.Core;
 using HelpersLib;
 using HistoryLib;
 using ImageQueue;
@@ -877,12 +879,14 @@ namespace ZScreenLib
                         try
                         {
                             // Compatibility fixes
-                            string APPLICATIONDATA_LANGUAGE_PATH =
-                                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                             @"Greenshot\Languages\");
-                            if (!Directory.Exists(APPLICATIONDATA_LANGUAGE_PATH))
-                                Directory.CreateDirectory(APPLICATIONDATA_LANGUAGE_PATH);
+                            string LANGUAGE_PATH = Path.Combine(Application.StartupPath, @"Languages");
+                            if (!Directory.Exists(LANGUAGE_PATH))
+                                Directory.CreateDirectory(LANGUAGE_PATH);
                             Greenshot.MainForm.Start(new string[0]);
+
+                            CoreConfiguration coreConfiguration = IniConfig.GetIniSection<CoreConfiguration>();
+                            coreConfiguration.OutputFileFilenamePattern = "${title}";
+                            coreConfiguration.OutputFilePath = Engine.ImagesDir;
 
                             ICapture capture = new GreenshotPlugin.Core.Capture();
                             capture.Image = TempImage;

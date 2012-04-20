@@ -410,10 +410,6 @@ namespace Greenshot
                 SaveSettings();
                 DialogResult = DialogResult.OK;
             }
-            else
-            {
-                this.tabcontrol.SelectTab(this.tab_output);
-            }
         }
 
         private void BrowseClick(object sender, System.EventArgs e)
