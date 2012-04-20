@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -24,6 +24,7 @@ using System.Drawing;
 
 using Greenshot.Drawing.Fields;
 using Greenshot.Plugin.Drawing;
+using GreenshotPlugin.Core;
 
 /// <summary>
 /// Graphical filter which can be added to DrawableContainer.
@@ -62,25 +63,8 @@ namespace Greenshot.Drawing.Filters {
 			return parent;
 		}
 
-		/**
-		 * This method fixes the problem that we can't apply a filter outside the target bitmap,
-		 * therefor the filtered-bitmap will be shifted if we try to draw it outside the target bitmap.
-		 * It will also account for the Invert flag.
-		 */
-		protected Rectangle IntersectRectangle(Size applySize, Rectangle rect) {
-			Rectangle myRect;
-			if (Invert) {
-				myRect = new Rectangle(0, 0, applySize.Width, applySize.Height);
-			} else {
-				Rectangle applyRect = new Rectangle(0,0, applySize.Width, applySize.Height);
-				myRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
-				myRect.Intersect(applyRect);
-			}
-			return myRect;
-		}
-
 		public virtual void Apply(Graphics graphics, Bitmap applyBitmap, Rectangle rect, RenderMode renderMode) {
-			applyRect = IntersectRectangle(applyBitmap.Size, rect);
+			applyRect = ImageHelper.CreateIntersectRectangle(applyBitmap.Size, rect, Invert);
 
 			if (applyRect.Width == 0 || applyRect.Height == 0) {
 				// nothing to do

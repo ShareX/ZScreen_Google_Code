@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -25,16 +25,17 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using Greenshot.Configuration;
 using Greenshot.Plugin;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot.Helpers {
 	/// <summary>
 	/// The PluginHelper takes care of all plugin related functionality
 	/// </summary>
 	[Serializable]
-	public class PluginHelper : IGreenshotPluginHost {
+	public class PluginHelper : IGreenshotHost {
 		private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(PluginHelper));
 		private static CoreConfiguration conf = IniConfig.GetIniSection<CoreConfiguration>();
 
@@ -43,30 +44,9 @@ namespace Greenshot.Helpers {
 		public static string pafPath =  Path.Combine(Application.StartupPath, @"App\Greenshot");
 		public static readonly PluginHelper instance = new PluginHelper();
 
-		private static Dictionary<PluginAttribute, IGreenshotPlugin> plugins = new Dictionary<PluginAttribute, IGreenshotPlugin>();
+		private static IDictionary<PluginAttribute, IGreenshotPlugin> plugins = new SortedDictionary<PluginAttribute, IGreenshotPlugin>();
 
 		private PluginHelper() {
-		}
-		
-		public void CreateImageEditorOpenEvent(IImageEditor imageEditor) {
-			if (OnImageEditorOpen != null) {
-				ImageEditorOpenEventArgs eventArgs = new ImageEditorOpenEventArgs(imageEditor);
-				OnImageEditorOpen(this, eventArgs);
-			}
-		}
-		
-		public void CreateCaptureTakenEvent(ICapture capture) {
-			if (OnCaptureTaken != null) {
-				CaptureTakenEventArgs eventArgs = new CaptureTakenEventArgs(capture);
-				OnCaptureTaken(this, eventArgs);
-			}
-		}
-
-		public void CreateSurfaceFromCaptureEvent(ICapture capture, ISurface surface) {
-			if (OnSurfaceFromCapture != null) {
-				SurfaceFromCaptureEventArgs eventArgs = new SurfaceFromCaptureEventArgs(capture, surface);
-				OnSurfaceFromCapture(this, eventArgs);
-			}
 		}
 
 		public bool HasPlugins() {
@@ -84,10 +64,11 @@ namespace Greenshot.Helpers {
 		public void FillListview(ListView listview) {
 			foreach(PluginAttribute pluginAttribute in plugins.Keys) {
 				ListViewItem item = new ListViewItem(pluginAttribute.Name);
-                item.SubItems.Add(pluginAttribute.Version);
-                item.SubItems.Add(pluginAttribute.DllFile);
-                item.Tag = pluginAttribute;
-                listview.Items.Add(item);
+				item.SubItems.Add(pluginAttribute.Version);
+				item.SubItems.Add(pluginAttribute.CreatedBy);
+				item.SubItems.Add(pluginAttribute.DllFile);
+				item.Tag = pluginAttribute;
+				listview.Items.Add(item);
 			}
 		}
 		
@@ -112,13 +93,18 @@ namespace Greenshot.Helpers {
 		}
 
 		#region Implementation of IGreenshotPluginHost
-		public event OnImageEditorOpenHandler OnImageEditorOpen;
-		public event OnCaptureTakenHandler OnCaptureTaken;
-		public event OnSurfaceFromCaptureHandler OnSurfaceFromCapture;
 		private ContextMenuStrip mainMenu = null;
 
-		public void SaveToStream(Image img, Stream stream, OutputFormat extension, int quality) {
-			ImageOutput.SaveToStream(img, stream, extension, quality);
+		public void SaveToStream(Image img, Stream stream, OutputFormat extension, int quality, bool reduceColors) {
+			ImageOutput.SaveToStream(img, stream, extension, quality, reduceColors);
+		}
+
+		public string SaveToTmpFile(Image img, OutputFormat outputFormat, int quality, bool reduceColors) {
+			return ImageOutput.SaveToTmpFile(img, outputFormat, quality, reduceColors);
+		}
+
+		public string SaveNamedTmpFile(Image image, ICaptureDetails captureDetails, OutputFormat outputFormat, int quality, bool reduceColors) {
+			return ImageOutput.SaveNamedTmpFile(image, captureDetails, outputFormat, quality, reduceColors);
 		}
 		
 		public string GetFilename(OutputFormat format, ICaptureDetails captureDetails) {
@@ -150,10 +136,40 @@ namespace Greenshot.Helpers {
 			get { return mainMenu;}
 		}
 		
-		public Dictionary<PluginAttribute, IGreenshotPlugin> Plugins {
+		public IDictionary<PluginAttribute, IGreenshotPlugin> Plugins {
 			get {return plugins;}
 		}
 
+		/// <summary>
+		/// Make Capture with specified Handler
+		/// </summary>
+		/// <param name="captureMouseCursor">bool false if the mouse should not be captured, true if the configuration should be checked</param>
+		/// <param name="destination">IDestination</param>
+		public void CaptureRegion(bool captureMouseCursor, IDestination destination) {
+			CaptureHelper.CaptureRegion(captureMouseCursor, destination);
+		}
+
+		/// <summary>
+		/// Use the supplied image, and handle it as if it's captured.
+		/// </summary>
+		/// <param name="imageToImport">Image to handle</param>
+		public void ImportCapture(ICapture captureToImport) {
+			MainForm.instance.BeginInvoke((MethodInvoker)delegate {
+				CaptureHelper.ImportCapture(captureToImport);
+			});
+		}
+		
+		/// <summary>
+		/// Get an ICapture object, so the plugin can modify this
+		/// </summary>
+		/// <returns></returns>
+		public ICapture GetCapture(Image imageToCapture) {
+			Capture capture = new Capture(imageToCapture);
+			capture.CaptureDetails = new CaptureDetails();
+			capture.CaptureDetails.CaptureMode = CaptureMode.Import;
+			capture.CaptureDetails.Title = "Imported";
+			return capture;
+		}
 		#endregion
 
 		#region Plugin loading
@@ -183,7 +199,7 @@ namespace Greenshot.Helpers {
 			return false;
 		}
 
-		public void LoadPlugins(MainForm mainForm, ICaptureHost captureHost) {
+		public void LoadPlugins(MainForm mainForm) {
 			// Copy ContextMenu
 			mainMenu = mainForm.MainMenu;
 			
@@ -213,26 +229,34 @@ namespace Greenshot.Helpers {
 			foreach (string pluginFile in pluginFiles) {
 				LOG.DebugFormat("Checking the following file for plugins: {0}", pluginFile);
 				try {
-					Assembly assembly = Assembly.LoadFile(pluginFile);
+					Assembly assembly = Assembly.LoadFile(pluginFile, Assembly.GetExecutingAssembly().Evidence);
 					PluginAttribute[] pluginAttributes = assembly.GetCustomAttributes(typeof(PluginAttribute), false) as PluginAttribute[];
 					if (pluginAttributes.Length > 0) {
 						PluginAttribute pluginAttribute = pluginAttributes[0];
-						
-						AssemblyProductAttribute[] assemblyProductAttributes = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false) as AssemblyProductAttribute[];
-						if (assemblyProductAttributes.Length > 0) {
-							pluginAttribute.Name = assemblyProductAttributes[0].Product;
-						} else {
-							continue;
+
+						if (string.IsNullOrEmpty(pluginAttribute.Name)) {
+							AssemblyProductAttribute[] assemblyProductAttributes = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false) as AssemblyProductAttribute[];
+							if (assemblyProductAttributes.Length > 0) {
+								pluginAttribute.Name = assemblyProductAttributes[0].Product;
+							} else {
+								continue;
+							}
+						}
+						if (string.IsNullOrEmpty(pluginAttribute.CreatedBy)) {
+							AssemblyCompanyAttribute[] assemblyCompanyAttributes = assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false) as AssemblyCompanyAttribute[];
+							if (assemblyCompanyAttributes.Length > 0) {
+								pluginAttribute.CreatedBy = assemblyCompanyAttributes[0].Company;
+							} else {
+								continue;
+							}
 						}
 						pluginAttribute.Version = assembly.GetName().Version.ToString();
 						pluginAttribute.DllFile = pluginFile;
 						
 						// check if this plugin is already available
 						PluginAttribute checkPluginAttribute = null;
-						try {
+						if (tmpAttributes.ContainsKey(pluginAttribute.Name)) {
 							checkPluginAttribute = tmpAttributes[pluginAttribute.Name];
-						} catch {
-							
 						}
 
 						if (checkPluginAttribute != null) {
@@ -281,7 +305,7 @@ namespace Greenshot.Helpers {
 					try {
 						IGreenshotPlugin plugin = (IGreenshotPlugin)Activator.CreateInstance(entryType);
 						if (plugin != null) {
-							if (plugin.Initialize(this, captureHost, pluginAttribute)) {
+							if (plugin.Initialize(this, pluginAttribute)) {
 								plugins.Add(pluginAttribute, plugin);
 							} else {
 								LOG.InfoFormat("Plugin {0} not initialized!", pluginAttribute.Name);

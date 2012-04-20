@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,65 +26,9 @@ namespace Greenshot.Plugin {
 	/// <summary>
 	/// The capture mode for Greenshot
 	/// </summary>
-	public enum CaptureMode { None, Region, FullScreen, ActiveWindow, Window, LastRegion, Clipboard, File, IE };
-	
-	/// <summary>
-	/// The destinations for the capture, these will be set during capture and can be modified by plugins
-	/// </summary>
-	public enum CaptureDestination {File, FileWithDialog, Clipboard, Printer, Editor, EMail};
+	public enum CaptureMode { None, Region, FullScreen, ActiveWindow, Window, LastRegion, Clipboard, File, IE, Video, Import };
+	public enum ScreenCaptureMode { Auto, FullScreen, Fixed};
 
-	/// <summary>
-	/// Handler for the MakeCapture in ICaptureHost
-	/// </summary>
-	public delegate void CaptureHandler(object sender, CaptureTakenEventArgs e);
-
-	/// <summary>
-	/// The ICaptureHost is more or less the Interface that "Greenshot" itself implements (the MainForm)
-	/// over this Interface it is possible to register to the main ContextMenu or pass a Bitmap for processing
-	/// </summary>
-	public interface ICaptureHost {
-		/// <summary>
-		/// Process a bitmap like it was captured
-		/// </summary>
-		void HandleCapture(Bitmap bitmap);
-
-		/// <summary>
-		/// Make Capture with default destinations
-		/// </summary>
-		/// <param name="mode">CaptureMode</param>
-		/// <param name="captureMouseCursor">bool false if the mouse should not be captured, true if the configuration should be checked</param>
-		void MakeCapture(CaptureMode mode, bool captureMouseCursor);
-		
-		/// <summary>
-		/// Make Capture with specified destinations
-		/// </summary>
-		/// <param name="mode">CaptureMode</param>
-		/// <param name="captureMouseCursor">bool false if the mouse should not be captured, true if the configuration should be checked</param>
-		/// <param name="captureDestinations">List<CaptureDestination> with destinations</param>
-		void MakeCapture(CaptureMode mode, bool captureMouseCursor, List<CaptureDestination> captureDestinations);
-		
-		/// <summary>
-		/// Make Capture with specified Handler
-		/// </summary>
-		/// <param name="mode"></param>
-		/// <param name="captureMouseCursor">bool false if the mouse should not be captured, true if the configuration should be checked</param>
-		/// <param name="captureHandler">CaptureHandler delegate</param>
-		void MakeCapture(CaptureMode mode, bool captureMouseCursor, CaptureHandler captureHandler);
-
-		/// <summary>
-		/// Make capture of window
-		/// </summary>
-		/// <param name="window">WindowDetails of the window to capture</param>
-		//void MakeCapture(WindowDetails window);
-		
-		/// <summary>
-		/// Make capture of window
-		/// </summary>
-		/// <param name="window">WindowDetails of the window to capture</param>
-		/// <param name="captureMouseCursor">bool false if the mouse should not be captured, true if the configuration should be checked</param>
-		//void MakeCapture(WindowDetails window,  CaptureHandler captureHandler);
-	}
-	
 	/// <summary>
 	/// Details for the capture, like the window title and date/time etc.
 	/// </summary>
@@ -103,7 +47,7 @@ namespace Greenshot.Plugin {
 			set;
 		}
 		
-		List<CaptureDestination> CaptureDestinations {
+		List<IDestination> CaptureDestinations {
 			get;
 			set;
 		}
@@ -120,13 +64,9 @@ namespace Greenshot.Plugin {
 		void AddMetaData(string key, string value);
 		
 		void ClearDestinations();
-		void RemoveDestination(CaptureDestination captureDestination);
-		void AddDestination(CaptureDestination captureDestination);
-
-		CaptureHandler CaptureHandler {
-			get;
-			set;
-		}
+		void RemoveDestination(IDestination captureDestination);
+		void AddDestination(IDestination captureDestination);
+		bool HasDestination(string designation);
 				
 		CaptureMode CaptureMode {
 			get;
@@ -143,6 +83,23 @@ namespace Greenshot.Plugin {
 		}
 	}
 
+	public interface ICaptureElement {
+		List<ICaptureElement> Children {
+			get;
+			set;
+		}
+		Rectangle Bounds {
+			get;
+			set;
+		}
+		string Name {
+			get;
+			set;
+		}
+
+		ICaptureElement FindElementUnderPoint(Point p);
+	}
+	
 	/// <summary>
 	/// The interface to the Capture object, so Plugins can use it.
 	/// </summary>
@@ -192,12 +149,32 @@ namespace Greenshot.Plugin {
 		bool Crop(Rectangle cropRectangle);
 
 		/// <summary>
-		/// Apply a translate to the mouse location.
-		/// e.g. needed for crop
+		/// Apply a translate to the mouse location. e.g. needed for crop
 		/// </summary>
 		/// <param name="x">x coordinates to move the mouse</param>
 		/// <param name="y">y coordinates to move the mouse</param>
 		void MoveMouseLocation(int x, int y);
+
+		/// <summary>
+		/// Apply a translate to the elements e.g. needed for crop
+		/// </summary>
+		/// <param name="x">x coordinates to move the elements</param>
+		/// <param name="y">y coordinates to move the elements</param>
+		void MoveElements(int x, int y);
+		
+		/// <summary>
+		/// Add a new element to the capture
+		/// </summary>
+		/// <param name="element">Rectangle</param>
+		void AddElement(ICaptureElement element);
+
+		/// <summary>
+		/// Returns a list of rectangles which represent objects that are "on" the capture
+		/// </summary>
+		List<ICaptureElement> Elements {
+			get;
+			set;
+		}
 	}
 
 }

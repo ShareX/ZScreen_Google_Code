@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -25,27 +25,18 @@ using Greenshot.Helpers;
 using GreenshotPlugin.Core;
 
 namespace Greenshot.Forms {
-	public partial class BugReportForm : Form {
-		private ILanguage lang;
+	public partial class BugReportForm : BaseForm {
 		private BugReportForm() {
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			lang = Language.GetInstance();
-			UpdateUI();
+			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
 			WindowDetails.ToForeground(this.Handle);
 		}
-		
-		
+
 		public BugReportForm(string bugText) : this() {
 			this.textBoxDescription.Text = bugText;
-		}
-		
-		void UpdateUI() {
-			this.Text = lang.GetString(LangKey.bugreport_title);
-			this.labelBugReportInfo.Text = lang.GetString(LangKey.bugreport_info);
-			this.btnClose.Text = lang.GetString(LangKey.bugreport_cancel);
 		}
 		
 		void LinkLblBugsLinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e) {
@@ -57,7 +48,7 @@ namespace Greenshot.Forms {
 				link.LinkVisited = true;
 				System.Diagnostics.Process.Start(link.Text);
 			} catch (Exception) {
-				MessageBox.Show(lang.GetFormattedString(LangKey.error_openlink, link.Text),lang.GetString(LangKey.error));
+				MessageBox.Show(Language.GetFormattedString(LangKey.error_openlink, link.Text), Language.GetString(LangKey.error));
 			}
 		}
 	}

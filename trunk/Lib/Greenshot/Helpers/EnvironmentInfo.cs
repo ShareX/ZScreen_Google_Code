@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -25,18 +25,16 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-using Greenshot.UnmanagedHelpers;
+using GreenshotPlugin.UnmanagedHelpers;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot.Helpers {
 	/// <summary>
 	/// Description of EnvironmentInfo.
 	/// </summary>
-	public class EnvironmentInfo {
+	public static class EnvironmentInfo {
 		private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger("Greenshot");
-
-		private EnvironmentInfo(){}
 		
 		public static string EnvironmentToString(bool newline) {
 			StringBuilder environment = new StringBuilder(); 
@@ -44,12 +42,14 @@ namespace Greenshot.Helpers {
 			if (IniConfig.IsPortable) {
 				environment.Append(" Portable");
 			}
+			environment.Append(" (" + OSInfo.Bits +" bit)");
+
 			if (newline) {
 				environment.AppendLine();
 			} else {
 				environment.Append(", ");
 			}
-			environment.Append(".NET runtime version: " + Assembly.GetEntryAssembly().ImageRuntimeVersion);
+			environment.Append(".NET runtime version: " + Environment.Version);
 			if (newline) {
 				environment.AppendLine();
 			} else {
@@ -125,7 +125,7 @@ namespace Greenshot.Helpers {
 			exceptionText.AppendLine(EnvironmentInfo.ExceptionToString(exception));
 			exceptionText.AppendLine("Configuration dump:");
 			using (TextWriter writer = new StringWriter(exceptionText)) {
-				IniConfig.SaveIniSectionToWriter(writer, IniConfig.GetIniSection<CoreConfiguration>(), true);
+				IniConfig.GetIniSection<CoreConfiguration>().Write(writer, true);
 			}
 			
 			return exceptionText.ToString();

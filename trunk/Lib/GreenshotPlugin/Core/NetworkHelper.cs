@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -24,13 +24,13 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-using IniFile;
+using Greenshot.IniFile;
 
 namespace GreenshotPlugin.Core {
 	/// <summary>
 	/// Description of NetworkHelper.
 	/// </summary>
-	public class NetworkHelper {
+	public static class NetworkHelper {
 		private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(NetworkHelper));
 		private static CoreConfiguration config = IniConfig.GetIniSection<CoreConfiguration>();
 
@@ -42,7 +42,7 @@ namespace GreenshotPlugin.Core {
 		/// <returns>string with the file content</returns>
 		public static string DownloadFileAsString(Uri url, Encoding encoding) {
 			try {
-				HttpWebRequest request = (HttpWebRequest)CreatedWebRequest(url);
+				HttpWebRequest request = (HttpWebRequest)CreateWebRequest(url);
 				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 				if (request.HaveResponse) {
 					StreamReader reader = new StreamReader(response.GetResponseStream(), encoding);
@@ -63,11 +63,12 @@ namespace GreenshotPlugin.Core {
 		public static Bitmap DownloadFavIcon(Uri baseUri) {
 			Uri url = new Uri(baseUri, new Uri("favicon.ico"));
 			try {
-				HttpWebRequest request = (HttpWebRequest)NetworkHelper.CreatedWebRequest(url);
+				HttpWebRequest request = (HttpWebRequest)NetworkHelper.CreateWebRequest(url);
 				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 				if (request.HaveResponse) {
-					Image image = Image.FromStream(response.GetResponseStream());
-					return (image.Height > 16 && image.Width > 16) ? new Bitmap(image, 16, 16) : new Bitmap(image);
+					using (Image image = Image.FromStream(response.GetResponseStream())) {
+						return (image.Height > 16 && image.Width > 16) ? new Bitmap(image, 16, 16) : new Bitmap(image);
+					}
 				}
 				
 			} catch (Exception e) {
@@ -81,8 +82,8 @@ namespace GreenshotPlugin.Core {
 		/// </summary>
 		/// <param name="uri">string with uri to connect to</param>
 		/// <returns>WebRequest</returns>
-		public static WebRequest CreatedWebRequest(string uri) {
-			return CreatedWebRequest(new Uri(uri));
+		public static WebRequest CreateWebRequest(string uri) {
+			return CreateWebRequest(new Uri(uri));
 		}
 		
 		/// <summary>
@@ -90,11 +91,11 @@ namespace GreenshotPlugin.Core {
 		/// </summary>
 		/// <param name="uri">Uri with uri to connect to</param>
 		/// <returns>WebRequest</returns>
-		public static WebRequest CreatedWebRequest(Uri uri) {
+		public static WebRequest CreateWebRequest(Uri uri) {
 			WebRequest webRequest = WebRequest.Create(uri);
 			if (config.UseProxy) {
-	            webRequest.Proxy = GreenshotPlugin.Core.NetworkHelper.CreateProxy(uri);
-	            //webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
+				webRequest.Proxy = GreenshotPlugin.Core.NetworkHelper.CreateProxy(uri);
+				//webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
 			}
 			return webRequest;
 		}

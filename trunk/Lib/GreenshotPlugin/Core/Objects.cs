@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -62,8 +63,24 @@ namespace GreenshotPlugin.Core {
 			PropertyInfo[] myObjectProperties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
 			foreach (PropertyInfo pi in myObjectProperties) {
-				pi.SetValue(destination, pi.GetValue(source, null), null);
+				if (pi.CanWrite) {
+					pi.SetValue(destination, pi.GetValue(source, null), null);
+				}
 			}
+		}
+		
+		public static bool CompareLists<T>(IList<T> l1, IList<T> l2) {
+			if (l1.Count != l2.Count) {
+				return false;
+			}
+			int matched = 0;
+			foreach(T item in l1) {
+				if (!l2.Contains(item)) {
+					return false;
+				}
+				matched++;
+			}
+			return matched == l1.Count;
 		}
 	}
 }

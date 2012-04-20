@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -38,6 +38,7 @@ namespace GreenshotPlugin.Controls {
 			BackgroundForm backgroundForm = new BackgroundForm(title, text);
 			// Show form in background thread
 			Thread backgroundTask = new Thread (new ThreadStart(backgroundForm.BackgroundShowDialog));
+			backgroundForm.Name = "Background form";
 			backgroundTask.IsBackground = true;
 			backgroundTask.SetApartmentState(ApartmentState.STA);
 			backgroundTask.Start();
@@ -49,6 +50,7 @@ namespace GreenshotPlugin.Controls {
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
 			shouldClose = false;
 			this.Text = title;
 			this.label_pleasewait.Text = text;
@@ -87,6 +89,7 @@ namespace GreenshotPlugin.Controls {
 		
 		public void CloseDialog() {
 			shouldClose = true;
+			Application.DoEvents();
 		}
 		
 		void BackgroundFormFormClosing(object sender, FormClosingEventArgs e) {

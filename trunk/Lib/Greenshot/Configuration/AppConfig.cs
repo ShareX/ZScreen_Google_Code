@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,9 +26,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-using Greenshot.UnmanagedHelpers;
+using GreenshotPlugin.UnmanagedHelpers;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.Plugin;
+using Greenshot.IniFile;
 
 namespace Greenshot.Configuration {
 	public enum ScreenshotDestinations {Editor=1, FileDefault=2, FileWithDialog=4, Clipboard=8, Printer=16, EMail=32}
@@ -157,7 +158,7 @@ namespace Greenshot.Configuration {
 						coreConfiguration.OutputFileIncrementingNumber = unchecked((uint)appConfig.Output_File_IncrementingNumber);
 						coreConfiguration.OutputFileJpegQuality = appConfig.Output_File_JpegQuality;
 						coreConfiguration.OutputFilePath = appConfig.Output_File_Path;
-						coreConfiguration.OutputFilePromptJpegQuality = (bool)appConfig.Output_File_PromptJpegQuality;
+						coreConfiguration.OutputFilePromptQuality = (bool)appConfig.Output_File_PromptJpegQuality;
 						coreConfiguration.Language = appConfig.Ui_Language;
 						coreConfiguration.PlayCameraSound = (bool)appConfig.Ui_Effects_CameraSound;
 						coreConfiguration.CaptureMousepointer = (bool)appConfig.Capture_Mousepointer;
@@ -167,29 +168,29 @@ namespace Greenshot.Configuration {
 						coreConfiguration.OutputPrintAllowShrink = (bool)appConfig.Output_Print_AllowShrink;
 						coreConfiguration.OutputPrintCenter = (bool)appConfig.Output_Print_Center;
 						coreConfiguration.OutputPrintPromptOptions = (bool)appConfig.Output_Print_PromptOptions;
-						coreConfiguration.OutputPrintTimestamp = (bool)appConfig.Output_Print_Timestamp;
+						coreConfiguration.OutputPrintFooter = (bool)appConfig.Output_Print_Timestamp;
 						int delay = appConfig.Capture_Wait_Time-1;
 						if (delay < 0) {
 							delay = 0;
 						}
 						coreConfiguration.CaptureDelay = delay;
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.Clipboard) == ScreenshotDestinations.Clipboard) {
-							coreConfiguration.OutputDestinations.Add(Destination.Clipboard);
+							coreConfiguration.OutputDestinations.Add("Clipboard");
 						}
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.Editor) == ScreenshotDestinations.Editor) {
-							coreConfiguration.OutputDestinations.Add(Destination.Editor);
+							coreConfiguration.OutputDestinations.Add("Editor");
 						}
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.EMail) == ScreenshotDestinations.EMail) {
-							coreConfiguration.OutputDestinations.Add(Destination.EMail);
+							coreConfiguration.OutputDestinations.Add("EMail");
 						}
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.Printer) == ScreenshotDestinations.Printer) {
-							coreConfiguration.OutputDestinations.Add(Destination.Printer);
+							coreConfiguration.OutputDestinations.Add("Printer");
 						}
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.FileDefault) == ScreenshotDestinations.FileDefault) {
-							coreConfiguration.OutputDestinations.Add(Destination.FileDefault);
+							coreConfiguration.OutputDestinations.Add("File");
 						}
 						if ((appConfig.Output_Destinations & ScreenshotDestinations.FileWithDialog) == ScreenshotDestinations.FileWithDialog) {
-							coreConfiguration.OutputDestinations.Add(Destination.FileWithDialog);
+							coreConfiguration.OutputDestinations.Add("FileWithDialog");
 						}
 						IniConfig.Save();
 					} catch (Exception e) {

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -22,11 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Greenshot.Helpers
-{
-	public class Colors {
-		private Colors() {}
-		
+namespace Greenshot.Helpers {
+	public static class Colors {
 		public static bool IsVisible(Color c) {
 			return c != null && !c.Equals(Color.Empty) && !c.Equals(Color.Transparent) && c.A > 0;
 		}
@@ -37,8 +34,8 @@ namespace Greenshot.Helpers
 			int g = 0;
 			int b = 0;
 			int count = 0;
-			foreach(Color color in colors) {
-				if(!color.Equals(Color.Empty)) {
+			foreach (Color color in colors) {
+				if (!color.Equals(Color.Empty)) {
 					a += color.A;
 					r += color.R;
 					g += color.G;

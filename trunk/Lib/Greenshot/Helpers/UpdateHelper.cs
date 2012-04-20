@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  *
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -27,36 +27,23 @@ using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
 using Greenshot.Configuration;
+using Greenshot.IniFile;
 using GreenshotPlugin.Core;
-using IniFile;
 
 namespace Greenshot.Experimental
 {
     /// <summary>
     /// Description of RssFeedHelper.
     /// </summary>
-    public class UpdateHelper
+    public static class UpdateHelper
     {
         private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(UpdateHelper));
         private static CoreConfiguration conf = IniConfig.GetIniSection<CoreConfiguration>();
-        private static Dictionary<string, string> mirrors = new Dictionary<string, string>();
         private static object lockObject = new object();
         private static SourceforgeFile latestGreenshot;
         private static SourceforgeFile currentGreenshot;
-        //private static List<RssFile> languageFiles;
-
-        static UpdateHelper()
-        {
-            // See: http://sourceforge.net/apps/trac/sourceforge/wiki/Mirrors
-            mirrors.Add("aarnet", "Brisbane, Australia");
-            mirrors.Add("cdnetworks-kr-1", "Seoul, Korea, Republic of");
-            mirrors.Add("cdnetworks-kr-2", "Seoul, Korea, Republic of");
-            mirrors.Add("cdnetworks-us-1", "San Jose, CA");
-            mirrors.Add("cdnetworks-us-2", "San Jose, CA");
-            mirrors.Add("citylan", "Moscow, Russian Federation");
-        }
+        private const string DOWNLOAD_LINK = "http://getgreenshot.org/downloads/";
 
         /// <summary>
         /// Is an update check needed?
@@ -86,6 +73,24 @@ namespace Greenshot.Experimental
                 }
             }
             return true;
+        }
+
+        private static void HandleBalloonTipClick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (latestGreenshot != null)
+                {
+                    // "Direct" download link
+                    // Process.Start(latestGreenshot.Link);
+                    // Go to getgreenshot.org
+                    Process.Start(DOWNLOAD_LINK);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Language.GetFormattedString(LangKey.error_openlink, latestGreenshot.Link), Language.GetString(LangKey.error));
+            }
         }
 
         private static void ProcessRSSInfo(Version currentVersion)

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -22,6 +22,7 @@ using System;
 using System.Drawing;
 using Greenshot.Drawing.Fields;
 using Greenshot.Plugin.Drawing;
+using GreenshotPlugin.Core;
 
 namespace Greenshot.Drawing.Filters {
 	[Serializable()] 
@@ -36,7 +37,7 @@ namespace Greenshot.Drawing.Filters {
 		
 		public override void Apply(Graphics graphics, Bitmap applyBitmap, Rectangle rect, RenderMode renderMode) {
 			magnificationFactor = GetFieldValueAsInt(FieldType.MAGNIFICATION_FACTOR);
-			applyRect = IntersectRectangle(applyBitmap.Size, rect);
+			applyRect = ImageHelper.CreateIntersectRectangle(applyBitmap.Size, rect, Invert);
 			
 			bbbSrc = new BitmapBuffer(applyBitmap, applyRect);
 			try {

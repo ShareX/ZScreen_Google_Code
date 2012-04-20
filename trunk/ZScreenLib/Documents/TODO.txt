@@ -18,6 +18,10 @@ Clipboard Upload Wizard
 		Index Folders
 
 Greenshot Editor Mods
+
+- build GreenshotPlugin
+- remove Greenshot\Helpers\IECaptureHelper.cs
+
 - remove General and Output tabs in SettingsForm
 - remove MainForm.RegisterHotkeys();
 - remove UnregisterHotkeys

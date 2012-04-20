@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,20 +26,19 @@ using System.Windows.Forms;
 
 using Greenshot.Configuration;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot {
 	/// <summary>
 	/// Description of ColorDialog.
 	/// </summary>
-	public partial class ColorDialog {
+	public partial class ColorDialog : BaseForm {
 		private static ColorDialog uniqueInstance;
 		private static EditorConfiguration editorConfiguration = IniConfig.GetIniSection<EditorConfiguration>();
+
 		private ColorDialog() {
 			this.SuspendLayout();
 			InitializeComponent();
-			lang = Language.GetInstance();
-			updateUI();
 			this.SuspendLayout();
 			this.createColorPalette(5,5,15,15);
 			this.createLastUsedColorButtonRow(5,190,15,15);
@@ -54,7 +53,6 @@ namespace Greenshot {
 			return uniqueInstance;
 		}
 		
-		private ILanguage lang;
 		private List<Button> colorButtons = new List<Button>();
 		private List<Button> recentColorButtons = new List<Button>();
 		private ToolTip toolTip = new ToolTip();
@@ -63,18 +61,6 @@ namespace Greenshot {
 		public Color Color {
 			get {return colorPanel.BackColor;}
 			set {previewColor(value,this);}
-		}
-		
-		private void updateUI() {
-			this.Text = lang.GetString(LangKey.colorpicker_title);
-			this.btnApply.Text = lang.GetString(LangKey.colorpicker_apply);
-			this.btnTransparent.Text = lang.GetString(LangKey.colorpicker_transparent);
-			this.labelHtmlColor.Text = lang.GetString(LangKey.colorpicker_htmlcolor);
-			this.labelRed.Text = lang.GetString(LangKey.colorpicker_red);
-			this.labelGreen.Text = lang.GetString(LangKey.colorpicker_green);
-			this.labelBlue.Text = lang.GetString(LangKey.colorpicker_blue);
-			this.labelAlpha.Text = lang.GetString(LangKey.colorpicker_alpha);
-			this.labelRecentColors.Text = lang.GetString(LangKey.colorpicker_recentcolors);
 		}
 		
 		#region user interface generation
@@ -234,5 +220,9 @@ namespace Greenshot {
 		}
 		
 		#endregion	
+
+		private void pipetteUsed(object sender, Greenshot.Controls.PipetteUsedArgs e) {
+			this.Color = e.color;
+		}
 	}
 }

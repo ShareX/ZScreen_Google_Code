@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using Greenshot.Plugin.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing {
 	/// <summary>
@@ -98,7 +99,17 @@ namespace Greenshot.Drawing {
 
 		public override void Draw(Graphics graphics, RenderMode rm) {
 			if (cursor != null) {
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+				graphics.CompositingQuality = CompositingQuality.Default;
+				graphics.PixelOffsetMode = PixelOffsetMode.None;
 				cursor.DrawStretched(graphics, Bounds);
+			}
+		}
+
+		public override Size DefaultSize {
+			get {
+				return cursor.Size;
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,11 +26,27 @@ namespace GreenshotPlugin.Core {
 	/// <summary>
 	/// Description of EmailConfigHelper.
 	/// </summary>
-	public class EmailConfigHelper {
+	public static class EmailConfigHelper {
 		private const string OUTLOOK_PATH_KEY = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\OUTLOOK.EXE";
+		private const string MAPI_CLIENT_KEY = @"SOFTWARE\Clients\Mail";
 		private const string MAPI_LOCATION_KEY = @"SOFTWARE\Microsoft\Windows Messaging Subsystem";
 		private const string MAPI_KEY = @"MAPI";
-	
+
+		public static string GetMapiClient() {
+			using (RegistryKey key = Registry.CurrentUser.OpenSubKey(MAPI_CLIENT_KEY, false)) {
+				if (key != null) {
+					return (string)key.GetValue("");
+				} 
+			}
+			using (RegistryKey key = Registry.LocalMachine.OpenSubKey(MAPI_CLIENT_KEY, false)) {
+				if (key != null) {
+					return (string)key.GetValue("");
+				} else {
+					return null;
+				}
+			}
+		}
+
 		public static bool HasMAPI() {
 			using (RegistryKey key = Registry.LocalMachine.OpenSubKey(MAPI_LOCATION_KEY, false)) {
 				if (key != null) {
@@ -41,20 +57,25 @@ namespace GreenshotPlugin.Core {
 			}
 		}
 		
+		public static string GetOutlookExePath() {
+			using (RegistryKey key = Registry.LocalMachine.OpenSubKey(OUTLOOK_PATH_KEY, false)) {
+				if (key != null) {
+					// "" is the default key, which should point to the outlook location
+					return (string)key.GetValue("");
+				}
+			}
+			return null;
+		}
+
 		/// <summary>
 		/// Check if Outlook is installed
 		/// </summary>
 		/// <returns>Returns true if outlook is installed</returns>
 		public static bool HasOutlook() {
-			using (RegistryKey key = Registry.LocalMachine.OpenSubKey(OUTLOOK_PATH_KEY, false)) {
-				if (key != null) {
-					// "" is the default key, which should point to the outlook location
-					string outlookPath = (string)key.GetValue("");
-					if (outlookPath != null) {
-						if (File.Exists(outlookPath)) {
-							return true;
-						}
-					}
+			string outlookPath = GetOutlookExePath();
+			if (outlookPath != null) {
+				if (File.Exists(outlookPath)) {
+					return true;
 				}
 			}
 			return false;

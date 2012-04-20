@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -20,6 +20,7 @@
  */
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using Greenshot.Drawing.Fields;
 using Greenshot.Helpers;
 using Greenshot.Plugin.Drawing;
@@ -36,11 +37,16 @@ namespace Greenshot.Drawing {
 			AddField(GetType(), FieldType.LINE_THICKNESS, 2);
 			AddField(GetType(), FieldType.LINE_COLOR, Color.Red);
 			AddField(GetType(), FieldType.FILL_COLOR, Color.Transparent);
-			AddField(GetType(), FieldType.SHADOW, false);
+			AddField(GetType(), FieldType.SHADOW, true);
 		}
 		
 		
-		public override void Draw(Graphics g, RenderMode rm) {
+		public override void Draw(Graphics graphics, RenderMode rm) {
+			graphics.SmoothingMode = SmoothingMode.HighQuality;
+			graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			graphics.CompositingQuality = CompositingQuality.HighQuality;
+			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
 			int lineThickness = GetFieldValueAsInt(FieldType.LINE_THICKNESS);
 			Color lineColor = GetFieldValueAsColor(FieldType.LINE_COLOR);
 			Color fillColor = GetFieldValueAsColor(FieldType.FILL_COLOR);
@@ -60,7 +66,7 @@ namespace Greenshot.Drawing {
 							this.Top + currentStep,
 							this.Width,
 							this.Height);
-						g.DrawRectangle(shadowPen, shadowRect);
+						graphics.DrawRectangle(shadowPen, shadowRect);
 						currentStep++;
 						alpha = alpha - (basealpha / steps);
 					}
@@ -69,17 +75,44 @@ namespace Greenshot.Drawing {
 			
 			Rectangle rect = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
 			
-			using (Brush brush = new SolidBrush(fillColor)) {
-				g.FillRectangle(brush, rect);
+			if (!Color.Transparent.Equals(fillColor)) {
+				using (Brush brush = new SolidBrush(fillColor)) {
+					graphics.FillRectangle(brush, rect);
+				}
 			}
 			
 			if (lineThickness > 0) {
 				using (Pen pen = new Pen(lineColor)) {
 					pen.Width = lineThickness;
-					g.DrawRectangle(pen, rect);
+					graphics.DrawRectangle(pen, rect);
 				}
 			}
 		}
 		
+		public override bool ClickableAt(int x, int y) {
+			Rectangle rect = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
+			int lineThickness = GetFieldValueAsInt(FieldType.LINE_THICKNESS) + 10;
+			Color fillColor = GetFieldValueAsColor(FieldType.FILL_COLOR);
+
+			// If we clicked inside the rectangle and it's visible we are clickable at.
+			if (!Color.Transparent.Equals(fillColor)) {
+				if (rect.Contains(x,y)) {
+					return true;
+				}
+			}
+
+			// check the rest of the lines
+			if (lineThickness > 0) {
+				using (Pen pen = new Pen(Color.White)) {
+					pen.Width = lineThickness;
+					using (GraphicsPath path = new GraphicsPath()) {
+						path.AddRectangle(rect);
+						return path.IsOutlineVisible(x, y, pen);
+					}
+				}
+			} else {
+				return false;
+			}
+		}
 	}
 }

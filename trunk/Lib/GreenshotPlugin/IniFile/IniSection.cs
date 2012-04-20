@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -19,14 +19,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.IO;
 
-namespace IniFile {
+namespace Greenshot.IniFile {
 	/// <summary>
 	/// Base class for all IniSections
 	/// </summary>
 	[Serializable]
 	public abstract class IniSection {
+		protected static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(IniSection));
+
+		[NonSerialized]
+		private IDictionary<string, IniValue> values = new Dictionary<string, IniValue>();
+
+		/// <summary>
+		/// Get the dictionary with all the IniValues
+		/// </summary>
+		public IDictionary<string, IniValue> Values {
+			get {
+				return values;
+			}
+		}
+
+		/// <summary>
 		/// Flag to specify if values have been changed
+		/// </summary>
 		public bool IsDirty = false;
 
 		/// <summary>
@@ -55,9 +74,86 @@ namespace IniFile {
 		public virtual void AfterLoad() {
 		}
 
+		/// <summary>
+		/// This will be called before saving the Section, so we can encrypt passwords etc...
+		/// </summary>
 		public virtual void BeforeSave() {
 		}
+
+		/// <summary>
+		/// This will be called before saving the Section, so we can decrypt passwords etc...
+		/// </summary>
 		public virtual void AfterSave() {
+		}
+
+		/// <summary>
+		/// Fill the section with the supplied properties
+		/// </summary>
+		/// <param name="properties"></param>
+		public void Fill(Dictionary<string, string> properties) {
+			Type iniSectionType = this.GetType();
+
+			// Iterate over the members and create IniValueContainers
+			foreach (FieldInfo fieldInfo in iniSectionType.GetFields()) {
+				if (Attribute.IsDefined(fieldInfo, typeof(IniPropertyAttribute))) {
+					if (!Values.ContainsKey(fieldInfo.Name)) {
+						IniPropertyAttribute iniPropertyAttribute = (IniPropertyAttribute)fieldInfo.GetCustomAttributes(typeof(IniPropertyAttribute), false)[0];
+						Values.Add(fieldInfo.Name, new IniValue(this, fieldInfo, iniPropertyAttribute));
+					}
+				}
+			}
+
+			foreach (PropertyInfo propertyInfo in iniSectionType.GetProperties()) {
+				if (Attribute.IsDefined(propertyInfo, typeof(IniPropertyAttribute))) {
+					if (!Values.ContainsKey(propertyInfo.Name)) {
+						IniPropertyAttribute iniPropertyAttribute = (IniPropertyAttribute)propertyInfo.GetCustomAttributes(typeof(IniPropertyAttribute), false)[0];
+						Values.Add(propertyInfo.Name, new IniValue(this, propertyInfo, iniPropertyAttribute));
+					}
+				}
+			}
+
+			foreach (string fieldName in Values.Keys) {
+				IniValue iniValue = Values[fieldName];
+				try {
+					iniValue.SetValueFromProperties(properties);
+				} catch (Exception ex) {
+					LOG.Error(ex);
+				}
+			}
+			AfterLoad();
+		}
+
+		/// <summary>
+		/// Write the section to the writer
+		/// </summary>
+		/// <param name="writer"></param>
+		/// <param name="onlyProperties"></param>
+		public void Write(TextWriter writer, bool onlyProperties) {
+			BeforeSave();
+			try {
+				Attribute[] classAttributes = Attribute.GetCustomAttributes(this.GetType());
+				IniSectionAttribute iniSectionAttribute = null;
+				foreach (Attribute attribute in classAttributes) {
+					if (attribute is IniSectionAttribute) {
+						iniSectionAttribute = (IniSectionAttribute)attribute;
+						break;
+					}
+				}
+				if (iniSectionAttribute == null) {
+					throw new ArgumentException("Section didn't implement the IniSectionAttribute");
+				}
+
+				if (!onlyProperties) {
+					writer.WriteLine("; {0}", iniSectionAttribute.Description);
+				}
+				writer.WriteLine("[{0}]", iniSectionAttribute.Name);
+
+				foreach (IniValue value in Values.Values) {
+					value.Write(writer, onlyProperties);
+				}
+			} finally {
+				AfterSave();
+			}
 		}
 	}
 }

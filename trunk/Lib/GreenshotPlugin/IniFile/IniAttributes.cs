@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -20,7 +20,7 @@
  */
 using System;
 
-namespace IniFile {
+namespace Greenshot.IniFile {
 	/// <summary>
 	/// Attribute for telling that this class is linked to a section in the ini-configuration
 	/// </summary>
@@ -49,6 +49,9 @@ namespace IniFile {
 		public string Description;
 		public string Separator = ",";
 		public string DefaultValue;
+		public string LanguageKey;
+		public bool ExcludeIfNull=false;
+		
 		public string Name {
 			get { return name; }
 			set { name = value; }
