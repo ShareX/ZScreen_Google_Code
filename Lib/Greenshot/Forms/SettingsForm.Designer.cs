@@ -74,22 +74,19 @@ namespace Greenshot {
 			this.destinationsListView = new System.Windows.Forms.ListView();
 			this.destination = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabcontrol = new System.Windows.Forms.TabControl();
-			this.tab_general = new GreenshotPlugin.Controls.GreenshotTabPage();
 			this.groupbox_network = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.numericUpDown_daysbetweencheck = new System.Windows.Forms.NumericUpDown();
 			this.label_checkperiod = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.checkbox_usedefaultproxy = new GreenshotPlugin.Controls.GreenshotCheckBox();
 			this.groupbox_hotkeys = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.label_lastregion_hotkey = new GreenshotPlugin.Controls.GreenshotLabel();
-			this.lastregion_hotkeyControl = new GreenshotPlugin.Controls.HotkeyControl();
+
 			this.label_ie_hotkey = new GreenshotPlugin.Controls.GreenshotLabel();
-			this.ie_hotkeyControl = new GreenshotPlugin.Controls.HotkeyControl();
+
 			this.label_region_hotkey = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.label_window_hotkey = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.label_fullscreen_hotkey = new GreenshotPlugin.Controls.GreenshotLabel();
-			this.region_hotkeyControl = new GreenshotPlugin.Controls.HotkeyControl();
-			this.window_hotkeyControl = new GreenshotPlugin.Controls.HotkeyControl();
-			this.fullscreen_hotkeyControl = new GreenshotPlugin.Controls.HotkeyControl();
+
 			this.tab_capture = new GreenshotPlugin.Controls.GreenshotTabPage();
 			this.groupbox_editor = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.checkbox_editor_match_capture_size = new GreenshotPlugin.Controls.GreenshotCheckBox();
@@ -105,8 +102,7 @@ namespace Greenshot {
 			this.checkbox_capture_mousepointer = new GreenshotPlugin.Controls.GreenshotCheckBox();
 			this.numericUpDownWaitTime = new System.Windows.Forms.NumericUpDown();
 			this.label_waittime = new GreenshotPlugin.Controls.GreenshotLabel();
-			this.tab_output = new GreenshotPlugin.Controls.GreenshotTabPage();
-			this.tab_destinations = new GreenshotPlugin.Controls.GreenshotTabPage();
+
 			this.tab_printer = new GreenshotPlugin.Controls.GreenshotTabPage();
 			this.groupbox_printoptions = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.checkboxPrintInverted = new GreenshotPlugin.Controls.GreenshotCheckBox();
@@ -120,7 +116,6 @@ namespace Greenshot {
 			this.groupbox_plugins = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.listview_plugins = new System.Windows.Forms.ListView();
 			this.button_pluginconfigure = new System.Windows.Forms.Button();
-			this.tab_expert = new GreenshotPlugin.Controls.GreenshotTabPage();
 			this.groupbox_expert = new GreenshotPlugin.Controls.GreenshotGroupBox();
 			this.checkbox_autoreducecolors = new GreenshotPlugin.Controls.GreenshotCheckBox();
 			this.label_clipboardformats = new GreenshotPlugin.Controls.GreenshotLabel();
@@ -133,7 +128,6 @@ namespace Greenshot {
 			((System.ComponentModel.ISupportInitialize)(this.trackBarJpegQuality)).BeginInit();
 			this.groupbox_destination.SuspendLayout();
 			this.tabcontrol.SuspendLayout();
-			this.tab_general.SuspendLayout();
 			this.groupbox_network.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_daysbetweencheck)).BeginInit();
 			this.groupbox_hotkeys.SuspendLayout();
@@ -143,13 +137,12 @@ namespace Greenshot {
 			this.groupbox_windowscapture.SuspendLayout();
 			this.groupbox_capture.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWaitTime)).BeginInit();
-			this.tab_output.SuspendLayout();
-			this.tab_destinations.SuspendLayout();
+
 			this.tab_printer.SuspendLayout();
 			this.groupbox_printoptions.SuspendLayout();
 			this.tab_plugins.SuspendLayout();
 			this.groupbox_plugins.SuspendLayout();
-			this.tab_expert.SuspendLayout();
+
 			this.groupbox_expert.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -420,33 +413,16 @@ namespace Greenshot {
 			// 
 			// tabcontrol
 			// 
-			this.tabcontrol.Controls.Add(this.tab_general);
+
 			this.tabcontrol.Controls.Add(this.tab_capture);
-			this.tabcontrol.Controls.Add(this.tab_output);
-			this.tabcontrol.Controls.Add(this.tab_destinations);
 			this.tabcontrol.Controls.Add(this.tab_printer);
 			this.tabcontrol.Controls.Add(this.tab_plugins);
-			this.tabcontrol.Controls.Add(this.tab_expert);
 			this.tabcontrol.Location = new System.Drawing.Point(12, 13);
 			this.tabcontrol.Name = "tabcontrol";
 			this.tabcontrol.SelectedIndex = 0;
 			this.tabcontrol.Size = new System.Drawing.Size(431, 346);
 			this.tabcontrol.TabIndex = 17;
-			// 
-			// tab_general
-			// 
-			this.tab_general.BackColor = System.Drawing.Color.Transparent;
-			this.tab_general.Controls.Add(this.groupbox_network);
-			this.tab_general.Controls.Add(this.groupbox_hotkeys);
-			this.tab_general.Controls.Add(this.groupbox_applicationsettings);
-			this.tab_general.LanguageKey = "settings_general";
-			this.tab_general.Location = new System.Drawing.Point(4, 22);
-			this.tab_general.Name = "tab_general";
-			this.tab_general.Padding = new System.Windows.Forms.Padding(3);
-			this.tab_general.Size = new System.Drawing.Size(423, 320);
-			this.tab_general.TabIndex = 0;
-			this.tab_general.Text = "General";
-			this.tab_general.UseVisualStyleBackColor = true;
+
 			// 
 			// groupbox_network
 			// 
@@ -492,15 +468,13 @@ namespace Greenshot {
 			// groupbox_hotkeys
 			// 
 			this.groupbox_hotkeys.Controls.Add(this.label_lastregion_hotkey);
-			this.groupbox_hotkeys.Controls.Add(this.lastregion_hotkeyControl);
+
 			this.groupbox_hotkeys.Controls.Add(this.label_ie_hotkey);
-			this.groupbox_hotkeys.Controls.Add(this.ie_hotkeyControl);
+
 			this.groupbox_hotkeys.Controls.Add(this.label_region_hotkey);
 			this.groupbox_hotkeys.Controls.Add(this.label_window_hotkey);
 			this.groupbox_hotkeys.Controls.Add(this.label_fullscreen_hotkey);
-			this.groupbox_hotkeys.Controls.Add(this.region_hotkeyControl);
-			this.groupbox_hotkeys.Controls.Add(this.window_hotkeyControl);
-			this.groupbox_hotkeys.Controls.Add(this.fullscreen_hotkeyControl);
+
 			this.groupbox_hotkeys.LanguageKey = "hotkeys";
 			this.groupbox_hotkeys.Location = new System.Drawing.Point(2, 76);
 			this.groupbox_hotkeys.Name = "groupbox_hotkeys";
@@ -517,17 +491,7 @@ namespace Greenshot {
 			this.label_lastregion_hotkey.Size = new System.Drawing.Size(212, 20);
 			this.label_lastregion_hotkey.TabIndex = 53;
 			this.label_lastregion_hotkey.Text = "Capture last region";
-			// 
-			// lastregion_hotkeyControl
-			// 
-			this.lastregion_hotkeyControl.Hotkey = System.Windows.Forms.Keys.None;
-			this.lastregion_hotkeyControl.HotkeyModifiers = System.Windows.Forms.Keys.None;
-			this.lastregion_hotkeyControl.Location = new System.Drawing.Point(224, 94);
-			this.lastregion_hotkeyControl.Name = "lastregion_hotkeyControl";
-			this.lastregion_hotkeyControl.PropertyName = "LastregionHotkey";
-			this.lastregion_hotkeyControl.Size = new System.Drawing.Size(179, 20);
-			this.lastregion_hotkeyControl.TabIndex = 52;
-			this.lastregion_hotkeyControl.Text = "None";
+
 			// 
 			// label_ie_hotkey
 			// 
@@ -537,17 +501,7 @@ namespace Greenshot {
 			this.label_ie_hotkey.Size = new System.Drawing.Size(212, 20);
 			this.label_ie_hotkey.TabIndex = 51;
 			this.label_ie_hotkey.Text = "Capture IE";
-			// 
-			// ie_hotkeyControl
-			// 
-			this.ie_hotkeyControl.Hotkey = System.Windows.Forms.Keys.None;
-			this.ie_hotkeyControl.HotkeyModifiers = System.Windows.Forms.Keys.None;
-			this.ie_hotkeyControl.Location = new System.Drawing.Point(224, 120);
-			this.ie_hotkeyControl.Name = "ie_hotkeyControl";
-			this.ie_hotkeyControl.PropertyName = "IEHotkey";
-			this.ie_hotkeyControl.Size = new System.Drawing.Size(179, 20);
-			this.ie_hotkeyControl.TabIndex = 50;
-			this.ie_hotkeyControl.Text = "None";
+
 			// 
 			// label_region_hotkey
 			// 
@@ -575,39 +529,6 @@ namespace Greenshot {
 			this.label_fullscreen_hotkey.Size = new System.Drawing.Size(212, 23);
 			this.label_fullscreen_hotkey.TabIndex = 47;
 			this.label_fullscreen_hotkey.Text = "Capture fullscreen";
-			// 
-			// region_hotkeyControl
-			// 
-			this.region_hotkeyControl.Hotkey = System.Windows.Forms.Keys.None;
-			this.region_hotkeyControl.HotkeyModifiers = System.Windows.Forms.Keys.None;
-			this.region_hotkeyControl.Location = new System.Drawing.Point(224, 68);
-			this.region_hotkeyControl.Name = "region_hotkeyControl";
-			this.region_hotkeyControl.PropertyName = "RegionHotkey";
-			this.region_hotkeyControl.Size = new System.Drawing.Size(179, 20);
-			this.region_hotkeyControl.TabIndex = 46;
-			this.region_hotkeyControl.Text = "None";
-			// 
-			// window_hotkeyControl
-			// 
-			this.window_hotkeyControl.Hotkey = System.Windows.Forms.Keys.None;
-			this.window_hotkeyControl.HotkeyModifiers = System.Windows.Forms.Keys.None;
-			this.window_hotkeyControl.Location = new System.Drawing.Point(224, 42);
-			this.window_hotkeyControl.Name = "window_hotkeyControl";
-			this.window_hotkeyControl.PropertyName = "WindowHotkey";
-			this.window_hotkeyControl.Size = new System.Drawing.Size(179, 20);
-			this.window_hotkeyControl.TabIndex = 45;
-			this.window_hotkeyControl.Text = "None";
-			// 
-			// fullscreen_hotkeyControl
-			// 
-			this.fullscreen_hotkeyControl.Hotkey = System.Windows.Forms.Keys.None;
-			this.fullscreen_hotkeyControl.HotkeyModifiers = System.Windows.Forms.Keys.None;
-			this.fullscreen_hotkeyControl.Location = new System.Drawing.Point(224, 16);
-			this.fullscreen_hotkeyControl.Name = "fullscreen_hotkeyControl";
-			this.fullscreen_hotkeyControl.PropertyName = "FullscreenHotkey";
-			this.fullscreen_hotkeyControl.Size = new System.Drawing.Size(179, 20);
-			this.fullscreen_hotkeyControl.TabIndex = 44;
-			this.fullscreen_hotkeyControl.Text = "None";
 			// 
 			// tab_capture
 			// 
@@ -786,31 +707,7 @@ namespace Greenshot {
 			this.label_waittime.Size = new System.Drawing.Size(331, 16);
 			this.label_waittime.TabIndex = 25;
 			this.label_waittime.Text = "Wait before capture (ms)";
-			// 
-			// tab_output
-			// 
-			this.tab_output.BackColor = System.Drawing.Color.Transparent;
-			this.tab_output.Controls.Add(this.groupbox_preferredfilesettings);
-			this.tab_output.Controls.Add(this.groupbox_jpegsettings);
-			this.tab_output.LanguageKey = "settings_output";
-			this.tab_output.Location = new System.Drawing.Point(4, 22);
-			this.tab_output.Name = "tab_output";
-			this.tab_output.Padding = new System.Windows.Forms.Padding(3);
-			this.tab_output.Size = new System.Drawing.Size(423, 320);
-			this.tab_output.TabIndex = 1;
-			this.tab_output.Text = "Output";
-			this.tab_output.UseVisualStyleBackColor = true;
-			// 
-			// tab_destinations
-			// 
-			this.tab_destinations.Controls.Add(this.groupbox_destination);
-			this.tab_destinations.LanguageKey = "settings_destination";
-			this.tab_destinations.Location = new System.Drawing.Point(4, 22);
-			this.tab_destinations.Name = "tab_destinations";
-			this.tab_destinations.Size = new System.Drawing.Size(423, 320);
-			this.tab_destinations.TabIndex = 4;
-			this.tab_destinations.Text = "Destinations";
-			this.tab_destinations.UseVisualStyleBackColor = true;
+
 			// 
 			// tab_printer
 			// 
@@ -987,16 +884,7 @@ namespace Greenshot {
 			this.button_pluginconfigure.Text = "Configure";
 			this.button_pluginconfigure.UseVisualStyleBackColor = true;
 			this.button_pluginconfigure.Click += new System.EventHandler(this.Button_pluginconfigureClick);
-			// 
-			// tab_expert
-			// 
-			this.tab_expert.Controls.Add(this.groupbox_expert);
-			this.tab_expert.Location = new System.Drawing.Point(4, 22);
-			this.tab_expert.Name = "tab_expert";
-			this.tab_expert.Size = new System.Drawing.Size(423, 320);
-			this.tab_expert.TabIndex = 5;
-			this.tab_expert.Text = "Expert";
-			this.tab_expert.UseVisualStyleBackColor = true;
+
 			// 
 			// groupbox_expert
 			// 
@@ -1084,7 +972,7 @@ namespace Greenshot {
 			((System.ComponentModel.ISupportInitialize)(this.trackBarJpegQuality)).EndInit();
 			this.groupbox_destination.ResumeLayout(false);
 			this.tabcontrol.ResumeLayout(false);
-			this.tab_general.ResumeLayout(false);
+
 			this.groupbox_network.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_daysbetweencheck)).EndInit();
 			this.groupbox_hotkeys.ResumeLayout(false);
@@ -1096,14 +984,14 @@ namespace Greenshot {
 			this.groupbox_windowscapture.PerformLayout();
 			this.groupbox_capture.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWaitTime)).EndInit();
-			this.tab_output.ResumeLayout(false);
-			this.tab_destinations.ResumeLayout(false);
+
+
 			this.tab_printer.ResumeLayout(false);
 			this.groupbox_printoptions.ResumeLayout(false);
 			this.tab_plugins.ResumeLayout(false);
 			this.groupbox_plugins.ResumeLayout(false);
 			this.groupbox_plugins.PerformLayout();
-			this.tab_expert.ResumeLayout(false);
+
 			this.groupbox_expert.ResumeLayout(false);
 			this.groupbox_expert.PerformLayout();
 			this.ResumeLayout(false);
@@ -1118,15 +1006,13 @@ namespace Greenshot {
 		private GreenshotPlugin.Controls.GreenshotGroupBox groupbox_network;
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkbox_usedefaultproxy;
 		private GreenshotPlugin.Controls.GreenshotLabel label_checkperiod;
-		private GreenshotPlugin.Controls.HotkeyControl fullscreen_hotkeyControl;
-		private GreenshotPlugin.Controls.HotkeyControl window_hotkeyControl;
-		private GreenshotPlugin.Controls.HotkeyControl region_hotkeyControl;
+
 		private GreenshotPlugin.Controls.GreenshotLabel label_fullscreen_hotkey;
 		private GreenshotPlugin.Controls.GreenshotLabel label_window_hotkey;
 		private GreenshotPlugin.Controls.GreenshotLabel label_region_hotkey;
-		private GreenshotPlugin.Controls.HotkeyControl ie_hotkeyControl;
+
 		private GreenshotPlugin.Controls.GreenshotLabel label_ie_hotkey;
-		private GreenshotPlugin.Controls.HotkeyControl lastregion_hotkeyControl;
+
 		private GreenshotPlugin.Controls.GreenshotLabel label_lastregion_hotkey;
 		private GreenshotPlugin.Controls.GreenshotGroupBox groupbox_hotkeys;
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkboxPrintInverted;
@@ -1156,8 +1042,6 @@ namespace Greenshot {
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkboxAllowCenter;
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkbox_alwaysshowprintoptionsdialog;
 		private GreenshotPlugin.Controls.GreenshotGroupBox groupbox_printoptions;
-		private GreenshotPlugin.Controls.GreenshotTabPage tab_output;
-		private GreenshotPlugin.Controls.GreenshotTabPage tab_general;
 		private System.Windows.Forms.TabControl tabcontrol;
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkbox_autostartshortcut;
 		private GreenshotPlugin.Controls.GreenshotGroupBox groupbox_destination;
@@ -1181,8 +1065,6 @@ namespace Greenshot {
 		private GreenshotPlugin.Controls.GreenshotButton settings_okay;
 		private System.Windows.Forms.TextBox textbox_storagelocation;
 		private GreenshotPlugin.Controls.GreenshotLabel label_storagelocation;
-		private GreenshotPlugin.Controls.GreenshotTabPage tab_destinations;
-		private GreenshotPlugin.Controls.GreenshotTabPage tab_expert;
 		private GreenshotPlugin.Controls.GreenshotGroupBox groupbox_expert;
 		private GreenshotPlugin.Controls.GreenshotCheckBox checkbox_autoreducecolors;
 		private GreenshotPlugin.Controls.GreenshotLabel label_clipboardformats;
