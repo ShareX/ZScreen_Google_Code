@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,7 +26,7 @@ namespace Greenshot.Helpers {
 	/// <summary>
 	/// A helper class for the startup registry
 	/// </summary>
-	public class StartupHelper {
+	public static class StartupHelper {
 		private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(StartupHelper));
 
 		private const string RUNKEY = @"Software\Microsoft\Windows\CurrentVersion\Run";

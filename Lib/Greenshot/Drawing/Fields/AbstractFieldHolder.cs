@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 
 using Greenshot.Configuration;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot.Drawing.Fields {
 	/// <summary>
@@ -58,7 +58,11 @@ namespace Greenshot.Drawing.Fields {
 			fieldsByType  = new Dictionary<FieldType, Field>();
 			// listen to changing properties
 			foreach(Field field in fields) {
-				field.PropertyChanged += delegate { if(fieldChanged != null) fieldChanged(this, new FieldChangedEventArgs(field)); };
+				field.PropertyChanged += delegate {
+					if (fieldChanged != null) {
+						fieldChanged(this, new FieldChangedEventArgs(field));
+					}
+				};
 				fieldsByType[field.FieldType] = field;
 			}
 		}
@@ -68,8 +72,8 @@ namespace Greenshot.Drawing.Fields {
 		}
 
 		public virtual void AddField(Field field) {
-			if(fieldsByType != null && fieldsByType.ContainsKey(field.FieldType)) {
-				if(LOG.IsDebugEnabled) {
+			if (fieldsByType != null && fieldsByType.ContainsKey(field.FieldType)) {
+				if (LOG.IsDebugEnabled) {
 					LOG.DebugFormat("A field with of type '{0}' already exists in this {1}, will overwrite.", field.FieldType, GetType());
 				}
 			} 
@@ -82,7 +86,11 @@ namespace Greenshot.Drawing.Fields {
 		public void RemoveField(Field field) {
 			fields.Remove(field);
 			fieldsByType.Remove(field.FieldType);
-			field.PropertyChanged -= delegate { if(fieldChanged != null) fieldChanged(this, new FieldChangedEventArgs(field)); };
+			field.PropertyChanged -= delegate {
+				if (fieldChanged != null) {
+					fieldChanged(this, new FieldChangedEventArgs(field));
+				}
+			};
 		}
 		
 		public List<Field> GetFields() {
@@ -94,7 +102,7 @@ namespace Greenshot.Drawing.Fields {
 			try {
 				return fieldsByType[fieldType];
 			} catch(KeyNotFoundException e) {
-				throw new ArgumentException("Field '"+fieldType+"' does not exist in " + GetType(), e);
+				throw new ArgumentException("Field '" + fieldType + "' does not exist in " + GetType(), e);
 			}
 		}
 		
@@ -149,8 +157,9 @@ namespace Greenshot.Drawing.Fields {
 		}
 		
 		protected void OnFieldChanged(object sender, FieldChangedEventArgs e){
-			if(fieldChanged != null) fieldChanged(sender, e);
+			if (fieldChanged != null) {
+				fieldChanged(sender, e);
+			}
 		}
-
 	}
 }

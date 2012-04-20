@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -23,8 +23,8 @@ using System.Collections.Generic;
 using System.Drawing;
 
 using Greenshot.Drawing.Fields;
-using Greenshot.UnmanagedHelpers;
-using IniFile;
+using GreenshotPlugin.UnmanagedHelpers;
+using Greenshot.IniFile;
 
 namespace Greenshot.Configuration {
 	/// <summary>
@@ -51,6 +51,8 @@ namespace Greenshot.Configuration {
 		[IniProperty("WindowNormalPosition", Description="Position of normal window", DefaultValue="100,100,400,400")]
 		public Rectangle WindowNormalPosition;
 
+		[IniProperty("SuppressSaveDialogAtClose", Description="Suppressed the 'do you want to save' dialog when closing the editor.", DefaultValue="False")]
+		public bool SuppressSaveDialogAtClose;
 		/// <param name="requestingType">Type of the class for which to create the field</param>
 		/// <param name="fieldType">FieldType of the field to construct</param>
 		/// <param name="scope">FieldType of the field to construct</param>

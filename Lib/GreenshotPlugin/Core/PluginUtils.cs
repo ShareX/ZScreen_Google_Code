@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -28,9 +28,7 @@ namespace GreenshotPlugin.Core {
 	/// <summary>
 	/// Description of PluginUtils.
 	/// </summary>
-	public class PluginUtils {
-		private PluginUtils() {
-		}
+	public static class PluginUtils {
 		
 		/// <summary>
 		/// Helper method to add a MenuItem to the File MenuItem of an ImageEditor
@@ -89,6 +87,29 @@ namespace GreenshotPlugin.Core {
 			}
 			if (!added) {
 				toolStripMenuItem.DropDownItems.Add(item);
+			}
+		}
+		/// <summary>
+		/// Helper method to add a MenuItem to the Greenshot context menu
+		/// </summary>
+		/// <param name="imageEditor"></param>
+		/// <param name="item"></param>
+		public static void AddToContextMenu(IGreenshotHost host, ToolStripMenuItem item) {
+			// Here we can hang ourselves to the main context menu!
+			ContextMenuStrip contextMenu = host.MainMenu;
+			bool addedItem = false;
+
+			// Try to find a separator, so we insert ourselves after it 
+			for(int i=0; i < contextMenu.Items.Count; i++) {
+				if (contextMenu.Items[i].GetType() == typeof(ToolStripSeparator)) {
+					contextMenu.Items.Insert(i+1, item);
+					addedItem = true;
+					break;
+				}
+			}
+			// If we didn't insert the item, we just add it...
+			if (!addedItem) {
+				contextMenu.Items.Add(item);
 			}
 		}
 	}

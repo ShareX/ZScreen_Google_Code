@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -68,7 +68,7 @@ namespace GreenshotPlugin.Controls
 			// 
 			// timer_checkforclose
 			// 
-			this.timer_checkforclose.Interval = 500;
+			this.timer_checkforclose.Interval = 200;
 			this.timer_checkforclose.Tick += new System.EventHandler(this.Timer_checkforcloseTick);
 			// 
 			// BackgroundForm
@@ -80,7 +80,6 @@ namespace GreenshotPlugin.Controls
 			this.ControlBox = true;
 			this.Controls.Add(this.label_pleasewait);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "BackgroundForm";

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -20,6 +20,8 @@
  */
 using System;
 using System.Drawing;
+using System.Windows.Forms;
+
 using Greenshot.Drawing.Fields;
 using Greenshot.Helpers;
 using Greenshot.Plugin.Drawing;
@@ -37,21 +39,38 @@ namespace Greenshot.Drawing {
 			parent.Invalidate();
 		}
 
+		/// <summary>
+		/// We need to override the DrawingBound, return a rectangle in the size of the image, to make sure this element is always draw
+		/// (we create a transparent brown over the complete picture)
+		/// </summary>
+		public override Rectangle DrawingBounds {
+			get {
+				return new Rectangle(0,0,parent.Width, parent.Height);
+			}
+		}
+
 		public override void Draw(Graphics g, RenderMode rm) {
 			using (Brush cropBrush = new SolidBrush(Color.FromArgb(100, 150, 150, 100))) {
-				Rectangle r = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
-				Rectangle selectionRect = new Rectangle(r.Left - 1, r.Top - 1, r.Width + 1, r.Height + 1);
+				Rectangle cropRectangle = GuiRectangle.GetGuiRectangle(this.Left, this.Top, this.Width, this.Height);
+				Rectangle selectionRect = new Rectangle(cropRectangle.Left - 1, cropRectangle.Top - 1, cropRectangle.Width + 1, cropRectangle.Height + 1);
 
 				DrawSelectionBorder(g, selectionRect);
 				
 				// top
-				g.FillRectangle(cropBrush, new Rectangle(0, 0, parent.Width, r.Top));
+				g.FillRectangle(cropBrush, new Rectangle(0, 0, parent.Width, cropRectangle.Top));
 				// left
-				g.FillRectangle(cropBrush, new Rectangle(0, r.Top, r.Left, r.Height));
+				g.FillRectangle(cropBrush, new Rectangle(0, cropRectangle.Top, cropRectangle.Left, cropRectangle.Height));
 				// right
-				g.FillRectangle(cropBrush, new Rectangle(r.Left + r.Width, r.Top, parent.Width - (r.Left + r.Width), r.Height));
+				g.FillRectangle(cropBrush, new Rectangle(cropRectangle.Left + cropRectangle.Width, cropRectangle.Top, parent.Width - (cropRectangle.Left + cropRectangle.Width), cropRectangle.Height));
 				// bottom
-				g.FillRectangle(cropBrush, new Rectangle(0, r.Top + r.Height, parent.Width, parent.Height - (r.Top + r.Height)));
+				g.FillRectangle(cropBrush, new Rectangle(0, cropRectangle.Top + cropRectangle.Height, parent.Width, parent.Height - (cropRectangle.Top + cropRectangle.Height)));
+			}
+		}
+		
+		public override bool hasContextMenu {
+			get {
+				// No context menu for the CropContainer
+				return false;
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -28,7 +28,7 @@ using Greenshot.Drawing;
 using Greenshot.Forms;
 using Greenshot.Plugin;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot.Helpers {
 	/// <summary>
@@ -37,20 +37,21 @@ namespace Greenshot.Helpers {
 	public class PrintHelper : IDisposable {
 		private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(PrintHelper));
 		private static CoreConfiguration conf = IniConfig.GetIniSection<CoreConfiguration>();
-		
+
 		private Image image;
+		private ICaptureDetails captureDetails;
 		private PrintDocument printDocument = new PrintDocument();
 		private PrintDialog printDialog = new PrintDialog();
-		private PrintOptionsDialog printOptionsDialog = null;
-		
+
 		public PrintHelper(Image image, ICaptureDetails captureDetails) {
 			this.image = image;
+			this.captureDetails = captureDetails;
 			printDialog.UseEXDialog = true;
 			printDocument.DocumentName = FilenameHelper.GetFilenameWithoutExtensionFromPattern(conf.OutputFileFilenamePattern, captureDetails);
 			printDocument.PrintPage += DrawImageForPrint;
 			printDialog.Document = printDocument;
 		}
-		
+
 		/**
 		 * Destructor
 		 */
@@ -73,108 +74,143 @@ namespace Greenshot.Helpers {
 		 */
 		protected void Dispose(bool disposing) {
 			if (disposing) {
-				if(image != null) image.Dispose();
-				if(printDocument != null) printDocument.Dispose();
-				if(printDialog != null) printDialog.Dispose();
-				if(printOptionsDialog != null) printOptionsDialog.Dispose();
+				if (image != null) {
+					image.Dispose();
+				}
+				if (printDocument != null) {
+					printDocument.Dispose();
+				}
+				if (printDialog != null) {
+					printDialog.Dispose();
+				}
 			}
 			image = null;
 			printDocument = null;
 			printDialog = null;
-			printOptionsDialog = null;
 		}
-		
+
+		/// <summary>
+		/// displays options dialog (if not disabled via settings) and windows
+		/// print dialog.
+		/// </summary>
+		/// <returns>printer settings if actually printed, or null if print was cancelled or has failed</returns>
+		public PrinterSettings PrintTo(string printerName) {
+			PrinterSettings returnPrinterSettings = null;
+			bool cancelled = false;
+			if (conf.OutputPrintPromptOptions) {
+				using (PrintOptionsDialog printOptionsDialog = new PrintOptionsDialog()) {
+					DialogResult result = printOptionsDialog.ShowDialog();
+					if (result != DialogResult.OK) {
+						cancelled = true;
+					}
+				}
+			}
+			try {
+				if (!cancelled) {
+					printDocument.PrinterSettings.PrinterName = printerName;
+					printDocument.Print();
+					returnPrinterSettings = printDocument.PrinterSettings;
+				}
+			} catch (Exception e) {
+				LOG.Error("An error ocurred while trying to print", e);
+				MessageBox.Show(Language.GetString(LangKey.print_error), Language.GetString(LangKey.error));
+			}
+			image.Dispose();
+			image = null;
+			return returnPrinterSettings;
+		}
+
 		/// <summary>
 		/// displays options dialog (if not disabled via settings) and windows
 		/// print dialog.
 		/// </summary>
 		/// <returns>printer settings if actually printed, or null if print was cancelled or has failed</returns>
 		public PrinterSettings PrintWithDialog() {
-			PrinterSettings ret = null;
+			PrinterSettings returnPrinterSettings = null;
 			if (printDialog.ShowDialog() == DialogResult.OK) {
 				bool cancelled = false;
-				printOptionsDialog = new PrintOptionsDialog();
 				if (conf.OutputPrintPromptOptions) {
-					DialogResult result = printOptionsDialog.ShowDialog();
-					if(result != DialogResult.OK) {
-						cancelled = true;
+					using (PrintOptionsDialog printOptionsDialog = new PrintOptionsDialog()) {
+						DialogResult result = printOptionsDialog.ShowDialog();
+						if (result != DialogResult.OK) {
+							cancelled = true;
+						}
 					}
-				} 
-				try {
-					if(!cancelled) {
-						printDocument.Print();
-						ret = printDialog.PrinterSettings;
-					}
-				} catch(Exception e) {
-					LOG.Error("An error ocurred while trying to print", e);
-					ILanguage lang = Language.GetInstance();
-					MessageBox.Show(lang.GetString(LangKey.print_error), lang.GetString(LangKey.error));
 				}
-				
-			} 
+				try {
+					if (!cancelled) {
+						printDocument.Print();
+						returnPrinterSettings = printDialog.PrinterSettings;
+					}
+				} catch (Exception e) {
+					LOG.Error("An error ocurred while trying to print", e);
+					MessageBox.Show(Language.GetString(LangKey.print_error), Language.GetString(LangKey.error));
+				}
+
+			}
 			image.Dispose();
 			image = null;
-			return ret;
+			return returnPrinterSettings;
 		}
-		
-		void DrawImageForPrint(object sender, PrintPageEventArgs e) {
-			PrintOptionsDialog pod = printOptionsDialog;
-			
-			ContentAlignment alignment = pod.AllowPrintCenter ? ContentAlignment.MiddleCenter : ContentAlignment.TopLeft;
 
-			if (conf.OutputPrintInverted) {
-				// Invert Bitmap
-				BitmapBuffer bb = new BitmapBuffer((Bitmap)image, false);
-				bb.Lock();
-				for(int y=0;y<bb.Height; y++) {
-					for(int x=0;x<bb.Width; x++) {
-						Color color = bb.GetColorAt(x, y);
-						Color invertedColor = Color.FromArgb(color.A, color.R ^ 255, color.G ^ 255, color.B ^ 255);
-						bb.SetColorAt(x, y, invertedColor);
-					}
+		void DrawImageForPrint(object sender, PrintPageEventArgs e) {
+			ContentAlignment alignment = conf.OutputPrintCenter ? ContentAlignment.MiddleCenter : ContentAlignment.TopLeft;
+
+			// prepare timestamp
+			float footerStringWidth = 0;
+			float footerStringHeight = 0;
+			string footerString = null; //DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
+			if (conf.OutputPrintFooter) {
+				footerString = FilenameHelper.FillPattern(conf.OutputPrintFooterPattern, captureDetails, false);
+				using (Font f = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular)) {
+					footerStringWidth = e.Graphics.MeasureString(footerString, f).Width;
+					footerStringHeight = e.Graphics.MeasureString(footerString, f).Height;
 				}
-				bb.Dispose();
 			}
 
+			// Get a rectangle representing the printable Area
 			RectangleF pageRect = e.PageSettings.PrintableArea;
+
+			// Subtract the dateString height from the available area, this way the area stays free
+			pageRect.Height -= footerStringHeight;
+
 			GraphicsUnit gu = GraphicsUnit.Pixel;
 			RectangleF imageRect = image.GetBounds(ref gu);
 			// rotate the image if it fits the page better
-			if(pod.AllowPrintRotate) {
-				if((pageRect.Width > pageRect.Height && imageRect.Width < imageRect.Height) ||
-				   (pageRect.Width < pageRect.Height && imageRect.Width > imageRect.Height)) {
+			if (conf.OutputPrintAllowRotate) {
+				if ((pageRect.Width > pageRect.Height && imageRect.Width < imageRect.Height) || (pageRect.Width < pageRect.Height && imageRect.Width > imageRect.Height)) {
 					image.RotateFlip(RotateFlipType.Rotate90FlipNone);
 					imageRect = image.GetBounds(ref gu);
-					if(alignment.Equals(ContentAlignment.TopLeft)) alignment = ContentAlignment.TopRight;
+					if (alignment.Equals(ContentAlignment.TopLeft)) {
+						alignment = ContentAlignment.TopRight;
+					}
 				}
 			}
-			RectangleF printRect = new RectangleF(0,0,imageRect.Width, imageRect.Height);;
+
+			RectangleF printRect = new RectangleF(0, 0, imageRect.Width, imageRect.Height);
 			// scale the image to fit the page better
-			if(pod.AllowPrintEnlarge || pod.AllowPrintShrink) {
-				SizeF resizedRect = ScaleHelper.GetScaledSize(imageRect.Size,pageRect.Size,false);
-				if((pod.AllowPrintShrink && resizedRect.Width < printRect.Width) ||
-				   pod.AllowPrintEnlarge && resizedRect.Width > printRect.Width) {
+			if (conf.OutputPrintAllowEnlarge || conf.OutputPrintAllowShrink) {
+				SizeF resizedRect = ScaleHelper.GetScaledSize(imageRect.Size, pageRect.Size, false);
+				if ((conf.OutputPrintAllowShrink && resizedRect.Width < printRect.Width) || conf.OutputPrintAllowEnlarge && resizedRect.Width > printRect.Width) {
 					printRect.Size = resizedRect;
 				}
-				
 			}
-			
-			// prepare timestamp
-			float dateStringWidth = 0;
-			float dateStringHeight = 0;
-			if (conf.OutputPrintTimestamp) {
-				Font f = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular);
-				string dateString = DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
-				dateStringWidth = e.Graphics.MeasureString(dateString, f).Width;
-				dateStringHeight = e.Graphics.MeasureString(dateString, f).Height;
-				e.Graphics.DrawString(dateString, f, Brushes.Black, pageRect.Width / 2 - (dateStringWidth / 2), pageRect.Height - dateStringHeight);
-			}
-			
+
 			// align the image
-			printRect = ScaleHelper.GetAlignedRectangle(printRect, new RectangleF(0, 0, pageRect.Width, pageRect.Height - dateStringHeight * 2), alignment);
-			
-			e.Graphics.DrawImage(image,printRect,imageRect,GraphicsUnit.Pixel);			
-			
+			printRect = ScaleHelper.GetAlignedRectangle(printRect, new RectangleF(0, 0, pageRect.Width, pageRect.Height), alignment);
+			if (conf.OutputPrintFooter) {
+				//printRect = new RectangleF(0, 0, printRect.Width, printRect.Height - (dateStringHeight * 2));
+				using (Font f = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular)) {
+					e.Graphics.DrawString(footerString, f, Brushes.Black, pageRect.Width / 2 - (footerStringWidth / 2), pageRect.Height);
+				}
+			}
+			if (conf.OutputPrintInverted) {
+				using (Bitmap negativeBitmap = ImageHelper.CreateNegative((Bitmap)image)) {
+					e.Graphics.DrawImage(negativeBitmap, printRect, imageRect, GraphicsUnit.Pixel);
+				}
+			} else {
+				e.Graphics.DrawImage(image, printRect, imageRect, GraphicsUnit.Pixel);
+			}
 		}
 	}
 }

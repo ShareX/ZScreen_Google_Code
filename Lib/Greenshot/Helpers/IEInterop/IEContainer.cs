@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -25,7 +25,10 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.Plugin;
+using Greenshot.Interop;
+using Greenshot.Interop.IE;
+using Greenshot.IniFile;
 
 namespace Greenshot.Helpers.IEInterop {
 	public class ElementContainer {
@@ -37,6 +40,7 @@ namespace Greenshot.Helpers.IEInterop {
 	public class DocumentContainer {
 		private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(DocumentContainer));
 		private static CoreConfiguration configuration = IniConfig.GetIniSection<CoreConfiguration>();
+		private static readonly List<string> CAPTURE_TAGS = new List<string>();
         private const int  E_ACCESSDENIED = unchecked((int)0x80070005L);
         private static Guid IID_IWebBrowserApp = new Guid("0002DF05-0000-0000-C000-000000000046");
         private static Guid IID_IWebBrowser2 = new Guid("D30C1661-CDAF-11D0-8A3E-00C04FC9E26E");
@@ -48,7 +52,7 @@ namespace Greenshot.Helpers.IEInterop {
 		private Point destinationLocation;
 		private Point startLocation = Point.Empty;
 		private Rectangle viewportRectangle = Rectangle.Empty;
-		private string name;
+		private string name = null;
 		private string url;
 		private bool isDTD;
 		private DocumentContainer parent;
@@ -57,12 +61,37 @@ namespace Greenshot.Helpers.IEInterop {
 		private double zoomLevelY = 1;
 		private List<DocumentContainer> frames = new List<DocumentContainer>();
 		
+		static DocumentContainer() {
+			CAPTURE_TAGS.Add("LABEL");
+			CAPTURE_TAGS.Add("DIV");
+			CAPTURE_TAGS.Add("IMG");
+			CAPTURE_TAGS.Add("INPUT");
+			CAPTURE_TAGS.Add("BUTTON");
+			CAPTURE_TAGS.Add("TD");
+			CAPTURE_TAGS.Add("TR");
+			CAPTURE_TAGS.Add("TH");
+			CAPTURE_TAGS.Add("TABLE");
+			CAPTURE_TAGS.Add("TBODY");
+			CAPTURE_TAGS.Add("SPAN");
+			CAPTURE_TAGS.Add("A");
+			CAPTURE_TAGS.Add("UL");
+			CAPTURE_TAGS.Add("LI");
+			CAPTURE_TAGS.Add("H1");
+			CAPTURE_TAGS.Add("H2");
+			CAPTURE_TAGS.Add("H3");
+			CAPTURE_TAGS.Add("H4");
+			CAPTURE_TAGS.Add("H5");
+			CAPTURE_TAGS.Add("FORM");
+			CAPTURE_TAGS.Add("FIELDSET");
+		}
+
 		private DocumentContainer(IHTMLWindow2 frameWindow, WindowDetails contentWindow, DocumentContainer parent) {
 			//IWebBrowser2 webBrowser2 = frame as IWebBrowser2;
 			//IHTMLDocument2 document2 = webBrowser2.Document as IHTMLDocument2;
 			IHTMLDocument2 document2 = GetDocumentFromWindow(frameWindow);
 			try {
 				LOG.DebugFormat("frameWindow.name {0}", frameWindow.name);
+				name = frameWindow.name;
 			} catch {
 				
 			}
@@ -89,7 +118,7 @@ namespace Greenshot.Helpers.IEInterop {
 //				element = element.offsetParent;
 //			} while (element != null);
 //			startLocation = new Point((int)x, (int)y);
-			Point contentWindowLocation = contentWindow.ClientRectangle.Location;
+			Point contentWindowLocation = contentWindow.WindowRectangle.Location;
 			int x = window3.screenLeft - contentWindowLocation.X;
 			int y = window3.screenTop - contentWindowLocation.Y;
 			startLocation = new Point(x, y);
@@ -118,7 +147,7 @@ namespace Greenshot.Helpers.IEInterop {
 			} else {
 				isDTD = false;
 			}
-			Rectangle clientRectangle = contentWindow.ClientRectangle;
+			Rectangle clientRectangle = contentWindow.WindowRectangle;
 			try {
 				IHTMLWindow3 window3 = (IHTMLWindow3)document2.parentWindow;
 				IHTMLWindow2 window2 = (IHTMLWindow2)document2.parentWindow;
@@ -164,8 +193,16 @@ namespace Greenshot.Helpers.IEInterop {
 			sourceLocation = new Point(ScaleX((int)startLocation.X), ScaleY((int)startLocation.Y));
 			destinationLocation = new Point(ScaleX((int)startLocation.X), ScaleY((int)startLocation.Y));
 
-			name = document2.title;
-			url = document2.url;
+			try {
+				if (name == null) {
+					name = document2.title;
+				}
+			} catch {
+			}
+			try {
+				url = document2.url;
+			} catch {
+			}
 			
 			if (parent != null) {
 				return;
@@ -267,7 +304,7 @@ namespace Greenshot.Helpers.IEInterop {
 			// IE tries to prevent a cross frame scripting security issue.
 			try {
 				// Convert IHTMLWindow2 to IWebBrowser2 using IServiceProvider.
-				IServiceProvider sp = (IServiceProvider)htmlWindow;
+				Interop.IServiceProvider sp = (Interop.IServiceProvider)htmlWindow;
 				
 				// Use IServiceProvider.QueryService to get IWebBrowser2 object.
 				Object brws = null;
@@ -320,6 +357,84 @@ namespace Greenshot.Helpers.IEInterop {
 				elements.Add(elementContainer);
 			}
 			return elements;
+		}
+
+		/// <summary>
+		/// Create a CaptureElement for every element on the page, which can be used by the editor.
+		/// </summary>
+		/// <returns></returns>
+		public CaptureElement CreateCaptureElements(Size documentSize) {
+			LOG.DebugFormat("CreateCaptureElements for {0}", Name);
+			IHTMLElement baseElement = document3.documentElement as IHTMLElement;
+			IHTMLElement2 baseElement2 = baseElement as IHTMLElement2;
+			IHTMLRect htmlRect = baseElement2.getBoundingClientRect();
+			if (Size.Empty.Equals(documentSize)) {
+				documentSize = new Size(ScrollWidth, ScrollHeight);
+			}
+			Rectangle baseElementBounds = new Rectangle(DestinationLocation.X + htmlRect.left, DestinationLocation.Y + htmlRect.top, documentSize.Width, documentSize.Height);
+			if (baseElementBounds.Width <= 0 || baseElementBounds.Height <= 0) {
+				// not visisble
+				return null;
+			}
+
+			CaptureElement captureBaseElement = new CaptureElement(name, baseElementBounds);
+		
+			foreach(IHTMLElement bodyElement in baseElement.children) {
+				if ("BODY".Equals(bodyElement.tagName)) {
+					captureBaseElement.Children.AddRange(RecurseElements(bodyElement));
+				}
+			}
+			return captureBaseElement;
+		}
+		
+		/// <summary>
+		/// Recurse into the document tree
+		/// </summary>
+		/// <param name="parentElement">IHTMLElement we want to recurse into</param>
+		/// <returns>List of ICaptureElements with child elements</returns>
+		private List<ICaptureElement> RecurseElements(IHTMLElement parentElement) {
+			List<ICaptureElement> childElements = new List<ICaptureElement>();
+			foreach(IHTMLElement element in parentElement.children) {
+				string tagName = element.tagName;
+
+				// Skip elements we aren't interested in
+				if (!CAPTURE_TAGS.Contains(tagName)) {
+					continue;
+				}
+
+				ICaptureElement captureElement = new CaptureElement(tagName);
+				captureElement.Children.AddRange(RecurseElements(element));
+
+				// Get Bounds
+				IHTMLElement2 element2 = element as IHTMLElement2;
+				IHTMLRect htmlRect = element2.getBoundingClientRect();
+				
+				int left = htmlRect.left;
+				int top = htmlRect.top;
+				int right = htmlRect.right;
+				int bottom = htmlRect.bottom;
+				
+				// Offset
+				left += DestinationLocation.X;
+				top += DestinationLocation.Y;
+				right += DestinationLocation.X;
+				bottom += DestinationLocation.Y;
+
+				// Fit to floating children
+				foreach(ICaptureElement childElement in captureElement.Children) {
+					//left = Math.Min(left, childElement.Bounds.Left);
+					//top = Math.Min(top, childElement.Bounds.Top);
+					right = Math.Max(right, childElement.Bounds.Right);
+					bottom = Math.Max(bottom, childElement.Bounds.Bottom);
+				}
+				Rectangle bounds = new Rectangle(left, top, right-left, bottom-top);
+
+				if (bounds.Width > 0 && bounds.Height > 0) {
+					captureElement.Bounds = bounds;
+					childElements.Add(captureElement);
+				}
+			}
+			return childElements;
 		}
 		
 		public Color BackgroundColor {
@@ -377,6 +492,7 @@ namespace Greenshot.Helpers.IEInterop {
 		public void setAttribute(string attribute, int value) {
 			setAttribute(attribute, value.ToString());
 		}
+
 		/// <summary>
 		/// Set/change an attribute on a document
 		/// </summary>
@@ -470,7 +586,7 @@ namespace Greenshot.Helpers.IEInterop {
 				return sourceLocation;
 			}
 			set {
-				sourceLocation = value;;
+				sourceLocation = value;
 			}
 		}
 
@@ -515,7 +631,7 @@ namespace Greenshot.Helpers.IEInterop {
 				return destinationLocation;
 			}
 			set {
-				destinationLocation = value;;
+				destinationLocation = value;
 			}
 
 		}

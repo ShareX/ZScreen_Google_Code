@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -22,10 +22,13 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Forms;
 
 using Greenshot.Drawing.Fields;
 using Greenshot.Helpers;
 using Greenshot.Plugin.Drawing;
+using GreenshotPlugin.Core;
+using System.Drawing.Drawing2D;
 
 namespace Greenshot.Drawing {
 	/// <summary>
@@ -52,7 +55,7 @@ namespace Greenshot.Drawing {
 				if (bitmap != null) {
 					bitmap.Dispose();
 				}
-				bitmap = (Bitmap)value.Clone();
+				bitmap = ImageHelper.Clone(value);
 				Width = value.Width;
 				Height = value.Height;
 			}
@@ -97,10 +100,24 @@ namespace Greenshot.Drawing {
 				LOG.Debug("Loaded file: " + filename + " with resolution: " + Height + "," + Width);
 			}
 		}
-		
+
+		public override void Rotate(RotateFlipType rotateFlipType) {
+			Bitmap newBitmap = ImageHelper.RotateFlip((Bitmap)bitmap, rotateFlipType);
+			if (bitmap != null) {
+				bitmap.Dispose();
+			}
+			bitmap = newBitmap;
+			base.Rotate(rotateFlipType);
+		}
+
 		public override void Draw(Graphics graphics, RenderMode rm) {
 			if (bitmap != null) {
 				bool shadow = GetFieldValueAsBool(FieldType.SHADOW);
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
 				if (shadow) {
 					ImageAttributes ia = new ImageAttributes();
 					ColorMatrix cm = new ColorMatrix();
@@ -109,9 +126,21 @@ namespace Greenshot.Drawing {
 					cm.Matrix22 = 0;
 					cm.Matrix33 = 0.25f;
 					ia.SetColorMatrix(cm);
-					graphics.DrawImage(bitmap, new Rectangle(Bounds.Left+2, Bounds.Top+2, Bounds.Width, Bounds.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, ia); 
+					graphics.DrawImage(bitmap, new Rectangle(Bounds.Left + 2, Bounds.Top + 2, Bounds.Width, Bounds.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, ia); 
 				}
 				graphics.DrawImage(bitmap, Bounds); 
+			}
+		}
+
+		public override bool hasDefaultSize {
+			get {
+				return true;
+			}
+		}
+
+		public override Size DefaultSize {
+			get {
+				return bitmap.Size;
 			}
 		}
 	}

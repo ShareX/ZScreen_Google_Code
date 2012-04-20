@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -32,7 +32,6 @@ namespace Greenshot.Forms {
 	public partial class LanguageDialog : Form {
 		private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(LanguageDialog));
 		private static LanguageDialog uniqueInstance;
-		private ILanguage language = Language.GetInstance();
 		private bool properOkPressed = false;
 
 		private LanguageDialog() {
@@ -40,6 +39,7 @@ namespace Greenshot.Forms {
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
 			this.Load += FormLoad;
 			this.FormClosing += PreventFormClose;
 		}
@@ -61,20 +61,29 @@ namespace Greenshot.Forms {
 
 			// Set datasource last to prevent problems
 			// See: http://www.codeproject.com/KB/database/scomlistcontrolbinding.aspx?fid=111644
-			this.comboBoxLanguage.DataSource = language.SupportedLanguages;
-			
-			if (language.CurrentLanguage != null) {
-				LOG.DebugFormat("Selecting {0}", language.CurrentLanguage);
-				this.comboBoxLanguage.SelectedValue = language.CurrentLanguage;
+			this.comboBoxLanguage.DataSource = Language.SupportedLanguages;
+
+			if (Language.CurrentLanguage != null) {
+				LOG.DebugFormat("Selecting {0}", Language.CurrentLanguage);
+				this.comboBoxLanguage.SelectedValue = Language.CurrentLanguage;
 			} else {
 				this.comboBoxLanguage.SelectedValue = Thread.CurrentThread.CurrentUICulture.Name;
+			}
+
+			// Close again when there is only one language, this shows the form briefly!
+			// But the use-case is not so interesting, only happens once, to invest a lot of time here.
+			if (Language.SupportedLanguages.Count == 1) {
+				this.comboBoxLanguage.SelectedValue = Language.SupportedLanguages[0].Ietf;
+				Language.CurrentLanguage = SelectedLanguage;
+				properOkPressed = true;
+				this.Close();
 			}
 		}
 		
 		void BtnOKClick(object sender, EventArgs e) {
 			properOkPressed = true;
 			// Fix for Bug #3431100 
-			language.SetLanguage(SelectedLanguage);
+			Language.CurrentLanguage = SelectedLanguage;
 			this.Close();
 		}
 		

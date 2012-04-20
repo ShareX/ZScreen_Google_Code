@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -20,7 +20,7 @@
  */
 using System;
 using System.Windows.Forms;
-using Greenshot.Configuration;
+
 
 namespace Greenshot {
 	partial class AboutForm {
@@ -49,19 +49,19 @@ namespace Greenshot {
 		/// </summary>
 		private void InitializeComponent() {
 			this.lblTitle = new System.Windows.Forms.Label();
-			this.lblLicense = new System.Windows.Forms.Label();
-			this.lblHost = new System.Windows.Forms.Label();
+			this.lblLicense = new GreenshotPlugin.Controls.GreenshotLabel();
+			this.lblHost = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.linkLblLicense = new System.Windows.Forms.LinkLabel();
 			this.linkLblHost = new System.Windows.Forms.LinkLabel();
 			this.linkLblBugs = new System.Windows.Forms.LinkLabel();
-			this.lblBugs = new System.Windows.Forms.Label();
+			this.lblBugs = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.linkLblDonations = new System.Windows.Forms.LinkLabel();
-			this.lblDonations = new System.Windows.Forms.Label();
+			this.lblDonations = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.linkLblIcons = new System.Windows.Forms.LinkLabel();
-			this.lblIcons = new System.Windows.Forms.Label();
+			this.lblIcons = new GreenshotPlugin.Controls.GreenshotLabel();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.lblTranslation = new System.Windows.Forms.Label();
+			this.lblTranslation = new GreenshotPlugin.Controls.GreenshotLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -76,19 +76,20 @@ namespace Greenshot {
 			// 
 			// lblLicense
 			// 
+			this.lblLicense.LanguageKey = "about_license";
 			this.lblLicense.Location = new System.Drawing.Point(109, 34);
 			this.lblLicense.Name = "lblLicense";
 			this.lblLicense.Size = new System.Drawing.Size(369, 68);
 			this.lblLicense.TabIndex = 3;
-			this.lblLicense.Text = "Copyright (C) 2007 Thomas Braun, Jens Klingen, Robin Krom";
 			// 
 			// lblHost
 			// 
+			this.lblHost.LanguageKey = "about_host";
 			this.lblHost.Location = new System.Drawing.Point(12, 109);
 			this.lblHost.Name = "lblHost";
 			this.lblHost.Size = new System.Drawing.Size(466, 23);
 			this.lblHost.TabIndex = 4;
-			this.lblHost.Text = "Greenshot is hosted by sourceforge.net at";
+			this.lblHost.Text = "Greenshot wird von sourceforge.net gehostet unter";
 			// 
 			// linkLblLicense
 			// 
@@ -122,11 +123,12 @@ namespace Greenshot {
 			// 
 			// lblBugs
 			// 
+			this.lblBugs.LanguageKey = "about_bugs";
 			this.lblBugs.Location = new System.Drawing.Point(12, 147);
 			this.lblBugs.Name = "lblBugs";
 			this.lblBugs.Size = new System.Drawing.Size(466, 23);
 			this.lblBugs.TabIndex = 7;
-			this.lblBugs.Text = "Please report bugs to";
+			this.lblBugs.Text = "Bitte melden Sie Fehler unter";
 			// 
 			// linkLblDonations
 			// 
@@ -140,11 +142,12 @@ namespace Greenshot {
 			// 
 			// lblDonations
 			// 
+			this.lblDonations.LanguageKey = "about_donations";
 			this.lblDonations.Location = new System.Drawing.Point(12, 186);
 			this.lblDonations.Name = "lblDonations";
 			this.lblDonations.Size = new System.Drawing.Size(466, 23);
 			this.lblDonations.TabIndex = 9;
-			this.lblDonations.Text = "If you like Greenshot, you might consider donating a dime or two at";
+			this.lblDonations.Text = "Wenn Sie Greenshot mögen, können Sie uns gerne unterstützen:";
 			// 
 			// linkLblIcons
 			// 
@@ -158,11 +161,13 @@ namespace Greenshot {
 			// 
 			// lblIcons
 			// 
+			this.lblIcons.LanguageKey = "about_icons";
 			this.lblIcons.Location = new System.Drawing.Point(12, 224);
 			this.lblIcons.Name = "lblIcons";
 			this.lblIcons.Size = new System.Drawing.Size(466, 23);
 			this.lblIcons.TabIndex = 11;
-			this.lblIcons.Text = "Greenshot uses icons from / derived from Mark James\' splendid Silk Icon Set on";
+			this.lblIcons.Text = "Icons aus Yusuke Kamiyamane\'s Fugue icon set (Creative Commons Attribution 3.0 li" +
+				"cense)";
 			// 
 			// linkLabel1
 			// 
@@ -177,7 +182,6 @@ namespace Greenshot {
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.Image = GreenshotPlugin.Core.GreenshotResources.getGreenshotImage();
 			this.pictureBox1.Location = new System.Drawing.Point(12, 12);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(90, 90);
@@ -187,11 +191,11 @@ namespace Greenshot {
 			// 
 			// lblTranslation
 			// 
+			this.lblTranslation.LanguageKey = "about_translation";
 			this.lblTranslation.Location = new System.Drawing.Point(12, 262);
 			this.lblTranslation.Name = "lblTranslation";
 			this.lblTranslation.Size = new System.Drawing.Size(466, 23);
 			this.lblTranslation.TabIndex = 15;
-			this.lblTranslation.Text = "English translation by YOUR_NAME";
 			// 
 			// AboutForm
 			// 
@@ -213,42 +217,30 @@ namespace Greenshot {
 			this.Controls.Add(this.lblLicense);
 			this.Controls.Add(this.lblTitle);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
+			this.LanguageKey = "about_title";
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "AboutForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "AboutForm";
+			this.Text = "Über Greenshot";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
-		private System.Windows.Forms.Label lblTranslation;
 		private System.Windows.Forms.LinkLabel linkLabel1;
-		private System.Windows.Forms.Label lblHost;
 		private System.Windows.Forms.LinkLabel linkLblHost;
-		private System.Windows.Forms.Label lblDonations;
 		private System.Windows.Forms.LinkLabel linkLblDonations;
-		private System.Windows.Forms.Label lblBugs;
 		private System.Windows.Forms.LinkLabel linkLblBugs;
 		private System.Windows.Forms.LinkLabel linkLblLicense;
 		private System.Windows.Forms.LinkLabel linkLblIcons;
-		private System.Windows.Forms.Label lblIcons;
-		private System.Windows.Forms.Label lblLicense;
 		private System.Windows.Forms.Label lblTitle;
 		private System.Windows.Forms.PictureBox pictureBox1;
-
-		void LinkLabelClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e) {
-			openLink((LinkLabel)sender);
-		}
-
-		private void openLink(LinkLabel link) {
-			try {
-				link.LinkVisited = true;
-   				System.Diagnostics.Process.Start(link.Text);
-			} catch (Exception) {
-				MessageBox.Show(lang.GetFormattedString(LangKey.error_openlink, link.Text),lang.GetString(LangKey.error));
-			}
-		}
+		private GreenshotPlugin.Controls.GreenshotLabel lblTranslation;
+		private GreenshotPlugin.Controls.GreenshotLabel lblHost;
+		private GreenshotPlugin.Controls.GreenshotLabel lblDonations;
+		private GreenshotPlugin.Controls.GreenshotLabel lblBugs;
+		private GreenshotPlugin.Controls.GreenshotLabel lblIcons;
+		private GreenshotPlugin.Controls.GreenshotLabel lblLicense;
 	}
 }

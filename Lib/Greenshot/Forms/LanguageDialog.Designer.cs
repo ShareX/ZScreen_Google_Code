@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -82,7 +82,6 @@ namespace Greenshot.Forms {
 			this.Controls.Add(this.comboBoxLanguage);
 			this.Controls.Add(this.lblSelectLanguage);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "LanguageDialog";

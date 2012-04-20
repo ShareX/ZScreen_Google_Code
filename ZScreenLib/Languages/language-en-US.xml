@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <language description="English" ietf="en-US" version="0.8.1" languagegroup="1">
   <resources>
-	<!--
-	Note to translator: uncomment entry "about_translation" to have
-	your efforts honored in the "About Greenshot" dialog
+	<!--    
+	Note to translator: uncomment entry "about_translation" to have 
+	your efforts honored in the "About Greenshot" dialog 
 	-->
 	<resource name="about_translation">
 		<!--English translation by YOUR_NAME-->
+	</resource>
+	<resource name="none">
 	</resource>
 	<resource name="application_title">
 		Greenshot - the revolutionary screenshot utility
@@ -62,6 +64,9 @@
 	<resource name="settings_visualization">
 		Effects
 	</resource>
+	<resource name="settings_shownotify">
+		Show notifications
+	</resource>
 	<resource name="settings_playsound">
 		Play camera sound
 	</resource>
@@ -91,7 +96,7 @@ Please check write accessibility of the selected storage location.
 		About Greenshot
 	</resource>
 	<resource name="about_license">
-		Copyright (C) 2007-2011 Thomas Braun, Jens Klingen, Robin Krom
+		Copyright (C) 2007-2012 Thomas Braun, Jens Klingen, Robin Krom
 Greenshot comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions.
 Details about the GNU General Public License:
 	</resource>
@@ -192,15 +197,18 @@ Details about the GNU General Public License:
 		Show JPEG quality dialog every time a JPEG image is saved
 	</resource>
 	<resource name="jpegqualitydialog_title">
-		Greenshot JPEG quality
+		Greenshot quality
 	</resource>
 	<resource name="jpegqualitydialog_choosejpegquality">
 		Please choose the quality for your JPEG image.
 	</resource>
 	<resource name="jpegqualitydialog_dontaskagain">
-		Save as default JPEG quality and do not ask again
+		Save as default quality and do not ask again
 	</resource>
-	<resource name="editor_forecolor">
+  <resource name="reduce_colors">
+    Reduce the amount of colors to 256 (can have impact on quality!)
+  </resource>
+  <resource name="editor_forecolor">
 		Line color
 	</resource>
 	<resource name="editor_backcolor">
@@ -259,8 +267,14 @@ All Greenshot features still work directly from the tray icon context menu witho
 	<resource name="settings_destination_clipboard">
 		Copy to clipboard
 	</resource>
+	<resource name="settings_destination_picker">
+		Select destination dynamically
+	</resource>
 	<resource name="editor_drawline">
 		Draw line (L)
+	</resource>
+	<resource name="editor_drawfreehand">
+		Draw freehand (F)
 	</resource>
 	<resource name="settings_destination">
 		Screenshot Destination
@@ -461,6 +475,18 @@ time, e.g. 11_58_32 (plus extension defined in the settings)
 	<resource name="editor_shadow">
 		Shadow
 	</resource>
+	<resource name="editor_torn_edge">
+		Torn edge
+	</resource>
+	<resource name="editor_effects">
+		Effects
+	</resource>
+	<resource name="editor_border">
+		Border
+	</resource>
+	<resource name="editor_grayscale">
+		Grayscale
+	</resource>
 	<resource name="editor_confirm">
 		Confirm
 	</resource>
@@ -536,11 +562,17 @@ time, e.g. 11_58_32 (plus extension defined in the settings)
 	<resource name="editor_autocrop">
 		Auto crop
 	</resource>
+	<resource name="editor_undo">
+		Undo {0}
+	</resource>
+	<resource name="editor_redo">
+		Redo {0}
+	</resource>
 	<resource name="settings_waittime">
 		Milliseconds to wait before capture
 	</resource>
 	<resource name="tooltip_firststart">
-		Right-click here or press the Print-key.
+		Right-click here or press the {0} key.
 	</resource>
 	<resource name="contextmenu_donate">
 		Support Greenshot
@@ -580,6 +612,33 @@ time, e.g. 11_58_32 (plus extension defined in the settings)
 	</resource>
 	<resource name="update_found">
 		A newer version of Greenshot is available! Do you want to download Greenshot {0}?
+	</resource>
+	<resource name="exported_to">
+		Exported to: {0}
+	</resource>
+	<resource name="WindowCaptureMode.Screen">
+		As displayed
+	</resource>
+	<resource name="WindowCaptureMode.GDI">
+		Use default color
+	</resource>
+	<resource name="WindowCaptureMode.Aero">
+		Use custom color
+	</resource>
+	<resource name="WindowCaptureMode.AeroTransparent">
+		Preserve transparency
+	</resource>
+	<resource name="WindowCaptureMode.Auto">
+		Automatically
+	</resource>
+	<resource name="EmailFormat.MAPI">
+		MAPI client
+	</resource>
+	<resource name="EmailFormat.OUTLOOK_TXT">
+		Outlook with text
+	</resource>
+	<resource name="EmailFormat.OUTLOOK_HTML">
+		Outlook with HTML
 	</resource>
   </resources>
 </language>

@@ -1,6 +1,6 @@
 /*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  *
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -30,24 +30,24 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-
 using Greenshot.Configuration;
+using Greenshot.Destinations;
 using Greenshot.Experimental;
 using Greenshot.Forms;
 using Greenshot.Help;
 using Greenshot.Helpers;
+using Greenshot.IniFile;
 using Greenshot.Plugin;
-using Greenshot.UnmanagedHelpers;
 using GreenshotPlugin.Controls;
 using GreenshotPlugin.Core;
-using IniFile;
+using GreenshotPlugin.UnmanagedHelpers;
 
 namespace Greenshot
 {
     /// <summary>
     /// Description of MainForm.
     /// </summary>
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm
     {
         private static log4net.ILog LOG = null;
         private static Mutex applicationMutex = null;
@@ -60,6 +60,8 @@ namespace Greenshot
             List<string> filesToOpen = new List<string>();
 
             // Set the Thread name, is better than "1"
+            Thread.CurrentThread.Name = Application.ProductName;
+
             // Init Log4NET
             LogFileLocation = LogHelper.InitializeLog4NET();
             // Get logger
@@ -161,7 +163,7 @@ namespace Greenshot
                         helpOutput.AppendLine();
                         helpOutput.AppendLine();
                         helpOutput.AppendLine("\t/language [language code]");
-                        helpOutput.AppendLine("\t\tSet the language of Greenshot, e.g. greenshot /language en-EN.");
+                        helpOutput.AppendLine("\t\tSet the language of Greenshot, e.g. greenshot /language en-US.");
                         helpOutput.AppendLine();
                         helpOutput.AppendLine();
                         helpOutput.AppendLine("\t[filename]");
@@ -235,22 +237,7 @@ namespace Greenshot
                     }
                 }
 
-                if (isAlreadyRunning)
-                {
-                    // We didn't initialize the language yet, do it here just for the message box
-                    ILanguage lang = Language.GetInstance();
-                    if (filesToOpen.Count > 0)
-                    {
-                        SendData(transport);
-                    }
-                    else
-                    {
-                        MessageBox.Show(lang.GetString(LangKey.error_multipleinstances), lang.GetString(LangKey.error));
-                    }
-                    FreeMutex();
-                    Application.Exit();
-                    return;
-                }
+                MainForm.instance = new MainForm(transport);
 
                 // if language is not set, show language dialog
                 if (string.IsNullOrEmpty(conf.Language))
@@ -269,7 +256,7 @@ namespace Greenshot
                     transport.AddCommand(CommandEnum.FirstLaunch);
                 }
 
-                MainForm mainForm = new MainForm(transport);
+                
             }
             catch (Exception ex)
             {
@@ -309,35 +296,70 @@ namespace Greenshot
 
         public static MainForm instance = null;
 
-        private ILanguage lang;
         private ToolTip tooltip;
-        private CaptureForm captureForm = null;
         private CopyData copyData = null;
 
         // Thumbnail preview
         private FormWithoutActivation thumbnailForm = null;
+
         private IntPtr thumbnailHandle = IntPtr.Zero;
         private Rectangle parentMenuBounds = Rectangle.Empty;
-        private int resizeFactor = 4;
+
+        // Make sure we have only one settings form
+        private SettingsForm settingsForm = null;
+
+        // Make sure we have only one about form
+        private AboutForm aboutForm = null;
 
         public MainForm(CopyDataTransport dataTransport)
         {
             instance = this;
+
+            // Make sure we never capture the mainform
+            WindowDetails.RegisterIgnoreHandle(this.Handle);
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
             InitializeComponent();
-            lang = Language.GetInstance();
+            this.Icon = GreenshotPlugin.Core.GreenshotResources.getGreenshotIcon();
+
             IniConfig.IniChanged += new FileSystemEventHandler(ReloadConfiguration);
 
             tooltip = new ToolTip();
 
             UpdateUI();
 
-            captureForm = new CaptureForm();
+            // Do loading on a different Thread to shorten the startup
+            Thread pluginInitThread = new Thread(delegate()
+            {
+                // Load all the plugins
+                PluginHelper.instance.LoadPlugins(this);
 
-            // Load all the plugins
-            PluginHelper.instance.LoadPlugins(this, captureForm);
+                // Check destinations, remove all that don't exist
+                foreach (string destination in conf.OutputDestinations.ToArray())
+                {
+                    if (DestinationHelper.GetDestination(destination) == null)
+                    {
+                        conf.OutputDestinations.Remove(destination);
+                    }
+                }
+
+                // we should have at least one!
+                if (conf.OutputDestinations.Count == 0)
+                {
+                    conf.OutputDestinations.Add(Destinations.EditorDestination.DESIGNATION);
+                }
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    // Do after all plugins & finding the destination, otherwise they are missing!
+                    InitializeQuickSettingsMenu();
+                });
+            });
+            pluginInitThread.Name = "Initialize plug-ins";
+            pluginInitThread.IsBackground = true;
+            pluginInitThread.Start();
+
+            SoundHelper.Initialize();
 
             // Create a new instance of the class: copyData = new CopyData();
             copyData = new CopyData();
@@ -353,7 +375,6 @@ namespace Greenshot
             {
                 HandleDataTransport(dataTransport);
             }
-            ClipboardHelper.RegisterClipboardViewer(this.Handle);
         }
 
         /// <summary>
@@ -376,20 +397,30 @@ namespace Greenshot
                 switch (command.Key)
                 {
                     case CommandEnum.Exit:
-                        exit();
+                        LOG.Info("Exit requested");
+                        Exit();
                         break;
                     case CommandEnum.FirstLaunch:
-                        LOG.Info("FirstLaunch: Created new configuration.");
+                        LOG.Info("FirstLaunch: Created new configuration, showing balloon.");
                         break;
                     case CommandEnum.ReloadConfig:
-                        IniConfig.Reload();
-                        ReloadConfiguration(null, null);
+                        LOG.Info("Reload requested");
+                        try
+                        {
+                            IniConfig.Reload();
+                            ReloadConfiguration(null, null);
+                        }
+                        catch { }
                         break;
                     case CommandEnum.OpenFile:
                         string filename = command.Value;
+                        LOG.InfoFormat("Open file requested: {0}", filename);
                         if (File.Exists(filename))
                         {
-                            captureForm.MakeCapture(filename);
+                            BeginInvoke((MethodInvoker)delegate
+                            {
+                                CaptureHelper.CaptureFile(filename);
+                            });
                         }
                         else
                         {
@@ -403,15 +434,18 @@ namespace Greenshot
             }
         }
 
+        /// <summary>
+        /// This is called when the ini-file changes
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void ReloadConfiguration(object source, FileSystemEventArgs e)
         {
-            lang.SetLanguage(conf.Language);
+            Language.CurrentLanguage = null;	// Reload
             this.Invoke((MethodInvoker)delegate
             {
                 // Even update language when needed
                 UpdateUI();
-                // Update the hotkey
-                // Make sure the current hotkeys are disabled
             });
         }
 
@@ -422,29 +456,17 @@ namespace Greenshot
 
         public void UpdateUI()
         {
-            this.Text = lang.GetString(LangKey.application_title);
-            this.contextmenu_settings.Text = lang.GetString(LangKey.contextmenu_settings);
-            this.contextmenu_capturearea.Text = lang.GetString(LangKey.contextmenu_capturearea);
-            this.contextmenu_capturelastregion.Text = lang.GetString(LangKey.contextmenu_capturelastregion);
-            this.contextmenu_capturewindow.Text = lang.GetString(LangKey.contextmenu_capturewindow);
-            this.contextmenu_capturefullscreen.Text = lang.GetString(LangKey.contextmenu_capturefullscreen);
-            this.contextmenu_captureclipboard.Text = lang.GetString(LangKey.contextmenu_captureclipboard);
-            this.contextmenu_openfile.Text = lang.GetString(LangKey.contextmenu_openfile);
-            this.contextmenu_quicksettings.Text = lang.GetString(LangKey.contextmenu_quicksettings);
-            this.contextmenu_help.Text = lang.GetString(LangKey.contextmenu_help);
-            this.contextmenu_about.Text = lang.GetString(LangKey.contextmenu_about);
-            this.contextmenu_donate.Text = lang.GetString(LangKey.contextmenu_donate);
-            this.contextmenu_exit.Text = lang.GetString(LangKey.contextmenu_exit);
-            this.contextmenu_captureie.Text = lang.GetString(LangKey.contextmenu_captureie);
-            this.contextmenu_openrecentcapture.Text = lang.GetString(LangKey.contextmenu_openrecentcapture);
+            // As the form is never loaded, call ApplyLanguage ourselves
+            ApplyLanguage();
         }
 
         #region mainform events
 
         private void MainFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            LOG.DebugFormat("Mainform closing, reason: {0}", e.CloseReason);
             instance = null;
-            exit();
+            Exit();
         }
 
         private void MainFormActivated(object sender, EventArgs e)
@@ -459,54 +481,52 @@ namespace Greenshot
 
         private void CaptureRegion()
         {
-            captureForm.MakeCapture(CaptureMode.Region, true);
+            CaptureHelper.CaptureRegion(true);
         }
 
         private void CaptureClipboard()
         {
-            captureForm.MakeCapture(CaptureMode.Clipboard, false);
+            CaptureHelper.CaptureClipboard();
         }
 
         private void CaptureFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png, *.jpg, *.gif, *.bmp, *.ico, *.tiff, *.wmf)|*.png; *.jpg; *.jpeg; *.gif; *.bmp; *.ico; *.tiff; *.wmf";
+            openFileDialog.Filter = "Image files (*.png, *.jpg, *.gif, *.bmp, *.ico, *.tiff, *.wmf)|*.png; *.jpg; *.jpeg; *.gif; *.bmp; *.ico; *.tiff; *.tif; *.wmf";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(openFileDialog.FileName))
                 {
-                    captureForm.MakeCapture(openFileDialog.FileName);
+                    CaptureHelper.CaptureFile(openFileDialog.FileName);
                 }
             }
         }
 
         private void CaptureFullScreen()
         {
-            captureForm.MakeCapture(CaptureMode.FullScreen, true);
+            CaptureHelper.CaptureFullscreen(true, conf.ScreenCaptureMode);
         }
 
         private void CaptureLastRegion()
         {
-            captureForm.MakeCapture(CaptureMode.LastRegion, true);
+            CaptureHelper.CaptureLastRegion(true);
         }
 
         private void CaptureIE()
         {
-            captureForm.MakeCapture(CaptureMode.IE, true);
+            CaptureHelper.CaptureIE(true);
         }
 
         private void CaptureWindow()
         {
-            CaptureMode captureMode = CaptureMode.None;
             if (conf.CaptureWindowsInteractive)
             {
-                captureMode = CaptureMode.Window;
+                CaptureHelper.CaptureWindowInteractive(true);
             }
             else
             {
-                captureMode = CaptureMode.ActiveWindow;
+                CaptureHelper.CaptureWindow(true);
             }
-            captureForm.MakeCapture(captureMode, true);
         }
 
         #endregion key handlers
@@ -519,13 +539,34 @@ namespace Greenshot
             contextmenu_capturelastregion.Enabled = RuntimeConfig.LastCapturedRegion != Rectangle.Empty;
 
             // IE context menu code
-            if (conf.IECapture && IECaptureHelper.IsIERunning())
+            try
             {
-                this.contextmenu_captureie.Enabled = true;
+                if (conf.IECapture && IECaptureHelper.IsIERunning())
+                {
+                    this.contextmenu_captureie.Enabled = true;
+                }
+                else
+                {
+                    this.contextmenu_captureie.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LOG.WarnFormat("Problem accessing IE information: {0}", ex.Message);
+            }
+
+            // Multi-Screen captures
+            this.contextmenu_capturefullscreen.Click -= new System.EventHandler(this.CaptureFullScreenToolStripMenuItemClick);
+            this.contextmenu_capturefullscreen.DropDownOpening -= new System.EventHandler(MultiScreenDropDownOpening);
+            this.contextmenu_capturefullscreen.DropDownClosed -= new System.EventHandler(MultiScreenDropDownClosing);
+            if (Screen.AllScreens.Length > 1)
+            {
+                this.contextmenu_capturefullscreen.DropDownOpening += new System.EventHandler(MultiScreenDropDownOpening);
+                this.contextmenu_capturefullscreen.DropDownClosed += new System.EventHandler(MultiScreenDropDownClosing);
             }
             else
             {
-                this.contextmenu_captureie.Enabled = false;
+                this.contextmenu_capturefullscreen.Click += new System.EventHandler(this.CaptureFullScreenToolStripMenuItemClick);
             }
         }
 
@@ -539,50 +580,117 @@ namespace Greenshot
         /// <summary>
         /// Build a selectable list of IE tabs when we enter the menu item
         /// </summary>
-        private void EnterCaptureIEMenuItem(object sender, EventArgs e)
+        private void CaptureIEMenuDropDownOpening(object sender, EventArgs e)
         {
-            List<KeyValuePair<WindowDetails, string>> tabs = IECaptureHelper.GetTabList();
-            this.contextmenu_captureie.DropDownItems.Clear();
-            if (tabs.Count > 0)
+            try
             {
-                this.contextmenu_captureie.Enabled = true;
-                Dictionary<WindowDetails, int> counter = new Dictionary<WindowDetails, int>();
-
-                foreach (KeyValuePair<WindowDetails, string> tabData in tabs)
+                List<KeyValuePair<WindowDetails, string>> tabs = IECaptureHelper.GetTabList();
+                this.contextmenu_captureie.DropDownItems.Clear();
+                if (tabs.Count > 0)
                 {
-                    ToolStripMenuItem captureIETabItem = new ToolStripMenuItem(tabData.Value);
-                    int index;
-                    if (counter.ContainsKey(tabData.Key))
+                    this.contextmenu_captureie.Enabled = true;
+                    Dictionary<WindowDetails, int> counter = new Dictionary<WindowDetails, int>();
+
+                    foreach (KeyValuePair<WindowDetails, string> tabData in tabs)
                     {
-                        index = counter[tabData.Key];
-                    }
-                    else
-                    {
-                        index = 0;
-                    }
-                    captureIETabItem.Tag = new KeyValuePair<WindowDetails, int>(tabData.Key, index++);
-                    captureIETabItem.Click += new System.EventHandler(Contextmenu_captureIE_Click);
-                    this.contextmenu_captureie.DropDownItems.Add(captureIETabItem);
-                    if (counter.ContainsKey(tabData.Key))
-                    {
-                        counter[tabData.Key] = index;
-                    }
-                    else
-                    {
-                        counter.Add(tabData.Key, index);
+                        ToolStripMenuItem captureIETabItem = new ToolStripMenuItem(tabData.Value);
+                        int index;
+                        if (counter.ContainsKey(tabData.Key))
+                        {
+                            index = counter[tabData.Key];
+                        }
+                        else
+                        {
+                            index = 0;
+                        }
+                        captureIETabItem.Tag = new KeyValuePair<WindowDetails, int>(tabData.Key, index++);
+                        captureIETabItem.Click += new System.EventHandler(Contextmenu_captureIE_Click);
+                        this.contextmenu_captureie.DropDownItems.Add(captureIETabItem);
+                        if (counter.ContainsKey(tabData.Key))
+                        {
+                            counter[tabData.Key] = index;
+                        }
+                        else
+                        {
+                            counter.Add(tabData.Key, index);
+                        }
                     }
                 }
+                else
+                {
+                    this.contextmenu_captureie.Enabled = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.contextmenu_captureie.Enabled = false;
+                LOG.WarnFormat("Problem accessing IE information: {0}", ex.Message);
             }
+        }
+
+        /// <summary>
+        /// MultiScreenDropDownOpening is called when mouse hovers over the Capture-Screen context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MultiScreenDropDownOpening(object sender, EventArgs e)
+        {
+            ToolStripMenuItem captureScreenMenuItem = (ToolStripMenuItem)sender;
+            captureScreenMenuItem.DropDownItems.Clear();
+            if (Screen.AllScreens.Length > 1)
+            {
+                ToolStripMenuItem captureScreenItem;
+                string allDeviceName = "";
+                foreach (Screen screen in Screen.AllScreens)
+                {
+                    string deviceName = screen.DeviceName;
+                    if (allDeviceName.Length > 0)
+                    {
+                        allDeviceName += " + ";
+                    }
+                    allDeviceName += deviceName.Substring(deviceName.Length - 1);
+                }
+                captureScreenItem = new ToolStripMenuItem(allDeviceName);
+                captureScreenItem.Click += delegate
+                {
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        CaptureHelper.CaptureFullscreen(false, ScreenCaptureMode.FullScreen);
+                    });
+                };
+                captureScreenMenuItem.DropDownItems.Add(captureScreenItem);
+                foreach (Screen screen in Screen.AllScreens)
+                {
+                    Screen screenToCapture = screen;
+                    string deviceName = screenToCapture.DeviceName;
+                    deviceName = deviceName.Substring(deviceName.Length - 1);
+                    captureScreenItem = new ToolStripMenuItem(deviceName);
+                    captureScreenItem.Click += delegate
+                    {
+                        BeginInvoke((MethodInvoker)delegate
+                        {
+                            CaptureHelper.CaptureRegion(false, screenToCapture.Bounds);
+                        });
+                    };
+                    captureScreenMenuItem.DropDownItems.Add(captureScreenItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// MultiScreenDropDownOpening is called when mouse leaves the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MultiScreenDropDownClosing(object sender, EventArgs e)
+        {
+            ToolStripMenuItem captureScreenMenuItem = (ToolStripMenuItem)sender;
+            captureScreenMenuItem.DropDownItems.Clear();
         }
 
         /// <summary>
         /// Build a selectable list of windows when we enter the menu item
         /// </summary>
-        private void EnterCaptureWindowMenuItem(object sender, EventArgs e)
+        private void CaptureWindowMenuDropDownOpening(object sender, EventArgs e)
         {
             // The Capture window context menu item used to go to the following code:
             // captureForm.MakeCapture(CaptureMode.Window, false);
@@ -591,7 +699,7 @@ namespace Greenshot
             AddCaptureWindowMenuItems(captureWindowMenuItem, Contextmenu_window_Click);
         }
 
-        private void LeaveCaptureWindowMenuItem(object sender, EventArgs e)
+        private void CaptureWindowMenuDropDownClosed(object sender, EventArgs e)
         {
             cleanupThumbnail();
         }
@@ -625,9 +733,14 @@ namespace Greenshot
             DWM.DwmRegisterThumbnail(thumbnailForm.Handle, window.Handle, out thumbnailHandle);
             if (thumbnailHandle != IntPtr.Zero)
             {
-                Rectangle windowRectangle = window.ClientRectangle;
-                int thumbnailWidth = (windowRectangle.Width) / resizeFactor;
-                int thumbnailHeight = (windowRectangle.Height) / resizeFactor;
+                Rectangle windowRectangle = window.WindowRectangle;
+                int thumbnailHeight = 200;
+                int thumbnailWidth = (int)(thumbnailHeight * ((float)windowRectangle.Width / (float)windowRectangle.Height));
+                if (thumbnailWidth > parentMenuBounds.Width)
+                {
+                    thumbnailWidth = parentMenuBounds.Width;
+                    thumbnailHeight = (int)(thumbnailWidth * ((float)windowRectangle.Height / (float)windowRectangle.Width));
+                }
                 thumbnailForm.Width = thumbnailWidth;
                 thumbnailForm.Height = thumbnailHeight;
                 // Prepare the displaying of the Thumbnail
@@ -685,7 +798,6 @@ namespace Greenshot
 
         public void AddCaptureWindowMenuItems(ToolStripMenuItem menuItem, EventHandler eventHandler)
         {
-            ILanguage lang = Language.GetInstance();
             menuItem.DropDownItems.Clear();
             // check if thumbnailPreview is enabled and DWM is enabled
             bool thumbnailPreview = conf.ThumnailPreview && DWM.isDWMEnabled();
@@ -695,6 +807,7 @@ namespace Greenshot
             {
                 ToolStripMenuItem captureWindowItem = new ToolStripMenuItem(window.Text);
                 captureWindowItem.Tag = window;
+                captureWindowItem.Image = window.DisplayIcon;
                 captureWindowItem.Click += new System.EventHandler(eventHandler);
                 // Only show preview when enabled
                 if (thumbnailPreview)
@@ -708,41 +821,59 @@ namespace Greenshot
 
         private void CaptureAreaToolStripMenuItemClick(object sender, EventArgs e)
         {
-            captureForm.MakeCapture(CaptureMode.Region, false);
+            BeginInvoke((MethodInvoker)delegate
+            {
+                CaptureHelper.CaptureRegion(false);
+            });
         }
 
         private void CaptureClipboardToolStripMenuItemClick(object sender, EventArgs e)
         {
-            CaptureClipboard();
+            BeginInvoke((MethodInvoker)delegate
+            {
+                CaptureHelper.CaptureClipboard();
+            });
         }
 
         private void OpenFileToolStripMenuItemClick(object sender, EventArgs e)
         {
-            CaptureFile();
+            BeginInvoke((MethodInvoker)delegate
+            {
+                CaptureFile();
+            });
         }
 
         private void CaptureFullScreenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            captureForm.MakeCapture(CaptureMode.FullScreen, false);
+            BeginInvoke((MethodInvoker)delegate
+            {
+                CaptureHelper.CaptureFullscreen(false, conf.ScreenCaptureMode);
+            });
         }
 
         private void Contextmenu_capturelastregionClick(object sender, EventArgs e)
         {
-            captureForm.MakeCapture(CaptureMode.LastRegion, false);
+            BeginInvoke((MethodInvoker)delegate
+            {
+                CaptureHelper.CaptureLastRegion(false);
+            });
         }
 
         private void Contextmenu_window_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            try
+            BeginInvoke((MethodInvoker)delegate
             {
-                WindowDetails windowToCapture = (WindowDetails)clickedItem.Tag;
-                captureForm.MakeCapture(windowToCapture);
-            }
-            catch (Exception exception)
-            {
-                LOG.Error(exception);
-            }
+                try
+                {
+                    WindowDetails windowToCapture = (WindowDetails)clickedItem.Tag;
+                    CaptureHelper.CaptureWindow(windowToCapture);
+                }
+                catch (Exception exception)
+                {
+                    LOG.Error(exception);
+                }
+            });
         }
 
         private void Contextmenu_captureIE_Click(object sender, EventArgs e)
@@ -754,100 +885,232 @@ namespace Greenshot
             }
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             KeyValuePair<WindowDetails, int> tabData = (KeyValuePair<WindowDetails, int>)clickedItem.Tag;
-            try
+            BeginInvoke((MethodInvoker)delegate
             {
-                IECaptureHelper.ActivateIETab(tabData.Key, tabData.Value);
-            }
-            catch (Exception exception)
-            {
-                LOG.Error(exception);
-            }
-            try
-            {
-                captureForm.MakeCapture(CaptureMode.IE, false);
-            }
-            catch (Exception exception)
-            {
-                LOG.Error(exception);
-            }
+                try
+                {
+                    IECaptureHelper.ActivateIETab(tabData.Key, tabData.Value);
+                }
+                catch (Exception exception)
+                {
+                    LOG.Error(exception);
+                }
+                try
+                {
+                    CaptureHelper.CaptureIE(false);
+                }
+                catch (Exception exception)
+                {
+                    LOG.Error(exception);
+                }
+            });
         }
 
         private void Contextmenu_donateClick(object sender, EventArgs e)
         {
-            Process.Start("http://getgreenshot.org/support/");
+            BeginInvoke((MethodInvoker)delegate
+            {
+                Process.Start("http://getgreenshot.org/support/");
+            });
         }
 
         private void Contextmenu_settingsClick(object sender, EventArgs e)
         {
-            SettingsForm settings = new SettingsForm();
-            settings.ShowDialog();
-            this.Hide();
+            BeginInvoke((MethodInvoker)delegate
+            {
+                ShowSetting();
+            });
+        }
+
+        public void ShowSetting()
+        {
+            if (settingsForm != null)
+            {
+                WindowDetails.ToForeground(settingsForm.Handle);
+            }
+            else
+            {
+                try
+                {
+                    using (settingsForm = new SettingsForm())
+                    {
+                        if (settingsForm.ShowDialog() == DialogResult.OK)
+                        {
+                            InitializeQuickSettingsMenu();
+                        }
+                    }
+                }
+                finally
+                {
+                    settingsForm = null;
+                }
+            }
         }
 
         private void Contextmenu_aboutClick(object sender, EventArgs e)
         {
-            new AboutForm().Show();
+            if (aboutForm != null)
+            {
+                WindowDetails.ToForeground(aboutForm.Handle);
+            }
+            else
+            {
+                try
+                {
+                    using (aboutForm = new AboutForm())
+                    {
+                        aboutForm.ShowDialog();
+                    }
+                }
+                finally
+                {
+                    aboutForm = null;
+                }
+            }
         }
 
         private void Contextmenu_helpClick(object sender, EventArgs e)
         {
-            HelpBrowserForm hpf = new HelpBrowserForm(conf.Language);
-            hpf.Show();
+            HelpFileLoader.LoadHelp();
         }
 
         private void Contextmenu_exitClick(object sender, EventArgs e)
         {
-            exit();
+            Exit();
         }
 
-        private void QuickSettingItemChanged(object sender, EventArgs e)
+        private void InitializeQuickSettingsMenu()
         {
-            ToolStripMenuSelectList selectList = (ToolStripMenuSelectList)sender;
+            this.contextmenu_quicksettings.DropDownItems.Clear();
+            // screenshot destination
+            ToolStripMenuSelectList selectList = new ToolStripMenuSelectList("destinations", true);
+            selectList.Text = Language.GetString(LangKey.settings_destination);
+            // Working with IDestination:
+            foreach (IDestination destination in DestinationHelper.GetAllDestinations())
+            {
+                selectList.AddItem(destination.Description, destination, conf.OutputDestinations.Contains(destination.Designation));
+            }
+            selectList.CheckedChanged += new EventHandler(this.QuickSettingDestinationChanged);
+            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
+
+            // Capture Modes
+            selectList = new ToolStripMenuSelectList("capturemodes", false);
+            selectList.Text = Language.GetString(LangKey.settings_window_capture_mode);
+            string enumTypeName = typeof(WindowCaptureMode).Name;
+            foreach (WindowCaptureMode captureMode in Enum.GetValues(typeof(WindowCaptureMode)))
+            {
+                selectList.AddItem(Language.GetString(enumTypeName + "." + captureMode.ToString()), captureMode, conf.WindowCaptureMode == captureMode);
+            }
+            selectList.CheckedChanged += new EventHandler(this.QuickSettingCaptureModeChanged);
+            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
+
+            // print options
+            selectList = new ToolStripMenuSelectList("printoptions", true);
+            selectList.Text = Language.GetString(LangKey.settings_printoptions);
+
+            IniValue iniValue;
+            foreach (string propertyName in conf.Values.Keys)
+            {
+                if (propertyName.StartsWith("OutputPrint"))
+                {
+                    iniValue = conf.Values[propertyName];
+                    if (iniValue.Attributes.LanguageKey != null)
+                    {
+                        selectList.AddItem(Language.GetString(iniValue.Attributes.LanguageKey), iniValue, (bool)iniValue.Value);
+                    }
+                }
+            }
+            selectList.CheckedChanged += new EventHandler(this.QuickSettingBoolItemChanged);
+            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
+
+            // effects
+            selectList = new ToolStripMenuSelectList("effects", true);
+            selectList.Text = Language.GetString(LangKey.settings_visualization);
+
+            iniValue = conf.Values["PlayCameraSound"];
+            selectList.AddItem(Language.GetString(iniValue.Attributes.LanguageKey), iniValue, (bool)iniValue.Value);
+            iniValue = conf.Values["ShowTrayNotification"];
+            selectList.AddItem(Language.GetString(iniValue.Attributes.LanguageKey), iniValue, (bool)iniValue.Value);
+            selectList.CheckedChanged += new EventHandler(this.QuickSettingBoolItemChanged);
+            this.contextmenu_quicksettings.DropDownItems.Add(selectList);
+        }
+
+        private void QuickSettingCaptureModeChanged(object sender, EventArgs e)
+        {
             ToolStripMenuSelectListItem item = ((ItemCheckedChangedEventArgs)e).Item;
-            if (selectList.Identifier.Equals("destination"))
+            WindowCaptureMode windowsCaptureMode = (WindowCaptureMode)item.Data;
+            if (item.Checked)
             {
-                Destination selectedDestination = (Destination)item.Data;
-                if (item.Checked && !conf.OutputDestinations.Contains(selectedDestination))
-                {
-                    conf.OutputDestinations.Add(selectedDestination);
-                }
-                if (!item.Checked && conf.OutputDestinations.Contains(selectedDestination))
-                {
-                    conf.OutputDestinations.Remove(selectedDestination);
-                }
+                conf.WindowCaptureMode = windowsCaptureMode;
+            }
+        }
+
+        private void QuickSettingBoolItemChanged(object sender, EventArgs e)
+        {
+            ToolStripMenuSelectListItem item = ((ItemCheckedChangedEventArgs)e).Item;
+            IniValue iniValue = item.Data as IniValue;
+            if (iniValue != null)
+            {
+                iniValue.Value = item.Checked;
                 IniConfig.Save();
             }
-            else if (selectList.Identifier.Equals("printoptions"))
+        }
+
+        private void QuickSettingDestinationChanged(object sender, EventArgs e)
+        {
+            ToolStripMenuSelectListItem item = ((ItemCheckedChangedEventArgs)e).Item;
+            IDestination selectedDestination = (IDestination)item.Data;
+            if (item.Checked && selectedDestination.Designation.Equals(PickerDestination.DESIGNATION))
             {
-                if (item.Data.Equals("AllowPrintShrink")) conf.OutputPrintAllowShrink = item.Checked;
-                else if (item.Data.Equals("AllowPrintEnlarge")) conf.OutputPrintAllowEnlarge = item.Checked;
-                else if (item.Data.Equals("AllowPrintRotate")) conf.OutputPrintAllowRotate = item.Checked;
-                else if (item.Data.Equals("AllowPrintCenter")) conf.OutputPrintCenter = item.Checked;
-                IniConfig.Save();
-            }
-            else if (selectList.Identifier.Equals("effects"))
-            {
-                if (item.Data.Equals("PlaySound"))
+                foreach (ToolStripMenuSelectList ddi in contextmenu_quicksettings.DropDownItems)
                 {
-                    conf.PlayCameraSound = item.Checked;
+                    if (ddi.Identifier.Equals("destinations"))
+                    {
+                        foreach (ToolStripMenuSelectListItem dropDownItem in ddi.DropDownItems)
+                        {
+                            IDestination destination = dropDownItem.Data as IDestination;
+                            if (!destination.Designation.Equals(PickerDestination.DESIGNATION))
+                            {
+                                if (dropDownItem.CheckState == CheckState.Checked)
+                                {
+                                    dropDownItem.CheckState = CheckState.Unchecked;
+                                }
+                            }
+                        }
+                    }
                 }
-                IniConfig.Save();
+                conf.OutputDestinations.Clear();
+                conf.OutputDestinations.Add(selectedDestination.Designation);
             }
+            else
+            {
+                if (item.Checked && !conf.OutputDestinations.Contains(selectedDestination.Designation))
+                {
+                    conf.OutputDestinations.Add(selectedDestination.Designation);
+                }
+                if (!item.Checked && conf.OutputDestinations.Contains(selectedDestination.Designation))
+                {
+                    conf.OutputDestinations.Remove(selectedDestination.Designation);
+                }
+            }
+            IniConfig.Save();
         }
 
         #endregion contextmenu
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            string exceptionText = EnvironmentInfo.BuildReport(e.ExceptionObject as Exception);
-            LOG.Error(exceptionText);
+            Exception exceptionToLog = e.ExceptionObject as Exception;
+            string exceptionText = EnvironmentInfo.BuildReport(exceptionToLog);
+            LOG.Error(EnvironmentInfo.ExceptionToString(exceptionToLog));
             new BugReportForm(exceptionText).ShowDialog();
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            string exceptionText = EnvironmentInfo.BuildReport(e.Exception);
-            LOG.Error(exceptionText);
+            Exception exceptionToLog = e.Exception;
+            string exceptionText = EnvironmentInfo.BuildReport(exceptionToLog);
+            LOG.Error(EnvironmentInfo.ExceptionToString(exceptionToLog));
             new BugReportForm(exceptionText).ShowDialog();
         }
 
@@ -888,10 +1151,8 @@ namespace Greenshot
         /// <summary>
         /// Shutdown / cleanup
         /// </summary>
-        public void exit()
+        public void Exit()
         {
-            ClipboardHelper.DeregisterClipboardViewer(this.Handle);
-
             LOG.Info("Exit: " + EnvironmentInfo.EnvironmentToString(false));
 
             // Close all open forms (except this), use a separate List to make sure we don't get a "InvalidOperationException: Collection was modified"
@@ -916,6 +1177,16 @@ namespace Greenshot
                 }
             }
 
+            // Now the sound isn't needed anymore
+            try
+            {
+                SoundHelper.Deinitialize();
+            }
+            catch (Exception e)
+            {
+                LOG.Error("Error deinitializing sound!", e);
+            }
+
             // Inform all registed plugins
             try
             {
@@ -936,6 +1207,8 @@ namespace Greenshot
             {
                 LOG.Error("Error closing application!", e);
             }
+
+            ImageOutput.RemoveTmpFiles();
 
             // Store any open configuration changes
             try

@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -75,8 +75,8 @@ namespace Greenshot.Forms {
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.TopMost = true;
-			this.VisibleChanged += new System.EventHandler(this.CaptureFormVisibleChanged);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CaptureFormKeyDown);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CaptureFormKeyUp);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.Visible = false;
 			this.ResumeLayout(false);

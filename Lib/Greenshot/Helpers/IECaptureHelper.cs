@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -26,11 +26,13 @@ using System.Drawing.Imaging;
 using Greenshot.Configuration;
 using Greenshot.Drawing.Filters;
 using Greenshot.Helpers.IEInterop;
+using Greenshot.Interop;
+using Greenshot.Interop.IE;
 using Greenshot.Plugin;
-using Greenshot.UnmanagedHelpers;
+using GreenshotPlugin.UnmanagedHelpers;
 using GreenshotPlugin.Controls;
 using GreenshotPlugin.Core;
-using IniFile;
+using Greenshot.IniFile;
 
 namespace Greenshot.Helpers {
 	/// <summary>
@@ -39,43 +41,19 @@ namespace Greenshot.Helpers {
 	/// On top I modified it to use the already available code in Greenshot.
 	/// Many thanks to all the people who contributed here!
 	/// </summary>
-	public class IECaptureHelper {
+	public static class IECaptureHelper {
 		private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(IECaptureHelper));
 		private static CoreConfiguration configuration = IniConfig.GetIniSection<CoreConfiguration>();
-		private static ILanguage language = Language.GetInstance();
 
 		// Helper method to activate a certain IE Tab
 		public static void ActivateIETab(WindowDetails ieWindowDetails, int tabIndex) {
-			WindowDetails directUIWindowDetails = GetDirectUI(ieWindowDetails);
+			WindowDetails directUIWindowDetails = IEHelper.GetDirectUI(ieWindowDetails);
 			// Bring window to the front
 			ieWindowDetails.Restore();
 			// Get accessible
-			Accessible ieAccessible = new Accessible(directUIWindowDetails);
+			Accessible ieAccessible = new Accessible(directUIWindowDetails.Handle);
 			// Activate Tab
 			ieAccessible.ActivateIETab(tabIndex);
-		}
-		
-		/// <summary>
-		/// Find the DirectUI window for MSAA (Accessible)
-		/// </summary>
-		/// <param name="browserWindowDetails">The browser WindowDetails</param>
-		/// <returns>WindowDetails for the DirectUI window</returns>
-		private static WindowDetails GetDirectUI(WindowDetails browserWindowDetails) {
-			WindowDetails tmpWD = browserWindowDetails;
-			// Since IE 9 the TabBandClass is less deep!
-			if (IEHelper.IEVersion() < 9) {
-				tmpWD = tmpWD.GetChild("CommandBarClass");
-				if (tmpWD != null) {
-					tmpWD = tmpWD.GetChild("ReBarWindow32");
-				}
-			}
-			if (tmpWD != null) {
-				tmpWD = tmpWD.GetChild("TabBandClass");
-			}
-			if (tmpWD != null) {
-				tmpWD = tmpWD.GetChild("DirectUIHWND");;
-			}
-			return tmpWD;
 		}
 		
 		/// <summary>
@@ -101,9 +79,9 @@ namespace Greenshot.Helpers {
 			foreach (WindowDetails ieWindow in WindowDetails.GetAllWindows("IEFrame")) {
 				try {
 					if (!ieHandleList.Contains(ieWindow.Handle)) {
-						WindowDetails directUIWD = GetDirectUI(ieWindow);
+						WindowDetails directUIWD = IEHelper.GetDirectUI(ieWindow);
 						if (directUIWD != null) {
-							Accessible accessible = new Accessible(directUIWD);
+							Accessible accessible = new Accessible(directUIWD.Handle);
 							browserWindows.Add(ieWindow, accessible.IETabCaptions);
 						} else {
 							List<string> singleWindowText = new List<string>();
@@ -146,9 +124,9 @@ namespace Greenshot.Helpers {
 				LOG.DebugFormat("Processing {0} - {1}", ieWindow.ClassName, ieWindow.Text);
 				
 				Accessible ieAccessible = null;
-				WindowDetails directUIWD = GetDirectUI(ieWindow);
+				WindowDetails directUIWD = IEHelper.GetDirectUI(ieWindow);
 				if (directUIWD != null) {
-					ieAccessible = new Accessible(directUIWD);
+					ieAccessible = new Accessible(directUIWD.Handle);
 				}
 				if (ieAccessible == null) {
 					LOG.InfoFormat("Active Window is {0}", activeWindow.Text);
@@ -162,12 +140,11 @@ namespace Greenshot.Helpers {
 				try {
 					// Get the Document
 					IHTMLDocument2 document2 = null;
-					int windowMessage = User32.RegisterWindowMessage("WM_HTML_GETOBJECT");
+					uint windowMessage = User32.RegisterWindowMessage("WM_HTML_GETOBJECT");
 					if (windowMessage == 0) {
 						LOG.WarnFormat("Couldn't register WM_HTML_GETOBJECT");
 						continue;
 					}
-
 
 					WindowDetails ieServer= ieWindow.GetChild("Internet Explorer_Server");
 					if (ieServer == null) {
@@ -175,11 +152,10 @@ namespace Greenshot.Helpers {
 						continue;
 					}
 					LOG.DebugFormat("Trying WM_HTML_GETOBJECT on {0}", ieServer.ClassName);
-					int response;
-					User32.SendMessageTimeout(ieServer.Handle, windowMessage, 0, 0,  0x2, 1000, out response);
-					if (response != 0) {
-						Guid IID_IHTMLDocument = new Guid("626FC520-A41E-11CF-A731-00A0C9082637");
-						int hr = Accessible.ObjectFromLresult(response, ref IID_IHTMLDocument, 0, ref document2);
+					UIntPtr response;
+					User32.SendMessageTimeout(ieServer.Handle, windowMessage, IntPtr.Zero, IntPtr.Zero, SendMessageTimeoutFlags.SMTO_NORMAL, 1000, out response);
+					if (response != UIntPtr.Zero) {
+						document2 = (IHTMLDocument2)Accessible.ObjectFromLresult(response, typeof(IHTMLDocument).GUID, IntPtr.Zero);
 						if (document2 == null) {
 							LOG.Error("No IHTMLDocument2 found");
 							continue;
@@ -261,7 +237,7 @@ namespace Greenshot.Helpers {
 			WindowDetails activeWindow = WindowDetails.GetActiveWindow();
 			
 			// Show backgroundform after retrieving the active window..
-			BackgroundForm backgroundForm = new BackgroundForm(language.GetString(LangKey.contextmenu_captureie), language.GetString(LangKey.wait_ie_capture));
+			BackgroundForm backgroundForm = new BackgroundForm(Language.GetString(LangKey.contextmenu_captureie), Language.GetString(LangKey.wait_ie_capture));
 			backgroundForm.Show();
 			//BackgroundForm backgroundForm = BackgroundForm.ShowAndWait(language.GetString(LangKey.contextmenu_captureie), language.GetString(LangKey.wait_ie_capture));
 			try {
@@ -281,11 +257,34 @@ namespace Greenshot.Helpers {
 	
 				// bitmap to return
 				Bitmap returnBitmap = null;
+				Size pageSize = Size.Empty;
 				try {
-					returnBitmap = capturePage(documentContainer, capture);
-				} catch (Exception e) {
-					LOG.Error("Exception found, ignoring and returning nothing! Error was: ", e);
+					pageSize = PrepareCapture(documentContainer, capture);
+					returnBitmap = capturePage(documentContainer, capture, pageSize);
+				} catch (Exception captureException) {
+					LOG.Error("Exception found, ignoring and returning nothing! Error was: ", captureException);
 				}
+				// Capture the element on the page
+				try {
+					if (configuration.IEFieldCapture && capture.CaptureDetails.HasDestination("Editor")) {
+						// clear the current elements, as they are for the window itself
+						capture.Elements.Clear();
+						CaptureElement documentCaptureElement = documentContainer.CreateCaptureElements(pageSize);
+						foreach(DocumentContainer frameDocument in documentContainer.Frames) {
+							CaptureElement frameCaptureElement = frameDocument.CreateCaptureElements(Size.Empty);
+							if (frameCaptureElement != null) {
+								documentCaptureElement.Children.Add(frameCaptureElement);
+							}
+						}
+						capture.AddElement(documentCaptureElement);
+						// Offset the elements, as they are "back offseted" later...
+						Point windowLocation = documentContainer.ContentWindow.WindowRectangle.Location;
+						capture.MoveElements(-(capture.ScreenBounds.Location.X-windowLocation.X), -(capture.ScreenBounds.Location.Y-windowLocation.Y));
+					}
+				} catch (Exception elementsException) {
+					LOG.Warn("An error occurred while creating the capture elements: ", elementsException);
+				}
+	
 				
 				if (returnBitmap == null) {
 					return null;
@@ -295,9 +294,37 @@ namespace Greenshot.Helpers {
 				capture.Image = returnBitmap;
 				// Store the location of the window
 				capture.Location = documentContainer.ContentWindow.Location;
-				// Store the title of the Page
-				capture.CaptureDetails.Title = documentContainer.Name;
-	
+
+				// Store the title of the page
+				if (documentContainer.Name != null) {
+					capture.CaptureDetails.Title = documentContainer.Name;
+				} else {
+					capture.CaptureDetails.Title = activeWindow.Text;
+				}
+
+				// Store the URL of the page
+				if (documentContainer.Url != null) {
+					Uri uri = new Uri(documentContainer.Url);
+					capture.CaptureDetails.AddMetaData("URL", uri.OriginalString);
+					// As the URL can hardly be used in a filename, the following can be used
+					if (!string.IsNullOrEmpty(uri.Scheme)) {
+						capture.CaptureDetails.AddMetaData("URL_SCHEME", uri.Scheme);
+					}
+					if (!string.IsNullOrEmpty(uri.DnsSafeHost)) {
+						capture.CaptureDetails.AddMetaData("URL_HOSTNAME", uri.DnsSafeHost);
+					}
+					if (!string.IsNullOrEmpty(uri.AbsolutePath)) {
+						capture.CaptureDetails.AddMetaData("URL_PATH", uri.AbsolutePath);
+					}
+					if (!string.IsNullOrEmpty(uri.Query)) {
+						capture.CaptureDetails.AddMetaData("URL_QUERY", uri.Query);
+					}
+					if (!string.IsNullOrEmpty(uri.UserInfo)) {
+						capture.CaptureDetails.AddMetaData("URL_USER", uri.UserInfo);
+					}
+					capture.CaptureDetails.AddMetaData("URL_PORT", uri.Port.ToString());
+				}
+
 				// Only move the mouse to correct for the capture offset
 				capture.MoveMouseLocation(-documentContainer.ViewportRectangle.X, -documentContainer.ViewportRectangle.Y);
 				// Used to be: capture.MoveMouseLocation(-(capture.Location.X + documentContainer.CaptureOffset.X), -(capture.Location.Y + documentContainer.CaptureOffset.Y));
@@ -307,14 +334,14 @@ namespace Greenshot.Helpers {
 			}
 			return capture;
 		}
-
+		
 		/// <summary>
-		/// Capture the actual page (document)
+		/// Prepare the calculates for all the frames, move and fit...
 		/// </summary>
-		/// <param name="documentContainer">The document wrapped in a container</param>
-		/// <returns>Bitmap with the page content as an image</returns>
-		private static Bitmap capturePage(DocumentContainer documentContainer, ICapture capture) {
-			WindowDetails contentWindowDetails = documentContainer.ContentWindow;
+		/// <param name="documentContainer"></param>
+		/// <param name="capture"></param>
+		/// <returns>Size of the complete page</returns>
+		private static Size PrepareCapture(DocumentContainer documentContainer, ICapture capture) {
 			// Calculate the page size
 			int pageWidth = documentContainer.ScrollWidth;
 			int pageHeight = documentContainer.ScrollHeight;
@@ -391,9 +418,19 @@ namespace Greenshot.Helpers {
 				LOG.WarnFormat("Capture has a height of {0} which bigger than the maximum supported {1}, cutting height to the maxium", pageHeight, short.MaxValue);
 				pageHeight = Math.Min(pageHeight, short.MaxValue);
 			}
-			
+			return new Size(pageWidth, pageHeight);
+		}
+
+		/// <summary>
+		/// Capture the actual page (document)
+		/// </summary>
+		/// <param name="documentContainer">The document wrapped in a container</param>
+		/// <returns>Bitmap with the page content as an image</returns>
+		private static Bitmap capturePage(DocumentContainer documentContainer, ICapture capture, Size pageSize) {
+			WindowDetails contentWindowDetails = documentContainer.ContentWindow;
+
 			//Create a target bitmap to draw into with the calculated page size
-			Bitmap returnBitmap = new Bitmap(pageWidth, pageHeight, PixelFormat.Format24bppRgb);
+			Bitmap returnBitmap = new Bitmap(pageSize.Width, pageSize.Height, PixelFormat.Format24bppRgb);
 			using (Graphics graphicsTarget = Graphics.FromImage(returnBitmap)) {
 				// Clear the target with the backgroundcolor
 				Color clearColor = documentContainer.BackgroundColor;
@@ -402,7 +439,7 @@ namespace Greenshot.Helpers {
 
 				// Get the base document & draw it
 				drawDocument(documentContainer, contentWindowDetails, graphicsTarget);
-				//ParseElements(documentContainer, graphicsTarget, returnBitmap);
+				
 				// Loop over the frames and clear their source area so we don't see any artefacts
 				foreach(DocumentContainer frameDocument in documentContainer.Frames) {
 					using(Brush brush = new SolidBrush(clearColor)) {
@@ -412,7 +449,6 @@ namespace Greenshot.Helpers {
 				// Loop over the frames and capture their content
 				foreach(DocumentContainer frameDocument in documentContainer.Frames) {
 					drawDocument(frameDocument, contentWindowDetails, graphicsTarget);
-					//ParseElements(frameDocument, graphicsTarget, returnBitmap);
 				}
 			}
 			return returnBitmap;
@@ -499,7 +535,7 @@ namespace Greenshot.Helpers {
 						try {
 							// cut all junk, due to IE "border" we need to remove some parts
 							Rectangle viewportRect = documentContainer.ViewportRectangle;
-							if (!Rectangle.Empty.Equals(viewportRect)) {
+							if (!viewportRect.IsEmpty) {
 								LOG.DebugFormat("Cropping to viewport: {0}", viewportRect);
 								ImageHelper.Crop(ref fragment, ref viewportRect);
 							}

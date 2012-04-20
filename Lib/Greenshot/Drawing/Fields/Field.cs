@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -33,10 +33,16 @@ namespace Greenshot.Drawing.Fields {
 		
 		public object myValue;
 		public object Value {
-			get { return myValue; }
-			set { if(!object.Equals(myValue,value)) {
+			get {
+				return myValue;
+			}
+			set {
+				if (!object.Equals(myValue,value)) {
 					myValue = value; 
-					if(PropertyChanged!=null) PropertyChanged(this, new PropertyChangedEventArgs("Value")); }
+					if (PropertyChanged!=null) {
+						PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+					}
+				}
 			}
 		}
 		public FieldType FieldType;

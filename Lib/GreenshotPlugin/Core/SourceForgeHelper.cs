@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -68,19 +68,26 @@ namespace GreenshotPlugin.Core {
 	/// </summary>
 	public class SourceForgeHelper {
 		private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(SourceForgeHelper));
-		private const String RSSFEED = "https://sourceforge.net/api/file/index/project-id/191585/mtime/desc/rss";
+		private const String RSSFEED = "http://sourceforge.net/api/file/index/project-id/191585/mtime/desc/rss";
 
 		/// <summary>
 		/// Read the Greenshot RSS feed, so we can use this information to check for updates
 		/// </summary>
 		/// <returns>Dictionary<string, Dictionary<string, RssFile>> with files and their RssFile "description"</returns>
 		public static Dictionary<string, Dictionary<string, SourceforgeFile>> readRSS() {
-			HttpWebRequest webRequest = (HttpWebRequest)GreenshotPlugin.Core.NetworkHelper.CreatedWebRequest(RSSFEED);
-			XmlTextReader rssReader = new XmlTextReader(webRequest.GetResponse().GetResponseStream());
+			HttpWebRequest webRequest;
 			XmlDocument rssDoc = new XmlDocument();
-
-			// Load the XML content into a XmlDocument
-			rssDoc.Load(rssReader);
+			try {
+				webRequest = (HttpWebRequest)GreenshotPlugin.Core.NetworkHelper.CreateWebRequest(RSSFEED);
+				XmlTextReader rssReader = new XmlTextReader(webRequest.GetResponse().GetResponseStream());
+	
+				// Load the XML content into a XmlDocument
+				rssDoc.Load(rssReader);
+			} catch (Exception wE) {
+				LOG.WarnFormat("Problem reading RSS from {0}", RSSFEED);
+				LOG.Warn(wE.Message);
+				return null;
+			}
 			
 			// Loop for the <rss> tag
 			XmlNode nodeRss = null;

@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using Crop;
 using Gif.Components;
 using GraphicsMgrLib;
+using Greenshot.Plugin;
 using HelpersLib;
 using HistoryLib;
 using ImageQueue;
@@ -165,8 +166,11 @@ namespace ZScreenLib
         #region 0 Events
 
         public event TaskEventHandler UploadCompleted;
+
         public event TaskEventHandler UploadPreparing;
+
         public event TaskEventHandler UploadProgressChanged2;
+
         public event TaskEventHandler UploadStarted;
 
         #endregion 0 Events
@@ -880,7 +884,8 @@ namespace ZScreenLib
                                 Directory.CreateDirectory(APPLICATIONDATA_LANGUAGE_PATH);
                             Greenshot.MainForm.Start(new string[0]);
 
-                            var capture = new Greenshot.Helpers.Capture(TempImage);
+                            ICapture capture = new GreenshotPlugin.Core.Capture();
+                            capture.Image = TempImage;
                             capture.CaptureDetails.Filename = Info.LocalFilePath;
                             capture.CaptureDetails.Title =
                                 Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
@@ -888,6 +893,7 @@ namespace ZScreenLib
                             capture.CaptureDetails.AddMetaData("source", "file");
 
                             var surface = new Greenshot.Drawing.Surface(capture);
+
                             var editor = new Greenshot.ImageEditorForm(surface,
                                                              WorkflowConfig.DestConfig.Outputs.Contains(
                                                                  OutputEnum.LocalDisk)) { Icon = Resources.zss_tray };

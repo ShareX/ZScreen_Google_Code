@@ -1,6 +1,6 @@
 ﻿/*
  * Greenshot - a free and open source screenshot tool
- * Copyright (C) 2007-2011  Thomas Braun, Jens Klingen, Robin Krom
+ * Copyright (C) 2007-2012  Thomas Braun, Jens Klingen, Robin Krom
  * 
  * For more information see: http://getgreenshot.org/
  * The Greenshot project is hosted on Sourceforge: http://sourceforge.net/projects/greenshot/
@@ -27,12 +27,9 @@ namespace Greenshot.Helpers {
 	/// (parent) OwnerItems are ENabled with ToolStripItems, 
 	/// (child) DropDownItems are ENabled and DISabled with ToolStripItems.
 	/// </summary>
-	public class ToolStripItemEndisabler {
+	public static class ToolStripItemEndisabler {
 		[Flags]
 		enum PropagationMode {NONE=0, CHILDREN=1, ANCESTORS=2};
-		
-		private ToolStripItemEndisabler() {
-		}
 		
 		/// <summary>
 		/// Enables all of a ToolStrip's children (recursively),
