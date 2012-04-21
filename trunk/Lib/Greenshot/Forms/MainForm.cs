@@ -59,9 +59,6 @@ namespace Greenshot
             bool isAlreadyRunning = false;
             List<string> filesToOpen = new List<string>();
 
-            // Set the Thread name, is better than "1"
-            Thread.CurrentThread.Name = Application.ProductName;
-
             // Init Log4NET
             LogFileLocation = LogHelper.InitializeLog4NET();
             // Get logger
@@ -237,7 +234,8 @@ namespace Greenshot
                     }
                 }
 
-                MainForm.instance = new MainForm(transport);
+                if (MainForm.instance == null)
+                    MainForm.instance = new MainForm(transport);
 
                 // if language is not set, show language dialog
                 if (string.IsNullOrEmpty(conf.Language))
@@ -255,8 +253,6 @@ namespace Greenshot
                     IniConfig.Save();
                     transport.AddCommand(CommandEnum.FirstLaunch);
                 }
-
-                
             }
             catch (Exception ex)
             {

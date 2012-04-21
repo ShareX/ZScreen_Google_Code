@@ -882,7 +882,8 @@ namespace ZScreenLib
                             string LANGUAGE_PATH = Path.Combine(Application.StartupPath, @"Languages");
                             if (!Directory.Exists(LANGUAGE_PATH))
                                 Directory.CreateDirectory(LANGUAGE_PATH);
-                            Greenshot.MainForm.Start(new string[0]);
+                            if (Greenshot.MainForm.instance == null)
+                                Greenshot.MainForm.Start(new string[0]);
 
                             CoreConfiguration coreConfiguration = IniConfig.GetIniSection<CoreConfiguration>();
                             coreConfiguration.OutputFileFilenamePattern = "${title}";
