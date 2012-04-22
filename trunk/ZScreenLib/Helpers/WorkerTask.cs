@@ -1135,7 +1135,7 @@ namespace ZScreenLib
 
                 DebugHelper.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
 
-                if (Engine.ConfigUI != null && Engine.ConfigUI.ShowOutputsAsap)
+                if (Engine.ConfigUI != null && this.WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
                     MyWorker.ReportProgress((int)ProgressType.CopyToClipboardImage, img.Clone());
@@ -1488,7 +1488,7 @@ namespace ZScreenLib
                             {
                                 case JobLevel2.Translate:
                                     SetTranslationInfo(
-                                        new GoogleTranslate(Engine.ConfigUI.ApiKeys.GoogleApiKey).TranslateText(TranslationInfo));
+                                        new GoogleTranslate(Engine.ConfigUI.ApiKeysConfig.GoogleApiKey).TranslateText(TranslationInfo));
                                     SetText(TranslationInfo.Result);
                                     break;
                                 default:
@@ -1612,11 +1612,11 @@ namespace ZScreenLib
 
                 if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.BITLY))
                 {
-                    us = new BitlyURLShortener(Engine.ConfigUI.ApiKeys.BitlyLogin, Engine.ConfigUI.ApiKeys.BitlyKey);
+                    us = new BitlyURLShortener(Engine.ConfigUI.ApiKeysConfig.BitlyLogin, Engine.ConfigUI.ApiKeysConfig.BitlyKey);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
                 {
-                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, Engine.ConfigUI.ApiKeys.GoogleApiKey, Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
+                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, Engine.ConfigUI.ApiKeysConfig.GoogleApiKey, Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
@@ -1624,7 +1624,7 @@ namespace ZScreenLib
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Jmp))
                 {
-                    us = new JmpURLShortener(Engine.ConfigUI.ApiKeys.BitlyLogin, Engine.ConfigUI.ApiKeys.BitlyKey);
+                    us = new JmpURLShortener(Engine.ConfigUI.ApiKeysConfig.BitlyLogin, Engine.ConfigUI.ApiKeysConfig.BitlyKey);
                 }
                 else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TINYURL))
                 {
@@ -1662,7 +1662,7 @@ namespace ZScreenLib
                 case FileDestination.FTP:
                     if (Engine.ConfigUI.ShowFTPSettingsBeforeUploading)
                     {
-                        var ucf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys);
+                        var ucf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeysConfig);
                         ucf.Icon = Resources.zss_main;
                         ucf.tcUploaders.SelectedTab = ucf.tpFileUploaders;
                         ucf.tcFileUploaders.SelectedTab = ucf.tpFTP;
@@ -1683,7 +1683,7 @@ namespace ZScreenLib
                     }
                     break;
                 case FileDestination.Minus:
-                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(Engine.ConfigUI.ApiKeys.MinusConsumerKey, Engine.ConfigUI.ApiKeys.MinusConsumerSecret));
+                    fileUploader = new Minus(Engine.ConfigUploaders.MinusConfig, new OAuthInfo(Engine.ConfigUI.ApiKeysConfig.MinusConsumerKey, Engine.ConfigUI.ApiKeysConfig.MinusConsumerSecret));
                     break;
                 case FileDestination.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.ConfigUploaders.DropboxUploadPath));
@@ -1701,14 +1701,14 @@ namespace ZScreenLib
                      };
                     break;
                 case FileDestination.SendSpace:
-                    fileUploader = new SendSpace(Engine.ConfigUI.ApiKeys.SendSpaceKey);
+                    fileUploader = new SendSpace(Engine.ConfigUI.ApiKeysConfig.SendSpaceKey);
                     switch (Engine.ConfigUploaders.SendSpaceAccountType)
                     {
                         case AccountType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeys.SendSpaceKey);
+                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeysConfig.SendSpaceKey);
                             break;
                         case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeys.SendSpaceKey, Engine.ConfigUploaders.SendSpaceUsername, Engine.ConfigUploaders.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Engine.ConfigUI.ApiKeysConfig.SendSpaceKey, Engine.ConfigUploaders.SendSpaceUsername, Engine.ConfigUploaders.SendSpacePassword);
                             break;
                     }
                     break;
@@ -1793,7 +1793,7 @@ namespace ZScreenLib
             switch (imageUploaderType)
             {
                 case ImageDestination.ImageShack:
-                    imageUploader = new ImageShackUploader(Engine.ConfigUI.ApiKeys.ImageShackKey,
+                    imageUploader = new ImageShackUploader(Engine.ConfigUI.ApiKeysConfig.ImageShackKey,
                                                            Engine.ConfigUploaders.ImageShackAccountType,
                                                            Engine.ConfigUploaders.ImageShackRegistrationCode)
                                         {
@@ -1801,19 +1801,19 @@ namespace ZScreenLib
                                         };
                     break;
                 case ImageDestination.TinyPic:
-                    imageUploader = new TinyPicUploader(Engine.ConfigUI.ApiKeys.TinyPicID, Engine.ConfigUI.ApiKeys.TinyPicKey,
+                    imageUploader = new TinyPicUploader(Engine.ConfigUI.ApiKeysConfig.TinyPicID, Engine.ConfigUI.ApiKeysConfig.TinyPicKey,
                                                         Engine.ConfigUploaders.TinyPicAccountType,
                                                         Engine.ConfigUploaders.TinyPicRegistrationCode);
                     break;
                 case ImageDestination.Imgur:
-                    imageUploader = new Imgur(Engine.ConfigUploaders.ImgurAccountType, Engine.ConfigUI.ApiKeys.ImgurAnonymousKey,
+                    imageUploader = new Imgur(Engine.ConfigUploaders.ImgurAccountType, Engine.ConfigUI.ApiKeysConfig.ImgurAnonymousKey,
                                               Engine.ConfigUploaders.ImgurOAuthInfo)
                                         {
                                             ThumbnailType = Engine.ConfigUploaders.ImgurThumbnailType
                                         };
                     break;
                 case ImageDestination.Flickr:
-                    imageUploader = new FlickrUploader(Engine.ConfigUI.ApiKeys.FlickrKey, Engine.ConfigUI.ApiKeys.FlickrSecret,
+                    imageUploader = new FlickrUploader(Engine.ConfigUI.ApiKeysConfig.FlickrKey, Engine.ConfigUI.ApiKeysConfig.FlickrSecret,
                                                        Engine.ConfigUploaders.FlickrAuthInfo,
                                                        Engine.ConfigUploaders.FlickrSettings);
                     break;
@@ -1822,7 +1822,7 @@ namespace ZScreenLib
                                                     Engine.ConfigUploaders.PhotobucketAccountInfo);
                     break;
                 case ImageDestination.UploadScreenshot:
-                    imageUploader = new UploadScreenshot(Engine.ConfigUI.ApiKeys.UploadScreenshotKey);
+                    imageUploader = new UploadScreenshot(Engine.ConfigUI.ApiKeysConfig.UploadScreenshotKey);
                     break;
                 case ImageDestination.Twitpic:
                     var twitpicOpt = new TwitPicOptions();
@@ -1834,10 +1834,10 @@ namespace ZScreenLib
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageDestination.Twitsnaps:
-                    imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
+                    imageUploader = new TwitSnapsUploader(Engine.ConfigUI.ApiKeysConfig.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
                     break;
                 case ImageDestination.yFrog:
-                    var yfrogOp = new YfrogOptions(Engine.ConfigUI.ApiKeys.ImageShackKey);
+                    var yfrogOp = new YfrogOptions(Engine.ConfigUI.ApiKeysConfig.ImageShackKey);
                     yfrogOp.Username = Engine.ConfigUploaders.YFrogUsername;
                     yfrogOp.Password = Engine.ConfigUploaders.YFrogPassword;
                     yfrogOp.Source = Application.ProductName;
@@ -1929,10 +1929,10 @@ namespace ZScreenLib
             switch (textUploaderType)
             {
                 case TextDestination.Pastebin:
-                    textUploader = new PastebinUploader(Engine.ConfigUI.ApiKeys.PastebinKey, Engine.ConfigUploaders.PastebinSettings);
+                    textUploader = new PastebinUploader(Engine.ConfigUI.ApiKeysConfig.PastebinKey, Engine.ConfigUploaders.PastebinSettings);
                     break;
                 case TextDestination.PastebinCA:
-                    textUploader = new PastebinCaUploader(Engine.ConfigUI.ApiKeys.PastebinCaKey);
+                    textUploader = new PastebinCaUploader(Engine.ConfigUI.ApiKeysConfig.PastebinCaKey);
                     break;
                 case TextDestination.Paste2:
                     textUploader = new Paste2Uploader();

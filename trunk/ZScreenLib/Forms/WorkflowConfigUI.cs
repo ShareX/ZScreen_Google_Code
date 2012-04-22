@@ -318,7 +318,7 @@ namespace ZScreenLib
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys) { Icon = this.Icon };
+            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeysConfig) { Icon = this.Icon };
             ocf.ShowDialog();
             Engine.ConfigUploaders = ocf.Config;
         }
