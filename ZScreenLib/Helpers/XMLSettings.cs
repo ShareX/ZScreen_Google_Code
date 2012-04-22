@@ -186,6 +186,7 @@ namespace ZScreenLib
         // Proxy Settings
         //~~~~~~~~~~~~~~~
         public ProxyConfig ConfigProxy = new ProxyConfig();
+
         public List<int> ConfLinkFormat = new List<int>();
         public List<int> ConfOutputs = new List<int>();
         public XColor CropBorderArgb = Color.FromArgb(255, 0, 255);
@@ -388,7 +389,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General - Program
-        public UploadersAPIKeys ApiKeys = new UploadersAPIKeys();
+        public UploadersAPIKeys ApiKeysConfig = new UploadersAPIKeys();
 
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }

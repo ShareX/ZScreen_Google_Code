@@ -81,7 +81,7 @@ namespace ZScreenGUI
             {
                 if (_ApiKeysUI == null || _ApiKeysUI.IsDisposed)
                 {
-                    _ApiKeysUI = new ApiKeysUI(ref Engine.ConfigUI.ApiKeys) { Icon = Resources.zss_tray };
+                    _ApiKeysUI = new ApiKeysUI(ref Engine.ConfigUI.ApiKeysConfig) { Icon = Resources.zss_tray };
                 }
                 return _ApiKeysUI;
             }

@@ -312,7 +312,7 @@ namespace ZScreenLib
 
         public void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
-            UploadersConfigForm form = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeys);
+            UploadersConfigForm form = new UploadersConfigForm(Engine.ConfigUploaders, Engine.ConfigUI.ApiKeysConfig);
             form.Icon = Resources.zss_main;
             if (form.ShowDialog() == DialogResult.OK)
             {
