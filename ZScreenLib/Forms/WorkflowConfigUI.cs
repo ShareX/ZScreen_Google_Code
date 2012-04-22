@@ -373,19 +373,6 @@ namespace ZScreenLib
             }
         }
 
-        private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTaskOutputConfig.Checked)
-            {
-                tcMain.TabPages.Insert(0, tpOutputs);
-                tcMain.SelectedTab = tpOutputs;
-            }
-            else
-            {
-                tcMain.TabPages.Remove(tpOutputs);
-            }
-        }
-
         private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
         {
             UpdateImageSize();
@@ -489,16 +476,14 @@ namespace ZScreenLib
             }
 
             tcMain.TabPages.Clear();
+            tcMain.TabPages.Add(tpOutputs);
+
             if (gui != null)
             {
                 gbTasks.Visible = false;
                 this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
                 this.Width = this.MinimumSize.Width;
                 this.GUI = gui;
-            }
-            else
-            {
-                chkTaskOutputConfig.Checked = true;
             }
             if (task != null)
             {
