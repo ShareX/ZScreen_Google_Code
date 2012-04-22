@@ -1,4 +1,4 @@
-﻿namespace HelpersLib
+﻿namespace UploadersLib
 {
     partial class ApiKeysUI
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pgAppConfig = new System.Windows.Forms.PropertyGrid();
+            this.btnReset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // pgAppConfig
@@ -37,13 +38,25 @@
             this.pgAppConfig.Location = new System.Drawing.Point(0, 0);
             this.pgAppConfig.Name = "pgAppConfig";
             this.pgAppConfig.Size = new System.Drawing.Size(568, 366);
-            this.pgAppConfig.TabIndex = 1;
+            this.pgAppConfig.TabIndex = 0;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReset.Location = new System.Drawing.Point(488, 336);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(74, 22);
+            this.btnReset.TabIndex = 1;
+            this.btnReset.Text = "&Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // ApiKeysUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 366);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pgAppConfig);
             this.MinimumSize = new System.Drawing.Size(576, 400);
             this.Name = "ApiKeysUI";
@@ -56,5 +69,6 @@
         #endregion
 
         internal System.Windows.Forms.PropertyGrid pgAppConfig;
+        private System.Windows.Forms.Button btnReset;
     }
 }

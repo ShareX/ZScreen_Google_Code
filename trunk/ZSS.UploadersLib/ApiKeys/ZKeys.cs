@@ -23,12 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-namespace HelpersLib
+namespace UploadersLib
 {
     public static class ZKeys
     {
         // Image Uploaders
-        public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
+        public const string ImageShackKey = "7ABLORTXe8d0bd49be7704185b5d31d6036d6196";
         public const string TinyPicID = "e2aabb8d555322fa";
         public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
         public const string ImgurAnonymousKey = "af2fde9818ae53e7670ab52fb8ade644";
