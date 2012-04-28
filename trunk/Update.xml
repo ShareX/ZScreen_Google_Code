@@ -2,12 +2,20 @@
 <Update>
   <ShareX>
     <Stable>
-      <Version>5.5.0.3030</Version>
+      <Version>6.0.0.35</Version>
       <URL>http://zscreen.googlecode.com/files/ZUploader-5.5.0.3030-setup.exe</URL>
-      <Date>2012-03-07</Date>
+      <Date>2012-06-07</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZUploader/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ShareX>
+  <ShareXmod>
+    <Stable>
+      <Version>6.0.0.15</Version>
+      <URL>http://zscreen.googlecode.com/files/ZUploader-5.5.0.3030-setup.exe</URL>
+      <Date>2012-06-07</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZUploader/Docs/VersionHistory.txt</Summary>
+    </Stable>
+  </ShareXmod>
   <ZScreen>
     <Stable>
       <Version>4.9.0.3033</Version>
