@@ -163,7 +163,7 @@ namespace UploadersLib.FileUploaders
             object s = new object();
             AsyncCallback ac = new AsyncCallback(CallBack);
 
-            var result = client.BeginUploadFile(stream, fileName, ac, s);
+            var result = client.BeginUploadFile(stream, Path.GetFileName(fileName), ac, s);
             SftpUploadAsyncResult sftpresult = result as SftpUploadAsyncResult;
 
             while (!sftpresult.IsCompleted)
