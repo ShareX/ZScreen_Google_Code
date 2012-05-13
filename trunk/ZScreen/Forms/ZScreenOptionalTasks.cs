@@ -107,8 +107,10 @@ namespace ZScreenGUI
                 {
                     Adapter.TestFTPAccount(acc, true);
                 }
-
-                CheckUpdate();
+                if (Engine.ConfigUI.CheckUpdates)
+                {
+                    CheckUpdate();
+                }
             }
             catch (Exception ex)
             {

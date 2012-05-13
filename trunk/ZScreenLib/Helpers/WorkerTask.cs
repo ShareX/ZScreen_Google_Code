@@ -2056,7 +2056,7 @@ namespace ZScreenLib
                     {
                         Directory.CreateDirectory(destDir);
                     }
-                    File.Copy(Info.LocalFilePath, destFile);
+                    File.Copy(Info.LocalFilePath, destFile, true);
                     UpdateLocalFilePath(destFile);
                 }
                 else if (TempImage != null)
