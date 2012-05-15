@@ -63,7 +63,7 @@
       <DependentUpon>FileNamingUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicsEx.cs" />
-    <Compile Include="ImageEffects\ImageEffects.cs" />
+    <Compile Include="ImageEffects\ScreenshotEffects.cs" />
     <Compile Include="ImageEffects\ImageEffectsConfig.cs" />
     <Compile Include="Watermark\WatermarkEffects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,9 +99,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphicsManagerLib\GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\HelpersLib.GraphicsHelper\HelpersLib.GraphicsHelper.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
-      <Name>GraphicsManagerLib</Name>
+      <Name>HelpersLib.GraphicsHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>

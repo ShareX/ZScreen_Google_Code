@@ -13,11 +13,11 @@ using System.Threading;
 using System.Windows.Forms;
 using Crop;
 using Gif.Components;
-using GraphicsMgrLib;
 using Greenshot.IniFile;
 using Greenshot.Plugin;
 using GreenshotPlugin.Core;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using HistoryLib;
 using ImageQueue;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -468,7 +468,7 @@ namespace ZScreenLib
                 {
                     if (WorkflowConfig.ActiveWindowShowCheckers)
                     {
-                        TempImage = ImageEffects.DrawCheckers(TempImage);
+                        TempImage = ZScreenCoreLib.ScreenshotEffectsHelper.DrawCheckers(TempImage);
                     }
                 }
 
@@ -653,7 +653,7 @@ namespace ZScreenLib
 
         private bool CreateThumbnail()
         {
-            return GraphicsMgr.IsValidImage(Info.LocalFilePath) && TempImage != null &&
+            return HelpersLib.GraphicsHelper.Core.IsValidImage(Info.LocalFilePath) && TempImage != null &&
                    (Engine.ConfigUI.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
                     Engine.ConfigUI.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL_WIKI) ||
                     Engine.ConfigUI.ConfLinkFormat.Contains((int)LinkFormatEnum.LinkedThumbnailHtml) ||
@@ -914,7 +914,7 @@ namespace ZScreenLib
                     }
                     else if (IsValidActionImage(app) && app.Name == Engine.zImageEffects)
                     {
-                        var effects = new ImageEffectsGUI(TempImage);
+                        var effects = new ImageEffects.ImageEffectsGUI(TempImage);
                         effects.ShowDialog();
                         TempImage = effects.GetImageForExport();
                     }
@@ -959,19 +959,19 @@ namespace ZScreenLib
                     bool roundedShadowCorners = false;
                     if (Engine.ConfigUI.ImageAddRoundedCorners)
                     {
-                        img = GraphicsMgr.RemoveCorners(img, null);
+                        img = HelpersLib.GraphicsHelper.Core.RemoveCorners(img, null);
                         roundedShadowCorners = true;
                     }
 
                     // Add shadows
                     if (Engine.ConfigUI.ImageAddShadow)
                     {
-                        img = GraphicsMgr.AddBorderShadow(img, roundedShadowCorners);
+                        img = HelpersLib.GraphicsHelper.Core.AddBorderShadow(img, roundedShadowCorners);
                     }
                 }
 
                 // Effects
-                var effects = new ImageEffects(Engine.ConfigOptions.ConfigImageEffects);
+                var effects = new ZScreenCoreLib.ScreenshotEffectsHelper(Engine.ConfigOptions.ConfigImageEffects);
                 img = effects.ApplySizeChanges(img);
                 img = effects.ApplyScreenshotEffects(img);
 
@@ -1123,7 +1123,7 @@ namespace ZScreenLib
 
         public bool SetImage(string savePath)
         {
-            return SetImage(GraphicsMgr.GetImageSafely(savePath), savePath);
+            return SetImage(HelpersLib.GraphicsHelper.Core.GetImageSafely(savePath), savePath);
         }
 
         public bool SetImage(Image img, string savePath = "")
@@ -1312,7 +1312,7 @@ namespace ZScreenLib
                 {
                     Job1 = EDataType.Image;
                     IsImage = true;
-                    if (TempImage == null && GraphicsMgr.IsValidImage(fp) && Job3 != JobLevel3.CreateAnimatedImage)
+                    if (TempImage == null && HelpersLib.GraphicsHelper.Core.IsValidImage(fp) && Job3 != JobLevel3.CreateAnimatedImage)
                     {
                         TempImage = FileSystem.ImageFromFile(fp); // todo: check if required
                     }
@@ -1336,7 +1336,7 @@ namespace ZScreenLib
                 {
                     double thar = Engine.ConfigUploaders.FTPThumbnailWidthLimit / (double)TempImage.Width;
                     using (
-                        Image img = GraphicsMgr.ChangeImageSize(TempImage, Engine.ConfigUploaders.FTPThumbnailWidthLimit,
+                        Image img = HelpersLib.GraphicsHelper.Core.ChangeImageSize(TempImage, Engine.ConfigUploaders.FTPThumbnailWidthLimit,
                                                                 (int)(thar * TempImage.Height)))
                     {
                         var sb = new StringBuilder(Path.GetFileNameWithoutExtension(Info.LocalFilePath));

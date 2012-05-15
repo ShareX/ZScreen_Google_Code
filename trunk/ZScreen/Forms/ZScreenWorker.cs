@@ -31,8 +31,8 @@ using System.IO;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
@@ -528,7 +528,7 @@ namespace ZScreenGUI
                 {
                     if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
                     {
-                        if (GraphicsMgr.IsValidImage(fp))
+                        if (HelpersLib.GraphicsHelper.Core.IsValidImage(fp))
                         {
                             string dirfp = Path.GetDirectoryName(fp);
                             string fsfp = FileSystem.GetUniqueFilePath(Engine.ConfigWorkflow, Engine.ImagesDir, Path.GetFileName(fp));
@@ -574,7 +574,7 @@ namespace ZScreenGUI
 
             strListFilePath.Sort();
             List<Image> tempImages = new List<Image>();
-            bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.ConfigWorkflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
+            bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.ConfigWorkflow.ImageAnimatedFramesMax && HelpersLib.GraphicsHelper.Core.HasIdenticalImages(strListFilePath, out tempImages);
 
             if (bCreateAni)
             {

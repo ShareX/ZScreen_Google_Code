@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Xml.Serialization;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 
 namespace ZScreenCoreLib
 {

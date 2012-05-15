@@ -6,12 +6,12 @@ using System.Drawing.Text;
 using System.IO;
 using System.Windows.Forms;
 using GradientTester;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 
 namespace ZScreenCoreLib
 {
-    public class WatermarkEffects : ImageEffects
+    public class WatermarkEffects : ScreenshotEffectsHelper
     {
         #region 0 Constructors
 
@@ -93,7 +93,7 @@ namespace ZScreenCoreLib
                 {
                     int offset = (int)Config.WatermarkOffset;
                     Image img2 = Image.FromFile(imgPath);
-                    img2 = GraphicsMgr.ChangeImageSize((Bitmap)img2, (float)Config.WatermarkImageScale);
+                    img2 = HelpersLib.GraphicsHelper.Core.ChangeImageSize((Bitmap)img2, (float)Config.WatermarkImageScale);
                     Point imgPos = FindPosition(Config.WatermarkPositionMode, offset, img.Size, img2.Size, 0);
                     if (Config.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
                         (img.Height < img2.Height + offset)))

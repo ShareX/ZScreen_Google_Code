@@ -34,8 +34,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
@@ -167,7 +167,7 @@ namespace ZScreenLib
         {
             if (ni != null)
             {
-                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress()))
+                using (Bitmap img = (Bitmap)HelpersLib.GraphicsHelper.Core.DrawProgressIcon(UploadManager.GetAverageProgress()))
                 {
                     IntPtr hicon = img.GetHicon();
                     ni.Icon = Icon.FromHandle(hicon);
