@@ -30,8 +30,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using ScreenCapture;
 using ZScreenCoreLib;
 using ZSS.ColorsLib;
@@ -223,7 +223,7 @@ namespace ZScreenLib
 
                 if (mouseDown && dragging)
                 {
-                    CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
+                    CropRegion = HelpersLib.GraphicsHelper.Core.GetRectangle(mousePos.X, mousePos.Y,
                         mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Engine.ConfigUI.CropGridSize,
                         Engine.ConfigUI.CropGridToggle, ref mousePos);
                     CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
@@ -338,7 +338,7 @@ namespace ZScreenLib
             {
                 int posY = labelRect.Y - offset.Y * 2 - 100;
                 if (posY < 5) posY = labelRect.Y + labelRect.Height + 10;
-                g.DrawImage(GraphicsMgr.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
+                g.DrawImage(HelpersLib.GraphicsHelper.Core.MagnifyingGlass((Bitmap)bmpClean, mousePos, 100, 5), labelRect.X, posY);
             }
         }
 

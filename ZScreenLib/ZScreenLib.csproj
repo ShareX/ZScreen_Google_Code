@@ -242,29 +242,17 @@
       <Project>{6C25F07A-A045-44E1-9B3E-AAE809A26B2A}</Project>
       <Name>FreeImageNetLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphicsManagerLib\GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\HelpersLib.GraphicsHelper\HelpersLib.GraphicsHelper.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
-      <Name>GraphicsManagerLib</Name>
+      <Name>HelpersLib.GraphicsHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageEffectsLib\ImagAdjustments\ImageAdjustmentsLib.csproj">
-      <Project>{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}</Project>
-      <Name>ImageAdjustmentsLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageEffectsLib\ImageFilters\ImageFiltersLib.csproj">
-      <Project>{E35F89F8-7EFB-4A2D-9D3A-F54EA627107F}</Project>
-      <Name>ImageFiltersLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageEffectsLib\ImageManipulation\ImageManipulationLib.csproj">
-      <Project>{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}</Project>
-      <Name>ImageManipulationLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageEffectsLib\ImageQueue\ImageQueueLib.csproj">
+    <ProjectReference Include="..\ImageEffects\ImageEffects\ImageEffectsGUI.csproj">
       <Project>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</Project>
-      <Name>ImageQueueLib</Name>
+      <Name>ImageEffectsGUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lib\GreenshotInterop\GreenshotInterop.csproj">
       <Project>{ADD4E400-56E1-4E31-A5C2-070BEB238A0F}</Project>
@@ -456,6 +444,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,8 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using UploadersLib;
 using ZScreenGUI.Properties;
 
@@ -173,7 +173,7 @@ namespace ZScreenLib
                     bwRemoteViewer.RunWorkerAsync(rvt);
                 }
 
-                if (GraphicsMgr.IsValidImage(fp))
+                if (HelpersLib.GraphicsHelper.Core.IsValidImage(fp))
                 {
                     pbViewer.Left = 0;
                     pbViewer.Top = 0;
@@ -333,7 +333,7 @@ namespace ZScreenLib
                 case RemoteViewerTask.ProgressType.VIEWING_FILE:
                     fp = (string)e.UserState;
                     DebugHelper.WriteLine("Viewing file: ", fp);
-                    if (GraphicsMgr.IsValidImage(fp))
+                    if (HelpersLib.GraphicsHelper.Core.IsValidImage(fp))
                     {
                         pbViewer.Visible = true;
                         txtViewer.Visible = false;

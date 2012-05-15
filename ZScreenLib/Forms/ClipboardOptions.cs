@@ -4,8 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
@@ -136,7 +136,7 @@ namespace ZScreenLib
         {
             if (File.Exists(urTask.Info.LocalFilePath))
             {
-                using (Image img = GraphicsMgr.GetImageSafely(urTask.Info.LocalFilePath))
+                using (Image img = HelpersLib.GraphicsHelper.Core.GetImageSafely(urTask.Info.LocalFilePath))
                 {
                     Adapter.CopyImageToClipboard(img, urTask.WorkflowConfig.ClipboardForceBmp);
                 }

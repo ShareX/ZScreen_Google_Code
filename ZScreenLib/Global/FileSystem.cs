@@ -30,8 +30,8 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using UploadersLib;
 
 namespace ZScreenLib
@@ -226,7 +226,7 @@ namespace ZScreenLib
 
         public static Image ImageFromFile(string fp)
         {
-            return GraphicsMgr.GetImageSafely(fp);
+            return HelpersLib.GraphicsHelper.Core.GetImageSafely(fp);
         }
 
         /// <summary>

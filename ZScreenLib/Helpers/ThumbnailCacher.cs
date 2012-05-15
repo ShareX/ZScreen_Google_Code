@@ -31,7 +31,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using GraphicsMgrLib;
+using HelpersLib.GraphicsHelper;
 
 namespace ZScreenLib.Helpers
 {
@@ -47,6 +47,7 @@ namespace ZScreenLib.Helpers
         private int bufferSize = 2048;
 
         public delegate void ProgressChangedEventHandler(int percentage, long position, long length);
+
         public event ProgressChangedEventHandler ProgressChanged;
 
         public ThumbnailCacher(PictureBox pictureBox, Size thumbnailSize, int capacity)
@@ -111,7 +112,7 @@ namespace ZScreenLib.Helpers
                         using (Image image = Image.FromStream(stream))
                         {
                             float perc = ThumbnailSize.Width * 100 / image.Width;
-                            thumb.Image = GraphicsMgr.ChangeImageSize(image, perc);
+                            thumb.Image = HelpersLib.GraphicsHelper.Core.ChangeImageSize(image, perc);
                             e.Result = thumb;
                         }
                     }

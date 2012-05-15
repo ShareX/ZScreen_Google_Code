@@ -27,8 +27,8 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using ScreenCapture;
 using ZScreenLib.Helpers;
 
@@ -102,11 +102,11 @@ namespace ZScreenLib
             if (wfdwm.ActiveWindowIncludeShadows)
             {
                 // Draw shadow manually to be able to have shadows in every case
-                windowImageDwm = GraphicsMgr.AddBorderShadow((Bitmap)windowImageDwm, true);
+                windowImageDwm = HelpersLib.GraphicsHelper.Core.AddBorderShadow((Bitmap)windowImageDwm, true);
 
                 if (wfdwm.DrawCursor)
                 {
-                    Point shadowOffset = GraphicsMgr.ShadowOffset;
+                    Point shadowOffset = HelpersLib.GraphicsHelper.Core.ShadowOffset;
 #if DEBUG
                     DebugHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
 #endif
@@ -220,7 +220,7 @@ namespace ZScreenLib
                     // Don't do transparency calculation if an animated picture is detected
                     if (whiteBGImage.AreBitmapsEqual(whiteBGImage2))
                     {
-                        windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                        windowImage = HelpersLib.GraphicsHelper.Core.ComputeOriginal(whiteBGImage, blackBGImage);
                     }
                     else
                     {
@@ -334,7 +334,7 @@ namespace ZScreenLib
 
                 if (wfgdi.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
                 {
-                    windowImageGdi = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                    windowImageGdi = HelpersLib.GraphicsHelper.Core.ComputeOriginal(whiteBGImage, blackBGImage);
                 }
                 else
                 {
@@ -350,7 +350,7 @@ namespace ZScreenLib
 
             if (windowImageGdi != null)
             {
-                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImageGdi);
+                Rectangle windowRectCropped = HelpersLib.GraphicsHelper.Core.GetCroppedArea((Bitmap)windowImageGdi);
                 windowImageGdi = CaptureHelpers.CropImage(windowImageGdi, windowRectCropped);
 
                 if (wfgdi.DrawCursor)
@@ -398,7 +398,7 @@ namespace ZScreenLib
                     }
                 }
 
-                return GraphicsMgr.RemoveCorners(windowImage, redBGImage);
+                return HelpersLib.GraphicsHelper.Core.RemoveCorners(windowImage, redBGImage);
             }
             return null;
         }

@@ -135,17 +135,13 @@
       <Project>{6241A05D-EF12-4769-B660-EF75060DF20E}</Project>
       <Name>DavuxLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphicsManagerLib\GraphicsManagerLib.csproj">
-      <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
-      <Name>GraphicsManagerLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
+    <ProjectReference Include="..\ScreenCapture.Shapes\ScreenCapture.Shapes.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
-      <Name>ScreenCapture</Name>
+      <Name>ScreenCapture.Shapes</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>

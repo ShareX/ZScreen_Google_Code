@@ -31,8 +31,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.GraphicsHelper;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -245,7 +245,7 @@ namespace ZScreenLib
 
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
-        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
+        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif", "m4v", "mp4" };
         public static string[] zTextFileTypes = { "txt", "log" };
         public static string[] zWebpageFileTypes = { "html", "htm" };
 
