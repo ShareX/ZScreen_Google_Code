@@ -28,4 +28,12 @@
       <Summary>http://sharex.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ZUploader>
+  <ShareXmod>
+    <Stable>
+      <Version>7.0.0.125</Version>
+      <URL>http://sharexmod.googlecode.com/files/ShareXmod-7.0.0.125-setup.exe</URL>
+      <Date>2012-05-21</Date>
+      <Summary>http://sharexmod.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
+    </Stable>
+  </ShareXmod>
 </Update>
