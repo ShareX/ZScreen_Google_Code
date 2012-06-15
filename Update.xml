@@ -2,37 +2,33 @@
 <Update>
   <ZScreen>
     <Stable>
-      <Version>4.9.0.3057</Version>
-      <URL>http://zscreen.googlecode.com/files/ZScreen-4.9.0.3057-dev-setup.exe</URL>
-      <Date>2012-05-12</Date>
-      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+      <Version>6.0.0.161</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.161-setup.exe</URL>
+      <Date>2012-06-10</Date>
+      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
     </Stable>
-    <Beta>
-      <Version>6.0.0.136</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.136-setup.exe</URL>
-      <Date>2012-05-27</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
-    </Beta>
-    <Dev>
-      <Version>6.0.0.136</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.136-setup.exe</URL>
-      <Date>2012-05-27</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
-    </Dev>
   </ZScreen>
   <ZUploader>
     <Stable>
-      <Version>6.0.0.136</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.136-setup.exe</URL>
-      <Date>2012-05-27</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
+      <Version>6.0.0.161</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.161-setup.exe</URL>
+      <Date>2012-06-10</Date>
+      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ZUploader>
+  <ShareX>
+    <Stable>
+      <Version>6.0.0.161</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.0.0.161-setup.exe</URL>
+      <Date>2012-06-10</Date>
+      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
+    </Stable>
+  </ShareX>
   <ShareXmod>
     <Stable>
-      <Version>7.0.0.125</Version>
-      <URL>http://sharexmod.googlecode.com/files/ShareXmod-7.0.0.125-setup.exe</URL>
-      <Date>2012-05-21</Date>
+      <Version>7.0.0.175</Version>
+      <URL>http://sharexmod.googlecode.com/files/ShareXmod-7.0.0.175-setup.exe</URL>
+      <Date>2012-06-03</Date>
       <Summary>http://sharexmod.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ShareXmod>
