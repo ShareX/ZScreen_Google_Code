@@ -1,0 +1,3 @@
+#summary ShareXmod Summary
+
+ShareXmod is a derivative of [http://code.google.com/p/sharex/ ShareX].
