@@ -2,26 +2,26 @@
 <Update>
   <ZScreen>
     <Stable>
-      <Version>6.1.0.180</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.1.0.180-setup.exe</URL>
-      <Date>2012-06-24</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
+      <Version>6.5.0.248</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.5.0.248-setup.exe</URL>
+      <Date>2012-09-19</Date>
+      <Summary></Summary>
     </Stable>
   </ZScreen>
   <ZUploader>
     <Stable>
-      <Version>6.1.0.180</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.1.0.180-setup.exe</URL>
-      <Date>2012-06-24</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
+      <Version>6.5.0.248</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.5.0.248-setup.exe</URL>
+      <Date>2012-09-19</Date>
+      <Summary></Summary>
     </Stable>
   </ZUploader>
   <ShareX>
     <Stable>
-      <Version>6.1.0.180</Version>
-      <URL>http://sharex.googlecode.com/files/ShareX-6.1.0.180-setup.exe</URL>
-      <Date>2012-06-24</Date>
-      <Summary>http://sharex.googlecode.com/svn/trunk/ShareX/Docs/VersionHistory.txt</Summary>
+      <Version>6.5.0.248</Version>
+      <URL>http://sharex.googlecode.com/files/ShareX-6.5.0.248-setup.exe</URL>
+      <Date>2012-09-19</Date>
+      <Summary></Summary>
     </Stable>
   </ShareX>
   <ShareXmod>
