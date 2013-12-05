@@ -2,34 +2,34 @@
 <Update>
   <ZScreen>
     <Stable>
-      <Version>6.6.2.293</Version>
-      <URL>https://sharex.googlecode.com/files/ShareX-6.6.2.293-setup.exe</URL>
-      <Date>2013-02-01</Date>
+      <Version>8.4.1</Version>
+      <URL>https://github.com/ShareX/ShareX/releases/download/v8.4.1/ShareX-8.4.1-setup.exe</URL>
+      <Date>2013-12-05</Date>
       <Summary></Summary>
     </Stable>
   </ZScreen>
   <ZUploader>
     <Stable>
-      <Version>6.6.2.293</Version>
-      <URL>https://sharex.googlecode.com/files/ShareX-6.6.2.293-setup.exe</URL>
-      <Date>2013-02-01</Date>
+      <Version>8.4.1</Version>
+      <URL>https://github.com/ShareX/ShareX/releases/download/v8.4.1/ShareX-8.4.1-setup.exe</URL>
+      <Date>2013-12-05</Date>
       <Summary></Summary>
     </Stable>
   </ZUploader>
   <ShareX>
     <Stable>
-      <Version>6.6.2.293</Version>
-      <URL>https://sharex.googlecode.com/files/ShareX-6.6.2.293-setup.exe</URL>
-      <Date>2013-02-01</Date>
+      <Version>8.4.1</Version>
+      <URL>https://github.com/ShareX/ShareX/releases/download/v8.4.1/ShareX-8.4.1-setup.exe</URL>
+      <Date>2013-12-05</Date>
       <Summary></Summary>
     </Stable>
   </ShareX>
   <ShareXmod>
     <Stable>
-      <Version>7.0.0.175</Version>
-      <URL>http://sharexmod.googlecode.com/files/ShareXmod-7.0.0.175-setup.exe</URL>
-      <Date>2012-06-03</Date>
-      <Summary>http://sharexmod.googlecode.com/svn/trunk/Docs/VersionHistory.txt</Summary>
+      <Version>8.4.1</Version>
+      <URL>https://github.com/ShareX/ShareX/releases/download/v8.4.1/ShareX-8.4.1-setup.exe</URL>
+      <Date>2013-12-05</Date>
+      <Summary></Summary>
     </Stable>
   </ShareXmod>
 </Update>
