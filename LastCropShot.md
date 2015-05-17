@@ -1,0 +1,1 @@
+This tab has only one button, to reset the last saved definition of the crop rectangle. Use this button to define a new crop shot rectangle.

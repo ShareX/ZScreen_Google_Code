@@ -1,0 +1,1 @@
+[ShareXmod](http://code.google.com/p/sharexmod/) is a derivative of [ShareX](http://code.google.com/p/sharex/).
